@@ -48,13 +48,17 @@
             <div class="t-dark">
                 <ul role="menu" class="c-dropdown__menu  u-toggle  u-arrow u-arrow--tl u-background">
                     {% for site in sites %}
-                        {% if selected_site != site %}
                             <li class="c-dropdown__item ">
                                 <a href="{% url 'flagadmin:list' site.pk %}" class="u-link is-live ">
+                                  {% if selected_site != site %}
+                                    <span class="icon icon-success" style="opacity:0;"></span>
+                                    {% else %}
+                                    <span class="icon icon-success"></span>
+                                    {% endif %}
                                     {{site.hostname}}:{{site.port}}
                                 </a>
                             </li>
-                        {% endif %}
+
                     {% endfor %}
                 </ul>
             </div>
