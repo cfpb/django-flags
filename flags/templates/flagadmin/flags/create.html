@@ -1,14 +1,14 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
 {% load gravatar %}
-{% block titletag %}{% trans "Create a Flag" as flags_str %}{% endblock %}
+{% block titletag %}{% trans "Create a flag for all domains" as flags_str %}{% endblock %}
 
 {% block content %}
     <ul class="breadcrumb">
         <li class="home"><a href="/admin" class="icon icon-home text-replace">Home</a></li>
         <li><a href="{% url 'flagadmin:list' 1 %}">Flags Settings</a></li>
     </ul>
-    {% trans "Create a Flag" as flags_str %}
+    {% trans "Create a flag for all domains" as flags_str %}
     {% trans "Add a flag" as add_a_flag_str %}
 
     {% include "wagtailadmin/shared/header.html" with title=flags_str %}
@@ -27,7 +27,7 @@
             </li>
             <li class="actions">
                 <input class="button action-save button-longrunning" type="submit" value="save new flag" />
-                <a class="button" href="{% url 'flagadmin:list' 1 %}">Back to flag settings…</a>
+                <a class="button bicolor icon icon-cog" href="{% url 'flagadmin:list' 1 %}">Back to flag settings…</a>
             </li>
         </ul>
     </form>
