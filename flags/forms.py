@@ -1,6 +1,14 @@
 from django import forms
+from django.core import validators
 
 from .models import Flag, FlagState
+
+
+validate_flag = validators.RegexValidator(
+    r'^[-a-zA-Z0-9_]+\Z',
+    "Enter a valid flag consisting of letters, numbers, underscores or hyphens.",
+    'invalid'
+)
 
 
 class SelectSiteForm(forms.Form):
@@ -8,6 +16,7 @@ class SelectSiteForm(forms.Form):
 
 
 class FeatureFlagForm(forms.ModelForm):
+    key = forms.CharField(validators=[validate_flag])
     class Meta:
         model = Flag
         fields = ('key', )
