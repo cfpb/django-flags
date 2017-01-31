@@ -4,11 +4,6 @@
 {% block titletag %}{% trans "Delete" as delete_str %}: {{ flag_id }}{% endblock %}
 
 {% block content %}
-    <ul class="breadcrumb">
-        <li class="home"><a href="/admin" class="icon icon-home text-replace">Home</a></li>
-        <li><a href="{% url 'flagadmin:list' 1 %}">Flags Settings</a></li>
-    </ul>
-
     {% trans "Delete:" as delete_str %}
     {% include "wagtailadmin/shared/header.html" with title=delete_str subtitle=flag_id %}
 
