@@ -15,10 +15,12 @@
         <ul class="fields">
             <li class="actions">
                 {% for field in form %}
-                    <div class="fieldWrapper">
-                        {{ field.errors }}
-                        <input placeholder="enter new flag name" name="{{ field.name }}" />
-                    </div>
+                    {% if field.errors %}
+                        <div class="help-block help-critical" style="margin-top:0;">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                    <input placeholder="enter new flag name" name="{{ field.name }}" />
                 {% endfor %}
             </li>
             <li class="actions">
