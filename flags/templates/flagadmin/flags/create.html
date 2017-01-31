@@ -4,14 +4,10 @@
 {% block titletag %}{% trans "Create a flag for all domains" as flags_str %}{% endblock %}
 
 {% block content %}
-    <ul class="breadcrumb">
-        <li class="home"><a href="/admin" class="icon icon-home text-replace">Home</a></li>
-        <li><a href="{% url 'flagadmin:list' 1 %}">Flags Settings</a></li>
-    </ul>
     {% trans "Create a flag for all domains" as flags_str %}
     {% trans "Add a flag" as add_a_flag_str %}
 
-    {% include "wagtailadmin/shared/header.html" with title=flags_str %}
+    {% include "wagtailadmin/shared/header.html" with title=flags_str icon="tag" %}
 
     <h2 class="nice-padding">New flag name:</h2>
     <form class="nice-padding" method="POST" action="{% url 'flagadmin:create' %}">

@@ -4,13 +4,10 @@
 {% block titletag %}{% trans "Flags" %}{% endblock %}
 
 {% block content %}
-    <ul class="breadcrumb">
-        <li class="home"><a href="/admin" class="icon icon-home text-replace">Home</a></li>
-    </ul>
     {% trans "Flags" as flags_str %}
     {% trans "Add a flag" as add_a_flag_str %}
 
-    {% include "wagtailadmin/shared/header.html" with title=flags_str %}
+    {% include "wagtailadmin/shared/header.html" with title=flags_str icon="tag" %}
 
 <!--
     <h2 class="nice-padding"> Editing flags for {{selected_site.hostname}}:{{selected_site.port}}</h2>
