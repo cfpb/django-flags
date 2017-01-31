@@ -1,18 +1,34 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
 {% load gravatar %}
-{% block titletag %}{% trans "Flags" %}{% endblock %}
+{% block titletag %}{% trans "Create a Flag" as flags_str %}{% endblock %}
 
 {% block content %}
-    {% trans "Flags" as flags_str %}
+    <ul class="breadcrumb">
+        <li class="home"><a href="/admin" class="icon icon-home text-replace">Home</a></li>
+        <li><a href="{% url 'flagadmin:list' 1 %}">Flags Settings</a></li>
+    </ul>
+    {% trans "Create a Flag" as flags_str %}
     {% trans "Add a flag" as add_a_flag_str %}
 
-    {% include "wagtailadmin/shared/header.html" with title=flags_str   %}
-    
-    <h2 class="nice-padding">Create a flag</h2>
+    {% include "wagtailadmin/shared/header.html" with title=flags_str %}
+
+    <h2 class="nice-padding">New flag name:</h2>
     <form class="nice-padding" method="POST" action="{% url 'flagadmin:create' %}">
-	{% csrf_token %}
-        {{form}}
-        <input type="submit" value="save"/>
+        {% csrf_token %}
+        <ul class="fields">
+            <li class="actions">
+                {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.errors }}
+                        <input placeholder="enter new flag name" name="{{ field.name }}" />
+                    </div>
+                {% endfor %}
+            </li>
+            <li class="actions">
+                <input class="button action-save button-longrunning" type="submit" value="save new flag" />
+                <a class="button" href="{% url 'flagadmin:list' 1 %}">Back to flag settings…</a>
+            </li>
+        </ul>
     </form>
 {% endblock %}

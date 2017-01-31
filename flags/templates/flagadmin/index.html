@@ -4,55 +4,90 @@
 {% block titletag %}{% trans "Flags" %}{% endblock %}
 
 {% block content %}
+    <ul class="breadcrumb">
+        <li class="home"><a href="/admin" class="icon icon-home text-replace">Home</a></li>
+    </ul>
     {% trans "Flags" as flags_str %}
     {% trans "Add a flag" as add_a_flag_str %}
 
-    {% include "wagtailadmin/shared/header.html" with title=flags_str   %}
-    <h2 class="nice-padding"> Editing flags for {{selected_site.hostname}}:
-    {{selected_site.port}}</h2>
-    <form class="nice-padding" method="POST" action="{% url 'flagadmin:select_site' %}">
-	{% csrf_token %}
-        <ul class="fields">
-            <li>
-<div class="field">
-<label for="id_select_site">Switch to:</label>
-	<div class="field-content">
-            
-        <select name="site_id" id="id_select_site">
-            {% for site in sites %}
-            <option value="{{site.pk}}"
-			{% if site == selected_site %} selected {% endif %}
-            >{{site.hostname}}:{{site.port}}</option>
-            {% endfor %}
-        </select>
-            
-            <span></span>
-        </div>
-        
+    {% include "wagtailadmin/shared/header.html" with title=flags_str %}
 
-        
-    </div>
+<!--
+    <h2 class="nice-padding"> Editing flags for {{selected_site.hostname}}:{{selected_site.port}}</h2>
+    <form class="nice-padding" method="POST" action="{% url 'flagadmin:select_site' %}">
+        {% csrf_token %}
+        <label for="id_select_site">Switch to:</label>
+        <ul class="fields">
+            <li class="actions">
+              <div class="field typed_choice_field select">
+                <div class="field-content input">
+                      <select name="site_id" id="id_select_site">
+                          {% for site in sites %}
+                          <option value="{{site.pk}}"
+                          {% if site == selected_site %} selected {% endif %}
+                          >{{site.hostname}}:{{site.port}}</option>
+                          {% endfor %}
+                      </select>
+                      <span></span>
+                </div>
+              </div>
+            </li>
+            <li class="actions">
+                <input class="button action-save button-longrunning" type="submit" value="Switch"/>
             </li>
         </ul>
-	<input type="submit" value="Switch"/>
     </form>
     <hr/>
-    <h2 class="nice-padding"> Set flags for {{selected_site.hostname}}:
-    {{selected_site.port}}</h2>
-    <div class="nice-padding"><a href="{% url 'flagadmin:create' %}">Add a flag</a></div>
-    <form class="nice-padding" method="POST" action="{% url 'flagadmin:save' selected_site.pk  %}">
-    {{ flagforms.management_form }}
-	<input type="submit" value="Save Flags" style="margin:10px"/>
-	{% csrf_token %}
-        <ul>
-    {% for form in flagforms %}
+  -->
+    <h2 class="nice-padding"> Set flags for
+      <div class="c-dropdown u-para t-default" data-dropdown="" style="display:inline-block">
+            <a class="c-dropdown__button  u-btn-current">
+                {{selected_site.hostname}}:{{selected_site.port}}
+                <div data-dropdown-toggle="" class="o-icon  c-dropdown__toggle  [ icon icon-arrow-down ]"></div>
+            </a>
+            <div class="t-dark">
+                <ul role="menu" class="c-dropdown__menu  u-toggle  u-arrow u-arrow--tl u-background">
+                    {% for site in sites %}
+                        {% if selected_site != site %}
+                            <li class="c-dropdown__item ">
+                                <a href="{% url 'flagadmin:list' site.pk %}" class="u-link is-live ">
+                                    {{site.hostname}}:{{site.port}}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </h2>
 
-    <li>{{ form.enabled }} {{ form.instance.flag_id }}
-    {% for hidden in form.hidden_fields %} {{ hidden }} {% endfor %} 
-    </li>
-    {% endfor %}
-        </ul>
-	<input type="submit" value="Save Flags" style="margin:10px"/>
+    <form class="nice-padding" method="POST" action="{% url 'flagadmin:save' selected_site.pk  %}">
+      {{ flagforms.management_form }}
+      {% csrf_token %}
+
+      <table class="listing">
+            <thead>
+                <tr>
+                    <th>Enabled</th>
+                    <th>Name</th>
+                    <th>Delete?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in flagforms %}
+                <tr>
+                    <td>
+                        {{ form.enabled }}
+                    </td>
+                    <td><input value="{{ form.instance.flag_id }}" /></td>
+                    <td><button type="button" id="content-1-value-link_blobs-4-value-links-0-delete" title="Delete" class="button icon text-replace hover-no icon-bin">Delete</button>
+                    {% for hidden in form.hidden_fields %} {{ hidden }} {% endfor %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <input class="button action-save button-longrunning" type="submit" value="Save Flags" />
+        <a href="{% url 'flagadmin:create' %}" class="button bicolor icon icon-plus">Add a flag</a>
     </form>
 {% endblock %}
-
