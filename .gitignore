@@ -1,0 +1,5 @@
+# Ignore system files.
+.DS_Store
+
+# Python files
+*.pyc
