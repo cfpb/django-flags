@@ -9,7 +9,7 @@ from flags import views
 @hooks.register('register_settings_menu_item')
 def register_flags_menu():
     return MenuItem('Flags', reverse('flagadmin:select_site'),
-                    classnames='icon flag-icon', order=10000)
+                    classnames='icon icon-tag', order=10000)
 
 
 @hooks.register('register_admin_urls')
