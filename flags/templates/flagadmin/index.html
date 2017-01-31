@@ -80,8 +80,10 @@
                         {{ form.enabled }}
                     </td>
                     <td><input value="{{ form.instance.flag_id }}" /></td>
-                    <td><button type="button" id="content-1-value-link_blobs-4-value-links-0-delete" title="Delete" class="button icon text-replace hover-no icon-bin">Delete</button>
-                    {% for hidden in form.hidden_fields %} {{ hidden }} {% endfor %}</td>
+                    <td>
+                      <a  href="{% url 'flagadmin:delete' form.instance.flag_id %}" class="button icon text-replace hover-no icon-bin">Delete</a>
+                      {% for hidden in form.hidden_fields %} {{ hidden }} {% endfor %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

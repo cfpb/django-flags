@@ -1,7 +1,9 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.forms import modelformset_factory
+from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
+
 from wagtail.wagtailcore.models import Site
 
 from .decorators import flag_required
@@ -76,6 +78,17 @@ def save(request, site_id):
         # this doesn't address what happens if the formset is invalid
         # index+save should probably be refactored as a single CBV
         return redirect('flagadmin:list', (selected_site.id),)
+
+
+def delete(request, flag_id):
+    flag = get_object_or_404(Flag, pk=flag_id)
+
+    if request.method == 'POST':
+        flag.delete()
+        return redirect('flagadmin:select_site')
+
+    context = dict(flag_id=flag.key)
+    return render(request, 'flagadmin/flags/delete.html', context)
 
 
 class FlaggedViewMixin(object):
