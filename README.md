@@ -1,19 +1,23 @@
 # Wagtail-Flags
 
-**Description**:  Standalone feature-flags for Wagtail applications.
+**Description**: Standalone feature-flags for Wagtail applications.
 
-Other things to include:
+**Status**: Alpha. See the [CHANGELOG](CHANGELOG.md) for important developments.
 
-  - **Technology stack**: Django Wagtail, Python.
-  - **Status**:  Alpha. See the [CHANGELOG](CHANGELOG.md) for important developments.
+![](screenshot.png)
 
 ## Dependencies
 
-To be added…
+ * Django
+ * Wagtail
+ * Python
 
 ## Installation
 
-To be added…
+1. Navigate to a local project folder on your computer.
+1. Clone this project into that folder with `git clone git@github.com:cfpb/wagtail-flags.git`.
+2. Install a Wagtail project into that same folder, such as [cfgov-refresh](https://github.com/cfpb/cfgov-refresh).
+3. From the Wagtail project folder, run `pip install -e ../wagtail-flags/` so that this project gets referenced.
 
 ## Configuration
 
