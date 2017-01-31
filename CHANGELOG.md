@@ -5,7 +5,7 @@ We follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 ## 0.0.1 - 2017-01-31
 
 ### Added
-- Initial readme files.
+- Initial files.
 
 ### Deprecated
 - Nothing.
