@@ -3,11 +3,10 @@ from django.http import Http404, HttpRequest, HttpResponse
 from django.test import TestCase
 from django.views.generic import View
 from wagtail.wagtailcore.models import Page, Site
-
+from wagtail.wagtailcore.views import serve as wagtail_serve
+4
 from flags.models import Flag
 from flags.views import FlaggedViewMixin
-from transition_utilities.conditional_urls import wagtail_fail_through
-from v1.tests.wagtail_pages.helpers import publish_page
 
 
 class TestView(FlaggedViewMixin, View):
@@ -84,12 +83,16 @@ class FlaggedViewMixinTestCase(TestCase):
         self.assertEqual(view(self.request()).content, 'fallback cbv')
 
     def test_fallback_wagtail_serve(self):
-        publish_page(Page(title='wagtail title', slug='title'))
+        site = Site.objects.get(is_default_site=True)
+        root = site.root_page
+        page = Page(title='wagtail title', slug='title')
+        root.add_child(instance=page)
+        page.save()
+        page.save_revision().publish()
 
-        view = TestView.as_view(
-            flag_name=self.flag_name,
-            fallback_view=wagtail_fail_through
-        )
+        fail_through = lambda request: wagtail_serve(request, request.path)
+        view = TestView.as_view(flag_name=self.flag_name,
+                                fallback_view=fail_through)
 
-        response = view(self.request(path='/title/'))
+        response = view(self.request(path='/title'))
         self.assertContains(response, '<title>wagtail title</title>')
