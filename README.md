@@ -1,6 +1,11 @@
 # Wagtail-Flags
 
-**Description**: Standalone feature-flags for Wagtail applications.
+[![Build Status](https://travis-ci.org/cfpb/wagtail-flags.svg?branch=master)](https://travis-ci.org/cfpb/wagtail-flags)
+[![Coverage Status](https://coveralls.io/repos/github/cfpb/wagtail-flags/badge.svg?branch=master)](https://coveralls.io/github/cfpb/wagtail-flags?branch=master)
+
+Feature flags allow you to toggle functionality within a Wagtail site via the admin without multiple deployments. Wagtail-Flags lets you use feature flags that are set in the Wagtail admin.
+
+![Feature flags in the Wagtail admin](screenshot.png)
 
 **Status**: Alpha. See the [CHANGELOG](CHANGELOG.md) for important developments.
 
