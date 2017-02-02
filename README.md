@@ -9,8 +9,6 @@ Feature flags allow you to toggle functionality within a Wagtail site via the ad
 
 **Status**: Alpha. See the [CHANGELOG](CHANGELOG.md) for important developments.
 
-![](screenshot.png)
-
 ## Dependencies
 
  * Django
