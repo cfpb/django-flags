@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.views.generic import View
 from wagtail.wagtailcore.models import Page, Site
 from wagtail.wagtailcore.views import serve as wagtail_serve
-4
+
 from flags.models import Flag
 from flags.views import FlaggedViewMixin
 
@@ -56,7 +56,12 @@ class FlaggedViewMixinTestCase(TestCase):
             fallback_view=test_view_function
         )
 
-        self.assertEqual(view(self.request()).content, 'fallback fn')
+        response = view(self.request())
+        if isinstance(response.content, str):
+            content = response.content
+        else:
+            content = bytes.decode(response.content)
+        self.assertEqual(content, 'fallback fn')
 
     def test_fallback_view_function_enabled(self):
         def test_view_function(request, *args, **kwargs):
@@ -68,7 +73,12 @@ class FlaggedViewMixinTestCase(TestCase):
             fallback_view=test_view_function
         )
 
-        self.assertEqual(view(self.request()).content, 'ok')
+        response = view(self.request())
+        if isinstance(response.content, str):
+            content = response.content
+        else:
+            content = bytes.decode(response.content)
+        self.assertEqual(content, 'ok')
 
     def test_fallback_class_based_view(self):
         class OtherTestView(View):
@@ -80,7 +90,12 @@ class FlaggedViewMixinTestCase(TestCase):
             fallback_view=OtherTestView.as_view()
         )
 
-        self.assertEqual(view(self.request()).content, 'fallback cbv')
+        response = view(self.request())
+        if isinstance(response.content, str):
+            content = response.content
+        else:
+            content = bytes.decode(response.content)
+        self.assertEqual(content, 'fallback cbv')
 
     def test_fallback_wagtail_serve(self):
         site = Site.objects.get(is_default_site=True)

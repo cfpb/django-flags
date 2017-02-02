@@ -6,7 +6,7 @@ from .models import Flag, FlagState
 
 validate_flag = validators.RegexValidator(
     r'^[-a-zA-Z0-9_]+\Z',
-    "Enter a valid flag consisting of letters, numbers, underscores or hyphens.",
+    "Enter a valid flag consisting of letters, numbers, or underscores.",
     'invalid'
 )
 
@@ -17,6 +17,7 @@ class SelectSiteForm(forms.Form):
 
 class FeatureFlagForm(forms.ModelForm):
     key = forms.CharField(validators=[validate_flag])
+
     class Meta:
         model = Flag
         fields = ('key', )

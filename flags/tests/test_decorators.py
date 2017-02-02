@@ -1,6 +1,10 @@
+try:
+    from unittest.mock import Mock
+except ImportError:
+    from mock import Mock
+
 from django.http import Http404, HttpRequest, HttpResponse
 from django.test import TestCase
-from mock import Mock
 
 from flags.decorators import flag_required
 from flags.models import Flag
@@ -34,7 +38,11 @@ class FlagRequiredTestCase(TestCase):
         Flag.objects.create(key=self.flag_name, enabled_by_default=True)
         decorated = flag_required(self.flag_name)(view)
         response = decorated(self.request)
-        self.assertEqual(response.content, 'ok')
+        if isinstance(response.content, str):
+            content = response.content
+        else:
+            content = bytes.decode(response.content)
+        self.assertEqual(content, 'ok')
 
     def test_fallback_view(self):
         def fallback(request):
@@ -43,7 +51,11 @@ class FlagRequiredTestCase(TestCase):
         decorator = flag_required(self.flag_name, fallback_view=fallback)
         decorated = decorator(self.view)
         response = decorated(self.request)
-        self.assertEqual(response.content, 'fallback')
+        if isinstance(response.content, str):
+            content = response.content
+        else:
+            content = bytes.decode(response.content)
+        self.assertEqual(content, 'fallback')
 
     def test_pass_if_not_set_no_flag_exists(self):
         def view(request):
@@ -51,7 +63,11 @@ class FlagRequiredTestCase(TestCase):
 
         decorated = flag_required(self.flag_name, pass_if_set=False)(view)
         response = decorated(self.request)
-        self.assertEqual(response.content, 'ok')
+        if isinstance(response.content, str):
+            content = response.content
+        else:
+            content = bytes.decode(response.content)
+        self.assertEqual(content, 'ok')
 
     def test_pass_if_not_set_disabled(self):
         def view(request):
@@ -60,7 +76,11 @@ class FlagRequiredTestCase(TestCase):
         Flag.objects.create(key=self.flag_name, enabled_by_default=False)
         decorated = flag_required(self.flag_name, pass_if_set=False)(view)
         response = decorated(self.request)
-        self.assertEqual(response.content, 'ok')
+        if isinstance(response.content, str):
+            content = response.content
+        else:
+            content = bytes.decode(response.content)
+        self.assertEqual(content, 'ok')
 
     def test_pass_if_not_set_enabled(self):
         Flag.objects.create(key=self.flag_name, enabled_by_default=True)
@@ -82,4 +102,8 @@ class FlagRequiredTestCase(TestCase):
 
         decorated = decorator(self.view)
         response = decorated(self.request)
-        self.assertEqual(response.content, 'fallback')
+        if isinstance(response.content, str):
+            content = response.content
+        else:
+            content = bytes.decode(response.content)
+        self.assertEqual(content, 'fallback')

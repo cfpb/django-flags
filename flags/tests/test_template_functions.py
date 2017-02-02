@@ -1,6 +1,11 @@
+try:
+    from mock import Mock, patch
+except ImportError:
+    from mock import Mock, patch
+
 from django.http import HttpRequest
 from django.test import TestCase
-from mock import Mock, patch
+
 from wagtail.wagtailcore.models import Site
 
 from flags.models import Flag, FlagState
