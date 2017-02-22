@@ -6,7 +6,8 @@ from flags.template_functions import flag_enabled
 
 def flag_check(flag_name, condition, fallback=None):
     """ Check that a given flag has the given condition (True/False).
-    If the condition is not met, perform the fallback. """
+    If the condition is not met, perform the fallback.
+    """
     def decorator(func):
         def inner(request, *args, **kwargs):
             enabled = flag_enabled(request, flag_name)
@@ -14,7 +15,7 @@ def flag_check(flag_name, condition, fallback=None):
             if (condition and enabled) or (not condition and not enabled):
                 return func(request, *args, **kwargs)
             elif fallback is not None:
-                return fallback(request)
+                return fallback(request, *args, **kwargs)
             else:
                 raise Http404
 
