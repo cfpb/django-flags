@@ -40,12 +40,7 @@ class FlagCheckTestCase(TestCase):
         resolved_view, args, kwargs = resolve('/url-true-no-fallback')
         response = resolved_view(request)
 
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-
-        self.assertEqual(content, 'view')
+        self.assertContains(response, 'view')
 
     def test_flagged_url_true_no_fallback_false(self):
         Flag.objects.create(key=self.flag_name, enabled_by_default=False)
@@ -63,12 +58,7 @@ class FlagCheckTestCase(TestCase):
         resolved_view, args, kwargs = resolve('/url-false-no-fallback')
         response = resolved_view(request)
 
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-
-        self.assertEqual(content, 'view')
+        self.assertContains(response, 'view')
 
     def test_flagged_url_false_no_fallback_true(self):
         Flag.objects.create(key=self.flag_name, enabled_by_default=True)
@@ -86,12 +76,7 @@ class FlagCheckTestCase(TestCase):
         resolved_view, args, kwargs = resolve('/url-true-fallback')
         response = resolved_view(request)
 
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-
-        self.assertEqual(content, 'view')
+        self.assertContains(response, 'view')
 
     def test_flagged_url_true_fallback_false(self):
         Flag.objects.create(key=self.flag_name, enabled_by_default=False)
@@ -100,12 +85,7 @@ class FlagCheckTestCase(TestCase):
         resolved_view, args, kwargs = resolve('/url-true-fallback')
         response = resolved_view(request)
 
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-
-        self.assertEqual(content, 'fallback')
+        self.assertContains(response, 'fallback')
 
     def test_flagged_url_false_fallback(self):
         Flag.objects.create(key=self.flag_name, enabled_by_default=False)
@@ -114,12 +94,7 @@ class FlagCheckTestCase(TestCase):
         resolved_view, args, kwargs = resolve('/url-false-fallback')
         response = resolved_view(request)
 
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-
-        self.assertEqual(content, 'view')
+        self.assertContains(response, 'view')
 
     def test_flagged_url_false_fallback_false(self):
         Flag.objects.create(key=self.flag_name, enabled_by_default=True)
@@ -128,12 +103,7 @@ class FlagCheckTestCase(TestCase):
         resolved_view, args, kwargs = resolve('/url-false-fallback')
         response = resolved_view(request)
 
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-
-        self.assertEqual(content, 'fallback')
+        self.assertContains(response, 'fallback')
 
     def test_flagged_url_include(self):
         with self.assertRaises(TypeError):
