@@ -13,7 +13,7 @@ Feature flags allow you to toggle functionality without multiple deployments. Wa
 - Django 1.8+
 - Wagtail 1.7+
 - Python 2.7+, 3.5+
- 
+
 
 ## Installation
 
@@ -42,7 +42,7 @@ Feature flags in Wagtail-Flags are stored in the database, exposed to Wagtail us
 
 The Wagtail-Flags app provides two basic functions to check the status of feature flags, and one shortcut for checking the status of multiple flags.
 
-- `flag_enabled` will return True if the feature flag is enabled. 
+- `flag_enabled` will return True if the feature flag is enabled.
 
 - `flag_disabled` will return True if the feature flag is disabled or does not exist.
 
@@ -70,52 +70,54 @@ if flags_enabled(request, 'FLAG1', 'FLAG2', 'FLAG3'):
 	print(“All flags were set”)
 ```
 
-A `flag_required` decorator is provided to require a particular flag for a Django view. The default behavior is to return a 404 if the flag is not set, but an optional fallback view function can be specified instead.
+A `@flag_required` decorator is provided to require a particular flag for a Django view. The default behavior is to return a 404 if the flag is not set, but an optional fallback view function can be specified instead.
 
 ```python
 from flags.decorators import flag_required
 
 @flag_required('MY_FLAG')
 def view_requiring_flag(request):
-    retrun HttpResponse('flag was set')
+    return HttpResponse('flag was set')
 
 def other_view(request):
     return HttpResponse('flag was not set')
 
-@flag_required('MY_FALLBACK_FLAG', fallback_view=other_view)
+@flag_required('MY_FLAG_WITH_FALLBACK', fallback_view=other_view)
 def view_with_fallback(request):
     return HttpResponse('flag was set')
 ```
 
-For more complex use a `flag_check` decorator is provided that can be used to check for a particular value of a flag, with an optional fallback.
+For more complex use a `@flag_check` decorator is provided that can be used to check for a particular value of a flag, with an optional fallback.
 
 ```python
 from flags.decorators import flag_check
 
 @flag_check('MY_FLAG', True)
 def view_requiring_flag(request):
-    retrun HttpResponse('flag was set')
+    return HttpResponse('flag was set')
 
 @flag_check('MY_OTHER_FLAG', False)
 def view_when_flag_is_not_set(request):
-    retrun HttpResponse('flag was set')
+    return HttpResponse('flag was set')
 
 def other_view(request):
     return HttpResponse('flag was not set')
 
-@flag_required('MY_FALLBACK_FLAG', True, fallback=other_view)
+@flag_required('MY_FLAG_WITH_FALLBACK', True, fallback=other_view)
 def view_with_fallback(request):
     return HttpResponse('flag was set')
 ```
 
-For URL handling, there is `flagged_url()` which can be used in place of Django's `url()`. **Note**: it will not work for `include()` urls.
+**Note**, because flags that do not exist are taken to be `False` by default, `@flag_check('MY_FLAG', False)` and `@flag_check('MY_FLAG', None)` will both succeed if `MY_FLAG` does not exist.
+
+For URL handling, there is `flagged_url()` which can be used in place of Django's `url()`. **Note**, it will not work for `include()` url.
 
 ```python
 from flags.urls import flagged_url
 
 urlpatterns = [
-    flagged_url('MY_FLAG', r'^my-url$', view_requiring_flag, condition=True),
-    flagged_url('MY_FALLBACK_FLAG', r'^my-url$', view_with_fallback, 
+    flagged_url('MY_FLAG', r'^an-url$', view_requiring_flag, condition=True),
+    flagged_url('MY_FLAG_WITH_FALLBACK', r'^another-url$', view_with_fallback,
                 condition=True, fallback=other_view)
 ]
 
