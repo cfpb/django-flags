@@ -6,7 +6,7 @@ except ImportError:
 from django.http import Http404, HttpRequest, HttpResponse
 from django.test import TestCase
 
-from flags.decorators import flag_check, flag_required
+from flags.decorators import flag_check
 from flags.models import Flag
 
 

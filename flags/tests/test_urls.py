@@ -1,8 +1,3 @@
-try:
-    from unittest.mock import Mock
-except ImportError:
-    from mock import Mock
-
 from django.conf.urls import url, include
 from django.core.urlresolvers import resolve
 from django.http import HttpResponse, Http404
@@ -59,7 +54,7 @@ class FlagCheckTestCase(TestCase):
         resolved_view, args, kwargs = resolve('/url-true-no-fallback')
 
         with self.assertRaises(Http404):
-            response = resolved_view(request)
+            resolved_view(request)
 
     def test_flagged_url_false_no_fallback(self):
         Flag.objects.create(key=self.flag_name, enabled_by_default=False)
@@ -82,7 +77,7 @@ class FlagCheckTestCase(TestCase):
         resolved_view, args, kwargs = resolve('/url-false-no-fallback')
 
         with self.assertRaises(Http404):
-            response = resolved_view(request)
+            resolved_view(request)
 
     def test_flagged_url_true_fallback(self):
         Flag.objects.create(key=self.flag_name, enabled_by_default=True)

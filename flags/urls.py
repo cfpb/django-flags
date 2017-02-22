@@ -1,6 +1,7 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 
 from flags.decorators import flag_check
+
 
 def flagged_url(flag_name, regex, view, kwargs=None, name=None,
                 condition=True, fallback=None):
