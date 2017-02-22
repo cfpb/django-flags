@@ -48,7 +48,7 @@ class FlagCheckTestCase(TestCase):
         def fallback(request):
             return HttpResponse('fallback')
 
-        decorator = flag_check(self.flag_name, True, alternative=fallback)
+        decorator = flag_check(self.flag_name, True, fallback=fallback)
         decorated = decorator(self.view)
         response = decorated(self.request)
         if isinstance(response.content, str):
@@ -97,7 +97,7 @@ class FlagCheckTestCase(TestCase):
         decorator = flag_check(
             self.flag_name,
             False,
-            alternative=fallback,
+            fallback=fallback,
         )
 
         decorated = decorator(self.view)

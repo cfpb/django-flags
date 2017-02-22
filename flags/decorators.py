@@ -4,17 +4,17 @@ from django.utils.functional import wraps
 from flags.template_functions import flag_enabled
 
 
-def flag_check(flag_name, condition, alternative=None):
+def flag_check(flag_name, condition, fallback=None):
     """ Check that a given flag has the given condition (True/False).
-    If the condition is not met, perform the alternative. """
+    If the condition is not met, perform the fallback. """
     def decorator(func):
         def inner(request, *args, **kwargs):
             enabled = flag_enabled(request, flag_name)
 
             if (condition and enabled) or (not condition and not enabled):
                 return func(request, *args, **kwargs)
-            elif alternative is not None:
-                return alternative(request)
+            elif fallback is not None:
+                return fallback(request)
             else:
                 raise Http404
 
@@ -24,4 +24,4 @@ def flag_check(flag_name, condition, alternative=None):
 
 
 def flag_required(flag_name, fallback_view=None, pass_if_set=True):
-    return flag_check(flag_name, pass_if_set, alternative=fallback_view)
+    return flag_check(flag_name, pass_if_set, fallback=fallback_view)
