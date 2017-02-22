@@ -15,7 +15,7 @@ def flagged_url(flag_name, regex, view, kwargs=None, name=None,
 
     elif isinstance(view, (list, tuple)):
         # XXX: For right now, we don't support include()
-        raise TypeError("Flagged include() is not supported")
+        raise TypeError('Flagged include() is not supported')
 
     else:
         raise TypeError('view must be a callable')
