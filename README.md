@@ -20,7 +20,7 @@ Feature flags allow you to toggle functionality without multiple deployments. Wa
 1. Install wagtail-flags using pip:
 
    ```shell
-pip install git+https://github.com/cfpb/wagtail-flags.git
+pip install wagtail-flags
 ```
 
 2. Add `flags` as an installed app in your Django `settings.py`:
