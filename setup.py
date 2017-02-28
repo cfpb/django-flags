@@ -23,4 +23,8 @@ setup(
     extras_require={
         'testing': testing_extras,
     }
+    classifiers=[
+        'License :: Public Domain',
+        'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication'
+    ]
 )
