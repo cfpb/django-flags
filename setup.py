@@ -1,5 +1,6 @@
-from setuptools import find_packages, setup
+import os
 
+from setuptools import find_packages, setup
 
 install_requires = [
     'Django>=1.8,<1.11',
@@ -16,13 +17,17 @@ testing_extras = [
 
 setup(
     name='wagtail-flags',
-    version='0.1',
+    url='https://github.com/cfpb/wagtail-flags',
+    author='CFPB',
+    author_email='tech@cfpb.gov',
+    license='CC0',
+    version='1.0.0',
     include_package_data=True,
     packages=find_packages(),
     install_requires=install_requires,
     extras_require={
         'testing': testing_extras,
-    }
+    },
     classifiers=[
         'License :: Public Domain',
         'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication'
