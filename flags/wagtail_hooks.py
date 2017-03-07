@@ -20,7 +20,7 @@ def register_flag_admin_urls():
                 url(r'^$', views.select_site, name='select_site'),
                 url(r'^(\d+)/$', views.index, name='list'),
                 url(r'^(\d+)/save/$', views.save, name='save'),
-                url(r'^(\w+)/delete/$', views.delete, name='delete'),
+                url(r'^(.+)/delete/$', views.delete, name='delete'),
                 url(r'^create/$', views.create, name='create'),
             ], namespace='flagadmin'))
     ]
