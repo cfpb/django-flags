@@ -19,7 +19,7 @@ setup(
     author='CFPB',
     author_email='tech@cfpb.gov',
     license='CC0',
-    version='1.0.0',
+    version='1.0.1',
     include_package_data=True,
     packages=find_packages(),
     install_requires=install_requires,
