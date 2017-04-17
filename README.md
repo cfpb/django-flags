@@ -110,7 +110,7 @@ def view_with_fallback(request):
 
 **Note**, because flags that do not exist are taken to be `False` by default, `@flag_check('MY_FLAG', False)` and `@flag_check('MY_FLAG', None)` will both succeed if `MY_FLAG` does not exist.
 
-For URL handling, there is `flagged_url()` which can be used in place of Django's `url()`. **Note**, it will not work for `include()` url.
+For URL handling, there is `flagged_url()` which can be used in place of Django's `url()`. `fallback` support for `include()` URLs is limited to a single view.
 
 ```python
 from flags.urls import flagged_url
@@ -118,6 +118,8 @@ from flags.urls import flagged_url
 urlpatterns = [
     flagged_url('MY_FLAG', r'^an-url$', view_requiring_flag, condition=True),
     flagged_url('MY_FLAG_WITH_FALLBACK', r'^another-url$', view_with_fallback,
+                condition=True, fallback=other_view)
+    flagged_url('MY_FLAGGED_INCLUDE', r'^myapp$', include('myapp.urls'),
                 condition=True, fallback=other_view)
 ]
 

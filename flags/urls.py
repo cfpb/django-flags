@@ -1,6 +1,31 @@
-from django.conf.urls import url
+from django.core.urlresolvers import (
+    RegexURLPattern,
+    RegexURLResolver
+)
 
 from flags.decorators import flag_check
+
+
+class FlaggedURLResolver(RegexURLResolver):
+    def __init__(self, flag_name, regex, urlconf_name,
+                 default_kwargs=None, app_name=None, namespace=None,
+                 condition=True, fallback=None):
+        super(FlaggedURLResolver, self).__init__(
+            regex, urlconf_name, default_kwargs=default_kwargs,
+            app_name=app_name, namespace=namespace)
+        self.flag_decorator = flag_check(
+            flag_name, condition, fallback=fallback)
+
+    @property
+    def url_patterns(self):
+        # Flag each of the resolved URL patterns
+        patterns = []
+        for pattern in super(FlaggedURLResolver, self).url_patterns:
+            flagged_pattern = RegexURLPattern(
+                pattern._regex, self.flag_decorator(pattern._callback),
+                pattern.default_args, pattern.name)
+            patterns.append(flagged_pattern)
+        return patterns
 
 
 def flagged_url(flag_name, regex, view, kwargs=None, name=None,
@@ -11,11 +36,14 @@ def flagged_url(flag_name, regex, view, kwargs=None, name=None,
         flagged_view = flag_check(flag_name,
                                   condition,
                                   fallback=fallback)(view)
-        return url(regex, flagged_view, kwargs=kwargs, name=name)
+        return RegexURLPattern(regex, flagged_view, kwargs, name)
 
     elif isinstance(view, (list, tuple)):
-        # XXX: For right now, we don't support include()
-        raise TypeError('Flagged include() is not supported')
+        urlconf_module, app_name, namespace = view
+        return FlaggedURLResolver(
+            flag_name, regex, urlconf_module, kwargs,
+            app_name=app_name, namespace=namespace,
+            condition=condition, fallback=fallback)
 
     else:
         raise TypeError('view must be a callable')
