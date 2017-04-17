@@ -1,7 +1,13 @@
-from django.core.urlresolvers import (
-    RegexURLPattern,
-    RegexURLResolver
-)
+try:
+    from django.urls import (
+        RegexURLPattern,
+        RegexURLResolver
+    )
+except ImportError:
+    from django.core.urlresolvers import (
+        RegexURLPattern,
+        RegexURLResolver
+    )
 
 from flags.decorators import flag_check
 
@@ -22,7 +28,7 @@ class FlaggedURLResolver(RegexURLResolver):
         patterns = []
         for pattern in super(FlaggedURLResolver, self).url_patterns:
             flagged_pattern = RegexURLPattern(
-                pattern._regex, self.flag_decorator(pattern._callback),
+                pattern._regex, self.flag_decorator(pattern.callback),
                 pattern.default_args, pattern.name)
             patterns.append(flagged_pattern)
         return patterns

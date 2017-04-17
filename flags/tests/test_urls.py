@@ -14,6 +14,7 @@ def view(request):
 def fallback(request):
     return HttpResponse('fallback')
 
+
 extra_patterns = [
     url(r'^included-url$', view),
 ]
