@@ -1,33 +1,22 @@
 from django import forms
-from django.core import validators
 
-from .models import Flag, FlagState
+from flags.conditions import get_conditions
+from flags.models import FlagState
+from flags.settings import get_flags
 
-
-validate_flag = validators.RegexValidator(
-    r'^[-a-zA-Z0-9_]+\Z',
-    "Enter a valid flag consisting of letters, numbers, or underscores.",
-    'invalid'
-)
-
-
-class SelectSiteForm(forms.Form):
-    site_id = forms.IntegerField()
-
-
-class FeatureFlagForm(forms.ModelForm):
-    key = forms.CharField(validators=[validate_flag])
-
-    class Meta:
-        model = Flag
-        fields = ('key', )
+FLAGS_CHOICES = [(flag, flag) for flag in get_flags().keys()]
+CONDITIONS_CHOICES = [(c, c) for c in get_conditions()]
 
 
 class FlagStateForm(forms.ModelForm):
+    name = forms.ChoiceField(choices=FLAGS_CHOICES,
+                             label="Flag",
+                             required=True)
+    condition = forms.ChoiceField(choices=CONDITIONS_CHOICES,
+                                  label="Is enabled when",
+                                  required=True)
+    value = forms.CharField(label="Is", required=True)
+
     class Meta:
         model = FlagState
-        fields = ('flag', 'enabled', 'site')
-        widgets = {
-            'flag': forms.widgets.HiddenInput(),
-            'site': forms.widgets.HiddenInput(),
-        }
+        fields = ('name', 'condition', 'value')

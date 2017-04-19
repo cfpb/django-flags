@@ -3,10 +3,29 @@
 [![Build Status](https://travis-ci.org/cfpb/wagtail-flags.svg?branch=master)](https://travis-ci.org/cfpb/wagtail-flags)
 [![Coverage Status](https://coveralls.io/repos/github/cfpb/wagtail-flags/badge.svg?branch=master)](https://coveralls.io/github/cfpb/wagtail-flags?branch=master)
 
-Feature flags allow you to toggle functionality without multiple deployments. Wagtail-Flags lets you use feature flags that are set in the Wagtail admin.
+Feature flags allow you to toggle functionality in both Django settings and the Wagtail or Django admin based on configurable conditions.
 
-![Feature flags in the Wagtail admin](screenshot.png)
+![Feature flags in the Wagtail admin](screenshot_list.png)
 
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Concepts](#concepts)
+- [Usage](#usage)
+  - [Overview](#overview)
+  - [Adding Flags](#adding-flags)
+    - [Defining flags](#defining-flags)
+    - [Built-in conditions](#built-in-conditions)
+- [API](#api)
+  - [Flag state](#flag-state)
+  - [Flag decorators](#flag-decorators)
+  - [Flagged URLs](#flagged-urls)
+  - [Django templates](#django-templates)
+  - [Jinja2 templates](#jinja2-templates)
+  - [Conditions](#conditions)
+- [Getting help](#getting-help)
+- [Getting involved](#getting-involved)
+- [Licensing](#licensing)
+- [Credits and references](#credits-and-references)
 
 ## Dependencies
 
@@ -14,18 +33,17 @@ Feature flags allow you to toggle functionality without multiple deployments. Wa
 - Wagtail 1.7+
 - Python 2.7+, 3.5+
 
-
 ## Installation
 
 1. Install wagtail-flags using pip:
 
-   ```shell
+```shell
 pip install wagtail-flags
 ```
 
 2. Add `flags` as an installed app in your Django `settings.py`:
 
-   ```python
+ ```python
  INSTALLED_APPS = (
      ...
      'flags',
@@ -33,44 +51,201 @@ pip install wagtail-flags
  )
 ```
 
+## Concepts
+
+Feature flags in Wagtail-Flags are identified by simple strings that are enabled when the conditions they are associated with are met. These flags can be used to wrap code and template content that should only be used when a flag is enabled or disabled.
+
+Conditions determine whether a flag is enabled or disabled by comparing a defined expected value of some kind with the value at the time the flag is checked. In many cases, the flag is checked during a request, and some piece of the request's metadata is what is compared. For example, a feature flag that is enabled for a specific Wagtail Site would be enabled if the request's site matches the condition's site.
 
 ## Usage
 
-Feature flags in Wagtail-Flags are stored in the database, exposed to Wagtail users through the Wagtail admin, and their state is associated with a [Wagtail Site](http://docs.wagtail.io/en/stable/reference/pages/model_reference.html#site).
+### Overview
 
-### Basic usage
+To use Wagtail-Flags you first need to define the flag, use the flag in code, and define conditions for the flag to be enabled.
 
-The Wagtail-Flags app provides two basic functions to check the status of feature flags, and one shortcut for checking the status of multiple flags.
-
-- `flag_enabled` will return True if the feature flag is enabled.
-
-- `flag_disabled` will return True if the feature flag is disabled or does not exist.
-
-- `flags_enabled` will return True only if all the given flags are enabled.
-
-
-### In Python
-
-In Python these functions can be imported from `flags.template_functions` and require a request object as the first argument (the request is used to check the flag's state for the requested Wagtail Site).
+First, define the flag in Django `settings.py`:
 
 ```python
-from flags.template_functions import (
-    flag_enabled,
-    flag_disabled,
-    flags_enabled
-)
-
-if flag_enabled(request, 'BETA_NOTICE'):
-	print(“Beta notice banner will be displayed”)
-
-if flag_disabled(request, 'BETA_NOTICE'):
-	print(“Beta notice banner will not be displayed”)
-
-if flags_enabled(request, 'FLAG1', 'FLAG2', 'FLAG3'):
-	print(“All flags were set”)
+FLAGS = {
+    'MY_FLAG': {}
+}
 ```
 
-A `@flag_required` decorator is provided to require a particular flag for a Django view. The default behavior is to return a 404 if the flag is not set, but an optional fallback view function can be specified instead.
+Then use the flag in a Django template (`mytemplate.html`):
+
+```django
+{% load feature_flags %}
+{% flag_enabled 'MY_FLAG' as my_flag %}
+
+{% if my_flag %}
+  <div class="flagged-banner">
+    I’m the result of a feature flag.   
+  </div>
+{% endif %}
+```
+
+Configure a URL for that template (`urls.py`):
+
+```python
+from django.conf.urls import url
+from django.views.generic.base import TemplateView
+
+urlpatterns = [
+    url(r'^/mypage$', TemplateView.as_view(template_name='mytemplate.html'),
+]
+```
+
+Then in the Wagtail admin add conditions for the flag in "Settings", "Flags":
+
+![Creating conditions in the Wagtail admin](screenshot_create.png)
+
+Then visiting the URL `/mypage?enable_my_flag=True` should show you the flagged `<div>` in the template.
+
+### Adding flags
+
+#### Defining flags
+
+Flags are defined in Django settings with the conditions in which they are enabled.
+
+```python
+FLAGS = {
+  'FLAG_WITH_EMPTY_CONDITIONS': {}
+  'MY_FLAG': {
+    'condition name': 'value flag is expected to match to be enabled',
+    'user': 'lady.liberty'
+  }
+}
+```
+
+The set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).
+
+Additional conditions can be added in the Django or Wagtail admin for any defined flag (illustrated in [Usage](#usage)). Conditions added in the Django or Wagtail admin can be changed without restarting Django, conditions defined in `settings.py` cannot.
+
+#### Built-in conditions
+
+Wagtail-Flags comes with the following conditions built-in:
+
+##### `boolean`
+
+A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.
+
+```python
+FLAGS = {'MY_FLAG': {'boolean': True}}
+```
+
+##### `user`
+
+Allows a flag to be enabled for the username given as the condition's value.
+
+```python
+FLAGS = {'MY_FLAG': {'user': 'jane.doe'}}
+```
+
+##### `anonymous`
+
+Allows a flag to be either enabled or disabled depending on the condition's boolean value.
+
+```python
+FLAGS = {'MY_FLAG': {'anonymous: False}}
+```
+
+##### `parameter`
+
+Allows a flag to be enabled based on a GET parameter with the name given as the condition's value.
+
+```python
+FLAGS = {'MY_FLAG': {'parameter': 'my_flag_param'}}
+```
+
+##### `path`
+
+Allows a flag to be enabled if the request's path matches the condition value.
+
+```python
+FLAGS = {'MY_FLAG': {'path': '/flagged/path'}}
+```
+
+##### `site`
+
+Allows a flag to be enabled for a Wagtail site that matches the hostname and port in the condition value.
+
+```python
+FLAGS = {'MY_FLAG': {'site': 'staging.mysite.com'}}
+```
+
+## API
+
+### Flag state
+
+```python
+from flags.state import (
+    flag_state,
+    flag_enabled,
+    flag_disabled,
+)
+```
+
+#### `flag_state(flag_name, **kwargs)`
+
+Return the value for the flag (`True` or `False`) by passing kwargs to its conditions.
+
+#### `flag_enabled(flag_name, **kwargs)`
+
+Returns `True` if a flag is enabled by passing kwargs to its conditions, otherwise returns `False`.
+
+```python
+if flag_enabled('MY_FLAG', request=a_request):
+	print("My feature flag is enabled")
+```
+
+#### `flag_disabled(flag_name, **kwargs)`
+
+Returns `True` if a flag is disabled by passing kwargs to its conditions, otherwise returns `False`.
+
+```python
+if flag_disabled('MY_FLAG', request=a_request):
+	print(“My feature flag is disabled”)
+```
+
+### Flag decorators
+
+Decorators are provided for use with Django views and conditions that take a `request` argument. The default behavior is to return a 404 if a callable fallback is not given.
+
+```python
+from flags.decorators import (
+    flag_check,
+    flag_required,
+)
+```
+
+#### `flag_check(flag_name, state, fallback=None, **kwargs)`
+
+Check that a given flag has the given state. If the state does not match, perform the fallback.
+
+**Note**, because flags that do not exist are taken to be `False` by default, `@flag_check('MY_FLAG', False)` and `@flag_check('MY_FLAG', None)` will both succeed if `MY_FLAG` does not exist.
+
+```python
+from flags.decorators import flag_check
+
+@flag_check('MY_FLAG', True)
+def view_requiring_flag(request):
+    return HttpResponse('flag was set')
+
+@flag_check('MY_OTHER_FLAG', False)
+def view_when_flag_is_not_set(request):
+    return HttpResponse('flag was set')
+
+def other_view(request):
+    return HttpResponse('flag was not set')
+
+@flag_check('MY_FLAG_WITH_FALLBACK', True, fallback=other_view)
+def view_with_fallback(request):
+    return HttpResponse('flag was set')
+```
+
+#### `flag_required(flag_name, fallback_view=None, pass_if_set=True)`
+
+Require the given flag to be enabled.
 
 ```python
 from flags.decorators import flag_required
@@ -87,85 +262,147 @@ def view_with_fallback(request):
     return HttpResponse('flag was set')
 ```
 
-For more complex use a `@flag_check` decorator is provided that can be used to check for a particular value of a flag, with an optional fallback.
-
-```python
-from flags.decorators import flag_check
-
-@flag_check('MY_FLAG', True)
-def view_requiring_flag(request):
-    return HttpResponse('flag was set')
-
-@flag_check('MY_OTHER_FLAG', False)
-def view_when_flag_is_not_set(request):
-    return HttpResponse('flag was set')
-
-def other_view(request):
-    return HttpResponse('flag was not set')
-
-@flag_required('MY_FLAG_WITH_FALLBACK', True, fallback=other_view)
-def view_with_fallback(request):
-    return HttpResponse('flag was set')
-```
-
-**Note**, because flags that do not exist are taken to be `False` by default, `@flag_check('MY_FLAG', False)` and `@flag_check('MY_FLAG', None)` will both succeed if `MY_FLAG` does not exist.
-
-For URL handling, there is `flagged_url()` which can be used in place of Django's `url()`. `fallback` support for `include()` URLs is limited to a single view.
+### Flagged URLs
 
 ```python
 from flags.urls import flagged_url
-
-urlpatterns = [
-    flagged_url('MY_FLAG', r'^an-url$', view_requiring_flag, condition=True),
-    flagged_url('MY_FLAG_WITH_FALLBACK', r'^another-url$', view_with_fallback,
-                condition=True, fallback=other_view)
-    flagged_url('MY_FLAGGED_INCLUDE', r'^myapp$', include('myapp.urls'),
-                condition=True, fallback=other_view)
-]
-
 ```
 
-### In Django templates
+#### `flagged_url(flag_name, regex, view, kwargs=None, name=None, state=True, fallback=None)`
 
-In Django templates you'll need to load the `feature_flags` template tag library. You can then use `flag_enabled`, `flag_disabled`, and `flags_enabled` tags:
+Make a URL depend on the state of a feature flag. `flagged_url()` can be used in place of Django's `url()`.
+
+`fallback` support for `include()` URLs is limited to a single view rather than a fallback set of `include()`ed URLs.
+
+```python
+urlpatterns = [
+    flagged_url('MY_FLAG', r'^an-url$', view_requiring_flag, state=True),
+    flagged_url('MY_FLAG_WITH_FALLBACK', r'^another-url$', view_with_fallback,
+                state=True, fallback=other_view)
+    flagged_url('MY_FLAGGED_INCLUDE', r'^myapp$', include('myapp.urls'),
+                state=True, fallback=other_view)
+]
+```
+
+### Django templates
+
+Wagtail-Flags provides a template tag library that can be used to evaluate flags in Django templates.
 
 ```django
 {% load feature_flags %}
-{% flag_enabled 'BETA_NOTICE' as beta_flag %}
-{% if beta_flag %}
+```
+
+#### `flag_enabled`
+
+Returns `True` if a flag is enabled by passing the current request to its conditions, otherwise returns `False`.
+
+```django
+{% flag_enabled 'MY_FLAG' as my_flag %}
+{% if my_flag %}
   <div class="m-global-banner">
-    I’m a beta banner.   
+    I’m the result of a feature flag.   
   </div>
 {% endif %}
 ```
 
+#### `flag_disabled`
 
-### In Jinja2 templates
+Returns `True` if a flag is disabled by passing the current request to its conditions, otherwise returns `False`.
 
-The `flag_enabled`, `flag_disabled`, and `flags_enabled` functions can also be added to a Jinja2 environment and subsequently used in templates:
+```django
+{% flag_disabled 'MY_FLAG' as my_flag %}
+{% if my_flag %}
+  <div class="m-global-banner">
+    I’m the result of a feature flag that is not enabled.
+  </div>
+{% endif %}
+```
+
+### Jinja2 templates
+
+Wagtail-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.
 
 ```python
 from flags.template_functions import (
     flag_enabled,
-    flag_disabled,
-    flags_enabled
+    flag_disabled
 )
 
 ...
 
 env.globals.update(
     flag_enabled=flag_enabled,
-    flag_disabled=flag_disabled,
-    flags_enabled=flags_enabled
+    flag_disabled=flag_disabled
 )
 ```
 
+#### `flag_enabled`
+
+Returns `True` if a flag is enabled by for the given request, otherwise returns `False`.
+
 ```jinja
-{% if flag_enabled(request, 'BETA_NOTICE') %}
+{% if flag_enabled('MY_FLAG', request) %}
   <div class="m-global-banner">
-    I’m a beta banner.   
+    I’m the result of a feature flag.   
   </div>
 {% endif %}
+```
+
+#### `flag_disabled`
+
+Returns `True` if a flag is disabled by passing the current request to its conditions, otherwise returns `False`.
+Returns `True` if a flag is disabled by for the given request, otherwise returns `False`.
+
+```jinja
+{% if flag_disabled('MY_FLAG', request) %}
+  <div class="m-global-banner">
+    I’m the result of a feature flag that is not enabled.
+  </div>
+{% endif %}
+```
+
+
+### Conditions
+
+Conditions are functions that take a configured value and possible keyword arguments and determines whether the given arguments are equivalent to the value. Conditions are registered with a unique name that is exposed to users in Django settings and the Django and Wagtail admin.
+
+```python
+from flags import conditions
+```
+
+#### `conditions.register(condition_name, fn=None)`
+
+Register a new condition, either as a decorator:
+
+```python
+from flags import conditions
+
+@conditions.register('path')
+def path_condition(path, request=None, **kwargs):
+    return request.path.startswith(path)
+```
+
+Or as a function call:
+
+```python
+def path_condition(path, request=None, **kwargs):
+    return request.path.startswith(path)
+
+conditions.register('path', fn=path_condition)
+```
+
+#### `conditions.RequiredForCondition`
+
+Exception intended to be raised when a condition is not given a keyword argument it requires for evaluation.
+
+```python
+@conditions.register('path')
+def path_condition(path, request=None, **kwargs):
+    if request is None:
+        raise conditions.RequiredForCondition(
+            "request is required for condition 'path'")
+
+    return request.path.startswith(path)
 ```
 
 
@@ -177,16 +414,10 @@ Please add issues to the [issue tracker](https://github.com/cfpb/wagtail-flags/i
 
 General instructions on _how_ to contribute can be found in [CONTRIBUTING](CONTRIBUTING.md).
 
-
-----
-
-## Open source licensing info
+## Licensing
 1. [TERMS](TERMS.md)
 2. [LICENSE](LICENSE)
 3. [CFPB Source Code Policy](https://github.com/cfpb/source-code-policy/)
-
-
-----
 
 ## Credits and references
 

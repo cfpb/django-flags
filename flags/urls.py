@@ -15,12 +15,12 @@ from flags.decorators import flag_check
 class FlaggedURLResolver(RegexURLResolver):
     def __init__(self, flag_name, regex, urlconf_name,
                  default_kwargs=None, app_name=None, namespace=None,
-                 condition=True, fallback=None):
+                 state=True, fallback=None):
         super(FlaggedURLResolver, self).__init__(
             regex, urlconf_name, default_kwargs=default_kwargs,
             app_name=app_name, namespace=namespace)
         self.flag_decorator = flag_check(
-            flag_name, condition, fallback=fallback)
+            flag_name, state, fallback=fallback)
 
     @property
     def url_patterns(self):
@@ -35,12 +35,12 @@ class FlaggedURLResolver(RegexURLResolver):
 
 
 def flagged_url(flag_name, regex, view, kwargs=None, name=None,
-                condition=True, fallback=None):
+                state=True, fallback=None):
     """ Make a URL depend on the state of a feature flag """
 
     if callable(view):
         flagged_view = flag_check(flag_name,
-                                  condition,
+                                  state,
                                   fallback=fallback)(view)
         return RegexURLPattern(regex, flagged_view, kwargs, name)
 
@@ -49,7 +49,7 @@ def flagged_url(flag_name, regex, view, kwargs=None, name=None,
         return FlaggedURLResolver(
             flag_name, regex, urlconf_module, kwargs,
             app_name=app_name, namespace=namespace,
-            condition=condition, fallback=fallback)
+            state=state, fallback=fallback)
 
     else:
         raise TypeError('view must be a callable')

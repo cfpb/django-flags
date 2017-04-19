@@ -8,7 +8,7 @@ from flags import views
 
 @hooks.register('register_settings_menu_item')
 def register_flags_menu():
-    return MenuItem('Flags', reverse('flagadmin:select_site'),
+    return MenuItem('Flags', reverse('flagadmin:list'),
                     classnames='icon icon-tag', order=10000)
 
 
@@ -17,10 +17,8 @@ def register_flag_admin_urls():
     return [
         url(r'^flags/',
             include([
-                url(r'^$', views.select_site, name='select_site'),
-                url(r'^(\d+)/$', views.index, name='list'),
-                url(r'^(\d+)/save/$', views.save, name='save'),
-                url(r'^([-a-zA-Z0-9_]+)/delete/$', views.delete,
+                url(r'^$', views.index, name='list'),
+                url(r'^(\d+)/delete/$', views.delete,
                     name='delete'),
                 url(r'^create/$', views.create, name='create'),
             ], namespace='flagadmin'))
