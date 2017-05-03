@@ -48,6 +48,13 @@
                         {% endif %}
                       </td>
                   </tr>
+                  {% empty %}
+                  <tr>
+                      <td>
+                        <b>{{ flag.name }}</b>
+                      </td>
+                      <td colspan="5">is never enabled</td>
+                  </tr>
                   {% endfor %}
               {% endfor %}
             </tbody>
