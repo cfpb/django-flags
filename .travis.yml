@@ -5,29 +5,41 @@ matrix:
   include:
     - env: TOXENV=flake8
       python: 3.5
-    - env: TOXENV=py27-dj18-wag17
-      python: 2.7
     - env: TOXENV=py27-dj18-wag18
       python: 2.7
-    - env: TOXENV=py27-dj19-wag17
+    - env: TOXENV=py27-dj18-wag19
+      python: 2.7
+    - env: TOXENV=py27-dj18-wag110
       python: 2.7
     - env: TOXENV=py27-dj19-wag18
       python: 2.7
-    - env: TOXENV=py27-dj110-wag17
+    - env: TOXENV=py27-dj19-wag19
+      python: 2.7
+    - env: TOXENV=py27-dj19-wag110
       python: 2.7
     - env: TOXENV=py27-dj110-wag18
       python: 2.7
-    - env: TOXENV=py35-dj18-wag17
-      python: 3.5
+    - env: TOXENV=py27-dj110-wag19
+      python: 2.7
+    - env: TOXENV=py27-dj110-wag110
+      python: 2.7
     - env: TOXENV=py35-dj18-wag18
       python: 3.5
-    - env: TOXENV=py35-dj19-wag17
+    - env: TOXENV=py35-dj18-wag19
+      python: 3.5
+    - env: TOXENV=py35-dj18-wag110
       python: 3.5
     - env: TOXENV=py35-dj19-wag18
       python: 3.5
-    - env: TOXENV=py35-dj110-wag17
+    - env: TOXENV=py35-dj19-wag19
+      python: 3.5
+    - env: TOXENV=py35-dj19-wag110
       python: 3.5
     - env: TOXENV=py35-dj110-wag18
+      python: 3.5
+    - env: TOXENV=py35-dj110-wag19
+      python: 3.5
+    - env: TOXENV=py35-dj110-wag110
       python: 3.5
 
 install:
