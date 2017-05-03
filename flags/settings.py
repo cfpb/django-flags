@@ -33,7 +33,7 @@ class Flag:
     def configured_conditions(self):
         """ Get all flag conditions configured in settings """
         # Get condition callables for our settings-configured conditions
-        condition_fns = [(c, fn, v)
+        condition_fns = [(c, fn, v, None)
                          for c, v in self.__conditions.items()
                          for fn in get_condition(c)]
         return condition_fns
@@ -43,7 +43,7 @@ class Flag:
         """ Get dynamic flag conditions from models.FlagState """
         # Get condition callables for our dynamic-configured conditions
         FlagState = apps.get_model('flags', 'FlagState')
-        condition_fns = [(s.condition, fn, s.value)
+        condition_fns = [(s.condition, fn, s.value, s)
                          for s in FlagState.objects.filter(name=self.name)
                          for fn in get_condition(s.condition)]
         return condition_fns
@@ -56,7 +56,7 @@ class Flag:
     def check_state(self, **kwargs):
         """ Determine this flag's state based on its conditions """
         condition_fns = self.conditions
-        return all(fn(v, **kwargs) for c, fn, v in condition_fns)
+        return all(fn(v, **kwargs) for c, fn, v, o in condition_fns)
 
 
 def add_flags_from_sources(sources=None):
