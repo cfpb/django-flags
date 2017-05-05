@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from flags.models import Flag, FlagState
+from flags.models import FlagState
 
-admin.site.register(Flag)
 admin.site.register(FlagState)

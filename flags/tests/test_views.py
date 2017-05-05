@@ -1,11 +1,11 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpRequest, HttpResponse
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.views.generic import View
+
 from wagtail.wagtailcore.models import Page, Site
 from wagtail.wagtailcore.views import serve as wagtail_serve
 
-from flags.models import Flag
 from flags.views import FlaggedViewMixin
 
 
@@ -16,7 +16,7 @@ class TestView(FlaggedViewMixin, View):
 
 class FlaggedViewMixinTestCase(TestCase):
     def setUp(self):
-        self.flag_name = 'FLAGGED_VIEW_MIXIN_TEST_CASE'
+        self.flag_name = 'FLAGGED_VIEW_MIXIN'
 
     def request(self, path='/'):
         request = HttpRequest()
@@ -37,13 +37,13 @@ class FlaggedViewMixinTestCase(TestCase):
         view = TestView.as_view(flag_name=self.flag_name)
         self.assertRaises(Http404, view, self.request())
 
+    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': {'boolean': True}})
     def test_flag_set_view_enabled(self):
-        Flag.objects.create(key=self.flag_name, enabled_by_default=True)
         view = TestView.as_view(flag_name=self.flag_name)
         self.assertEqual(view(self.request()).status_code, 200)
 
+    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': {'boolean': False}})
     def test_flag_set_view_disabled(self):
-        Flag.objects.create(key=self.flag_name, enabled_by_default=False)
         view = TestView.as_view(flag_name=self.flag_name)
         self.assertRaises(Http404, view, self.request())
 
@@ -53,32 +53,26 @@ class FlaggedViewMixinTestCase(TestCase):
 
         view = TestView.as_view(
             flag_name=self.flag_name,
-            fallback_view=test_view_function
+            condition=True,
+            fallback=test_view_function
         )
 
         response = view(self.request())
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-        self.assertEqual(content, 'fallback fn')
+        self.assertContains(response, 'fallback fn')
 
+    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': {'boolean': True}})
     def test_fallback_view_function_enabled(self):
         def test_view_function(request, *args, **kwargs):
             return HttpResponse('fallback fn')
 
-        Flag.objects.create(key=self.flag_name, enabled_by_default=True)
         view = TestView.as_view(
             flag_name=self.flag_name,
-            fallback_view=test_view_function
+            condition=True,
+            fallback=test_view_function
         )
 
         response = view(self.request())
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-        self.assertEqual(content, 'ok')
+        self.assertContains(response, 'ok')
 
     def test_fallback_class_based_view(self):
         class OtherTestView(View):
@@ -87,15 +81,12 @@ class FlaggedViewMixinTestCase(TestCase):
 
         view = TestView.as_view(
             flag_name=self.flag_name,
-            fallback_view=OtherTestView.as_view()
+            condition=True,
+            fallback=OtherTestView.as_view()
         )
 
         response = view(self.request())
-        if isinstance(response.content, str):
-            content = response.content
-        else:
-            content = bytes.decode(response.content)
-        self.assertEqual(content, 'fallback cbv')
+        self.assertContains(response, 'fallback cbv')
 
     def test_fallback_wagtail_serve(self):
         site = Site.objects.get(is_default_site=True)
@@ -107,7 +98,8 @@ class FlaggedViewMixinTestCase(TestCase):
 
         fail_through = lambda request: wagtail_serve(request, request.path)
         view = TestView.as_view(flag_name=self.flag_name,
-                                fallback_view=fail_through)
+                                condition=True,
+                                fallback=fail_through)
 
         response = view(self.request(path='/title'))
         self.assertContains(response, '<title>wagtail title</title>')

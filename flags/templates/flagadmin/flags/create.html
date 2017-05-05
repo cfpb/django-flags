@@ -1,15 +1,13 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
 {% load gravatar %}
-{% block titletag %}{% trans "Create a flag for all domains" as flags_str %}{% endblock %}
+{% block titletag %}{% trans "Create a flag condition" as flags_str %}{% endblock %}
 
 {% block content %}
-    {% trans "Create a flag for all domains" as flags_str %}
-    {% trans "Add a flag" as add_a_flag_str %}
-
+    {% trans "Create a flag condition" as flags_str %}
     {% include "wagtailadmin/shared/header.html" with title=flags_str icon="tag" %}
 
-    <h2 class="nice-padding">New flag name:</h2>
+    <h2 class="nice-padding">New flag condition:</h2>
     <form class="nice-padding" method="POST" action="{% url 'flagadmin:create' %}">
         {% csrf_token %}
         <ul class="fields">
@@ -20,12 +18,19 @@
                             {{ field.errors }}
                         </div>
                     {% endif %}
-                    <input placeholder="enter new flag name" name="{{ field.name }}" />
+                    <label>{{ field.label }}</label>
+                    <div class="field-content">
+                        <div class="input">
+                            {{ field }}
+                            <span></span>
+                        </div>
+                        <p class="help"></p>
+                    </div>
                 {% endfor %}
             </li>
             <li class="actions">
-                <input class="button action-save button-longrunning" type="submit" value="save new flag" />
-                <a class="button bicolor icon icon-cog" href="{% url 'flagadmin:list' 1 %}">Back to flag settings…</a>
+                <input class="button action-save button-longrunning" type="submit" value="Save new condition" />
+                <a class="button bicolor icon icon-cog" href="{% url 'flagadmin:list' %}">Back to flag conditions…</a>
             </li>
         </ul>
     </form>

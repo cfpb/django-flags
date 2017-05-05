@@ -1,18 +1,17 @@
 from django.http import Http404
 from django.utils.functional import wraps
 
-from flags.template_functions import flag_enabled
+from flags.state import flag_state
 
 
-def flag_check(flag_name, condition, fallback=None):
-    """ Check that a given flag has the given condition (True/False).
-    If the condition is not met, perform the fallback.
-    """
+def flag_check(flag_name, state, fallback=None, **fc_kwargs):
+    """ Check that a given flag has the given state.
+    If the state does not match, perform the fallback. """
     def decorator(func):
         def inner(request, *args, **kwargs):
-            enabled = flag_enabled(request, flag_name)
+            enabled = flag_state(flag_name, request=request, **fc_kwargs)
 
-            if (condition and enabled) or (not condition and not enabled):
+            if ((state and enabled) or (not state and not enabled)):
                 return func(request, *args, **kwargs)
             elif fallback is not None:
                 return fallback(request, *args, **kwargs)
