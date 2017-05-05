@@ -5,23 +5,23 @@
 
 Feature flags allow you to toggle functionality in both Django settings and the Wagtail or Django admin based on configurable conditions.
 
-![Feature flags in the Wagtail admin](screenshot_list.png)
+![Feature flags in the Wagtail admin](https://raw.githubusercontent.com/cfpb/wagtail-flags/master/screenshot_list.png)
 
 - [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Concepts](#concepts)
 - [Usage](#usage)
-  - [Overview](#overview)
-  - [Adding Flags](#adding-flags)
-    - [Defining flags](#defining-flags)
-    - [Built-in conditions](#built-in-conditions)
+    - [Overview](#overview)
+    - [Adding Flags](#adding-flags)
+        - [Defining flags](#defining-flags)
+        - [Built-in conditions](#built-in-conditions)
 - [API](#api)
-  - [Flag state](#flag-state)
-  - [Flag decorators](#flag-decorators)
-  - [Flagged URLs](#flagged-urls)
-  - [Django templates](#django-templates)
-  - [Jinja2 templates](#jinja2-templates)
-  - [Conditions](#conditions)
+    - [Flag state](#flag-state)
+    - [Flag decorators](#flag-decorators)
+    - [Flagged URLs](#flagged-urls)
+    - [Django templates](#django-templates)
+    - [Jinja2 templates](#jinja2-templates)
+    - [Conditions](#conditions)
 - [Getting help](#getting-help)
 - [Getting involved](#getting-involved)
 - [Licensing](#licensing)
@@ -97,7 +97,8 @@ urlpatterns = [
 
 Then in the Wagtail admin add conditions for the flag in "Settings", "Flags":
 
-![Creating conditions in the Wagtail admin](screenshot_create.png)
+![Creating conditions in the Wagtail admin](https://raw.githubusercontent.com/cfpb/wagtail-flags/master/screenshot_create.png)
+
 
 Then visiting the URL `/mypage?enable_my_flag=True` should show you the flagged `<div>` in the template.
 
