@@ -50,6 +50,7 @@ class FlagTestCase(TestCase):
         flag = Flag('MY_FLAG', {})
         self.assertFalse(flag.check_state())
 
+
 class SettingsTestCase(TestCase):
 
     def tearDown(self):
