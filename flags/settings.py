@@ -55,8 +55,9 @@ class Flag:
 
     def check_state(self, **kwargs):
         """ Determine this flag's state based on its conditions """
-        condition_fns = self.conditions
-        return all(fn(v, **kwargs) for c, fn, v, o in condition_fns)
+        if len(self.conditions) == 0:
+            return False
+        return all(fn(v, **kwargs) for c, fn, v, o in self.conditions)
 
 
 def add_flags_from_sources(sources=None):
