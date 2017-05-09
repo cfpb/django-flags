@@ -4,6 +4,7 @@ from importlib import import_module
 
 from django.apps import apps
 from django.conf import settings
+from django.utils.functional import cached_property
 
 from flags.conditions import get_condition
 
@@ -29,7 +30,7 @@ class Flag:
         """ There can be only one feature flag of a given name """
         return other.name == self.name
 
-    @property
+    @cached_property
     def configured_conditions(self):
         """ Get all flag conditions configured in settings """
         # Get condition callables for our settings-configured conditions
@@ -38,7 +39,7 @@ class Flag:
                          for fn in get_condition(c)]
         return condition_fns
 
-    @property
+    @cached_property
     def dynamic_conditions(self):
         """ Get dynamic flag conditions from models.FlagState """
         # Get condition callables for our dynamic-configured conditions
@@ -48,15 +49,16 @@ class Flag:
                          for fn in get_condition(s.condition)]
         return condition_fns
 
-    @property
+    @cached_property
     def conditions(self):
         """ Get all flag conditions """
         return self.configured_conditions + self.dynamic_conditions
 
     def check_state(self, **kwargs):
         """ Determine this flag's state based on its conditions """
-        condition_fns = self.conditions
-        return all(fn(v, **kwargs) for c, fn, v, o in condition_fns)
+        if len(self.conditions) == 0:
+            return False
+        return all(fn(v, **kwargs) for c, fn, v, o in self.conditions)
 
 
 def add_flags_from_sources(sources=None):

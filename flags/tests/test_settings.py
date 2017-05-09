@@ -46,6 +46,10 @@ class FlagTestCase(TestCase):
         flag = Flag('MY_FLAG', {'boolean': True})
         self.assertTrue(flag.check_state())
 
+    def test_check_state_no_conditions(self):
+        flag = Flag('MY_FLAG', {})
+        self.assertFalse(flag.check_state())
+
 
 class SettingsTestCase(TestCase):
 
