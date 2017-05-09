@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+
 try:
     from django.urls import (
         RegexURLPattern,
@@ -37,7 +39,6 @@ class FlaggedURLResolver(RegexURLResolver):
 def flagged_url(flag_name, regex, view, kwargs=None, name=None,
                 state=True, fallback=None):
     """ Make a URL depend on the state of a feature flag """
-
     if callable(view):
         flagged_view = flag_check(flag_name,
                                   state,
@@ -53,3 +54,13 @@ def flagged_url(flag_name, regex, view, kwargs=None, name=None,
 
     else:
         raise TypeError('view must be a callable')
+
+
+@contextmanager
+def flagged_urls(flag_name, state=True, fallback=None):
+    """ Flag multiple URLs in the same context
+    Returns a url()-compatible wrapper for flagged_url() """
+    def flagged_url_wrapper(regex, view, kwargs=None, name=None):
+        return flagged_url(flag_name, regex, view, kwargs=kwargs, name=name,
+                           state=state, fallback=fallback)
+    yield flagged_url_wrapper

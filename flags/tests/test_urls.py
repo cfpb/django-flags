@@ -3,7 +3,7 @@ from django.core.urlresolvers import resolve
 from django.http import HttpResponse, Http404
 from django.test import TestCase, RequestFactory, override_settings
 
-from flags.urls import flagged_url
+from flags.urls import flagged_url, flagged_urls
 
 
 def view(request):
@@ -37,6 +37,24 @@ urlpatterns = [
     flagged_url('FLAGGED_URL', r'^include-false-fallback/',
                 include(extra_patterns), state=True, fallback=fallback),
 ]
+
+with flagged_urls('FLAGGED_URL') as url:
+    flagged_patterns_true_no_fallback = [
+        url(r'^patterns-true-no-fallback$', view, name='some-view'),
+    ]
+urlpatterns = urlpatterns + flagged_patterns_true_no_fallback
+
+with flagged_urls('FLAGGED_URL', state=False) as url:
+    flagged_patterns_false_no_fallback = [
+        url(r'^patterns-false-no-fallback$', view, name='some-view'),
+    ]
+urlpatterns = urlpatterns + flagged_patterns_false_no_fallback
+
+with flagged_urls('FLAGGED_URL', fallback=fallback) as url:
+    flagged_patterns_true_fallback = [
+        url(r'^patterns-true-fallback$', view, name='some-view'),
+    ]
+urlpatterns = urlpatterns + flagged_patterns_true_fallback
 
 
 @override_settings(
@@ -153,3 +171,51 @@ class FlagCheckTestCase(TestCase):
     def test_flagged_url_not_callable(self):
         with self.assertRaises(TypeError):
             flagged_url('MY_FLAG', r'^my_url/$', 'string')
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
+    def test_flagged_urls_cm_true_no_fallback(self):
+        request = self.factory.get('/patterns-true-no-fallback')
+        resolved_view, args, kwargs = resolve('/patterns-true-no-fallback')
+        response = resolved_view(request)
+
+        self.assertContains(response, 'view')
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
+    def test_flagged_urls_cm_true_no_fallback_false(self):
+        request = self.factory.get('/patterns-true-no-fallback')
+        resolved_view, args, kwargs = resolve('/patterns-true-no-fallback')
+
+        with self.assertRaises(Http404):
+            resolved_view(request)
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
+    def test_flagged_urls_cm_false_no_fallback(self):
+        request = self.factory.get('/patterns-false-no-fallback')
+        resolved_view, args, kwargs = resolve('/patterns-false-no-fallback')
+        response = resolved_view(request)
+
+        self.assertContains(response, 'view')
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
+    def test_flagged_urls_cm_false_no_fallback_true(self):
+        request = self.factory.get('/patterns-false-no-fallback')
+        resolved_view, args, kwargs = resolve('/patterns-false-no-fallback')
+
+        with self.assertRaises(Http404):
+            resolved_view(request)
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
+    def test_flagged_urls_cm_true_fallback(self):
+        request = self.factory.get('/patterns-true-fallback')
+        resolved_view, args, kwargs = resolve('/patterns-true-fallback')
+        response = resolved_view(request)
+
+        self.assertContains(response, 'view')
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
+    def test_flagged_urls_cm_true_fallback_false(self):
+        request = self.factory.get('/patterns-true-fallback')
+        resolved_view, args, kwargs = resolve('/patterns-true-fallback')
+        response = resolved_view(request)
+
+        self.assertContains(response, 'fallback')
