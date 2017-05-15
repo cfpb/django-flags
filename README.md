@@ -266,7 +266,7 @@ def view_with_fallback(request):
 ### Flagged URLs
 
 ```python
-from flags.urls import flagged_url
+from flags.urls import flagged_url, flagged_urls
 ```
 
 #### `flagged_url(flag_name, regex, view, kwargs=None, name=None, state=True, fallback=None)`
@@ -283,6 +283,19 @@ urlpatterns = [
     flagged_url('MY_FLAGGED_INCLUDE', r'^myapp$', include('myapp.urls'),
                 state=True, fallback=other_view)
 ]
+```
+
+#### `flagged_urls(flag_name, state=True, fallback=None)`
+
+Flag multiple URLs in the same context. Returns function that can be used in place of Django's `url()` that wraps `flagged_url()`. Can take an optional fallback view that will apply to all urls.
+
+```python
+with flagged_urls('MY_FLAG') as url:
+    flagged_url_patterns = [
+        url(r'^an-url$', view_requiring_flag),
+    ]
+
+urlpatterns = urlpatterns + flagged_url_patterns
 ```
 
 ### Django templates
