@@ -21,19 +21,52 @@ class FlaggedURLResolver(RegexURLResolver):
         super(FlaggedURLResolver, self).__init__(
             regex, urlconf_name, default_kwargs=default_kwargs,
             app_name=app_name, namespace=namespace)
-        self.flag_decorator = flag_check(
-            flag_name, state, fallback=fallback)
+
+        self.flag_name = flag_name
+        self.state = state
+        self.fallback = fallback
+        self.fallback_patterns = []
+        if isinstance(self.fallback, (list, tuple)):
+            urlconf_module, app_name, namespace = self.fallback
+            self.fallback_patterns = RegexURLResolver(
+                regex, urlconf_module, None,
+                app_name=app_name, namespace=namespace
+            ).url_patterns
 
     @property
     def url_patterns(self):
-        # Flag each of the resolved URL patterns
-        patterns = []
+        # First, add our "positively" flagged URLs, where when the flag
+        # matches the defined state, the view is served for the pattern
+        # and not the fallback.
+        url_patterns = []
         for pattern in super(FlaggedURLResolver, self).url_patterns:
+            # Get the fallback view, if there is one, and remove it from
+            # the list of fallback patterns.
+            fallback = self.fallback
+            if isinstance(self.fallback, (list, tuple)):
+                fallback = next((p.callback for p in self.fallback_patterns
+                                 if p.regex == pattern.regex), None)
+
+            flag_decorator = flag_check(self.flag_name, self.state,
+                                        fallback=fallback)
             flagged_pattern = RegexURLPattern(
-                pattern._regex, self.flag_decorator(pattern.callback),
+                pattern.regex.pattern, flag_decorator(pattern.callback),
                 pattern.default_args, pattern.name)
-            patterns.append(flagged_pattern)
-        return patterns
+            url_patterns.append(flagged_pattern)
+
+        # Next, add "negatively" flagged URLs, where the flag does not match
+        # the defined state, for any remaining fallback patterns that didn't
+        # match other url patterns.
+        url_pattern_regexes = [p.regex for p in url_patterns]
+        for pattern in (p for p in self.fallback_patterns
+                        if p.regex not in url_pattern_regexes):
+            flag_decorator = flag_check(self.flag_name, not self.state)
+            flagged_pattern = RegexURLPattern(
+                pattern.regex.pattern, flag_decorator(pattern.callback),
+                pattern.default_args, pattern.name)
+            url_patterns.append(flagged_pattern)
+
+        return url_patterns
 
 
 def flagged_url(flag_name, regex, view, kwargs=None, name=None,
