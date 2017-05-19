@@ -37,4 +37,5 @@ FLAGS = {
     'FLAG_ENABLED': {'boolean': True},
     'FLAG_ENABLED2': {'boolean': True},
     'FLAG_DISABLED': {'boolean': False},
+    'DB_FLAG': {},
 }
