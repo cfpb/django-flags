@@ -61,7 +61,7 @@ class FlagStateTestCase(TestCase):
         self.assertFalse(flag_state('DB_FLAG', request=self.request))
 
     def test_flag_state_site_for_multiple_sites(self):
-        """ A site flag enabled for another site should be False """
+        """ A site flag enabled for two sites should return True for both """
         other_site = Site.objects.create(
             is_default_site=False,
             root_page_id=self.site.root_page_id,
