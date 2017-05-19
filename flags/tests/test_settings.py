@@ -1,4 +1,7 @@
-from collections import namedtuple
+try:
+    from unittest.mock import Mock
+except ImportError:
+    from mock import Mock
 
 from django.test import TestCase, override_settings
 
@@ -53,7 +56,7 @@ class FlagTestCase(TestCase):
         self.assertFalse(flag.check_state())
 
     def test_check_state_multiple_conditions(self):
-        request = namedtuple('Request', ['path'])(path='/foo')
+        request = Mock(path='/foo')
         flag = Flag('MY_FLAG', {'boolean': False, 'path': '/foo'})
         self.assertTrue(flag.check_state(request=request))
 
