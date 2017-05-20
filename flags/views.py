@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.core.exceptions import ImproperlyConfigured
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect, render
@@ -10,9 +12,10 @@ from flags.settings import get_flags
 
 
 def index(request):
+    flags = OrderedDict(sorted(get_flags().items(), key=lambda x: x[0]))
     context = {
         'flag_states': FlagState.objects.all(),
-        'flags': get_flags(),
+        'flags': flags,
     }
     return render(request, 'flagadmin/index.html', context)
 
