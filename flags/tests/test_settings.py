@@ -1,3 +1,8 @@
+try:
+    from unittest.mock import Mock
+except ImportError:
+    from mock import Mock
+
 from django.test import TestCase, override_settings
 
 import flags.settings
@@ -49,6 +54,11 @@ class FlagTestCase(TestCase):
     def test_check_state_no_conditions(self):
         flag = Flag('MY_FLAG', {})
         self.assertFalse(flag.check_state())
+
+    def test_check_state_multiple_conditions(self):
+        request = Mock(path='/foo')
+        flag = Flag('MY_FLAG', {'boolean': False, 'path': '/foo'})
+        self.assertTrue(flag.check_state(request=request))
 
 
 class SettingsTestCase(TestCase):

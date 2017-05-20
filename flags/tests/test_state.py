@@ -34,7 +34,7 @@ class FlagStateTestCase(TestCase):
         FlagState.objects.create(name='FLAG_DISABLED',
                                  condition='site',
                                  value=str(self.site))
-        self.assertFalse(flag_state('FLAG_DISABLED', request=self.request))
+        self.assertTrue(flag_state('FLAG_DISABLED', request=self.request))
 
     def test_flag_state_bool_true_and_db_site_true(self):
         """ Test state of multiple conditions, one 'site' in database """
@@ -49,15 +49,31 @@ class FlagStateTestCase(TestCase):
                                     request=self.request))
 
     def test_flag_state_site_for_other_site(self):
-        """ A site flag enabled for an other site should be False """
+        """ A site flag enabled for another site should be False """
         other_site = Site.objects.create(
             is_default_site=False,
-            root_page_id=self.site.root_page_id
+            root_page_id=self.site.root_page_id,
+            hostname='other.host'
         )
-        FlagState.objects.create(name='FLAG_ENABLED',
+        FlagState.objects.create(name='DB_FLAG',
                                  condition='site',
                                  value=str(other_site))
-        self.assertFalse(flag_state('FLAG_ENABLED', request=self.request))
+        self.assertFalse(flag_state('DB_FLAG', request=self.request))
+
+    def test_flag_state_site_for_multiple_sites(self):
+        """ A site flag enabled for two sites should return True for both """
+        other_site = Site.objects.create(
+            is_default_site=False,
+            root_page_id=self.site.root_page_id,
+            hostname='other.host'
+        )
+        FlagState.objects.create(name='DB_FLAG',
+                                 condition='site',
+                                 value=str(other_site))
+        FlagState.objects.create(name='DB_FLAG',
+                                 condition='site',
+                                 value=str(self.site))
+        self.assertTrue(flag_state('DB_FLAG', request=self.request))
 
     def test_flag_enabled_enabled(self):
         """ Global flags enabled should be True """

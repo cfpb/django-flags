@@ -120,7 +120,10 @@ def site_condition(site_str, request=None, **kwargs):
         site_str += ':80'
 
     hostname, port = site_str.split(':')
-    conditional_site = Site.objects.get(hostname=hostname, port=port)
+    try:
+        conditional_site = Site.objects.get(hostname=hostname, port=port)
+    except ObjectDoesNotExist:
+        return False
 
     try:
         site = Site.find_for_request(request)
