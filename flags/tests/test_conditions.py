@@ -167,6 +167,10 @@ class SiteConditionTestCase(TestCase):
     def test_site_valid_site(self):
         self.assertTrue(site_condition(str(self.site), request=self.request))
 
+    def test_site_invalid_site(self):
+        self.assertFalse(site_condition('non.existent.site',
+                                        request=self.request))
+
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):
             site_condition('localhost:80')
