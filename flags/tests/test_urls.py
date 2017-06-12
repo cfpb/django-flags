@@ -16,6 +16,11 @@ def fallback(request):
 
 extra_patterns = [
     url(r'^included-url$', view),
+    url(r'^included-url-with-fallback$', view),
+]
+fallback_patterns = [
+    url(r'^included-url-with-fallback$', fallback),
+    url(r'^other-included-url$', fallback),
 ]
 
 urlpatterns = [
@@ -36,6 +41,9 @@ urlpatterns = [
                 state=True, fallback=fallback),
     flagged_url('FLAGGED_URL', r'^include-false-fallback/',
                 include(extra_patterns), state=True, fallback=fallback),
+    flagged_url('FLAGGED_URL', r'^include-fallback-include/',
+                include(extra_patterns),
+                state=True, fallback=include(fallback_patterns)),
 ]
 
 with flagged_urls('FLAGGED_URL') as url:
@@ -65,107 +73,105 @@ class FlagCheckTestCase(TestCase):
         self.flag_name = 'FLAGGED_URL'
         self.factory = RequestFactory()
 
+    def get_url_response(self, url):
+        request = self.factory.get(url)
+        resolved_view, args, kwargs = resolve(url)
+        response = resolved_view(request)
+        return response
+
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_url_true_no_fallback(self):
-        request = self.factory.get('/url-true-no-fallback')
-        resolved_view, args, kwargs = resolve('/url-true-no-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/url-true-no-fallback')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_url_true_no_fallback_false(self):
-        request = self.factory.get('/url-true-no-fallback')
-        resolved_view, args, kwargs = resolve('/url-true-no-fallback')
-
         with self.assertRaises(Http404):
-            resolved_view(request)
+            self.get_url_response('/url-true-no-fallback')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_url_false_no_fallback(self):
-        request = self.factory.get('/url-false-no-fallback')
-        resolved_view, args, kwargs = resolve('/url-false-no-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/url-false-no-fallback')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_url_false_no_fallback_true(self):
-        request = self.factory.get('/url-false-no-fallback')
-        resolved_view, args, kwargs = resolve('/url-false-no-fallback')
-
         with self.assertRaises(Http404):
-            resolved_view(request)
+            self.get_url_response('/url-false-no-fallback')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_url_true_fallback(self):
-        request = self.factory.get('/url-true-fallback')
-        resolved_view, args, kwargs = resolve('/url-true-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/url-true-fallback')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_url_true_fallback_false(self):
-        request = self.factory.get('/url-true-fallback')
-        resolved_view, args, kwargs = resolve('/url-true-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/url-true-fallback')
         self.assertContains(response, 'fallback')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_url_false_fallback(self):
-        request = self.factory.get('/url-false-fallback')
-        resolved_view, args, kwargs = resolve('/url-false-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/url-false-fallback')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_url_false_fallback_false(self):
-        request = self.factory.get('/url-false-fallback')
-        resolved_view, args, kwargs = resolve('/url-false-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/url-false-fallback')
         self.assertContains(response, 'fallback')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_url_true_include_true(self):
-        request = self.factory.get('/include/included-url')
-        resolved_view, args, kwargs = resolve('/include/included-url')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/include/included-url')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_url_true_include_false(self):
-        request = self.factory.get('/include/included-url')
-        resolved_view, args, kwargs = resolve('/include/included-url')
         with self.assertRaises(Http404):
-            resolved_view(request)
+            self.get_url_response('/include/included-url')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_url_false_include(self):
-        request = self.factory.get('/include-false/included-url')
-        resolved_view, args, kwargs = resolve('/include-false/included-url')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/include-false/included-url')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_url_false_include_true(self):
-        request = self.factory.get('/include-false/included-url')
-        resolved_view, args, kwargs = resolve('/include-false/included-url')
         with self.assertRaises(Http404):
-            resolved_view(request)
+            self.get_url_response('/include-false/included-url')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_url_include_fallback(self):
-        request = self.factory.get('/include-fallback/included-url')
-        resolved_view, args, kwargs = resolve(
-            '/include-fallback/included-url')
-        response = resolved_view(request)
+        response = self.get_url_response('/include-fallback/included-url')
+        self.assertContains(response, 'fallback')
 
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
+    def test_flagged_url_true_include_fallback_include(self):
+        response = self.get_url_response(
+            '/include-fallback-include/included-url-with-fallback')
+        self.assertContains(response, 'view')
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
+    def test_flagged_url_false_include_fallback_include(self):
+        response = self.get_url_response(
+            '/include-fallback-include/included-url-with-fallback')
+        self.assertContains(response, 'fallback')
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
+    def test_flagged_url_false_include_fallback_none(self):
+        with self.assertRaises(Http404):
+            self.get_url_response(
+                '/include-fallback-include/included-url')
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
+    def test_flagged_url_true_include_fallback_include_nonmatching_url(self):
+        with self.assertRaises(Http404):
+            self.get_url_response(
+                '/include-fallback-include/other-included-url')
+
+    @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
+    def test_flagged_url_false_include_fallback_include_nonmatching_url(self):
+        response = self.get_url_response(
+            '/include-fallback-include/other-included-url')
         self.assertContains(response, 'fallback')
 
     def test_flagged_url_not_callable(self):
@@ -174,48 +180,30 @@ class FlagCheckTestCase(TestCase):
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_urls_cm_true_no_fallback(self):
-        request = self.factory.get('/patterns-true-no-fallback')
-        resolved_view, args, kwargs = resolve('/patterns-true-no-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/patterns-true-no-fallback')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_urls_cm_true_no_fallback_false(self):
-        request = self.factory.get('/patterns-true-no-fallback')
-        resolved_view, args, kwargs = resolve('/patterns-true-no-fallback')
-
         with self.assertRaises(Http404):
-            resolved_view(request)
+            self.get_url_response('/patterns-true-no-fallback')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_urls_cm_false_no_fallback(self):
-        request = self.factory.get('/patterns-false-no-fallback')
-        resolved_view, args, kwargs = resolve('/patterns-false-no-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/patterns-false-no-fallback')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_urls_cm_false_no_fallback_true(self):
-        request = self.factory.get('/patterns-false-no-fallback')
-        resolved_view, args, kwargs = resolve('/patterns-false-no-fallback')
-
         with self.assertRaises(Http404):
-            resolved_view(request)
+            self.get_url_response('/patterns-false-no-fallback')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': True}})
     def test_flagged_urls_cm_true_fallback(self):
-        request = self.factory.get('/patterns-true-fallback')
-        resolved_view, args, kwargs = resolve('/patterns-true-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/patterns-true-fallback')
         self.assertContains(response, 'view')
 
     @override_settings(FLAGS={'FLAGGED_URL': {'boolean': False}})
     def test_flagged_urls_cm_true_fallback_false(self):
-        request = self.factory.get('/patterns-true-fallback')
-        resolved_view, args, kwargs = resolve('/patterns-true-fallback')
-        response = resolved_view(request)
-
+        response = self.get_url_response('/patterns-true-fallback')
         self.assertContains(response, 'fallback')

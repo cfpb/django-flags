@@ -273,7 +273,7 @@ from flags.urls import flagged_url, flagged_urls
 
 Make a URL depend on the state of a feature flag. `flagged_url()` can be used in place of Django's `url()`.
 
-`fallback` support for `include()` URLs is limited to a single view rather than a fallback set of `include()`ed URLs.
+`fallback` can be a a set of `include()`ed patterns, but the regular expressions in the fallback includes must match the regular expression for the URL or includes *exactly*.
 
 ```python
 urlpatterns = [
@@ -282,6 +282,8 @@ urlpatterns = [
                 state=True, fallback=other_view)
     flagged_url('MY_FLAGGED_INCLUDE', r'^myapp$', include('myapp.urls'),
                 state=True, fallback=other_view)
+    flagged_url('MY_NEW_APP_FLAG', r'^mynewapp$', include('mynewapp.urls'),
+                state=True, fallback=include('myoldapp.urls'))
 ]
 ```
 
