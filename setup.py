@@ -8,8 +8,8 @@ except (IOError, ImportError):
 
 
 install_requires = [
-    'Django>=1.8,<1.11',
-    'wagtail>=1.6,<1.9',
+    'Django>=1.8,<1.12',
+    'wagtail>=1.8,<1.11',
 ]
 
 

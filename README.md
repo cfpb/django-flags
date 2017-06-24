@@ -30,8 +30,8 @@ Feature flags allow you to toggle functionality in both Django settings and the 
 ## Dependencies
 
 - Django 1.8+
-- Wagtail 1.7+
-- Python 2.7+, 3.5+
+- Wagtail 1.8+
+- Python 2.7+, 3.6+
 
 ## Installation
 
