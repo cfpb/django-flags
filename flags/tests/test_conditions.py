@@ -1,6 +1,9 @@
+from datetime import timedelta
+
 from django.contrib.auth.models import AnonymousUser, User
 from django.http import HttpRequest, QueryDict
 from django.test import TestCase
+from django.utils import timezone
 
 from wagtail.wagtailcore.models import Site
 
@@ -15,6 +18,7 @@ from flags.conditions import (
     parameter_condition,
     path_condition,
     site_condition,
+    date_condition,
 )
 
 
@@ -174,3 +178,48 @@ class SiteConditionTestCase(TestCase):
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):
             site_condition('localhost:80')
+
+
+class DateConditionTestCase(TestCase):
+
+    def setUp(self):
+        # Set up some datetimes relative to now for testing
+        delta = timedelta(days=1)
+
+        self.past_datetime_tz = timezone.now() - delta
+        self.past_datetime_notz = self.past_datetime_tz.replace(tzinfo=None)
+        self.past_datetime_tz_str = self.past_datetime_tz.isoformat()
+        self.past_datetime_notz_str = self.past_datetime_notz.isoformat()
+
+        self.future_datetime_tz = timezone.now() + delta
+        self.future_datetime_notz = self.future_datetime_tz.replace(
+            tzinfo=None)
+        self.future_datetime_tz_str = self.future_datetime_tz.isoformat()
+        self.future_datetime_notz_str = self.future_datetime_notz.isoformat()
+
+    def test_date_timeone_true(self):
+        self.assertTrue(date_condition(self.past_datetime_tz))
+
+    def test_date_no_timeone_true(self):
+        self.assertTrue(date_condition(self.past_datetime_notz))
+
+    def test_date_str_timeone_true(self):
+        self.assertTrue(date_condition(self.past_datetime_tz_str))
+
+    def test_date_str_no_timeone_true(self):
+        self.assertTrue(date_condition(self.past_datetime_notz_str))
+
+    def test_date_timeone_false(self):
+        self.assertFalse(date_condition(self.future_datetime_tz))
+
+    def test_date_no_timeone_false(self):
+        self.assertFalse(date_condition(self.future_datetime_notz))
+
+    def test_date_str_timeone_false(self):
+        self.assertFalse(date_condition(self.future_datetime_tz_str))
+
+    def test_date_str_no_timeone_false(self):
+        self.assertFalse(date_condition(self.future_datetime_notz_str))
+
+    def test_not_valid_date_str(self):
+        self.assertFalse(date_condition('I am not a valid date'))
