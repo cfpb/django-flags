@@ -275,7 +275,7 @@ Flagged URLs are an alternative to [flagging views with decorators](https://gith
 
 Make a URL depend on the state of a feature flag. `flagged_url()` can be used in place of Django's `url()`.
 
-The `view` and the `fallback` can both be a a set of `include()`ed patterns but any matching URL patterns in the includes must match *exactly* in terms of regular expression, keyword arguments, and name, otherwise a `404` may be unexpectedly raised. 
+The `view` and the `fallback` can both be a set of `include()`ed patterns but any matching URL patterns in the includes must match *exactly* in terms of regular expression, keyword arguments, and name, otherwise a `404` may be unexpectedly raised. 
 
 If a `fallback` is not given the flagged url will raise a `404` if the flag state does not match the required `state`. 
 
