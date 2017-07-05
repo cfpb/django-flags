@@ -92,7 +92,7 @@ def parameter_condition(param_name, request=None, **kwargs):
     return request.GET.get(param_name) == 'True'
 
 
-@register('path')
+@register('path start')
 def path_condition(path, request=None, **kwargs):
     """ Does the request's path match the given path? """
     if request is None:
