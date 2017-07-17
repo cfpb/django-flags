@@ -30,8 +30,8 @@ Feature flags allow you to toggle functionality in both Django settings and the 
 ## Dependencies
 
 - Django 1.8+
-- Wagtail 1.7+
-- Python 2.7+, 3.5+
+- Wagtail 1.8+
+- Python 2.7+, 3.6+
 
 ## Installation
 
@@ -277,11 +277,15 @@ def view_with_fallback(request):
 from flags.urls import flagged_url, flagged_urls
 ```
 
+Flagged URLs are an alternative to [flagging views with decorators](https://github.com/cfpb/wagtail-flags#flag_checkflag_name-state-fallbacknone-kwargs).
+
 #### `flagged_url(flag_name, regex, view, kwargs=None, name=None, state=True, fallback=None)`
 
 Make a URL depend on the state of a feature flag. `flagged_url()` can be used in place of Django's `url()`.
 
-`fallback` can be a a set of `include()`ed patterns, but the regular expressions in the fallback includes must match the regular expression for the URL or includes *exactly*.
+The `view` and the `fallback` can both be a set of `include()`ed patterns but any matching URL patterns in the includes must match *exactly* in terms of regular expression, keyword arguments, and name, otherwise a `404` may be unexpectedly raised. 
+
+If a `fallback` is not given the flagged url will raise a `404` if the flag state does not match the required `state`. 
 
 ```python
 urlpatterns = [

@@ -8,8 +8,8 @@ except (IOError, ImportError):
 
 
 install_requires = [
-    'Django>=1.8,<1.11',
-    'wagtail>=1.6,<1.9',
+    'Django>=1.8,<1.12',
+    'wagtail>=1.8,<1.11',
 ]
 
 
@@ -28,7 +28,7 @@ setup(
     description='Feature flags for Wagtail sites',
     long_description=long_description,
     license='CC0',
-    version='2.0.3',
+    version='2.0.4',
     include_package_data=True,
     packages=find_packages(),
     install_requires=install_requires,
