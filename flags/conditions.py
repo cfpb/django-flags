@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone, dateparse
 
 # This will be maintained by register() as a global dictionary of
 # condition_name: [list of functions], so we can have multiple conditions
@@ -132,3 +133,22 @@ def site_condition(site_str, request=None, **kwargs):
         return False
 
     return conditional_site == site
+
+
+@register('after date')
+def date_condition(date_or_str, **kwargs):
+    """ Does the current date match the given date?
+    date_or_str is either a date object or an ISO 8601 string """
+    try:
+        date = dateparse.parse_datetime(date_or_str)
+    except TypeError:
+        date = date_or_str
+
+    now = timezone.now()
+
+    try:
+        date_test = (now >= date)
+    except TypeError:
+        date_test = False
+
+    return date_test
