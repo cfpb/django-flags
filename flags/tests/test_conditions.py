@@ -142,8 +142,12 @@ class PathConditionTestCase(TestCase):
         self.request.path = '/my/path/to/somewhere'
         self.assertTrue(path_condition('/my/path', request=self.request))
 
+    def test_path_condition_valid_not_starting_with(self):
+        self.request.path = '/subsection/my/path'
+        self.assertTrue(path_condition('/my/path', request=self.request))
+
     def test_path_condition_invalid(self):
-        self.request.path = '/not/my/path'
+        self.request.path = '/your/path'
         self.assertFalse(path_condition('/my/path', request=self.request))
 
     def test_request_required(self):

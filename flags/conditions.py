@@ -1,3 +1,5 @@
+import re
+
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone, dateparse
@@ -92,14 +94,14 @@ def parameter_condition(param_name, request=None, **kwargs):
     return request.GET.get(param_name) == 'True'
 
 
-@register('path start')
-def path_condition(path, request=None, **kwargs):
-    """ Does the request's path match the given path? """
+@register('path matches')
+def path_condition(pattern, request=None, **kwargs):
+    """ Does the request's path match the given regular expression? """
     if request is None:
         raise RequiredForCondition("request is required for condition "
                                    "'path'")
 
-    return request.path.startswith(path)
+    return bool(re.search(pattern, request.path))
 
 
 @register('site')

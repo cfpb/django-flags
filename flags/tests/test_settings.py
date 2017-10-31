@@ -57,7 +57,7 @@ class FlagTestCase(TestCase):
 
     def test_check_state_multiple_conditions(self):
         request = Mock(path='/foo')
-        flag = Flag('MY_FLAG', {'boolean': False, 'path': '/foo'})
+        flag = Flag('MY_FLAG', {'boolean': False, 'path matches': '/foo'})
         self.assertTrue(flag.check_state(request=request))
 
 
