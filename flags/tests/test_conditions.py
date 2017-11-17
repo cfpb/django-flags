@@ -1,5 +1,8 @@
+import importlib
+
 from datetime import timedelta
 
+from django.apps import apps
 from django.contrib.auth.models import AnonymousUser, User
 from django.http import HttpRequest, QueryDict
 from django.test import TestCase
@@ -20,6 +23,8 @@ from flags.conditions import (
     site_condition,
     date_condition,
 )
+
+from flags.models import FlagState
 
 
 class ConditionRegistryTestCase(TestCase):
@@ -142,13 +147,48 @@ class PathConditionTestCase(TestCase):
         self.request.path = '/my/path/to/somewhere'
         self.assertTrue(path_condition('/my/path', request=self.request))
 
+    def test_path_condition_valid_not_starting_with(self):
+        self.request.path = '/subsection/my/path'
+        self.assertTrue(path_condition('/my/path', request=self.request))
+
     def test_path_condition_invalid(self):
-        self.request.path = '/not/my/path'
+        self.request.path = '/your/path'
         self.assertFalse(path_condition('/my/path', request=self.request))
 
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):
             path_condition('/my/path')
+
+
+class PathConditionMigrationTestCase(TestCase):
+    # Before this migration, it was assumed that the value of the `path`
+    # condition matched from the start of the requested path. Now, a regex
+    # can be specified to get as crazy as you want with your matching.
+
+    def setUp(self):
+        self.migration = importlib.import_module(
+            'flags.migrations.0011_migrate_path_data_startswith_to_matches'
+        )
+
+    def test_migration_startswith_to_matches(self):
+        state = FlagState.objects.create(name='MY_FLAG',
+                                         condition='path',
+                                         value='/my/path')
+
+        self.migration.forwards(apps, None)
+        state.refresh_from_db()
+        self.assertEqual(state.condition, 'path matches')
+        self.assertEqual(state.value, '^/my/path')
+
+    def test_migration_startswith_to_matches_backwards(self):
+        state = FlagState.objects.create(name='MY_FLAG',
+                                         condition='path matches',
+                                         value='^/my/path')
+
+        self.migration.backwards(apps, None)
+        state.refresh_from_db()
+        self.assertEqual(state.condition, 'path')
+        self.assertEqual(state.value, '/my/path')
 
 
 class SiteConditionTestCase(TestCase):
