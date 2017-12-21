@@ -3,7 +3,7 @@ cache: pip
 
 matrix:
   include:
-    - env: TOXENV=flake8
+    - env: TOXENV=lint
       python: 3.6
     - env: TOXENV=py27-dj18-wag110
       python: 2.7
@@ -17,17 +17,17 @@ matrix:
       python: 2.7
     - env: TOXENV=py27-dj111-wag113
       python: 2.7
-    - env: TOXENV=36-dj18-wag110
-      python: 2.7
-    - env: TOXENV=36-dj18-wag112
-      python: 2.7
-    - env: TOXENV=36-dj18-wag113
-      python: 2.7
-    - env: TOXENV=36-dj111-wag110
+    - env: TOXENV=py36-dj18-wag110
       python: 3.6
-    - env: TOXENV=36-dj111-wag112
+    - env: TOXENV=py36-dj18-wag112
       python: 3.6
-    - env: TOXENV=36-dj111-wag113
+    - env: TOXENV=py36-dj18-wag113
+      python: 3.6
+    - env: TOXENV=py36-dj111-wag110
+      python: 3.6
+    - env: TOXENV=py36-dj111-wag112
+      python: 3.6
+    - env: TOXENV=py36-dj111-wag113
       python: 3.6
 
 install:

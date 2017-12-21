@@ -11,10 +11,10 @@ Feature flags allow you to toggle functionality in both Django settings and the 
 - [Installation](#installation)
 - [Concepts](#concepts)
 - [Usage](#usage)
-    - [Overview](#overview)
-    - [Adding Flags](#adding-flags)
-        - [Defining flags](#defining-flags)
-        - [Built-in conditions](#built-in-conditions)
+    - [Quickstart](#quickstart)
+    - [Defining flags](#defining-flags)
+    - [Using flags in code](#using-flags-in-code)
+    - [Built-in conditions](#built-in-conditions)
 - [API](#api)
     - [Flag state](#flag-state)
     - [Flag decorators](#flag-decorators)
@@ -30,7 +30,7 @@ Feature flags allow you to toggle functionality in both Django settings and the 
 ## Dependencies
 
 - Django 1.8+
-- Wagtail 1.8+
+- Wagtail 1.10+
 - Python 2.7+, 3.6+
 
 ## Installation
@@ -59,9 +59,9 @@ Conditions determine whether a flag is enabled or disabled by comparing a define
 
 ## Usage
 
-### Overview
+### Quickstart
 
-To use Wagtail-Flags you first need to define the flag, use the flag in code, and define conditions for the flag to be enabled.
+To use Wagtail-Flags you first need to define the flag, use the flag, and define conditions for the flag to be enabled.
 
 First, define the flag in Django `settings.py`:
 
@@ -104,7 +104,7 @@ Then visiting the URL `/mypage?enable_my_flag=True` should show you the flagged 
 
 ### Adding flags
 
-#### Defining flags
+### Defining flags
 
 Flags are defined in Django settings with the conditions in which they are enabled.
 
@@ -120,7 +120,53 @@ FLAGS = {
 
 The set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).
 
-Additional conditions can be added in the Django or Wagtail admin for any defined flag (illustrated in [Usage](#usage)). Conditions added in the Django or Wagtail admin can be changed without restarting Django, conditions defined in `settings.py` cannot.
+Additional conditions can be added in the Django or Wagtail admin for any defined flag (illustrated in [Usage](#usage)). Conditions added in the Django or Wagtail admin can be changed without restarting Django, conditions defined in `settings.py` cannot. See below [for a list of built-in conditions](#built-in-conditions).
+
+### Using flags in code
+
+Flags can be used in Python code:
+
+```python
+from flags.state import flag_enabled
+
+if flag_enabled('MY_FLAG', request=a_request):
+	print("My feature flag is enabled")	
+```
+
+Django templates:
+
+```django
+{% flag_enabled 'MY_FLAG' as my_flag %}
+{% if my_flag %}
+  <div>
+    I’m the result of a feature flag.   
+  </div>
+{% endif %}
+```
+
+Jinja2 templates:
+
+```jinja
+{% if flag_enabled('MY_FLAG', request) %}
+  <div>
+    I’m the result of a feature flag.   
+  </div>
+{% endif %}
+```
+
+And Django `urls.py`:
+
+```python
+from flags.urls import flagged_url, flagged_urls
+
+urlpatterns = [
+    flagged_url('MY_FLAG', r'^an-url$', view_requiring_flag, state=True),
+]
+```
+
+See the [API documentation below](#api) for more details and examples.
+
+
 
 #### Built-in conditions
 
