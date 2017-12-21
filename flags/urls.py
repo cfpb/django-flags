@@ -1,5 +1,8 @@
 from contextlib import contextmanager
 
+from flags.decorators import flag_check
+
+
 try:
     from django.urls import (
         RegexURLPattern,
@@ -10,8 +13,6 @@ except ImportError:
         RegexURLPattern,
         RegexURLResolver
     )
-
-from flags.decorators import flag_check
 
 
 class FlaggedURLResolver(RegexURLResolver):

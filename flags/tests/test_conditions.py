@@ -1,5 +1,4 @@
 import importlib
-
 from datetime import timedelta
 
 from django.apps import apps
@@ -13,17 +12,16 @@ from wagtail.wagtailcore.models import Site
 from flags.conditions import (
     CONDITIONS,
     RequiredForCondition,
-    register,
-    get_condition,
-    boolean_condition,
-    user_condition,
     anonymous_condition,
+    boolean_condition,
+    date_condition,
+    get_condition,
     parameter_condition,
     path_condition,
+    register,
     site_condition,
-    date_condition,
+    user_condition,
 )
-
 from flags.models import FlagState
 
 

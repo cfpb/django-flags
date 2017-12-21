@@ -6,15 +6,14 @@ except ImportError:
 from django.test import TestCase, override_settings
 
 import flags.settings
-
 from flags.models import FlagState
-
 from flags.settings import (
     DuplicateFlagException,
     Flag,
     add_flags_from_sources,
-    get_flags
+    get_flags,
 )
+
 
 # Test flag for using this module to test
 SOURCED_FLAG = True
