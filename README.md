@@ -91,7 +91,7 @@ from django.conf.urls import url
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    url(r'^/mypage$', TemplateView.as_view(template_name='mytemplate.html'),
+    url(r'^/mypage$', TemplateView.as_view(template_name='mytemplate.html')),
 ]
 ```
 
@@ -130,12 +130,13 @@ Flags can be used in Python code:
 from flags.state import flag_enabled
 
 if flag_enabled('MY_FLAG', request=a_request):
-	print("My feature flag is enabled")	
+    print("My feature flag is enabled")	
 ```
 
 Django templates:
 
 ```django
+{% load feature_flags %}
 {% flag_enabled 'MY_FLAG' as my_flag %}
 {% if my_flag %}
   <div>
@@ -144,7 +145,7 @@ Django templates:
 {% endif %}
 ```
 
-Jinja2 templates:
+Jinja2 templates (after [adding `flag_enabled` to the Jinja2 environment](#jinja2-templates)):
 
 ```jinja
 {% if flag_enabled('MY_FLAG', request) %}
@@ -401,9 +402,11 @@ from flags.template_functions import (
     flag_enabled,
     flag_disabled
 )
+from jinja2 import Environment
 
 ...
 
+env = Environment(…)
 env.globals.update(
     flag_enabled=flag_enabled,
     flag_disabled=flag_disabled
@@ -495,4 +498,4 @@ General instructions on _how_ to contribute can be found in [CONTRIBUTING](CONTR
 
 ## Credits and references
 
-1. Forked from [cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/flags)
+1. Forked from [cfgov-refresh](https://github.com/cfpb/cfgov-refresh)
