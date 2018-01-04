@@ -1,6 +1,6 @@
 from flags.state import (
+    flag_disabled as base_flag_disabled,
     flag_enabled as base_flag_enabled,
-    flag_disabled as base_flag_disabled
 )
 
 

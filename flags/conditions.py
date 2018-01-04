@@ -2,7 +2,8 @@ import re
 
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils import timezone, dateparse
+from django.utils import dateparse, timezone
+
 
 # This will be maintained by register() as a global dictionary of
 # condition_name: [list of functions], so we can have multiple conditions

@@ -1,5 +1,4 @@
 import logging
-
 from importlib import import_module
 
 from django.apps import apps
@@ -7,6 +6,7 @@ from django.conf import settings
 from django.utils.functional import cached_property
 
 from flags.conditions import get_condition
+
 
 logger = logging.getLogger(__name__)
 

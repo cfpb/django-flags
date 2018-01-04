@@ -4,6 +4,7 @@ from flags.conditions import get_conditions
 from flags.models import FlagState
 from flags.settings import get_flags
 
+
 FLAGS_CHOICES = [(flag, flag) for flag in get_flags().keys()]
 CONDITIONS_CHOICES = [(c, c) for c in get_conditions()]
 

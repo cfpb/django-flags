@@ -1,7 +1,7 @@
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 from django.core.urlresolvers import resolve
-from django.http import HttpResponse, Http404
-from django.test import TestCase, RequestFactory, override_settings
+from django.http import Http404, HttpResponse
+from django.test import RequestFactory, TestCase, override_settings
 
 from flags.urls import flagged_url, flagged_urls
 
