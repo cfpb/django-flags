@@ -223,10 +223,10 @@ FLAGS = {'MY_FLAG': {'site': 'staging.mysite.com'}}
 
 ##### `after date`
 
-Allows a flag to be enabled after a given date (and time) given in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601).
+Allows a flag to be enabled after a given date (and time) given in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). The time must be specified either in UTC or as an offset from UTC.
 
 ```python
-FLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00'}}
+FLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}
 ```
 
 ## API
