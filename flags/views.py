@@ -13,7 +13,7 @@ from flags.settings import get_flags
 def index(request):
     flags = OrderedDict(sorted(get_flags().items(), key=lambda x: x[0]))
     context = {
-        'flag_states': FlagState.objects.all(),
+        'flag_states': FlagState.objects.order_by('name'),
         'flags': flags,
     }
     return render(request, 'flagadmin/index.html', context)
