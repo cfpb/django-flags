@@ -27,7 +27,7 @@ setup(
     description='Feature flags for Wagtail sites',
     long_description=long_description,
     license='CC0',
-    version='2.0.7',
+    version='2.0.8',
     include_package_data=True,
     packages=find_packages(),
     install_requires=install_requires,
