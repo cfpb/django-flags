@@ -7,8 +7,6 @@ from django.http import HttpRequest, QueryDict
 from django.test import TestCase
 from django.utils import timezone
 
-from wagtail.wagtailcore.models import Site
-
 from flags.conditions import (
     CONDITIONS,
     RequiredForCondition,
@@ -23,6 +21,12 @@ from flags.conditions import (
     user_condition,
 )
 from flags.models import FlagState
+
+
+try:
+    from wagtail.core.models import Site
+except ImportError:
+    from wagtail.wagtailcore.models import Site
 
 
 class ConditionRegistryTestCase(TestCase):

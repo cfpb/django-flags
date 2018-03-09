@@ -14,12 +14,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='flagstate',
             name='flag',
-            field=models.ForeignKey(related_name='states', to='flags.Flag'),
+            field=models.ForeignKey(related_name='states', to='flags.Flag', on_delete=models.CASCADE),
         ),
         migrations.AlterField(
             model_name='flagstate',
             name='site',
-            field=models.ForeignKey(related_name='flag_states', to='wagtailcore.Site'),
+            field=models.ForeignKey(related_name='flag_states', to='wagtailcore.Site', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='flagstate',

@@ -46,11 +46,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='flagstate',
             name='flag',
-            field=models.ForeignKey(to='flags.Flag'),
+            field=models.ForeignKey(to='flags.Flag', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='flagstate',
             name='site',
-            field=models.ForeignKey(to='wagtailcore.Site'),
+            field=models.ForeignKey(to='wagtailcore.Site', on_delete=models.CASCADE),
         ),
     ]

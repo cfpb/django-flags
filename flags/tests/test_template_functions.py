@@ -1,9 +1,13 @@
 from django.http import HttpRequest
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Site
-
 from flags.template_functions import flag_disabled, flag_enabled
+
+
+try:
+    from wagtail.core.models import Site
+except ImportError:
+    from wagtail.wagtailcore.models import Site
 
 
 class TemplateFunctionsTestCase(TestCase):

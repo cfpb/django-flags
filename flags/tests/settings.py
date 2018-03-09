@@ -2,6 +2,8 @@ from __future__ import absolute_import, unicode_literals
 
 import os
 
+import wagtail
+
 
 SECRET_KEY = 'not needed'
 
@@ -25,7 +27,18 @@ DATABASES = {
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'wagtail.wagtailcore',
+)
+
+if wagtail.VERSION[0] >= 2:
+    INSTALLED_APPS += (
+        'wagtail.core',
+    )
+else:
+    INSTALLED_APPS += (
+        'wagtail.wagtailcore',
+    )
+
+INSTALLED_APPS += (
     'flags',
 )
 

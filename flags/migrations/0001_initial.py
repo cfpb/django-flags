@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('key', models.CharField(max_length=500)),
                 ('enabled', models.BooleanField()),
-                ('site', models.ForeignKey(to='wagtailcore.Site')),
+                ('site', models.ForeignKey(to='wagtailcore.Site', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('default', models.BooleanField()),
-                ('site', models.ForeignKey(to='wagtailcore.Site')),
+                ('site', models.ForeignKey(to='wagtailcore.Site', on_delete=models.CASCADE)),
             ],
         ),
     ]
