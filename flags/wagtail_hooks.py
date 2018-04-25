@@ -1,10 +1,19 @@
 from django.conf.urls import include, url
-from django.core.urlresolvers import reverse
-
-from wagtail.wagtailadmin.menu import MenuItem
-from wagtail.wagtailcore import hooks
 
 from flags import views
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
+
+try:
+    from wagtail.admin.menu import MenuItem
+    from wagtail.core import hooks
+except ImportError:
+    from wagtail.wagtailadmin.menu import MenuItem
+    from wagtail.wagtailcore import hooks
 
 
 @hooks.register('register_settings_menu_item')
@@ -17,10 +26,10 @@ def register_flags_menu():
 def register_flag_admin_urls():
     return [
         url(r'^flags/',
-            include([
+            include(([
                 url(r'^$', views.index, name='list'),
                 url(r'^(\d+)/delete/$', views.delete,
                     name='delete'),
                 url(r'^create/$', views.create, name='create'),
-            ], namespace='flagadmin'))
+            ], 'flags'), namespace='flagadmin'))
     ]

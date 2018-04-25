@@ -1,10 +1,14 @@
 from django.http import HttpRequest
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Site
-
 from flags.models import FlagState
 from flags.state import flag_disabled, flag_enabled, flag_state
+
+
+try:
+    from wagtail.core.models import Site
+except ImportError:
+    from wagtail.wagtailcore.models import Site
 
 
 class FlagStateTestCase(TestCase):

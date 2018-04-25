@@ -3,10 +3,15 @@ from django.http import Http404, HttpRequest, HttpResponse
 from django.test import TestCase, override_settings
 from django.views.generic import View
 
-from wagtail.wagtailcore.models import Page, Site
-from wagtail.wagtailcore.views import serve as wagtail_serve
-
 from flags.views import FlaggedViewMixin
+
+
+try:
+    from wagtail.core.models import Page, Site
+    from wagtail.core.views import serve as wagtail_serve
+except ImportError:
+    from wagtail.wagtailcore.models import Page, Site
+    from wagtail.wagtailcore.views import serve as wagtail_serve
 
 
 class TestView(FlaggedViewMixin, View):

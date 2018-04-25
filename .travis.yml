@@ -5,29 +5,23 @@ matrix:
   include:
     - env: TOXENV=lint
       python: 3.6
-    - env: TOXENV=py27-dj18-wag110
-      python: 2.7
     - env: TOXENV=py27-dj18-wag112
       python: 2.7
     - env: TOXENV=py27-dj18-wag113
-      python: 2.7
-    - env: TOXENV=py27-dj111-wag110
       python: 2.7
     - env: TOXENV=py27-dj111-wag112
       python: 2.7
     - env: TOXENV=py27-dj111-wag113
       python: 2.7
-    - env: TOXENV=py36-dj18-wag110
-      python: 3.6
     - env: TOXENV=py36-dj18-wag112
       python: 3.6
     - env: TOXENV=py36-dj18-wag113
       python: 3.6
-    - env: TOXENV=py36-dj111-wag110
-      python: 3.6
     - env: TOXENV=py36-dj111-wag112
       python: 3.6
     - env: TOXENV=py36-dj111-wag113
+      python: 3.6
+    - env: TOXENV=py36-dj20-wag20
       python: 3.6
 
 install:

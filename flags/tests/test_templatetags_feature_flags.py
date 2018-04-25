@@ -2,7 +2,11 @@ from django.http import HttpRequest
 from django.template import Context, Template
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Site
+
+try:
+    from wagtail.core.models import Site
+except ImportError:
+    from wagtail.wagtailcore.models import Site
 
 
 class FlagsTemplateTagsTestCase(TestCase):

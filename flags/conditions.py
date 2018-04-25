@@ -1,5 +1,6 @@
 import re
 
+import django
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import dateparse, timezone
@@ -82,7 +83,10 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
         raise RequiredForCondition("request is required for condition "
                                    "'anonymous'")
 
-    return bool(boolean_value) == bool(request.user.is_anonymous())
+    if django.VERSION[0] >= 2:
+        return bool(boolean_value) == bool(request.user.is_anonymous)
+    else:
+        return bool(boolean_value) == bool(request.user.is_anonymous())
 
 
 @register('parameter')
