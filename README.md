@@ -173,7 +173,7 @@ Django 2.0 `urls.py`:
 from flags.urls import flagged_path
 
 urlpatterns = [
-    flagged_path('MY_FLAG', 'an-url/', view_requiring_flag, state=True),
+    flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),
 ]
 ```
 
@@ -183,7 +183,7 @@ And Django 1.x `urls.py`:
 from flags.urls import flagged_url
 
 urlpatterns = [
-    flagged_url('MY_FLAG', r'^an-url$', view_requiring_flag, state=True),
+    flagged_url('MY_FLAG', r'^a-url$', view_requiring_flag, state=True),
 ]
 ```
 
@@ -373,7 +373,7 @@ If a `fallback` is not given the flagged url will raise a `404` if the flag stat
 
 ```python
 urlpatterns = [
-    flagged_path('MY_FLAG', r'an-url/', view_requiring_flag, state=True),
+    flagged_path('MY_FLAG', r'a-url/', view_requiring_flag, state=True),
     flagged_re_path('MY_FLAG_WITH_FALLBACK', r'^another-url$', 
                     view_with_fallback, state=True, fallback=other_view)
     flagged_path('MY_FLAGGED_INCLUDE', 'myapp/', include('myapp.urls'),
@@ -400,7 +400,7 @@ Returns function that can be used in place of Django's `url()` that wraps `flagg
 ```python
 with flagged_paths('MY_FLAG') as path:
     flagged_url_patterns = [
-        path('an-url/', view_requiring_flag),
+        path('a-url/', view_requiring_flag),
     ]
 
 urlpatterns = urlpatterns + flagged_url_patterns
