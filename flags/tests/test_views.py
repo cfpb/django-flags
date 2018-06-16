@@ -6,14 +6,6 @@ from django.views.generic import View
 from flags.views import FlaggedViewMixin
 
 
-try:
-    from wagtail.core.models import Page, Site
-    from wagtail.core.views import serve as wagtail_serve
-except ImportError:
-    from wagtail.wagtailcore.models import Page, Site
-    from wagtail.wagtailcore.views import serve as wagtail_serve
-
-
 class TestView(FlaggedViewMixin, View):
     def get(self, request, *args, **kwargs):
         return HttpResponse('ok')
@@ -30,7 +22,6 @@ class FlaggedViewMixinTestCase(TestCase):
         request.path = path
         request.META['SERVER_NAME'] = 'localhost'
         request.META['SERVER_PORT'] = 8000
-        request.site = Site.objects.get(is_default_site=True)
 
         return request
 
@@ -92,19 +83,3 @@ class FlaggedViewMixinTestCase(TestCase):
 
         response = view(self.request())
         self.assertContains(response, 'fallback cbv')
-
-    def test_fallback_wagtail_serve(self):
-        site = Site.objects.get(is_default_site=True)
-        root = site.root_page
-        page = Page(title='wagtail title', slug='title')
-        root.add_child(instance=page)
-        page.save()
-        page.save_revision().publish()
-
-        fail_through = lambda request: wagtail_serve(request, request.path)
-        view = TestView.as_view(flag_name=self.flag_name,
-                                condition=True,
-                                fallback=fail_through)
-
-        response = view(self.request(path='/title'))
-        self.assertContains(response, '<title>wagtail title</title>')

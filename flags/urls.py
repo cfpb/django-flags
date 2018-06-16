@@ -6,14 +6,14 @@ import django
 from flags.decorators import flag_check
 
 
-try:
+try:  # pragma: no cover
     from django.urls.resolvers import (
         RegexPattern,
         RoutePattern,
         URLPattern,
         URLResolver
     )
-except ImportError:
+except ImportError:  # pragma: no cover
     from django.core.urlresolvers import (
         RegexURLPattern as URLPattern,
         RegexURLResolver as URLResolver

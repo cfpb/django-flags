@@ -3,18 +3,10 @@ from django.template import Context, Template
 from django.test import TestCase
 
 
-try:
-    from wagtail.core.models import Site
-except ImportError:
-    from wagtail.wagtailcore.models import Site
-
-
 class FlagsTemplateTagsTestCase(TestCase):
 
     def setUp(self):
-        self.site = Site.objects.get(is_default_site=True)
         self.request = HttpRequest()
-        self.request.site = self.site
 
     def render_template(self, string, context=None):
         context = context or {'request': self.request}

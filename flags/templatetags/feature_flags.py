@@ -9,9 +9,9 @@ from flags.state import (
 
 register = template.Library()
 
-if django.VERSION >= (1, 9):
+if django.VERSION >= (1, 9):  # pragma: no cover
     simple_tag = register.simple_tag
-else:
+else:  # pragma: no cover
     simple_tag = register.assignment_tag
 
 

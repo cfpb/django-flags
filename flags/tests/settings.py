@@ -2,8 +2,6 @@ from __future__ import absolute_import, unicode_literals
 
 import os
 
-import wagtail
-
 
 SECRET_KEY = 'not needed'
 
@@ -13,7 +11,7 @@ DATABASES = {
             'DATABASE_ENGINE',
             'django.db.backends.sqlite3'
         ),
-        'NAME': os.environ.get('DATABASE_NAME', 'flags'),
+        'NAME': os.environ.get('DATABASE_NAME', 'flagstest.sqlite'),
         'USER': os.environ.get('DATABASE_USER', None),
         'PASSWORD': os.environ.get('DATABASE_PASS', None),
         'HOST': os.environ.get('DATABASE_HOST', None),
@@ -28,15 +26,6 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
 )
-
-if wagtail.VERSION[0] >= 2:
-    INSTALLED_APPS += (
-        'wagtail.core',
-    )
-else:
-    INSTALLED_APPS += (
-        'wagtail.wagtailcore',
-    )
 
 INSTALLED_APPS += (
     'flags',

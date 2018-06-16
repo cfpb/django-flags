@@ -83,9 +83,9 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
         raise RequiredForCondition("request is required for condition "
                                    "'anonymous'")
 
-    if django.VERSION[0] >= 2:
+    if django.VERSION[0] >= 2:  # pragma: no cover
         return bool(boolean_value) == bool(request.user.is_anonymous)
-    else:
+    else:  # pragma: no cover
         return bool(boolean_value) == bool(request.user.is_anonymous())
 
 
@@ -107,39 +107,6 @@ def path_condition(pattern, request=None, **kwargs):
                                    "'path'")
 
     return bool(re.search(pattern, request.path))
-
-
-@register('site')
-def site_condition(site_str, request=None, **kwargs):
-    """ Does the requests's Wagtail Site match the given site?
-    site_str should be 'hostname:port', or 'hostname [default]'. """
-    if request is None:
-        raise RequiredForCondition("request is required for condition "
-                                   "'site'")
-
-    Site = apps.get_model('wagtailcore.Site')
-
-    if '[default]' in site_str:
-        # Wagtail Sites on the default port have [default] at the end of
-        # their str() form.
-        site_str = site_str.replace(' [default]', ':80')
-    elif ':' not in site_str:
-        # Add a default port if one isn't given
-        site_str += ':80'
-
-    hostname, port = site_str.split(':')
-    try:
-        conditional_site = Site.objects.get(hostname=hostname, port=port)
-    except ObjectDoesNotExist:
-        return False
-
-    try:
-        site = Site.find_for_request(request)
-    except AttributeError:
-        # We can't do anything with this
-        return False
-
-    return conditional_site == site
 
 
 @register('after date')

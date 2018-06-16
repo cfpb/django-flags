@@ -4,17 +4,9 @@ from django.test import TestCase
 from flags.template_functions import flag_disabled, flag_enabled
 
 
-try:
-    from wagtail.core.models import Site
-except ImportError:
-    from wagtail.wagtailcore.models import Site
-
-
 class TemplateFunctionsTestCase(TestCase):
     def setUp(self):
-        self.site = Site.objects.get(is_default_site=True)
         self.request = HttpRequest()
-        self.request.site = self.site
 
     def test_flag_enabled_true(self):
         self.assertTrue(flag_enabled('FLAG_ENABLED', request=self.request))

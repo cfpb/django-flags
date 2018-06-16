@@ -5,11 +5,11 @@ from flags.models import FlagState
 from flags.settings import get_flags
 
 
-FLAGS_CHOICES = [(flag, flag) for flag in sorted(get_flags().keys())]
-CONDITIONS_CHOICES = [(c, c) for c in sorted(get_conditions())]
-
-
 class FlagStateForm(forms.ModelForm):
+
+    FLAGS_CHOICES = [(flag, flag) for flag in sorted(get_flags().keys())]
+    CONDITIONS_CHOICES = [(c, c) for c in sorted(get_conditions())]
+
     name = forms.ChoiceField(choices=FLAGS_CHOICES,
                              label="Flag",
                              required=True)
