@@ -1,0 +1,16 @@
+site_name: Django-Flags
+pages:
+    - Getting started: index.md
+    - Usage guide: usage.md
+    - Built-in conditions: conditions.md
+    - API Reference:
+        - Flag state: api/state.md
+        - Flag decorators: api/decorators.md 
+        - Flagged URL patterns: api/urls.md
+        - Django templates: api/django.md
+        - Jinja2 templates: api/jinja2.md
+        - Conditions: api/conditions.md
+theme:
+  name: 'rtd-dropdown'
+extra_css:
+    - css/overrides.css
