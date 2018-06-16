@@ -55,4 +55,4 @@ General instructions on _how_ to contribute can be found in [CONTRIBUTING](CONTR
 
 ## Credits and references
 
-1. Forked from [cfgov-refresh](https://github.com/cfpb/cfgov-refresh)
+Django-Flags was forked from [Wagtail-Flags](https://github.com/cfpb/wagtail-flags), which was itself forked from [cfgov-refresh](https://github.com/cfpb/cfgov-refresh).
