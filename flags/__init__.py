@@ -1,1 +1,1 @@
-default_app_config = 'flags.apps.WagtailFlagsConfig'
+default_app_config = 'flags.apps.DjangoFlagsConfig'
