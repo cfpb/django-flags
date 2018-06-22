@@ -146,58 +146,52 @@
                 <h1 id="usage-guide">Usage guide<a class="headerlink" href="#usage-guide" title="Permanent link">¶</a></h1>
 <h2 id="defining-flags">Defining flags<a class="headerlink" href="#defining-flags" title="Permanent link">¶</a></h2>
 <p>Flags are defined in Django settings with the conditions in which they are enabled.</p>
-<pre><code class="python">FLAGS = {
+<pre class="highlight"><code class="language-python">FLAGS = {
   'FLAG_WITH_EMPTY_CONDITIONS': {}
   'MY_FLAG': {
     'condition name': 'value flag is expected to match to be enabled',
     'user': 'lady.liberty'
   }
-}
-</code></pre>
+}</code></pre>
 
 <p>The set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).</p>
 <p>Additional conditions can be added in the Django admin for any defined flag (illustrated in <a href="#usage">Usage</a>). Conditions added in the Django admin can be changed without restarting Django, conditions defined in <code>settings.py</code> cannot. See below <a href="#built-in-conditions">for a list of built-in conditions</a>.</p>
 <h2 id="using-flags-in-code">Using flags in code<a class="headerlink" href="#using-flags-in-code" title="Permanent link">¶</a></h2>
 <p>Flags can be used in Python code:</p>
-<pre><code class="python">from flags.state import flag_enabled
+<pre class="highlight"><code class="language-python">from flags.state import flag_enabled
 
 if flag_enabled('MY_FLAG', request=a_request):
-    print(&quot;My feature flag is enabled&quot;) 
-</code></pre>
+    print(&quot;My feature flag is enabled&quot;) </code></pre>
 
 <p>Django templates:</p>
-<pre><code class="django">{% load feature_flags %}
+<pre class="highlight"><code class="language-django">{% load feature_flags %}
 {% flag_enabled 'MY_FLAG' as my_flag %}
 {% if my_flag %}
   &lt;div&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
-{% endif %}
-</code></pre>
+{% endif %}</code></pre>
 
 <p>Jinja2 templates (after <a href="#jinja2-templates">adding <code>flag_enabled</code> to the Jinja2 environment</a>):</p>
-<pre><code class="jinja">{% if flag_enabled('MY_FLAG', request) %}
+<pre class="highlight"><code class="language-jinja">{% if flag_enabled('MY_FLAG', request) %}
   &lt;div&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
-{% endif %}
-</code></pre>
+{% endif %}</code></pre>
 
 <p>Django 2.0 <code>urls.py</code>:</p>
-<pre><code class="python">from flags.urls import flagged_path
+<pre class="highlight"><code class="language-python">from flags.urls import flagged_path
 
 urlpatterns = [
     flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),
-]
-</code></pre>
+]</code></pre>
 
 <p>And Django 1.x <code>urls.py</code>:</p>
-<pre><code class="python">from flags.urls import flagged_url
+<pre class="highlight"><code class="language-python">from flags.urls import flagged_url
 
 urlpatterns = [
     flagged_url('MY_FLAG', r'^a-url$', view_requiring_flag, state=True),
-]
-</code></pre>
+]</code></pre>
 
 <p>See the <a href="#api">API documentation below</a> for more details and examples.</p>
               

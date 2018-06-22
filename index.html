@@ -156,16 +156,14 @@
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
 <p>First, install django-flags:</p>
-<pre><code class="shell">pip install django-flags
-</code></pre>
+<pre class="highlight"><code class="language-shell">pip install django-flags</code></pre>
 
 <p>Then add <code>flags</code> as an installed app in your Django <code>settings.py</code>:</p>
-<pre><code class="python">INSTALLED_APPS = (
+<pre class="highlight"><code class="language-python">INSTALLED_APPS = (
     ...
     'flags',
     ...
-)
-</code></pre>
+)</code></pre>
 
 <h2 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">¶</a></h2>
 <p>Feature flags in Django-Flags are identified by simple strings that are enabled when the conditions they are associated with are met. These flags can be used to wrap code and template content that should only be used when a flag is enabled or disabled.</p>
@@ -173,43 +171,39 @@
 <h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">¶</a></h2>
 <p>To use Django-Flags you first need to define the flag, use the flag, and define conditions for the flag to be enabled.</p>
 <p>First, define the flag in Django <code>settings.py</code>:</p>
-<pre><code class="python">FLAGS = {
+<pre class="highlight"><code class="language-python">FLAGS = {
     'MY_FLAG': {}
-}
-</code></pre>
+}</code></pre>
 
 <p>Then use the flag in a Django template (<code>mytemplate.html</code>):</p>
-<pre><code class="django">{% load feature_flags %}
+<pre class="highlight"><code class="language-django">{% load feature_flags %}
 {% flag_enabled 'MY_FLAG' as my_flag %}
 
 {% if my_flag %}
   &lt;div class=&quot;flagged-banner&quot;&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
-{% endif %}
-</code></pre>
+{% endif %}</code></pre>
 
 <p>Configure a URL for that template (<code>urls.py</code>):</p>
 <p>Django 2.0:</p>
-<pre><code class="python">from django.urls import path
+<pre class="highlight"><code class="language-python">from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
     path(r'mypage/', TemplateView.as_view(template_name='mytemplate.html')),
-]
-</code></pre>
+]</code></pre>
 
 <p>Django 1.x:</p>
-<pre><code class="python">from django.conf.urls import url
+<pre class="highlight"><code class="language-python">from django.conf.urls import url
 from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^mypage/$', TemplateView.as_view(template_name='mytemplate.html')),
-]
-</code></pre>
+]</code></pre>
 
-<p>Then in the Django admin add conditions for the flag in "Settings", "Flags":</p>
-<p><img alt="Creating conditions in the Django admin" src="https://raw.githubusercontent.com/cfpb/django-flags/master/screenshot_create.png" /></p>
+<p>Then in the Django admin add conditions for the flag in "Django Flags", "Flag states":</p>
+<p><img alt="Creating conditions in the Django admin" src="./images/screenshot_create.png" /></p>
 <p>Then visiting the URL <code>/mypage?enable_my_flag=True</code> should show you the flagged <code>&lt;div&gt;</code> in the template.</p>
               
             </div>
@@ -262,5 +256,5 @@ urlpatterns = [
 
 <!--
 MkDocs version : 0.17.4
-Build Date UTC : 2018-06-22 15:49:22
+Build Date UTC : 2018-06-22 16:20:12
 -->

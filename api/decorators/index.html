@@ -149,17 +149,16 @@
               
                 <h1 id="flag-decorators">Flag decorators<a class="headerlink" href="#flag-decorators" title="Permanent link">¶</a></h1>
 <p>Decorators are provided for use with Django views and conditions that take a <code>request</code> argument. The default behavior is to return a 404 if a callable fallback is not given.</p>
-<pre><code class="python">from flags.decorators import (
+<pre class="highlight"><code class="language-python">from flags.decorators import (
     flag_check,
     flag_required,
-)
-</code></pre>
+)</code></pre>
 
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_checkflag_name-state-fallbacknone-kwargs"><code>flag_check(flag_name, state, fallback=None, **kwargs)</code><a class="headerlink" href="#flag_checkflag_name-state-fallbacknone-kwargs" title="Permanent link">¶</a></h3>
 <p>Check that a given flag has the given state. If the state does not match, perform the fallback.</p>
 <p><strong>Note</strong>, because flags that do not exist are taken to be <code>False</code> by default, <code>@flag_check('MY_FLAG', False)</code> and <code>@flag_check('MY_FLAG', None)</code> will both succeed if <code>MY_FLAG</code> does not exist.</p>
-<pre><code class="python">from flags.decorators import flag_check
+<pre class="highlight"><code class="language-python">from flags.decorators import flag_check
 
 @flag_check('MY_FLAG', True)
 def view_requiring_flag(request):
@@ -174,13 +173,12 @@ def other_view(request):
 
 @flag_check('MY_FLAG_WITH_FALLBACK', True, fallback=other_view)
 def view_with_fallback(request):
-    return HttpResponse('flag was set')
-</code></pre>
+    return HttpResponse('flag was set')</code></pre>
 
 <h2 id="requiring-state">Requiring state<a class="headerlink" href="#requiring-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_requiredflag_name-fallback_viewnone-pass_if_settrue"><code>flag_required(flag_name, fallback_view=None, pass_if_set=True)</code><a class="headerlink" href="#flag_requiredflag_name-fallback_viewnone-pass_if_settrue" title="Permanent link">¶</a></h3>
 <p>Require the given flag to be enabled.</p>
-<pre><code class="python">from flags.decorators import flag_required
+<pre class="highlight"><code class="language-python">from flags.decorators import flag_required
 
 @flag_required('MY_FLAG')
 def view_requiring_flag(request):
@@ -191,8 +189,7 @@ def other_view(request):
 
 @flag_required('MY_FLAG_WITH_FALLBACK', fallback_view=other_view)
 def view_with_fallback(request):
-    return HttpResponse('flag was set')
-</code></pre>
+    return HttpResponse('flag was set')</code></pre>
               
             </div>
           </div>

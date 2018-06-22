@@ -148,12 +148,11 @@
             <div class="section">
               
                 <h1 id="flag-state">Flag state<a class="headerlink" href="#flag-state" title="Permanent link">¶</a></h1>
-<pre><code class="python">from flags.state import (
+<pre class="highlight"><code class="language-python">from flags.state import (
     flag_state,
     flag_enabled,
     flag_disabled,
-)
-</code></pre>
+)</code></pre>
 
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_stateflag_name-kwargs"><code>flag_state(flag_name, **kwargs)</code><a class="headerlink" href="#flag_stateflag_name-kwargs" title="Permanent link">¶</a></h3>
@@ -161,15 +160,13 @@
 <h2 id="requiring-state">Requiring state<a class="headerlink" href="#requiring-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_enabledflag_name-kwargs"><code>flag_enabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_enabledflag_name-kwargs" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is enabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
-<pre><code class="python">if flag_enabled('MY_FLAG', request=a_request):
-    print(&quot;My feature flag is enabled&quot;)
-</code></pre>
+<pre class="highlight"><code class="language-python">if flag_enabled('MY_FLAG', request=a_request):
+    print(&quot;My feature flag is enabled&quot;)</code></pre>
 
 <h3 id="flag_disabledflag_name-kwargs"><code>flag_disabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_disabledflag_name-kwargs" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
-<pre><code class="python">if flag_disabled('MY_FLAG', request=a_request):
-    print(“My feature flag is disabled”)
-</code></pre>
+<pre class="highlight"><code class="language-python">if flag_disabled('MY_FLAG', request=a_request):
+    print(“My feature flag is disabled”)</code></pre>
               
             </div>
           </div>

@@ -147,29 +147,26 @@
               
                 <h1 id="django-templates">Django templates<a class="headerlink" href="#django-templates" title="Permanent link">¶</a></h1>
 <p>Wagtail-Flags provides a template tag library that can be used to evaluate flags in Django templates.</p>
-<pre><code class="django">{% load feature_flags %}
-</code></pre>
+<pre class="highlight"><code class="language-django">{% load feature_flags %}</code></pre>
 
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_enabled"><code>flag_enabled</code><a class="headerlink" href="#flag_enabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is enabled by passing the current request to its conditions, otherwise returns <code>False</code>.</p>
-<pre><code class="django">{% flag_enabled 'MY_FLAG' as my_flag %}
+<pre class="highlight"><code class="language-django">{% flag_enabled 'MY_FLAG' as my_flag %}
 {% if my_flag %}
   &lt;div class=&quot;m-global-banner&quot;&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
-{% endif %}
-</code></pre>
+{% endif %}</code></pre>
 
 <h3 id="flag_disabled"><code>flag_disabled</code><a class="headerlink" href="#flag_disabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled by passing the current request to its conditions, otherwise returns <code>False</code>.</p>
-<pre><code class="django">{% flag_disabled 'MY_FLAG' as my_flag %}
+<pre class="highlight"><code class="language-django">{% flag_disabled 'MY_FLAG' as my_flag %}
 {% if my_flag %}
   &lt;div class=&quot;m-global-banner&quot;&gt;
     I’m the result of a feature flag that is not enabled.
   &lt;/div&gt;
-{% endif %}
-</code></pre>
+{% endif %}</code></pre>
               
             </div>
           </div>

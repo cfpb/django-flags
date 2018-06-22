@@ -147,7 +147,7 @@
               
                 <h1 id="jinja2-templates">Jinja2 templates<a class="headerlink" href="#jinja2-templates" title="Permanent link">¶</a></h1>
 <p>Wagtail-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.</p>
-<pre><code class="python">from flags.template_functions import (
+<pre class="highlight"><code class="language-python">from flags.template_functions import (
     flag_enabled,
     flag_disabled
 )
@@ -159,28 +159,25 @@ env = Environment(…)
 env.globals.update(
     flag_enabled=flag_enabled,
     flag_disabled=flag_disabled
-)
-</code></pre>
+)</code></pre>
 
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_enabled"><code>flag_enabled</code><a class="headerlink" href="#flag_enabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is enabled by for the given request, otherwise returns <code>False</code>.</p>
-<pre><code class="jinja">{% if flag_enabled('MY_FLAG', request) %}
+<pre class="highlight"><code class="language-jinja">{% if flag_enabled('MY_FLAG', request) %}
   &lt;div class=&quot;m-global-banner&quot;&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
-{% endif %}
-</code></pre>
+{% endif %}</code></pre>
 
 <h3 id="flag_disabled"><code>flag_disabled</code><a class="headerlink" href="#flag_disabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled by passing the current request to its conditions, otherwise returns <code>False</code>.
 Returns <code>True</code> if a flag is disabled by for the given request, otherwise returns <code>False</code>.</p>
-<pre><code class="jinja">{% if flag_disabled('MY_FLAG', request) %}
+<pre class="highlight"><code class="language-jinja">{% if flag_disabled('MY_FLAG', request) %}
   &lt;div class=&quot;m-global-banner&quot;&gt;
     I’m the result of a feature flag that is not enabled.
   &lt;/div&gt;
-{% endif %}
-</code></pre>
+{% endif %}</code></pre>
               
             </div>
           </div>

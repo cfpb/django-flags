@@ -149,37 +149,33 @@
               
                 <h1 id="conditions">Conditions<a class="headerlink" href="#conditions" title="Permanent link">¶</a></h1>
 <p>Conditions are functions that take a configured value and possible keyword arguments and determines whether the given arguments are equivalent to the value. Conditions are registered with a unique name that is exposed to users in Django settings and the Django and Wagtail admin.</p>
-<pre><code class="python">from flags import conditions
-</code></pre>
+<pre class="highlight"><code class="language-python">from flags import conditions</code></pre>
 
 <h2 id="registering-conditions">Registering conditions<a class="headerlink" href="#registering-conditions" title="Permanent link">¶</a></h2>
 <h3 id="conditionsregistercondition_name-fnnone"><code>conditions.register(condition_name, fn=None)</code><a class="headerlink" href="#conditionsregistercondition_name-fnnone" title="Permanent link">¶</a></h3>
 <p>Register a new condition, either as a decorator:</p>
-<pre><code class="python">from flags import conditions
+<pre class="highlight"><code class="language-python">from flags import conditions
 
 @conditions.register('path')
 def path_condition(path, request=None, **kwargs):
-    return request.path.startswith(path)
-</code></pre>
+    return request.path.startswith(path)</code></pre>
 
 <p>Or as a function call:</p>
-<pre><code class="python">def path_condition(path, request=None, **kwargs):
+<pre class="highlight"><code class="language-python">def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)
 
-conditions.register('path', fn=path_condition)
-</code></pre>
+conditions.register('path', fn=path_condition)</code></pre>
 
 <h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">¶</a></h2>
 <h3 id="conditionsrequiredforcondition"><code>conditions.RequiredForCondition</code><a class="headerlink" href="#conditionsrequiredforcondition" title="Permanent link">¶</a></h3>
 <p>Exception intended to be raised when a condition is not given a keyword argument it requires for evaluation.</p>
-<pre><code class="python">@conditions.register('path')
+<pre class="highlight"><code class="language-python">@conditions.register('path')
 def path_condition(path, request=None, **kwargs):
     if request is None:
         raise conditions.RequiredForCondition(
             &quot;request is required for condition 'path'&quot;)
 
-    return request.path.startswith(path)
-</code></pre>
+    return request.path.startswith(path)</code></pre>
               
             </div>
           </div>

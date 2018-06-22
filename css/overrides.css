@@ -24,32 +24,21 @@ a:hover,
 .wy-side-nav-search input[type=text] {
     border-color: #1e9642;
 }
-.wy-menu-vertical p.caption {
+.wy-menu-vertical .caption-text {
     color: #ffffff;
 }
-.wy-menu-vertical li.on a:hover, 
-.wy-menu-vertical li.current>a:hover {
-    background: #ffffff;
-}
-.toc-item, .toc-item:hover {
-    background: #e7e8e9;
-}
-.wy-menu-vertical li.current a {
-    color: #101820;
-}
-.wy-menu-vertical li.on a:hover span.toctree-expand, 
-.wy-menu-vertical li.current>a:hover span.toctree-expand {
+.wy-menu-vertical li.current .subnav a {
     color: #101820;
 }
 .wy-nav-side {
     background: #43484e;
 }
-.wy-menu-vertical li.current a:hover {
-    background: #d6d6d6;
-
-}
-.wy-menu-vertical a {
+.wy-menu-vertical li a,
+.wy-menu-vertical .subnav li a {
     color: #ffffff;
+}
+.wy-menu-vertical li a:hover {
+    background-color: #5a5d61
 }
 .rst-versions .rst-current-version {
     background-color: #43484e;
