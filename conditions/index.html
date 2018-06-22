@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Built-in conditions - Django-Flags</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../css/overrides.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Built-in conditions";
+    var mkdocs_page_input_path = "conditions.md";
+    var mkdocs_page_url = "/conditions/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Django-Flags</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      
+
+
+  
+    
+
+
+<ul class="" href="/">
+  
+    
+    
+      <li class=" toctree-l1">
+        <a class="" href="/">Getting started</a>
+      </li>
+</ul>
+
+<!--
+ | This is a hacky way to pass setting from the template generator to the
+ | javascript that drives the dropdown functionality
+-->
+<div style="width: 1px; height: 1px; visibility: none;">
+
+</div>
+
+
+
+  
+    
+
+
+<ul class="" href="/usage/">
+  
+    
+    
+      <li class=" toctree-l1">
+        <a class="" href="/usage/">Usage guide</a>
+      </li>
+</ul>
+
+<!--
+ | This is a hacky way to pass setting from the template generator to the
+ | javascript that drives the dropdown functionality
+-->
+<div style="width: 1px; height: 1px; visibility: none;">
+
+</div>
+
+
+
+  
+    
+
+
+<ul class="current" href="/conditions/">
+  
+    
+    
+      <li class="current toctree-l1">
+        <a class="current" href="/conditions/">Built-in conditions</a>
+        
+  
+  
+  <ul class="current subnav">
+    
+      
+
+  
+  
+  
+
+
+  <li class="current toctree-l2">
+    
+    <ul class="current subnav">
+      
+        
+
+  
+  
+
+
+  <li class="toctree-l2 toc-item">
+    <a href="#boolean" title="Built-in conditions">boolean</a>
+  </li>
+
+      
+        
+
+  
+  
+
+
+  <li class="toctree-l2 toc-item">
+    <a href="#user" title="Built-in conditions">user</a>
+  </li>
+
+      
+        
+
+  
+  
+
+
+  <li class="toctree-l2 toc-item">
+    <a href="#anonymous" title="Built-in conditions">anonymous</a>
+  </li>
+
+      
+        
+
+  
+  
+
+
+  <li class="toctree-l2 toc-item">
+    <a href="#parameter" title="Built-in conditions">parameter</a>
+  </li>
+
+      
+        
+
+  
+  
+
+
+  <li class="toctree-l2 toc-item">
+    <a href="#path" title="Built-in conditions">path</a>
+  </li>
+
+      
+        
+
+  
+  
+
+
+  <li class="toctree-l2 toc-item">
+    <a href="#after-date" title="Built-in conditions">after date</a>
+  </li>
+
+      
+    </ul>
+  </li>
+
+    
+  </ul>
+
+      </li>
+</ul>
+
+<!--
+ | This is a hacky way to pass setting from the template generator to the
+ | javascript that drives the dropdown functionality
+-->
+<div style="width: 1px; height: 1px; visibility: none;">
+
+</div>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+
+  <p class="caption">API Reference</p>
+
+
+<ul class="" href="api/state">
+  
+    
+      
+<li class=" toctree-l1">
+  <a href="../api/state/" title="Flag state"
+      class="">
+    Flag state
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../api/decorators/" title="Flag decorators"
+      class="">
+    Flag decorators
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../api/urls/" title="Flagged URL patterns"
+      class="">
+    Flagged URL patterns
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../api/django/" title="Django templates"
+      class="">
+    Django templates
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../api/jinja2/" title="Jinja2 templates"
+      class="">
+    Jinja2 templates
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../api/conditions/" title="Conditions"
+      class="">
+    Conditions
+  </a>
+
+  
+  
+</li>
+    
+</ul>
+
+<!--
+ | This is a hacky way to pass setting from the template generator to the
+ | javascript that drives the dropdown functionality
+-->
+<div style="width: 1px; height: 1px; visibility: none;">
+
+</div>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Django-Flags</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Built-in conditions</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="built-in-conditions">Built-in conditions</h1>
+<p>Django-Flags comes with the following conditions built-in:</p>
+<h3 id="boolean"><code>boolean</code></h3>
+<p>A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.</p>
+<pre><code class="python">FLAGS = {'MY_FLAG': {'boolean': True}}
+</code></pre>
+
+<h3 id="user"><code>user</code></h3>
+<p>Allows a flag to be enabled for the username given as the condition's value.</p>
+<pre><code class="python">FLAGS = {'MY_FLAG': {'user': 'jane.doe'}}
+</code></pre>
+
+<h3 id="anonymous"><code>anonymous</code></h3>
+<p>Allows a flag to be either enabled or disabled depending on the condition's boolean value.</p>
+<pre><code class="python">FLAGS = {'MY_FLAG': {'anonymous: False}}
+</code></pre>
+
+<h3 id="parameter"><code>parameter</code></h3>
+<p>Allows a flag to be enabled based on a GET parameter with the name given as the condition's value.</p>
+<pre><code class="python">FLAGS = {'MY_FLAG': {'parameter': 'my_flag_param'}}
+</code></pre>
+
+<h3 id="path"><code>path</code></h3>
+<p>Allows a flag to be enabled if the request's path matches the condition value.</p>
+<pre><code class="python">FLAGS = {'MY_FLAG': {'path': '/flagged/path'}}
+</code></pre>
+
+<h3 id="after-date"><code>after date</code></h3>
+<p>Allows a flag to be enabled after a given date (and time) given in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 format</a>. The time must be specified either in UTC or as an offset from UTC.</p>
+<pre><code class="python">FLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/state/" class="btn btn-neutral float-right" title="Flag state">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../usage/" class="btn btn-neutral" title="Usage guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../usage/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../api/state/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

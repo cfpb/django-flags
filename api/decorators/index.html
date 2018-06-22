@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Flag decorators - Django-Flags</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../css/overrides.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Flag decorators";
+    var mkdocs_page_input_path = "api/decorators.md";
+    var mkdocs_page_url = "/api/decorators/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Django-Flags</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      
+
+
+  
+    
+
+
+<ul class="" href="/">
+  
+    
+    
+      <li class=" toctree-l1">
+        <a class="" href="/">Getting started</a>
+      </li>
+</ul>
+
+<!--
+ | This is a hacky way to pass setting from the template generator to the
+ | javascript that drives the dropdown functionality
+-->
+<div style="width: 1px; height: 1px; visibility: none;">
+
+</div>
+
+
+
+  
+    
+
+
+<ul class="" href="/usage/">
+  
+    
+    
+      <li class=" toctree-l1">
+        <a class="" href="/usage/">Usage guide</a>
+      </li>
+</ul>
+
+<!--
+ | This is a hacky way to pass setting from the template generator to the
+ | javascript that drives the dropdown functionality
+-->
+<div style="width: 1px; height: 1px; visibility: none;">
+
+</div>
+
+
+
+  
+    
+
+
+<ul class="" href="/conditions/">
+  
+    
+    
+      <li class=" toctree-l1">
+        <a class="" href="/conditions/">Built-in conditions</a>
+      </li>
+</ul>
+
+<!--
+ | This is a hacky way to pass setting from the template generator to the
+ | javascript that drives the dropdown functionality
+-->
+<div style="width: 1px; height: 1px; visibility: none;">
+
+</div>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+
+  <p class="caption">API Reference</p>
+
+
+<ul class="current" href="api/state">
+  
+    
+      
+<li class=" toctree-l1">
+  <a href="../state/" title="Flag state"
+      class="">
+    Flag state
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class="current toctree-l1">
+  <a href="./" title="Flag decorators"
+      class="current">
+    Flag decorators
+  </a>
+
+  
+  
+    
+    
+      
+  
+  
+  <ul class="current subnav">
+    
+      
+
+  
+  
+  
+
+
+  <li class="current toctree-l2">
+    
+    <ul class="current subnav">
+      
+        
+
+  
+  
+
+
+  <li class="toctree-l2 toc-item">
+    <a href="#checking-state" title="Flag decorators">Checking state</a>
+  </li>
+
+      
+        
+
+  
+  
+
+
+  <li class="toctree-l2 toc-item">
+    <a href="#requiring-state" title="Flag decorators">Requiring state</a>
+  </li>
+
+      
+    </ul>
+  </li>
+
+    
+  </ul>
+
+    
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../urls/" title="Flagged URL patterns"
+      class="">
+    Flagged URL patterns
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../django/" title="Django templates"
+      class="">
+    Django templates
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../jinja2/" title="Jinja2 templates"
+      class="">
+    Jinja2 templates
+  </a>
+
+  
+  
+</li>
+    
+      
+<li class=" toctree-l1">
+  <a href="../conditions/" title="Conditions"
+      class="">
+    Conditions
+  </a>
+
+  
+  
+</li>
+    
+</ul>
+
+<!--
+ | This is a hacky way to pass setting from the template generator to the
+ | javascript that drives the dropdown functionality
+-->
+<div style="width: 1px; height: 1px; visibility: none;">
+
+</div>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Django-Flags</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API Reference &raquo;</li>
+        
+      
+    
+    <li>Flag decorators</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="flag-decorators">Flag decorators</h1>
+<p>Decorators are provided for use with Django views and conditions that take a <code>request</code> argument. The default behavior is to return a 404 if a callable fallback is not given.</p>
+<pre><code class="python">from flags.decorators import (
+    flag_check,
+    flag_required,
+)
+</code></pre>
+
+<h2 id="checking-state">Checking state</h2>
+<h3 id="flag_checkflag_name-state-fallbacknone-kwargs"><code>flag_check(flag_name, state, fallback=None, **kwargs)</code></h3>
+<p>Check that a given flag has the given state. If the state does not match, perform the fallback.</p>
+<p><strong>Note</strong>, because flags that do not exist are taken to be <code>False</code> by default, <code>@flag_check('MY_FLAG', False)</code> and <code>@flag_check('MY_FLAG', None)</code> will both succeed if <code>MY_FLAG</code> does not exist.</p>
+<pre><code class="python">from flags.decorators import flag_check
+
+@flag_check('MY_FLAG', True)
+def view_requiring_flag(request):
+    return HttpResponse('flag was set')
+
+@flag_check('MY_OTHER_FLAG', False)
+def view_when_flag_is_not_set(request):
+    return HttpResponse('flag was set')
+
+def other_view(request):
+    return HttpResponse('flag was not set')
+
+@flag_check('MY_FLAG_WITH_FALLBACK', True, fallback=other_view)
+def view_with_fallback(request):
+    return HttpResponse('flag was set')
+</code></pre>
+
+<h2 id="requiring-state">Requiring state</h2>
+<h3 id="flag_requiredflag_name-fallback_viewnone-pass_if_settrue"><code>flag_required(flag_name, fallback_view=None, pass_if_set=True)</code></h3>
+<p>Require the given flag to be enabled.</p>
+<pre><code class="python">from flags.decorators import flag_required
+
+@flag_required('MY_FLAG')
+def view_requiring_flag(request):
+    return HttpResponse('flag was set')
+
+def other_view(request):
+    return HttpResponse('flag was not set')
+
+@flag_required('MY_FLAG_WITH_FALLBACK', fallback_view=other_view)
+def view_with_fallback(request):
+    return HttpResponse('flag was set')
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../urls/" class="btn btn-neutral float-right" title="Flagged URL patterns">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../state/" class="btn btn-neutral" title="Flag state"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../state/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../urls/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>
