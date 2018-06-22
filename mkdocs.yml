@@ -1,4 +1,5 @@
 site_name: Django-Flags
+repo_url: https://github.com/cfpb/django-flags/
 pages:
     - Getting started: index.md
     - Usage guide: usage.md
@@ -11,6 +12,12 @@ pages:
         - Jinja2 templates: api/jinja2.md
         - Conditions: api/conditions.md
 theme:
-  name: 'rtd-dropdown'
+  name: 'readthedocs'
 extra_css:
     - css/overrides.css
+markdown_extensions:
+    - tables
+    - pymdownx.github
+    - pymdownx.superfences
+    - toc:
+        permalink: "¶"

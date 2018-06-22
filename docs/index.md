@@ -80,8 +80,8 @@ urlpatterns = [
 ]
 ```
 
-Then in the Django admin add conditions for the flag in "Settings", "Flags":
+Then in the Django admin add conditions for the flag in "Django Flags", "Flag states":
 
-![Creating conditions in the Django admin](https://raw.githubusercontent.com/cfpb/django-flags/master/screenshot_create.png)
+![Creating conditions in the Django admin](images/screenshot_create.png)
 
 Then visiting the URL `/mypage?enable_my_flag=True` should show you the flagged `<div>` in the template.
