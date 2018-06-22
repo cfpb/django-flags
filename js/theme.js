@@ -38,29 +38,6 @@ $( document ).ready(function() {
     hljs.initHighlightingOnLoad();
 
     $('table').addClass('docutils');
-
-    toggleCurrent = function (elem) {
-        var parent_li = elem.closest('li');
-        parent_li.siblings('li.current').removeClass('current');
-        parent_li.siblings().find('li.current').removeClass('current');
-        parent_li.find('> ul li.current').removeClass('current');
-        parent_li.toggleClass('current');
-    }
-
-    // https://github.com/rtfd/sphinx_rtd_theme/blob/master/js/theme.js
-    $('.wy-menu-vertical ul').not('.simple').siblings('a').each(function () {
-        var link = $(this);
-            expand = $('<span class="toctree-expand"></span>');
-        expand.on('click', function (ev) {
-            toggleCurrent(link);
-            ev.stopPropagation();
-            return false;
-        });
-        link.on('click', function (ev) {
-            toggleCurrent(link);
-        });
-        link.prepend(expand);
-    });
 });
 
 window.SphinxRtdTheme = (function (jquery) {

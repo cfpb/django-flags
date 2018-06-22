@@ -10,7 +10,6 @@
   <link rel="shortcut icon" href="../../img/favicon.ico">
   <title>Flag decorators - Django-Flags</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
@@ -46,217 +45,70 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-      
-
-
-  
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Getting started</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../usage/">Usage guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../conditions/">Built-in conditions</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API Reference</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../state/">Flag state</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Flag decorators</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#flag-decorators">Flag decorators</a></li>
     
-
-
-<ul class="" href="/">
-  
-    
-    
-      <li class=" toctree-l1">
-        <a class="" href="/">Getting started</a>
-      </li>
-</ul>
-
-<!--
- | This is a hacky way to pass setting from the template generator to the
- | javascript that drives the dropdown functionality
--->
-<div style="width: 1px; height: 1px; visibility: none;">
-
-</div>
-
-
-
-  
-    
-
-
-<ul class="" href="/usage/">
-  
-    
-    
-      <li class=" toctree-l1">
-        <a class="" href="/usage/">Usage guide</a>
-      </li>
-</ul>
-
-<!--
- | This is a hacky way to pass setting from the template generator to the
- | javascript that drives the dropdown functionality
--->
-<div style="width: 1px; height: 1px; visibility: none;">
-
-</div>
-
-
-
-  
-    
-
-
-<ul class="" href="/conditions/">
-  
-    
-    
-      <li class=" toctree-l1">
-        <a class="" href="/conditions/">Built-in conditions</a>
-      </li>
-</ul>
-
-<!--
- | This is a hacky way to pass setting from the template generator to the
- | javascript that drives the dropdown functionality
--->
-<div style="width: 1px; height: 1px; visibility: none;">
-
-</div>
-
-
-
-  
-    
-    
-    
-    
-    
-    
-
-  <p class="caption">API Reference</p>
-
-
-<ul class="current" href="api/state">
-  
-    
-      
-<li class=" toctree-l1">
-  <a href="../state/" title="Flag state"
-      class="">
-    Flag state
-  </a>
-
-  
-  
-</li>
-    
-      
-<li class="current toctree-l1">
-  <a href="./" title="Flag decorators"
-      class="current">
-    Flag decorators
-  </a>
-
-  
-  
-    
-    
-      
-  
-  
-  <ul class="current subnav">
-    
-      
-
-  
-  
-  
-
-
-  <li class="current toctree-l2">
-    
-    <ul class="current subnav">
-      
+        <ul>
         
-
-  
-  
-
-
-  <li class="toctree-l2 toc-item">
-    <a href="#checking-state" title="Flag decorators">Checking state</a>
-  </li>
-
-      
+            <li><a class="toctree-l4" href="#checking-state">Checking state</a></li>
         
+            <li><a class="toctree-l4" href="#requiring-state">Requiring state</a></li>
+        
+        </ul>
+    
 
-  
-  
-
-
-  <li class="toctree-l2 toc-item">
-    <a href="#requiring-state" title="Flag decorators">Requiring state</a>
-  </li>
-
-      
     </ul>
-  </li>
-
-    
-  </ul>
-
-    
-  
-</li>
-    
-      
-<li class=" toctree-l1">
-  <a href="../urls/" title="Flagged URL patterns"
-      class="">
-    Flagged URL patterns
-  </a>
-
-  
-  
-</li>
-    
-      
-<li class=" toctree-l1">
-  <a href="../django/" title="Django templates"
-      class="">
-    Django templates
-  </a>
-
-  
-  
-</li>
-    
-      
-<li class=" toctree-l1">
-  <a href="../jinja2/" title="Jinja2 templates"
-      class="">
-    Jinja2 templates
-  </a>
-
-  
-  
-</li>
-    
-      
-<li class=" toctree-l1">
-  <a href="../conditions/" title="Conditions"
-      class="">
-    Conditions
-  </a>
-
-  
-  
-</li>
-    
-</ul>
-
-<!--
- | This is a hacky way to pass setting from the template generator to the
- | javascript that drives the dropdown functionality
--->
-<div style="width: 1px; height: 1px; visibility: none;">
-
-</div>
-
-
+                </li>
+                <li class="">
+                    
+    <a class="" href="../urls/">Flagged URL patterns</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../django/">Django templates</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../jinja2/">Jinja2 templates</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../conditions/">Conditions</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
       </div>
       &nbsp;
     </nav>
@@ -285,6 +137,9 @@
     <li>Flag decorators</li>
     <li class="wy-breadcrumbs-aside">
       
+        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/decorators.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
     </li>
   </ul>
   <hr/>
@@ -292,7 +147,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="flag-decorators">Flag decorators</h1>
+                <h1 id="flag-decorators">Flag decorators<a class="headerlink" href="#flag-decorators" title="Permanent link">¶</a></h1>
 <p>Decorators are provided for use with Django views and conditions that take a <code>request</code> argument. The default behavior is to return a 404 if a callable fallback is not given.</p>
 <pre><code class="python">from flags.decorators import (
     flag_check,
@@ -300,8 +155,8 @@
 )
 </code></pre>
 
-<h2 id="checking-state">Checking state</h2>
-<h3 id="flag_checkflag_name-state-fallbacknone-kwargs"><code>flag_check(flag_name, state, fallback=None, **kwargs)</code></h3>
+<h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
+<h3 id="flag_checkflag_name-state-fallbacknone-kwargs"><code>flag_check(flag_name, state, fallback=None, **kwargs)</code><a class="headerlink" href="#flag_checkflag_name-state-fallbacknone-kwargs" title="Permanent link">¶</a></h3>
 <p>Check that a given flag has the given state. If the state does not match, perform the fallback.</p>
 <p><strong>Note</strong>, because flags that do not exist are taken to be <code>False</code> by default, <code>@flag_check('MY_FLAG', False)</code> and <code>@flag_check('MY_FLAG', None)</code> will both succeed if <code>MY_FLAG</code> does not exist.</p>
 <pre><code class="python">from flags.decorators import flag_check
@@ -322,8 +177,8 @@ def view_with_fallback(request):
     return HttpResponse('flag was set')
 </code></pre>
 
-<h2 id="requiring-state">Requiring state</h2>
-<h3 id="flag_requiredflag_name-fallback_viewnone-pass_if_settrue"><code>flag_required(flag_name, fallback_view=None, pass_if_set=True)</code></h3>
+<h2 id="requiring-state">Requiring state<a class="headerlink" href="#requiring-state" title="Permanent link">¶</a></h2>
+<h3 id="flag_requiredflag_name-fallback_viewnone-pass_if_settrue"><code>flag_required(flag_name, fallback_view=None, pass_if_set=True)</code><a class="headerlink" href="#flag_requiredflag_name-fallback_viewnone-pass_if_settrue" title="Permanent link">¶</a></h3>
 <p>Require the given flag to be enabled.</p>
 <pre><code class="python">from flags.decorators import flag_required
 
@@ -372,6 +227,8 @@ def view_with_fallback(request):
 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../state/" style="color: #fcfcfc;">&laquo; Previous</a></span>

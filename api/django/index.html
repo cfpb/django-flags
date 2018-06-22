@@ -10,7 +10,6 @@
   <link rel="shortcut icon" href="../../img/favicon.ico">
   <title>Django templates - Django-Flags</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
@@ -46,206 +45,68 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-      
-
-
-  
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Getting started</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../usage/">Usage guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../conditions/">Built-in conditions</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API Reference</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../state/">Flag state</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../decorators/">Flag decorators</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../urls/">Flagged URL patterns</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Django templates</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#django-templates">Django templates</a></li>
     
-
-
-<ul class="" href="/">
-  
-    
-    
-      <li class=" toctree-l1">
-        <a class="" href="/">Getting started</a>
-      </li>
-</ul>
-
-<!--
- | This is a hacky way to pass setting from the template generator to the
- | javascript that drives the dropdown functionality
--->
-<div style="width: 1px; height: 1px; visibility: none;">
-
-</div>
-
-
-
-  
-    
-
-
-<ul class="" href="/usage/">
-  
-    
-    
-      <li class=" toctree-l1">
-        <a class="" href="/usage/">Usage guide</a>
-      </li>
-</ul>
-
-<!--
- | This is a hacky way to pass setting from the template generator to the
- | javascript that drives the dropdown functionality
--->
-<div style="width: 1px; height: 1px; visibility: none;">
-
-</div>
-
-
-
-  
-    
-
-
-<ul class="" href="/conditions/">
-  
-    
-    
-      <li class=" toctree-l1">
-        <a class="" href="/conditions/">Built-in conditions</a>
-      </li>
-</ul>
-
-<!--
- | This is a hacky way to pass setting from the template generator to the
- | javascript that drives the dropdown functionality
--->
-<div style="width: 1px; height: 1px; visibility: none;">
-
-</div>
-
-
-
-  
-    
-    
-    
-    
-    
-    
-
-  <p class="caption">API Reference</p>
-
-
-<ul class="current" href="api/state">
-  
-    
-      
-<li class=" toctree-l1">
-  <a href="../state/" title="Flag state"
-      class="">
-    Flag state
-  </a>
-
-  
-  
-</li>
-    
-      
-<li class=" toctree-l1">
-  <a href="../decorators/" title="Flag decorators"
-      class="">
-    Flag decorators
-  </a>
-
-  
-  
-</li>
-    
-      
-<li class=" toctree-l1">
-  <a href="../urls/" title="Flagged URL patterns"
-      class="">
-    Flagged URL patterns
-  </a>
-
-  
-  
-</li>
-    
-      
-<li class="current toctree-l1">
-  <a href="./" title="Django templates"
-      class="current">
-    Django templates
-  </a>
-
-  
-  
-    
-    
-      
-  
-  
-  <ul class="current subnav">
-    
-      
-
-  
-  
-  
-
-
-  <li class="current toctree-l2">
-    
-    <ul class="current subnav">
-      
+        <ul>
         
+            <li><a class="toctree-l4" href="#checking-state">Checking state</a></li>
+        
+        </ul>
+    
 
-  
-  
-
-
-  <li class="toctree-l2 toc-item">
-    <a href="#checking-state" title="Django templates">Checking state</a>
-  </li>
-
-      
     </ul>
-  </li>
-
-    
-  </ul>
-
-    
-  
-</li>
-    
-      
-<li class=" toctree-l1">
-  <a href="../jinja2/" title="Jinja2 templates"
-      class="">
-    Jinja2 templates
-  </a>
-
-  
-  
-</li>
-    
-      
-<li class=" toctree-l1">
-  <a href="../conditions/" title="Conditions"
-      class="">
-    Conditions
-  </a>
-
-  
-  
-</li>
-    
-</ul>
-
-<!--
- | This is a hacky way to pass setting from the template generator to the
- | javascript that drives the dropdown functionality
--->
-<div style="width: 1px; height: 1px; visibility: none;">
-
-</div>
-
-
+                </li>
+                <li class="">
+                    
+    <a class="" href="../jinja2/">Jinja2 templates</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../conditions/">Conditions</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
       </div>
       &nbsp;
     </nav>
@@ -274,6 +135,9 @@
     <li>Django templates</li>
     <li class="wy-breadcrumbs-aside">
       
+        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/django.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
     </li>
   </ul>
   <hr/>
@@ -281,13 +145,13 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="django-templates">Django templates</h1>
+                <h1 id="django-templates">Django templates<a class="headerlink" href="#django-templates" title="Permanent link">¶</a></h1>
 <p>Wagtail-Flags provides a template tag library that can be used to evaluate flags in Django templates.</p>
 <pre><code class="django">{% load feature_flags %}
 </code></pre>
 
-<h2 id="checking-state">Checking state</h2>
-<h3 id="flag_enabled"><code>flag_enabled</code></h3>
+<h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
+<h3 id="flag_enabled"><code>flag_enabled</code><a class="headerlink" href="#flag_enabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is enabled by passing the current request to its conditions, otherwise returns <code>False</code>.</p>
 <pre><code class="django">{% flag_enabled 'MY_FLAG' as my_flag %}
 {% if my_flag %}
@@ -297,7 +161,7 @@
 {% endif %}
 </code></pre>
 
-<h3 id="flag_disabled"><code>flag_disabled</code></h3>
+<h3 id="flag_disabled"><code>flag_disabled</code><a class="headerlink" href="#flag_disabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled by passing the current request to its conditions, otherwise returns <code>False</code>.</p>
 <pre><code class="django">{% flag_disabled 'MY_FLAG' as my_flag %}
 {% if my_flag %}
@@ -340,6 +204,8 @@
 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../urls/" style="color: #fcfcfc;">&laquo; Previous</a></span>
