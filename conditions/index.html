@@ -79,6 +79,8 @@
         
             <li><a class="toctree-l3" href="#after-date">after date</a></li>
         
+            <li><a class="toctree-l3" href="#custom-conditions">Custom conditions</a></li>
+        
         </ul>
     
 
@@ -176,6 +178,9 @@
 <h3 id="after-date"><code>after date</code><a class="headerlink" href="#after-date" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled after a given date (and time) given in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 format</a>. The time must be specified either in UTC or as an offset from UTC.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}</code></pre>
+
+<h2 id="custom-conditions">Custom conditions<a class="headerlink" href="#custom-conditions" title="Permanent link">¶</a></h2>
+<p>Custom conditions can be created and registered for use using the <a href="../api/conditions">conditions API</a>.</p>
               
             </div>
           </div>
