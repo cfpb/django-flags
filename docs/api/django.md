@@ -1,6 +1,6 @@
 # Django templates
 
-Wagtail-Flags provides a template tag library that can be used to evaluate flags in Django templates.
+Django-Flags provides a template tag library that can be used to evaluate flags in Django templates.
 
 ```django
 {% load feature_flags %}

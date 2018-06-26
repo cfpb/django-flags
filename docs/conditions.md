@@ -49,3 +49,7 @@ Allows a flag to be enabled after a given date (and time) given in [ISO 8601 for
 ```python
 FLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}
 ```
+
+## Custom conditions
+
+Custom conditions can be created and registered for use using the [conditions API](api/conditions).

@@ -1,6 +1,6 @@
 # Jinja2 templates
 
-Wagtail-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.
+Django-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.
 
 ```python
 from flags.template_functions import (
