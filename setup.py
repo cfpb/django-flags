@@ -15,6 +15,7 @@ testing_extras = [
 docs_extras = [
     'mkdocs>=0.17',
     'mkdocs-rtd-dropdown>=0.0.11',
+    'pymdown-extensions>=4.11',
 ]
 
 setup(
