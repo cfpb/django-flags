@@ -165,6 +165,9 @@
     ...
 )</code></pre>
 
+<p>Finally, run migrations:</p>
+<pre class="highlight"><code class="language-shell">./manage.py migrate</code></pre>
+
 <h2 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">¶</a></h2>
 <p>Feature flags in Django-Flags are identified by simple strings that are enabled when the conditions they are associated with are met. These flags can be used to wrap code and template content that should only be used when a flag is enabled or disabled.</p>
 <p>Conditions determine whether a flag is enabled or disabled by comparing a defined expected value of some kind with the value at the time the flag is checked. In many cases, the flag is checked during a request, and some piece of the request's metadata is what is compared. For example, a feature flag that is enabled for a specific user would be enabled if the request's user matches the condition's user.</p>
@@ -256,5 +259,5 @@ urlpatterns = [
 
 <!--
 MkDocs version : 0.17.4
-Build Date UTC : 2018-06-26 12:38:49
+Build Date UTC : 2018-07-27 15:32:25
 -->
