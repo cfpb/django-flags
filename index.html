@@ -166,10 +166,23 @@
 )</code></pre>
 
 <p>And <code>django.template.context_processors.request</code> to the <code>TEMPLATE_CONTEXT_PROCESSORS</code> setting:</p>
-<pre class="highlight"><code class="language-python">TEMPLATE_CONTEXT_PROCESSORS = (
-    # …
-    'django.core.context_processors.request',
-    # …
+<pre class="highlight"><code class="language-python">TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # …
+        'OPTIONS': {
+            # …
+            'context_processors': [
+                # …
+                'django.core.context_processors.request',
+                # …
+            ],
+            # …
+        },
+        # …
+    },
+]
+TEMPLATE_CONTEXT_PROCESSORS = (
 )</code></pre>
 
 <p>Finally, run migrations:</p>
@@ -266,5 +279,5 @@ urlpatterns = [
 
 <!--
 MkDocs version : 0.17.4
-Build Date UTC : 2018-07-27 18:25:43
+Build Date UTC : 2018-07-27 18:54:24
 -->
