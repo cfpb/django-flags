@@ -25,6 +25,12 @@ INSTALLED_APPS = (
 )
 ```
 
+Finally, run migrations:
+
+```shell
+./manage.py migrate
+```
+
 ## Concepts
 
 Feature flags in Django-Flags are identified by simple strings that are enabled when the conditions they are associated with are met. These flags can be used to wrap code and template content that should only be used when a flag is enabled or disabled.
