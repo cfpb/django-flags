@@ -19,10 +19,31 @@ Then add `flags` as an installed app in your Django `settings.py`:
 
 ```python
 INSTALLED_APPS = (
-    ...
+    # …
     'flags',
-    ...
+    # …
 )
+```
+
+And `django.template.context_processors.request` to the `TEMPLATES` `context_processors` setting:
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # …
+        'OPTIONS': {
+            # …
+            'context_processors': [
+                # …
+                'django.core.context_processors.request',
+                # …
+            ],
+            # …
+        },
+        # …
+    },
+]
 ```
 
 Finally, run migrations:
