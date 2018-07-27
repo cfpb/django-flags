@@ -160,9 +160,16 @@
 
 <p>Then add <code>flags</code> as an installed app in your Django <code>settings.py</code>:</p>
 <pre class="highlight"><code class="language-python">INSTALLED_APPS = (
-    ...
+    # …
     'flags',
-    ...
+    # …
+)</code></pre>
+
+<p>And <code>django.template.context_processors.request</code> to the <code>TEMPLATE_CONTEXT_PROCESSORS</code> setting:</p>
+<pre class="highlight"><code class="language-python">TEMPLATE_CONTEXT_PROCESSORS = (
+    # …
+    'django.core.context_processors.request',
+    # …
 )</code></pre>
 
 <p>Finally, run migrations:</p>
@@ -259,5 +266,5 @@ urlpatterns = [
 
 <!--
 MkDocs version : 0.17.4
-Build Date UTC : 2018-07-27 15:32:25
+Build Date UTC : 2018-07-27 18:25:43
 -->
