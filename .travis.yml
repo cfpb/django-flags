@@ -5,23 +5,17 @@ matrix:
   include:
     - env: TOXENV=lint
       python: 3.6
-    - env: TOXENV=py27-dj18-wag112
+    - env: TOXENV=py27-dj18
       python: 2.7
-    - env: TOXENV=py27-dj18-wag113
+    - env: TOXENV=py27-dj111
       python: 2.7
-    - env: TOXENV=py27-dj111-wag112
-      python: 2.7
-    - env: TOXENV=py27-dj111-wag113
-      python: 2.7
-    - env: TOXENV=py36-dj18-wag112
+    - env: TOXENV=py36-dj18
       python: 3.6
-    - env: TOXENV=py36-dj18-wag113
+    - env: TOXENV=py36-dj111
       python: 3.6
-    - env: TOXENV=py36-dj111-wag112
+    - env: TOXENV=py36-dj20
       python: 3.6
-    - env: TOXENV=py36-dj111-wag113
-      python: 3.6
-    - env: TOXENV=py36-dj20-wag20
+    - env: TOXENV=docs
       python: 3.6
 
 install:
@@ -32,3 +26,21 @@ script:
 
 after_success:
   coveralls
+
+deploy:
+  - provider: pypi
+    distributions: "sdist bdist_wheel --universal"
+    user: cfpb
+    password:
+        secure: "RQmVt7ulZ1qTr5xycobPguA6ctKfqdDaNEtjEdjgelk74g+N9lSMjGssEX0anqn3pQT0DTquby+Xb0C/MRhuWeNSTa61LESGKZ4nT02VAHsmEcmgxpcGbhtf/zvu4fztHNocF2ffSpsyq0n0YpJoT5N2znlw5sPX/aHNd+2m2tkiQu6yqUFR5PWcLDcz4KJNmyDk0miUTRHucS0yFanBsYjVCBzEWAWtnAxq5DCOW78dHOncfTCeAsMpjT/eVHOLldk9giEvBs/OJgWjFq8c/sVt3owCKhgkwbA1htXFGxofo9gl+m72cop3GEmUlOoTOMOs1AFTTMQQchyXqoLvDglRcBfOp+UhzCjEmckr7bKECa+Ok+8IeO7qyCR5Z1PsvMa5Vf12ZyEOsYs5QivQuA8tTKdB9Pni3rb/f0EqTLoWGb2Lg/WhP4GRSGxOC2SM4jJTEoi6bgzV3bvg1YIAPZIuK1whHPlo6EA1NzEOO/57iFw2G3R14Kw1B5QMXXLdKXulPc/FYRCcygqEkHl8nIe8FexeGEpJeC8URx+Gy9F0YxBL6Aqu3Jk09yhfyHTBbBaRCodfAUzt1/Ula3tOzYlIObxZhZnxNEETa3xY8lZWchXf4FEXleqsM1dGHprG1+dwBJwt1szTphd+kqc5I6/uuv1iVFOh4JAcCethG9s="
+    on:
+      tags: true
+      condition: $TOXENV = "py36-dj111"
+  - provider: pages
+    local_dir: site
+    skip-cleanup: true
+    keep-history: true
+    github_token: $GITHUB_TOKEN
+    on:
+      tags: true
+      condition: $TOXENV = "docs"

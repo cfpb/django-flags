@@ -1,0 +1,23 @@
+site_name: Django-Flags
+repo_url: https://github.com/cfpb/django-flags/
+pages:
+    - Getting started: index.md
+    - Usage guide: usage.md
+    - Built-in conditions: conditions.md
+    - API Reference:
+        - Flag state: api/state.md
+        - Flag decorators: api/decorators.md 
+        - Flagged URL patterns: api/urls.md
+        - Django templates: api/django.md
+        - Jinja2 templates: api/jinja2.md
+        - Conditions: api/conditions.md
+theme:
+  name: 'readthedocs'
+extra_css:
+    - css/overrides.css
+markdown_extensions:
+    - tables
+    - pymdownx.github
+    - pymdownx.superfences
+    - toc:
+        permalink: "¶"

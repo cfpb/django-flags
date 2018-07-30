@@ -1,7 +1,5 @@
-import importlib
 from datetime import timedelta
 
-from django.apps import apps
 from django.contrib.auth.models import AnonymousUser, User
 from django.http import HttpRequest, QueryDict
 from django.test import TestCase
@@ -17,16 +15,8 @@ from flags.conditions import (
     parameter_condition,
     path_condition,
     register,
-    site_condition,
     user_condition,
 )
-from flags.models import FlagState
-
-
-try:
-    from wagtail.core.models import Site
-except ImportError:
-    from wagtail.wagtailcore.models import Site
 
 
 class ConditionRegistryTestCase(TestCase):
@@ -160,66 +150,6 @@ class PathConditionTestCase(TestCase):
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):
             path_condition('/my/path')
-
-
-class PathConditionMigrationTestCase(TestCase):
-    # Before this migration, it was assumed that the value of the `path`
-    # condition matched from the start of the requested path. Now, a regex
-    # can be specified to get as crazy as you want with your matching.
-
-    def setUp(self):
-        self.migration = importlib.import_module(
-            'flags.migrations.0011_migrate_path_data_startswith_to_matches'
-        )
-
-    def test_migration_startswith_to_matches(self):
-        state = FlagState.objects.create(name='MY_FLAG',
-                                         condition='path',
-                                         value='/my/path')
-
-        self.migration.forwards(apps, None)
-        state.refresh_from_db()
-        self.assertEqual(state.condition, 'path matches')
-        self.assertEqual(state.value, '^/my/path')
-
-    def test_migration_startswith_to_matches_backwards(self):
-        state = FlagState.objects.create(name='MY_FLAG',
-                                         condition='path matches',
-                                         value='^/my/path')
-
-        self.migration.backwards(apps, None)
-        state.refresh_from_db()
-        self.assertEqual(state.condition, 'path')
-        self.assertEqual(state.value, '/my/path')
-
-
-class SiteConditionTestCase(TestCase):
-
-    def setUp(self):
-        self.site = Site.objects.get(is_default_site=True)
-        self.request = HttpRequest()
-        self.request.site = self.site
-
-    def test_site_valid_string(self):
-        self.assertTrue(site_condition('localhost:80', request=self.request))
-
-    def test_site_valid_string_no_port(self):
-        self.assertTrue(site_condition('localhost', request=self.request))
-
-    def test_site_valid_string_default_port(self):
-        self.assertTrue(site_condition('localhost [default]',
-                                       request=self.request))
-
-    def test_site_valid_site(self):
-        self.assertTrue(site_condition(str(self.site), request=self.request))
-
-    def test_site_invalid_site(self):
-        self.assertFalse(site_condition('non.existent.site',
-                                        request=self.request))
-
-    def test_request_required(self):
-        with self.assertRaises(RequiredForCondition):
-            site_condition('localhost:80')
 
 
 class DateConditionTestCase(TestCase):
