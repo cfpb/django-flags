@@ -50,6 +50,19 @@ class FlagsTemplateTagsTestCase(TestCase):
         )
         self.assertEqual(rendered, 'flag enabled')
 
+    def test_flag_enabled_no_request(self):
+        rendered = self.render_template(
+            '{% load feature_flags %}'
+            '{% flag_enabled "FLAG_ENABLED"  as test_flag %}'
+            '{% if test_flag %}'
+            'flag enabled'
+            '{% else %}'
+            'flag disabled'
+            '{% endif %}',
+            context={}
+        )
+        self.assertEqual(rendered, 'flag enabled')
+
     def test_flag_disabled_disabled(self):
         # Disabled can also mean non-existent
         rendered = self.render_template(
@@ -60,6 +73,20 @@ class FlagsTemplateTagsTestCase(TestCase):
             '{% else %}'
             'flag enabled'
             '{% endif %}'
+        )
+        self.assertEqual(rendered, 'flag disabled')
+
+    def test_flag_disabled_no_request(self):
+        # Disabled can also mean non-existent
+        rendered = self.render_template(
+            '{% load feature_flags %}'
+            '{% flag_disabled "FLAG_DISABLED"  as test_flag %}'
+            '{% if test_flag %}'
+            'flag disabled'
+            '{% else %}'
+            'flag enabled'
+            '{% endif %}',
+            context={}
         )
         self.assertEqual(rendered, 'flag disabled')
 

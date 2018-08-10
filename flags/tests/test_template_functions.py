@@ -14,8 +14,14 @@ class TemplateFunctionsTestCase(TestCase):
     def test_flag_enabled_false(self):
         self.assertFalse(flag_enabled('FLAG_DISABLED', request=self.request))
 
+    def test_flag_enabled_no_request(self):
+        self.assertTrue(flag_enabled('FLAG_ENABLED'))
+
     def test_flag_disabled_true(self):
         self.assertTrue(flag_disabled('FLAG_DISABLED', request=self.request))
 
     def test_flag_disabled_false(self):
         self.assertFalse(flag_disabled('FLAG_ENABLED', request=self.request))
+
+    def test_flag_disabled_no_request(self):
+        self.assertTrue(flag_disabled('FLAG_DISABLED'))

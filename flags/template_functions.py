@@ -4,11 +4,11 @@ from flags.state import (
 )
 
 
-def flag_enabled(flag_name, request):
+def flag_enabled(flag_name, request=None):
     """ Check if a flag is enabled for a given request """
     return base_flag_enabled(flag_name, request=request)
 
 
-def flag_disabled(flag_name, request):
+def flag_disabled(flag_name, request=None):
     """ Check if a flag is disabled for a given request """
     return base_flag_disabled(flag_name, request=request)
