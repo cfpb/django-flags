@@ -51,12 +51,12 @@ class FlaggedURLResolver(URLResolver):
             # the list of fallback patterns.
             fallback = self.fallback
             if isinstance(self.fallback, (list, tuple)):
-                if django.VERSION[0] >= 2:
+                if django.VERSION[0] >= 2:  # pragma: no cover
                     fallback = next((
                         p.callback for p in self.fallback_patterns
                         if p.pattern.describe() == pattern.pattern.describe()
                     ), None)
-                else:
+                else:  # pragma: no cover
                     fallback = next((
                         p.callback for p in self.fallback_patterns
                         if p.regex == pattern.regex
@@ -65,9 +65,9 @@ class FlaggedURLResolver(URLResolver):
             flag_decorator = flag_check(self.flag_name, self.state,
                                         fallback=fallback)
 
-            if django.VERSION[0] >= 2:
+            if django.VERSION[0] >= 2:  # pragma: no cover
                 route_pattern = pattern.pattern
-            else:
+            else:  # pragma: no cover
                 route_pattern = pattern.regex.pattern
 
             flagged_pattern = URLPattern(
@@ -79,14 +79,14 @@ class FlaggedURLResolver(URLResolver):
         # Next, add "negatively" flagged URLs, where the flag does not match
         # the defined state, for any remaining fallback patterns that didn't
         # match other url patterns.
-        if django.VERSION[0] >= 2:
+        if django.VERSION[0] >= 2:  # pragma: no cover
             # Django >= 2.0
             described_patterns = [p.pattern.describe() for p in url_patterns]
             negative_patterns = (
                 p for p in self.fallback_patterns
                 if p.pattern.describe() not in described_patterns
             )
-        else:
+        else:  # pragma: no cover
             described_patterns = [p.regex for p in url_patterns]
             negative_patterns = (
                 p for p in self.fallback_patterns
@@ -96,9 +96,9 @@ class FlaggedURLResolver(URLResolver):
         for pattern in negative_patterns:
             flag_decorator = flag_check(self.flag_name, not self.state)
 
-            if django.VERSION[0] >= 2:
+            if django.VERSION[0] >= 2:  # pragma: no cover
                 route_pattern = pattern.pattern
-            else:
+            else:  # pragma: no cover
                 route_pattern = pattern.regex.pattern
 
             flagged_pattern = URLPattern(
@@ -152,11 +152,11 @@ def _flagged_paths(flag_name, state=True, fallback=None, Pattern=None):
     yield flagged_url_wrapper
 
 
-if django.VERSION[0] >= 2:
+if django.VERSION[0] >= 2:  # pragma: no cover
     flagged_path = partial(_flagged_path, Pattern=RoutePattern)
     flagged_re_path = partial(_flagged_path, Pattern=RegexPattern)
     flagged_paths = partial(_flagged_paths, Pattern=RoutePattern)
     flagged_re_paths = partial(_flagged_paths, Pattern=RegexPattern)
-else:
+else:  # pragma: no cover
     flagged_url = partial(_flagged_path, Pattern=None)
     flagged_urls = partial(_flagged_paths, Pattern=None)

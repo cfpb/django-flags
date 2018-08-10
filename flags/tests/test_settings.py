@@ -1,6 +1,6 @@
 try:
     from unittest.mock import Mock
-except ImportError:
+except ImportError:  # pragma: no cover
     from mock import Mock
 
 from django.test import TestCase, override_settings
