@@ -58,13 +58,10 @@ class FlaggedViewMixinTestCase(TestCase):
 
     @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': {'boolean': True}})
     def test_fallback_view_function_enabled(self):
-        def test_view_function(request, *args, **kwargs):
-            return HttpResponse('fallback fn')
-
         view = TestView.as_view(
             flag_name=self.flag_name,
             condition=True,
-            fallback=test_view_function
+            fallback=lambda r: HttpResponse('fallback fn')
         )
 
         response = view(self.request())
