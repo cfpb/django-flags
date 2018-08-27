@@ -17,7 +17,10 @@ extra_css:
     - css/overrides.css
 markdown_extensions:
     - tables
-    - pymdownx.github
+    - markdown.extensions.tables
+    - pymdownx.magiclink
+    - pymdownx.betterem
+    - pymdownx.tilde
     - pymdownx.superfences
     - toc:
         permalink: "¶"
