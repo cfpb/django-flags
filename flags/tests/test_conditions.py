@@ -17,6 +17,7 @@ from flags.conditions import (
     register,
     user_condition,
 )
+from mock import MagicMock
 
 
 class ConditionRegistryTestCase(TestCase):
@@ -79,6 +80,13 @@ class UserConditionTestCase(TestCase):
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):
             user_condition('testuser')
+
+    def test_with_custom_user(self):
+        mock_user = MagicMock()
+        mock_user.get_username.return_value = 'test@test.com'
+        self.request.user = mock_user
+
+        self.assertTrue(user_condition('test@test.com', request=self.request))
 
 
 class AnonymousConditionTestCase(TestCase):

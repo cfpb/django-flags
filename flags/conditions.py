@@ -1,8 +1,6 @@
 import re
 
 import django
-from django.apps import apps
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils import dateparse, timezone
 
 
@@ -68,11 +66,7 @@ def user_condition(username, request=None, **kwargs):
         raise RequiredForCondition("request is required for condition "
                                    "'user'")
 
-    User = apps.get_model('auth', 'User')
-    try:
-        return request.user == User.objects.get(username=username)
-    except ObjectDoesNotExist:
-        return False
+    return request.user.get_username() == username
 
 
 @register('anonymous')
