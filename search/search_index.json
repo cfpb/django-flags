@@ -237,7 +237,7 @@
         },
         {
             "location": "/api/jinja2/",
-            "text": "Jinja2 templates\n\u00b6\n\n\nDjango-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.\n\n\nfrom flags.template_functions import (\n    flag_enabled,\n    flag_disabled\n)\nfrom jinja2 import Environment\n\n...\n\nenv = Environment(\u2026)\nenv.globals.update(\n    flag_enabled=flag_enabled,\n    flag_disabled=flag_disabled\n)\n\n\n\nChecking state\n\u00b6\n\n\nflag_enabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is enabled by for the given request, otherwise returns \nFalse\n.\n\n\n{% if flag_enabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nflag_disabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is disabled by passing the current request to its conditions, otherwise returns \nFalse\n.\nReturns \nTrue\n if a flag is disabled by for the given request, otherwise returns \nFalse\n.\n\n\n{% if flag_disabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}",
+            "text": "Jinja2 templates\n\u00b6\n\n\nDjango-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.\n\n\nfrom flags.template_functions import (\n    flag_enabled,\n    flag_disabled\n)\nfrom jinja2 import Environment\n\n...\n\nenv = Environment(\u2026)\nenv.globals.update(\n    flag_enabled=flag_enabled,\n    flag_disabled=flag_disabled\n)\n\n\n\nChecking state\n\u00b6\n\n\nflag_enabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is enabled by for the given request, otherwise returns \nFalse\n.\n\n\n{% if flag_enabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nrequest\n is optional.\n\n\nflag_disabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is disabled by passing the current request to its conditions, otherwise returns \nFalse\n.\nReturns \nTrue\n if a flag is disabled by for the given request, otherwise returns \nFalse\n.\n\n\n{% if flag_disabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}\n\n\n\nrequest\n is optional.",
             "title": "Jinja2 templates"
         },
         {
@@ -252,12 +252,12 @@
         },
         {
             "location": "/api/jinja2/#flag_enabled",
-            "text": "Returns  True  if a flag is enabled by for the given request, otherwise returns  False .  {% if flag_enabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}",
+            "text": "Returns  True  if a flag is enabled by for the given request, otherwise returns  False .  {% if flag_enabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}  request  is optional.",
             "title": "flag_enabled"
         },
         {
             "location": "/api/jinja2/#flag_disabled",
-            "text": "Returns  True  if a flag is disabled by passing the current request to its conditions, otherwise returns  False .\nReturns  True  if a flag is disabled by for the given request, otherwise returns  False .  {% if flag_disabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}",
+            "text": "Returns  True  if a flag is disabled by passing the current request to its conditions, otherwise returns  False .\nReturns  True  if a flag is disabled by for the given request, otherwise returns  False .  {% if flag_disabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}  request  is optional.",
             "title": "flag_disabled"
         },
         {
