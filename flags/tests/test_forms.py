@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+from flags.conditions import CONDITIONS, register
 from flags.forms import FlagStateForm
 
 
@@ -25,3 +26,19 @@ class FormTestCase(TestCase):
             'condition': ['This field is required.'],
             'value': ['This field is required.'],
         })
+
+    def test_condition_choices_are_bound_late(self):
+        @register('fake_condition')
+        def fake_condition():
+            return True
+
+        def cleanup_condition(condition_name):
+            del CONDITIONS[condition_name]
+
+        self.addCleanup(cleanup_condition, 'fake_condition')
+
+        form = FlagStateForm()
+        self.assertIn(
+            ('fake_condition', 'fake_condition'),
+            form.fields['condition'].choices
+        )
