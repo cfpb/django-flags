@@ -30,7 +30,7 @@ class FormTestCase(TestCase):
     def test_condition_choices_are_bound_late(self):
         @register('fake_condition')
         def fake_condition():
-            return True
+            return True  # pragma: no cover
 
         def cleanup_condition(condition_name):
             del CONDITIONS[condition_name]

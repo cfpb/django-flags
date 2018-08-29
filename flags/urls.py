@@ -118,9 +118,9 @@ def _flagged_path(flag_name, route, view, kwargs=None, name=None,
                                   state,
                                   fallback=fallback)(view)
 
-        if Pattern:
+        if Pattern:  # pragma: no cover
             route_pattern = Pattern(route, name=name, is_endpoint=True)
-        else:
+        else:  # pragma: no cover
             route_pattern = route
 
         return URLPattern(route_pattern, flagged_view, kwargs, name)
@@ -128,9 +128,9 @@ def _flagged_path(flag_name, route, view, kwargs=None, name=None,
     elif isinstance(view, (list, tuple)):
         urlconf_module, app_name, namespace = view
 
-        if Pattern:
+        if Pattern:  # pragma: no cover
             route_pattern = Pattern(route, name=name, is_endpoint=True)
-        else:
+        else:  # pragma: no cover
             route_pattern = route
 
         return FlaggedURLResolver(
