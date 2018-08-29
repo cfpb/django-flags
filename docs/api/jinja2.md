@@ -32,6 +32,8 @@ Returns `True` if a flag is enabled by for the given request, otherwise returns 
 {% endif %}
 ```
 
+`request` is optional.
+
 ### `flag_disabled`
 
 Returns `True` if a flag is disabled by passing the current request to its conditions, otherwise returns `False`.
@@ -44,3 +46,5 @@ Returns `True` if a flag is disabled by for the given request, otherwise returns
   </div>
 {% endif %}
 ```
+
+`request` is optional.
