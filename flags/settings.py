@@ -1,4 +1,3 @@
-import logging
 from importlib import import_module
 
 from django.apps import apps
@@ -7,8 +6,6 @@ from django.utils.functional import cached_property
 
 from flags.conditions import get_condition
 
-
-logger = logging.getLogger(__name__)
 
 # Private set of all flags from sources in FLAG_SOURCES. This is
 # populated on AppConfig.ready() by add_flags_from_sources below.
