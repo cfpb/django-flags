@@ -3,6 +3,7 @@ try:
 except ImportError:  # pragma: no cover
     from mock import Mock
 
+from django.core.cache import cache
 from django.test import TestCase, override_settings
 
 import flags.settings
@@ -41,9 +42,11 @@ class FlagTestCase(TestCase):
 
     def test_conditions(self):
         flag = Flag('MY_FLAG', {'boolean': True})
-        FlagState.objects.create(name='MY_FLAG',
-                                 condition='parameter',
-                                 value='MY_FLAG')
+        FlagState.objects.create(
+            name='MY_FLAG',
+            condition='parameter',
+            value='MY_FLAG'
+        )
         self.assertEqual(len(list(flag.conditions)), 2)
 
     def test_check_state(self):
@@ -58,6 +61,19 @@ class FlagTestCase(TestCase):
         request = Mock(path='/foo')
         flag = Flag('MY_FLAG', {'boolean': False, 'path matches': '/foo'})
         self.assertTrue(flag.check_state(request=request))
+
+    @override_settings(FLAGS_CACHE_CONDITIONS=True)
+    def test_get_flags_reads_from_cache(self):
+        cache.set('flags',
+                  ('test condition', 'value', None))
+        conditions = get_flags()
+        self.assertEqual(conditions, ('test condition', 'value', None))
+
+    @override_settings(FLAGS_CACHE_CONDITIONS=True)
+    def test_get_flags_populates_cache(self):
+        self.assertIsNone(cache.get('flags'))
+        get_flags()
+        self.assertIsNotNone(cache.get('flags'))
 
 
 class SettingsTestCase(TestCase):
