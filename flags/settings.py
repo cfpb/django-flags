@@ -33,7 +33,10 @@ class Flag:
         """ Get all flag conditions configured in settings """
         # Get condition callables for our settings-configured conditions
         conditions = [
-            (c, v, None)
+            # Previously, this tuple was (condition, fn, value, obj).
+            # The fn is fetched in `check_state` now, but the position is
+            # being preserved for API-compatibility until 4.0.
+            (c, None, v, None)
             for c, v in self.__configured_conditions.items()
         ]
         return conditions
@@ -44,7 +47,10 @@ class Flag:
         # Get condition callables for our dynamic-configured conditions
         FlagState = apps.get_model('flags', 'FlagState')
         conditions = [
-            (s.condition, s.value, s)
+            # Previously, this tuple was (condition, fn, value, obj).
+            # The fn is fetched in `check_state` now, but the position is
+            # being preserved for API-compatibility until 4.0.
+            (s.condition, None, s.value, s)
             for s in FlagState.objects.filter(name=self.name)
         ]
         return conditions
@@ -58,7 +64,7 @@ class Flag:
         """ Determine this flag's state based on any of its conditions """
         return any(
             fn(v, **kwargs)
-            for c, v, o in self.conditions
+            for c, n, v, o in self.conditions
             for fn in get_condition(c)
         )
 
