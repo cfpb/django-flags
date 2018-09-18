@@ -82,7 +82,7 @@ Default: `{}`
 
 ## Caching flag conditions
 
-It is possible that a request cycle could check numerous flags, or check a single flag multiple times. Because flag conditions created in the Django admin are stored in the database, this can result in multiple identical database queries. To cache flag conditions with a cache key of `flags_conditions`:
+It is possible that a request cycle could check numerous flags, or check a single flag multiple times. Because flag conditions created in the Django admin are stored in the database, this can result in multiple identical database queries. The default cache key is `flags`. To enable caching of flag conditions with a cache key of `flags_conditions`:
 
 ```python
 FLAGS_CACHE_CONDITIONS = True
