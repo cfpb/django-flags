@@ -87,7 +87,6 @@ def add_flags_from_sources(sources=None):
                 raise DuplicateFlagException("{} duplicated in {}".format(
                     flag, source_str))
 
-            cache.delete('flags_conditions_' + flag)
             SOURCED_FLAGS[flag] = getattr(source, flag)
 
 

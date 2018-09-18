@@ -26,7 +26,7 @@ class FlagStateTestCase(TestCase):
             condition='boolean',
             value='True'
         )
-        self.assertIsNone(cache.get('flags_conditions_MY_FLAG'))
+        self.assertIsNone(cache.get('flags'))
 
     @override_settings(FLAGS_CACHE_CONDITIONS=True)
     def test_delete_signal_receiver(self):
