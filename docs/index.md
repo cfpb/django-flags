@@ -25,7 +25,7 @@ INSTALLED_APPS = (
 )
 ```
 
-And `django.template.context_processors.request` to the `TEMPLATES` `context_processors` setting:
+And `django.template.context_processors.request` to the `TEMPLATES` `context_processors` setting so that the `request` variable is available:
 
 ```python
 TEMPLATES = [
@@ -44,6 +44,16 @@ TEMPLATES = [
         # …
     },
 ]
+```
+
+(Optionally) add `flags.middleware.FlagConditionsMiddleware` to `MIDDLEWARE` to avoid looking up flag conditions more than once per request:
+
+```python
+MIDDLEWARE = (
+    # …
+    'flags.middleware.FlagConditionsMiddleware',
+    # …
+)
 ```
 
 Finally, run migrations:

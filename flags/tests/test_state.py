@@ -1,12 +1,12 @@
-from django.http import HttpRequest
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 
+from flags.settings import Flag
 from flags.state import flag_disabled, flag_enabled, flag_state
 
 
 class FlagStateTestCase(TestCase):
     def setUp(self):
-        self.request = HttpRequest()
+        self.factory = RequestFactory()
 
     def test_non_existent_flag(self):
         """ Non-existent flags always have a default state of False """
@@ -22,8 +22,22 @@ class FlagStateTestCase(TestCase):
 
     def test_flag_state_non_existent_flag_site(self):
         """ Given a site non-existent flags should still be False """
+        request = self.factory.get('/test')
         self.assertFalse(flag_state('FLAG_DOES_NOT_EXIST',
-                                    request=self.request))
+                                    request=request))
+
+    def test_flag_state_request_in_kwargs_with_conditions(self):
+        request = self.factory.get('/test')
+        request.FLAG_CONDITIONS = {
+            'MIDDLEWARE_FLAGGED': Flag(
+                'MIDDLEWARE_FLAGGED', {'boolean': True}
+            )
+        }
+        self.assertTrue(flag_state('MIDDLEWARE_FLAGGED', request=request))
+
+    def test_flag_state_request_in_kwargs_without_conditions(self):
+        request = self.factory.get('/test')
+        self.assertFalse(flag_state('MIDDLEWARE_FLAGGED', request=request))
 
     def test_flag_enabled_enabled(self):
         """ Global flags enabled should be True """
