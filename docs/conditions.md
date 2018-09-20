@@ -1,4 +1,6 @@
-# Built-in conditions
+# Conditions
+
+## Built-in conditions
 
 Django-Flags comes with the following conditions built-in:
 
@@ -23,7 +25,7 @@ FLAGS = {'MY_FLAG': {'user': 'jane.doe'}}
 Allows a flag to be either enabled or disabled depending on the condition's boolean value.
 
 ```python
-FLAGS = {'MY_FLAG': {'anonymous: False}}
+FLAGS = {'MY_FLAG': {'anonymous': False}}
 ```
 
 ### `parameter`

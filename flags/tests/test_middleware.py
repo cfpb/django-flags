@@ -9,6 +9,9 @@ from flags.middleware import FlagConditionsMiddleware
 from flags.state import flag_state
 
 
+@override_settings(
+    FLAG_SOURCES=('flags.sources.SettingsFlagsSource', )
+)
 class FlagConditionsMiddlewareTestCase(SimpleTestCase):
     def setUp(self):
         self.factory = RequestFactory()

@@ -5,18 +5,16 @@ except ImportError:  # pragma: no cover
 
 from django.test import TestCase, override_settings
 
-import flags.settings
-from flags.models import FlagState
-from flags.settings import (
-    DuplicateFlagException,
-    Flag,
-    add_flags_from_sources,
-    get_flags,
-)
+from flags.settings import Flag, get_flags, get_flags_from_sources
 
 
-# Test flag for using this module to test
-SOURCED_FLAG = True
+# Test flag source for using this module to test
+class TestFlagsSource(object):
+    def get_flags(self):
+        return {
+            'SOURCED_FLAG': {'boolean': True},
+            'NOT_IN_SETTINGS_FLAG': {'boolean': False}
+        }
 
 
 class FlagTestCase(TestCase):
@@ -26,25 +24,9 @@ class FlagTestCase(TestCase):
         flag2 = Flag('MY_FLAG')
         self.assertEqual(flag1, flag2)
 
-    def test_configured_conditions(self):
-        flag = Flag('MY_FLAG', {'boolean': True})
-        # Check the conditions length
-        self.assertEqual(len(list(flag.configured_conditions)), 1)
-
-    def test_dynamic_conditions(self):
-        # Add a dyanmic (database) condition
-        flag = Flag('MY_FLAG')
-        FlagState.objects.create(name='MY_FLAG',
-                                 condition='parameter',
-                                 value='MY_FLAG')
-        self.assertEqual(len(list(flag.dynamic_conditions)), 1)
-
     def test_conditions(self):
         flag = Flag('MY_FLAG', {'boolean': True})
-        FlagState.objects.create(name='MY_FLAG',
-                                 condition='parameter',
-                                 value='MY_FLAG')
-        self.assertEqual(len(list(flag.conditions)), 2)
+        self.assertEqual(len(list(flag.conditions)), 1)
 
     def test_check_state(self):
         flag = Flag('MY_FLAG', {'boolean': True})
@@ -62,25 +44,27 @@ class FlagTestCase(TestCase):
 
 class SettingsTestCase(TestCase):
 
-    def tearDown(self):
-        # Reset SOURCED_FLAGS after each test
-        flags.settings.SOURCED_FLAGS = {}
-
-    def test_add_flags_from_sources(self):
-        add_flags_from_sources(sources=['flags.tests.test_settings'])
-        self.assertTrue(flags.settings.SOURCED_FLAGS['SOURCED_FLAG'])
+    def test_get_flags_from_sources(self):
+        sourced_flags = get_flags_from_sources(
+            sources=['flags.tests.test_settings.TestFlagsSource', ]
+        )
+        self.assertTrue(sourced_flags['SOURCED_FLAG']['boolean'])
+        self.assertIn('NOT_IN_SETTINGS_FLAG', sourced_flags)
 
     def test_add_flags_from_sources_non_existent(self):
         with self.assertRaises(ImportError):
-            add_flags_from_sources(sources=['non.existent.module'])
+            get_flags_from_sources(sources=['non.existent.module'])
 
-    @override_settings(FLAGS={'GLOBAL_FLAG': {}})
+    @override_settings(FLAGS={'SOURCED_FLAG': {}, 'OTHER_FLAG': {}})
     def test_get_flags(self):
-        add_flags_from_sources(sources=['flags.tests.test_settings'])
-        self.assertIn('GLOBAL_FLAG', get_flags())
-        self.assertIn('SOURCED_FLAG', get_flags())
-
-    @override_settings(FLAGS={'SOURCED_FLAG': {}})
-    def test_duplicate_global_flags(self):
-        with self.assertRaises(DuplicateFlagException):
-            add_flags_from_sources(sources=['flags.tests.test_settings'])
+        sourced_flags = get_flags_from_sources(
+            sources=[
+                'flags.sources.SettingsFlagsSource',
+                'flags.tests.test_settings.TestFlagsSource',
+            ]
+        )
+        flags = get_flags(sourced_flags=sourced_flags)
+        self.assertIn('OTHER_FLAG', flags)
+        self.assertIn('SOURCED_FLAG', flags)
+        self.assertEqual(len(flags['OTHER_FLAG'].conditions), 0)
+        self.assertEqual(len(flags['SOURCED_FLAG'].conditions), 1)

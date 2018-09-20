@@ -4,7 +4,7 @@ pages:
     - Getting started: index.md
     - Usage guide: usage.md
     - Settings: settings.md
-    - Built-in conditions: conditions.md
+    - Conditions: conditions.md
     - API Reference:
         - Flag state: api/state.md
         - Flag decorators: api/decorators.md 
