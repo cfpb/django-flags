@@ -27,7 +27,8 @@ a:hover,
 .wy-menu-vertical .caption-text {
     color: #ffffff;
 }
-.wy-menu-vertical li.current .subnav a {
+.wy-menu-vertical li.current .subnav a,
+.wy-menu-vertical .subnav li.current a {
     color: #101820;
 }
 .wy-nav-side {

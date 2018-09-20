@@ -16,7 +16,7 @@ FLAGS = {
 
 The set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).
 
-Additional conditions can be added in the Django admin for any defined flag (illustrated in [Usage](#usage)). Conditions added in the Django admin can be changed without restarting Django, conditions defined in `settings.py` cannot. See below [for a list of built-in conditions](#built-in-conditions).
+Additional conditions can be added in the Django admin for any defined flag (illustrated in [Quickstart](../#quickstart)). Conditions added in the Django admin can be changed without restarting Django, conditions defined in `settings.py` cannot. See [the list of built-in conditions](conditions).
 
 ## Using flags in code
 
@@ -41,7 +41,7 @@ Django templates:
 {% endif %}
 ```
 
-Jinja2 templates (after [adding `flag_enabled` to the Jinja2 environment](#jinja2-templates)):
+Jinja2 templates (after [adding `flag_enabled` to the Jinja2 environment](api/jinja2/)):
 
 ```jinja
 {% if flag_enabled('MY_FLAG', request) %}
@@ -71,4 +71,4 @@ urlpatterns = [
 ]
 ```
 
-See the [API documentation below](#api) for more details and examples.
+See the [API reference](/api/state) for more details and examples.
