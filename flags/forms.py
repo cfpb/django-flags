@@ -2,16 +2,19 @@ from django import forms
 
 from flags.conditions import get_conditions
 from flags.models import FlagState
-from flags.settings import get_flags
+from flags.sources import get_flags
 
 
 class FlagStateForm(forms.ModelForm):
-
-    name = forms.ChoiceField(label="Flag",
-                             required=True)
-    condition = forms.ChoiceField(label="Is enabled when",
-                                  required=True)
-    value = forms.CharField(label="Is", required=True)
+    name = forms.ChoiceField(
+        label="Flag", required=True
+    )
+    condition = forms.ChoiceField(
+        label="Is enabled when", required=True
+    )
+    value = forms.CharField(
+        label="Is", required=True
+    )
 
     def __init__(self, *args, **kwargs):
         super(FlagStateForm, self).__init__(*args, **kwargs)

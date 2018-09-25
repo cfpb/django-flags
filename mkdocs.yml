@@ -6,6 +6,7 @@ pages:
     - Settings: settings.md
     - Conditions: conditions.md
     - API Reference:
+        - Flag sources: api/sources.md
         - Flag state: api/state.md
         - Flag decorators: api/decorators.md 
         - Flagged URL patterns: api/urls.md

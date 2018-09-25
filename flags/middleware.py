@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 from django.utils.deprecation import MiddlewareMixin
 
-from flags.settings import get_flags
+from flags.sources import get_flags
 
 
 class FlagConditionsMiddleware(MiddlewareMixin):

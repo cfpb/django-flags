@@ -23,4 +23,4 @@ FLAGS = {
 
 Default: `('flags.sources.SettingsFlagsSource', 'flags.sources.DatabaseFlagsSource',)`
 
-A list or tuple containing the full Python path to a class that provides a `get_flags()` method. The `get_flags() method is expected to return a dictionary of flags and conditions formatted like the `FLAGS` setting above. All flags returned by all flag sources will be available to check. Conditions that are duplicated by sources that appear later in the list will take precidence over previous ones.
+A list or tuple containing the full Python path strings to classes that provides a [`get_flags()` method](api/sources/#flag-sources). The `get_flags()` method is expected to return a dictionary of flags and [`Condition` objects](api/sources/#conditioncondition-value-sourcenone-objnone). All flags returned by all flag sources will be available to check.
