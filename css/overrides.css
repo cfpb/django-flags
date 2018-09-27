@@ -13,6 +13,13 @@ a:hover,
 .wy-body-for-nav {
     background-color: #ffffff;
 }
+.wy-nav-top {
+    background: #1e9642;
+}
+.wy-nav-top a,
+.wy-nav-top a:visited {
+    color: #ffffff;
+}
 .wy-side-nav-search {
     background-color: #1e9642;
 }
@@ -27,7 +34,8 @@ a:hover,
 .wy-menu-vertical .caption-text {
     color: #ffffff;
 }
-.wy-menu-vertical li.current .subnav a {
+.wy-menu-vertical li.current .subnav a,
+.wy-menu-vertical .subnav li.current a {
     color: #101820;
 }
 .wy-nav-side {
@@ -45,4 +53,5 @@ a:hover,
 }
 footer {
     color: #5a5d61;
+}
 }

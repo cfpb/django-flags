@@ -32,7 +32,7 @@
         },
         {
             "location": "/usage/",
-            "text": "Usage guide\n\u00b6\n\n\nDefining flags\n\u00b6\n\n\nFlags are defined in Django settings with the conditions in which they are enabled.\n\n\nFLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'MY_FLAG': {\n    'condition name': 'value flag is expected to match to be enabled',\n    'user': 'lady.liberty'\n  }\n}\n\n\n\nThe set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).\n\n\nAdditional conditions can be added in the Django admin for any defined flag (illustrated in \nUsage\n). Conditions added in the Django admin can be changed without restarting Django, conditions defined in \nsettings.py\n cannot. See below \nfor a list of built-in conditions\n.\n\n\nUsing flags in code\n\u00b6\n\n\nFlags can be used in Python code:\n\n\nfrom flags.state import flag_enabled\n\nif flag_enabled('MY_FLAG', request=a_request):\n    print(\"My feature flag is enabled\") \n\n\n\nDjango templates:\n\n\n{% load feature_flags %}\n{% flag_enabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div>\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nJinja2 templates (after \nadding \nflag_enabled\n to the Jinja2 environment\n):\n\n\n{% if flag_enabled('MY_FLAG', request) %}\n  <div>\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nDjango 2.0 \nurls.py\n:\n\n\nfrom flags.urls import flagged_path\n\nurlpatterns = [\n    flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),\n]\n\n\n\nAnd Django 1.x \nurls.py\n:\n\n\nfrom flags.urls import flagged_url\n\nurlpatterns = [\n    flagged_url('MY_FLAG', r'^a-url$', view_requiring_flag, state=True),\n]\n\n\n\nSee the \nAPI documentation below\n for more details and examples.",
+            "text": "Usage guide\n\u00b6\n\n\nDefining flags\n\u00b6\n\n\nFlags are defined in Django settings with the conditions in which they are enabled.\n\n\nFLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'MY_FLAG': {\n    'condition name': 'value flag is expected to match to be enabled',\n    'user': 'lady.liberty'\n  }\n}\n\n\n\nThe set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).\n\n\nAdditional conditions can be added in the Django admin for any defined flag (illustrated in \nQuickstart\n). Conditions added in the Django admin can be changed without restarting Django, conditions defined in \nsettings.py\n cannot. See \nthe list of built-in conditions\n.\n\n\nUsing flags in code\n\u00b6\n\n\nFlags can be used in Python code:\n\n\nfrom flags.state import flag_enabled\n\nif flag_enabled('MY_FLAG', request=a_request):\n    print(\"My feature flag is enabled\") \n\n\n\nDjango templates:\n\n\n{% load feature_flags %}\n{% flag_enabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div>\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nJinja2 templates (after \nadding \nflag_enabled\n to the Jinja2 environment\n):\n\n\n{% if flag_enabled('MY_FLAG', request) %}\n  <div>\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nDjango 2.0 \nurls.py\n:\n\n\nfrom flags.urls import flagged_path\n\nurlpatterns = [\n    flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),\n]\n\n\n\nAnd Django 1.x \nurls.py\n:\n\n\nfrom flags.urls import flagged_url\n\nurlpatterns = [\n    flagged_url('MY_FLAG', r'^a-url$', view_requiring_flag, state=True),\n]\n\n\n\nSee the \nAPI reference\n for more details and examples.",
             "title": "Usage guide"
         },
         {
@@ -42,13 +42,33 @@
         },
         {
             "location": "/usage/#defining-flags",
-            "text": "Flags are defined in Django settings with the conditions in which they are enabled.  FLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'MY_FLAG': {\n    'condition name': 'value flag is expected to match to be enabled',\n    'user': 'lady.liberty'\n  }\n}  The set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).  Additional conditions can be added in the Django admin for any defined flag (illustrated in  Usage ). Conditions added in the Django admin can be changed without restarting Django, conditions defined in  settings.py  cannot. See below  for a list of built-in conditions .",
+            "text": "Flags are defined in Django settings with the conditions in which they are enabled.  FLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'MY_FLAG': {\n    'condition name': 'value flag is expected to match to be enabled',\n    'user': 'lady.liberty'\n  }\n}  The set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).  Additional conditions can be added in the Django admin for any defined flag (illustrated in  Quickstart ). Conditions added in the Django admin can be changed without restarting Django, conditions defined in  settings.py  cannot. See  the list of built-in conditions .",
             "title": "Defining flags"
         },
         {
             "location": "/usage/#using-flags-in-code",
-            "text": "Flags can be used in Python code:  from flags.state import flag_enabled\n\nif flag_enabled('MY_FLAG', request=a_request):\n    print(\"My feature flag is enabled\")   Django templates:  {% load feature_flags %}\n{% flag_enabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div>\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}  Jinja2 templates (after  adding  flag_enabled  to the Jinja2 environment ):  {% if flag_enabled('MY_FLAG', request) %}\n  <div>\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}  Django 2.0  urls.py :  from flags.urls import flagged_path\n\nurlpatterns = [\n    flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),\n]  And Django 1.x  urls.py :  from flags.urls import flagged_url\n\nurlpatterns = [\n    flagged_url('MY_FLAG', r'^a-url$', view_requiring_flag, state=True),\n]  See the  API documentation below  for more details and examples.",
+            "text": "Flags can be used in Python code:  from flags.state import flag_enabled\n\nif flag_enabled('MY_FLAG', request=a_request):\n    print(\"My feature flag is enabled\")   Django templates:  {% load feature_flags %}\n{% flag_enabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div>\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}  Jinja2 templates (after  adding  flag_enabled  to the Jinja2 environment ):  {% if flag_enabled('MY_FLAG', request) %}\n  <div>\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}  Django 2.0  urls.py :  from flags.urls import flagged_path\n\nurlpatterns = [\n    flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),\n]  And Django 1.x  urls.py :  from flags.urls import flagged_url\n\nurlpatterns = [\n    flagged_url('MY_FLAG', r'^a-url$', view_requiring_flag, state=True),\n]  See the  API reference  for more details and examples.",
             "title": "Using flags in code"
+        },
+        {
+            "location": "/settings/",
+            "text": "Settings\n\u00b6\n\n\nDefining flags\n\u00b6\n\n\nFLAGS\n\u00b6\n\n\nDefault: \n{}\n\n\nA dictionary of available feature flags and optional conditions. Flags must be defined in this dictionary to be available in the Django Admin for users to add and remove conditions that way.\n\n\nThis dictionary takes the following format:\n\n\nFLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'FLAG_WITH_CONDITIONS': {\n    'condition name': 'value flag is expected to match to be enabled',\n  }\n}",
+            "title": "Settings"
+        },
+        {
+            "location": "/settings/#settings",
+            "text": "",
+            "title": "Settings"
+        },
+        {
+            "location": "/settings/#defining-flags",
+            "text": "",
+            "title": "Defining flags"
+        },
+        {
+            "location": "/settings/#flags",
+            "text": "Default:  {}  A dictionary of available feature flags and optional conditions. Flags must be defined in this dictionary to be available in the Django Admin for users to add and remove conditions that way.  This dictionary takes the following format:  FLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'FLAG_WITH_CONDITIONS': {\n    'condition name': 'value flag is expected to match to be enabled',\n  }\n}",
+            "title": "FLAGS"
         },
         {
             "location": "/conditions/",
