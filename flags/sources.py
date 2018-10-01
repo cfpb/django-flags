@@ -9,13 +9,15 @@ from flags.conditions import get_condition
 class SettingsFlagsSource(object):
 
     def get_flags(self):
-        flags = {
-            flag: [
-                Condition(c, v, source=self)
-                for c, v in conditions.items()
-            ]
-            for flag, conditions in getattr(settings, 'FLAGS', {}).items()
-        }
+        settings_flags = getattr(settings, 'FLAGS', {}).items()
+        flags = {}
+        for flag, conditions in settings_flags:
+            # Flag conditions in settings used to be dicts. We expect 2-tuples
+            # now but contiune to support dicts. At some point, we should issue
+            # deprecation warnings about dicts and then deprecate support.
+            if isinstance(conditions, dict):
+                conditions = conditions.items()
+            flags[flag] = [Condition(c, v, source=self) for c, v in conditions]
 
         return flags
 

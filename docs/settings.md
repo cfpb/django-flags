@@ -6,18 +6,25 @@
 
 Default: `{}`
 
-A dictionary of available feature flags and optional conditions. Flags *must* be defined in this dictionary to be available to check and to add/remove conditions in the Django Admin.
+A dictionary of available feature flags and optional conditions. Flags *must* be defined in this dictionary to be available to check and to add/remove conditions in the Django Admin. Conditions can either be included as:
 
-This dictionary takes the following format:
+- A dictionary with the condition name as the key anv expected value as value
+- A list of 2-tuples with the format `(condition name: expected value)`
 
 ```python
 FLAGS = {
   'FLAG_WITH_EMPTY_CONDITIONS': {}
-  'FLAG_WITH_CONDITIONS': {
+  'FLAG_WITH_DICT_CONDITIONS': {
     'condition name': 'value flag is expected to match to be enabled',
-  }
+  },
+  'FLAG_WITH_LISTED_CONDITIONS': [
+    ('path matches',  r'^/matching-path.*'),
+    (''path matches',  r'^/other-path.*'),
+  ]
 }
 ```
+
+The advantage of a list of 2-tuples is that the same condition can be repeated for different expected values.
 
 ### `FLAGS_SOURCES`
 
