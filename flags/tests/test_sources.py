@@ -19,9 +19,9 @@ from flags.sources import (
 class TestFlagsSource(object):
     def get_flags(self):
         return {
-            'SOURCED_FLAG': [Condition('boolean', True, source=self), ],
+            'SOURCED_FLAG': [Condition('boolean', True), ],
             'NOT_IN_SETTINGS_FLAG': [
-                Condition('boolean', False, source=self),
+                Condition('boolean', False),
             ]
         }
 
@@ -87,10 +87,6 @@ class GetFlagsTestCase(TestCase):
         )
         self.assertTrue(flags['SOURCED_FLAG'].conditions[0].value)
         self.assertIn('NOT_IN_SETTINGS_FLAG', flags)
-        self.assertTrue(isinstance(
-            flags['SOURCED_FLAG'].conditions[0].source,
-            TestFlagsSource
-        ))
 
     def test_add_flags_from_sources_non_existent(self):
         with self.assertRaises(ImportError):
