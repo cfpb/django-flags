@@ -28,7 +28,7 @@ TEMPLATES = [
 
 ### `flag_enabled`
 
-Returns `True` if a flag is enabled for the current request, otherwise returns `False`.
+Returns `True` if a flag is enabled, otherwise returns `False`.
 
 ```jinja
 {% if flag_enabled('MY_FLAG') %}
@@ -40,7 +40,7 @@ Returns `True` if a flag is enabled for the current request, otherwise returns `
 
 ### `flag_disabled`
 
-Returns `True` if a flag is disabled for the current request to its conditions, otherwise returns `False`.
+Returns `True` if a flag is disabled to its conditions, otherwise returns `False`.
 
 ```jinja
 {% if flag_disabled('MY_FLAG') %}
@@ -50,11 +50,14 @@ Returns `True` if a flag is disabled for the current request to its conditions, 
 {% endif %}
 ```
 
+If a `request` exists in the current context,
+it will be passed to any conditions that use it.
+
 
 ## Passing additional arguments
 
-For some flag conditions, you may want to pass in additional keyword arguments.
-For example, you could pass in the `page` object:
+Some conditions take additional keyword arguments.
+For example, you could pass a `page` object:
 
 ```jinja
 {% if flag_enabled('MY_FLAG_THAT_CHECKS_PAGE', page=page) %}

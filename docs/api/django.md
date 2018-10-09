@@ -10,7 +10,7 @@ Django-Flags provides a template tag library that can be used to evaluate flags 
 
 ### `flag_enabled`
 
-Returns `True` if a flag is enabled by passing the current request to its conditions, otherwise returns `False`.
+Returns `True` if a flag is enabled, otherwise returns `False`.
 
 ```django
 {% flag_enabled 'MY_FLAG' as my_flag %}
@@ -23,7 +23,7 @@ Returns `True` if a flag is enabled by passing the current request to its condit
 
 ### `flag_disabled`
 
-Returns `True` if a flag is disabled by passing the current request to its conditions, otherwise returns `False`.
+Returns `True` if a flag is disabled, otherwise returns `False`.
 
 ```django
 {% flag_disabled 'MY_FLAG' as my_flag %}
@@ -34,11 +34,14 @@ Returns `True` if a flag is disabled by passing the current request to its condi
 {% endif %}
 ```
 
+If a `request` exists in the current context,
+it will be passed to any conditions that use it.
+
 
 ## Passing additional arguments
 
-For some flag conditions, you may want to pass in additional keyword arguments.
-For example, you could pass in the `page` object:
+Some conditions take additional keyword arguments.
+For example, you could pass a `page` object:
 
 ```django
 {% flag_enabled 'MY_FLAG_THAT_CHECKS_PAGE' page=page as my_flag %}
