@@ -1,6 +1,6 @@
+from flags.templatetags.feature_flags import flag_disabled, flag_enabled
 from jinja2 import contextfunction
 from jinja2.ext import Extension
-from flags.templatetags.feature_flags import flag_disabled, flag_enabled
 
 
 class FlagsExtension(Extension):
