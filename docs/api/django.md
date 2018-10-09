@@ -33,3 +33,16 @@ Returns `True` if a flag is disabled by passing the current request to its condi
   </div>
 {% endif %}
 ```
+
+
+## Passing additional arguments
+
+For some flag conditions, you may want to pass in additional keyword arguments.
+For example, you could pass in the `page` object:
+
+```django
+{% flag_enabled 'MY_FLAG_THAT_CHECKS_PAGE' page=page as my_flag %}
+{% if my_flag %}
+  This flag with a condition that uses the page object evaluated to True.
+{% endif %}
+```
