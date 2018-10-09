@@ -15,18 +15,20 @@ else:  # pragma: no cover
     simple_tag = register.assignment_tag
 
 
-def _flag_fn(fn, name):
-    @simple_tag(takes_context=True, name=name)
-    def wrapped(context, flag_name, request=None, **kwargs):
-        if request is None:
-            request = context.get('request')
-        return fn(flag_name, request=request, **kwargs)
-
-    return wrapped
-
-
 # Creates template tags flag_enabled and flag_disabled that call
 # base_flag_enabled and base_flag_disabled, passing in any arguments, including
 # the request (which could be passed explicitly, or pulled from the context).
-flag_enabled = _flag_fn(base_flag_enabled, 'flag_enabled')
-flag_disabled = _flag_fn(base_flag_disabled, 'flag_disabled')
+
+
+@simple_tag(takes_context=True)
+def flag_enabled(context, flag_name, request=None, **kwargs):
+    if request is None:
+        request = context.get('request')
+    return base_flag_enabled(flag_name, request=request, **kwargs)
+
+
+@simple_tag(takes_context=True)
+def flag_disabled(context, flag_name, request=None, **kwargs):
+    if request is None:
+        request = context.get('request')
+    return base_flag_disabled(flag_name, request=request, **kwargs)
