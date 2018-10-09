@@ -16,8 +16,7 @@ templates_override = [
 
 
 @override_settings(
-    TEMPLATES=templates_override,
-    FLAGS={'MY_FLAG': {'boolean': 'True'}}
+    TEMPLATES=templates_override
 )
 class FlagsExtensionTests(TestCase):
     def setUp(self):
@@ -25,12 +24,24 @@ class FlagsExtensionTests(TestCase):
 
     def test_jinja2_flag_enabled_tag(self):
         template = self.jinja_engine.from_string(
-            '{{ flag_enabled("MY_FLAG") }}'
+            '{{ flag_enabled("FLAG_ENABLED") }}'
         )
         self.assertEqual(template.render({'request': None}), 'True')
 
-    def test_flag_disabled_tag(self):
+    def test_jinja2_flag_disabled_tag(self):
         template = self.jinja_engine.from_string(
-            '{{ flag_disabled("MY_FLAG") }}'
+            '{{ flag_disabled("FLAG_ENABLED") }}'
+        )
+        self.assertEqual(template.render({'request': None}), 'False')
+
+    def test_jinja2_flag_enabled_tag_with_kwarg(self):
+        template = self.jinja_engine.from_string(
+            '{{ flag_enabled("FLAG_ENABLED_WITH_KWARG", passed_value=4) }}'
+        )
+        self.assertEqual(template.render({'request': None}), 'True')
+
+    def test_jinja2_flag_disabled_tag_with_kwarg(self):
+        template = self.jinja_engine.from_string(
+            '{{ flag_disabled("FLAG_ENABLED_WITH_KWARG", passed_value=4) }}'
         )
         self.assertEqual(template.render({'request': None}), 'False')

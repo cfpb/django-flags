@@ -16,7 +16,7 @@ class FlagsTemplateTagsTestCase(TestCase):
     def test_flag_enabled_disabled(self):
         rendered = self.render_template(
             '{% load feature_flags %}'
-            '{% flag_enabled "FLAG_DISABLED"  as test_flag %}'
+            '{% flag_enabled "FLAG_DISABLED" as test_flag %}'
             '{% if test_flag %}'
             'flag enabled'
             '{% else %}'
@@ -29,7 +29,7 @@ class FlagsTemplateTagsTestCase(TestCase):
         # Disabled can also mean non-existent
         rendered = self.render_template(
             '{% load feature_flags %}'
-            '{% flag_enabled "FLAG_DOES_NOT_EXIST"  as test_flag %}'
+            '{% flag_enabled "FLAG_DOES_NOT_EXIST" as test_flag %}'
             '{% if test_flag %}'
             'flag enabled'
             '{% else %}'
@@ -41,7 +41,7 @@ class FlagsTemplateTagsTestCase(TestCase):
     def test_flag_enabled_enabled(self):
         rendered = self.render_template(
             '{% load feature_flags %}'
-            '{% flag_enabled "FLAG_ENABLED"  as test_flag %}'
+            '{% flag_enabled "FLAG_ENABLED" as test_flag %}'
             '{% if test_flag %}'
             'flag enabled'
             '{% else %}'
@@ -53,7 +53,20 @@ class FlagsTemplateTagsTestCase(TestCase):
     def test_flag_enabled_no_request(self):
         rendered = self.render_template(
             '{% load feature_flags %}'
-            '{% flag_enabled "FLAG_ENABLED"  as test_flag %}'
+            '{% flag_enabled "FLAG_ENABLED" as test_flag %}'
+            '{% if test_flag %}'
+            'flag enabled'
+            '{% else %}'
+            'flag disabled'
+            '{% endif %}',
+            context={}
+        )
+        self.assertEqual(rendered, 'flag enabled')
+
+    def test_flag_enabled_with_kwarg(self):
+        rendered = self.render_template(
+            '{% load feature_flags %}'
+            '{% flag_enabled "FLAG_ENABLED_WITH_KWARG" passed_value=4 as test_flag %}'  # noqa 502
             '{% if test_flag %}'
             'flag enabled'
             '{% else %}'
@@ -67,7 +80,7 @@ class FlagsTemplateTagsTestCase(TestCase):
         # Disabled can also mean non-existent
         rendered = self.render_template(
             '{% load feature_flags %}'
-            '{% flag_disabled "FLAG_DISABLED"  as test_flag %}'
+            '{% flag_disabled "FLAG_DISABLED" as test_flag %}'
             '{% if test_flag %}'
             'flag disabled'
             '{% else %}'
@@ -80,7 +93,7 @@ class FlagsTemplateTagsTestCase(TestCase):
         # Disabled can also mean non-existent
         rendered = self.render_template(
             '{% load feature_flags %}'
-            '{% flag_disabled "FLAG_DISABLED"  as test_flag %}'
+            '{% flag_disabled "FLAG_DISABLED" as test_flag %}'
             '{% if test_flag %}'
             'flag disabled'
             '{% else %}'
@@ -90,10 +103,23 @@ class FlagsTemplateTagsTestCase(TestCase):
         )
         self.assertEqual(rendered, 'flag disabled')
 
+    def test_flag_disabled_with_kwarg(self):
+        rendered = self.render_template(
+            '{% load feature_flags %}'
+            '{% flag_disabled "FLAG_ENABLED_WITH_KWARG" passed_value=4 as test_flag %}'  # noqa 502
+            '{% if test_flag %}'
+            'flag enabled'
+            '{% else %}'
+            'flag disabled'
+            '{% endif %}',
+            context={}
+        )
+        self.assertEqual(rendered, 'flag disabled')
+
     def test_flag_disabled_does_not_exist(self):
         rendered = self.render_template(
             '{% load feature_flags %}'
-            '{% flag_disabled "FLAG_DOES_NOT_EXIST"  as test_flag %}'
+            '{% flag_disabled "FLAG_DOES_NOT_EXIST" as test_flag %}'
             '{% if test_flag %}'
             'flag disabled'
             '{% else %}'
@@ -105,7 +131,7 @@ class FlagsTemplateTagsTestCase(TestCase):
     def test_flag_disabled_enabled(self):
         rendered = self.render_template(
             '{% load feature_flags %}'
-            '{% flag_disabled "FLAG_ENABLED"  as test_flag %}'
+            '{% flag_disabled "FLAG_ENABLED" as test_flag %}'
             '{% if test_flag %}'
             'flag disabled'
             '{% else %}'
