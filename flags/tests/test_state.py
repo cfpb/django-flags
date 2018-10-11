@@ -1,6 +1,5 @@
 from django.test import RequestFactory, TestCase
 
-from flags.settings import Flag
 from flags.state import flag_disabled, flag_enabled, flag_state
 
 
@@ -25,19 +24,6 @@ class FlagStateTestCase(TestCase):
         request = self.factory.get('/test')
         self.assertFalse(flag_state('FLAG_DOES_NOT_EXIST',
                                     request=request))
-
-    def test_flag_state_request_in_kwargs_with_conditions(self):
-        request = self.factory.get('/test')
-        request.FLAG_CONDITIONS = {
-            'MIDDLEWARE_FLAGGED': Flag(
-                'MIDDLEWARE_FLAGGED', {'boolean': True}
-            )
-        }
-        self.assertTrue(flag_state('MIDDLEWARE_FLAGGED', request=request))
-
-    def test_flag_state_request_in_kwargs_without_conditions(self):
-        request = self.factory.get('/test')
-        self.assertFalse(flag_state('MIDDLEWARE_FLAGGED', request=request))
 
     def test_flag_enabled_enabled(self):
         """ Global flags enabled should be True """
