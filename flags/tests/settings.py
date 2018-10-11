@@ -4,6 +4,8 @@ import os
 
 import django
 
+from flags.conditions import register
+
 
 SECRET_KEY = 'not needed'
 
@@ -59,7 +61,13 @@ TEMPLATES = [{
 
 FLAGS = {
     'FLAG_ENABLED': {'boolean': True},
-    'FLAG_ENABLED2': {'boolean': True},
+    'FLAG_ENABLED_WITH_KWARG': {'flag_enabled_with_kwarg': (2 + 2)},
     'FLAG_DISABLED': {'boolean': False},
     'DB_FLAG': {},
 }
+
+
+@register('flag_enabled_with_kwarg')
+def kwarg_condition(expected_value, passed_value=None, **kwargs):
+    """Checks that an expected value matches a passed value"""
+    return expected_value == passed_value
