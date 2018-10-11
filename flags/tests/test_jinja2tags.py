@@ -26,22 +26,22 @@ class FlagsExtensionTests(TestCase):
         template = self.jinja_engine.from_string(
             '{{ flag_enabled("FLAG_ENABLED") }}'
         )
-        self.assertEqual(template.render({'request': None}), 'True')
+        self.assertEqual(template.render(), 'True')
 
     def test_jinja2_flag_disabled_tag(self):
         template = self.jinja_engine.from_string(
             '{{ flag_disabled("FLAG_ENABLED") }}'
         )
-        self.assertEqual(template.render({'request': None}), 'False')
+        self.assertEqual(template.render(), 'False')
 
     def test_jinja2_flag_enabled_tag_with_kwarg(self):
         template = self.jinja_engine.from_string(
             '{{ flag_enabled("FLAG_ENABLED_WITH_KWARG", passed_value=4) }}'
         )
-        self.assertEqual(template.render({'request': None}), 'True')
+        self.assertEqual(template.render(), 'True')
 
     def test_jinja2_flag_disabled_tag_with_kwarg(self):
         template = self.jinja_engine.from_string(
             '{{ flag_disabled("FLAG_ENABLED_WITH_KWARG", passed_value=4) }}'
         )
-        self.assertEqual(template.render({'request': None}), 'False')
+        self.assertEqual(template.render(), 'False')

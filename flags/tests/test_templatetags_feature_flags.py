@@ -71,8 +71,7 @@ class FlagsTemplateTagsTestCase(TestCase):
             'flag enabled'
             '{% else %}'
             'flag disabled'
-            '{% endif %}',
-            context={}
+            '{% endif %}'
         )
         self.assertEqual(rendered, 'flag enabled')
 
@@ -111,8 +110,7 @@ class FlagsTemplateTagsTestCase(TestCase):
             'flag enabled'
             '{% else %}'
             'flag disabled'
-            '{% endif %}',
-            context={}
+            '{% endif %}'
         )
         self.assertEqual(rendered, 'flag disabled')
 
