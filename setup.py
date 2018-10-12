@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 long_description = open('README.md', 'r').read()
 
 install_requires = [
-    'Django>=1.8,<2.2',
+    'Django>=1.11,<2.2',
 ]
 
 testing_extras = [
@@ -39,7 +39,6 @@ setup(
     classifiers=[
         'Framework :: Django',
         'Framework :: Django :: 1.11',
-        'Framework :: Django :: 1.8',
         'Framework :: Django :: 2.0',
         'Framework :: Django :: 2.1',
         'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',

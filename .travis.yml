@@ -5,12 +5,8 @@ matrix:
   include:
     - env: TOXENV=lint
       python: 3.6
-    - env: TOXENV=py27-dj18
-      python: 2.7
     - env: TOXENV=py27-dj111
       python: 2.7
-    - env: TOXENV=py36-dj18
-      python: 3.6
     - env: TOXENV=py36-dj111
       python: 3.6
     - env: TOXENV=py36-dj20
