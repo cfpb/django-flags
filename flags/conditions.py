@@ -10,7 +10,11 @@ from django.utils import dateparse, timezone
 CONDITIONS = {}
 
 
-class RequiredForCondition(Exception):
+class DuplicateCondition(ValueError):
+    """ Raised when registering a condition that is already registered """
+
+
+class RequiredForCondition(AttributeError):
     """ Raised when a kwarg that is required for a condition is not given """
 
 
@@ -21,7 +25,6 @@ def register(condition_name, fn=None):
     when checking the flag state. """
     global CONDITIONS
 
-    # Don't be a decorator, just register
     if fn is None:
         # Be a decorator
         def decorator(fn):
@@ -29,10 +32,15 @@ def register(condition_name, fn=None):
             return fn
         return decorator
 
-    if condition_name not in CONDITIONS:
-        CONDITIONS[condition_name] = []
+    # Don't be a decorator, just register
+    if condition_name in CONDITIONS:
+        raise DuplicateCondition(
+            'Flag condition "{name}" already registered.'.format(
+                name=condition_name
+            )
+        )
 
-    CONDITIONS[condition_name].append(fn)
+    CONDITIONS[condition_name] = fn
 
 
 def get_conditions():
@@ -42,10 +50,8 @@ def get_conditions():
 
 def get_condition(condition_name):
     """ Generator to fetch condition checkers from the registry """
-    if condition_name not in CONDITIONS:
-        raise StopIteration
-    for condition_fn in CONDITIONS[condition_name]:
-        yield condition_fn
+    if condition_name in CONDITIONS:
+        return CONDITIONS[condition_name]
 
 
 @register('boolean')

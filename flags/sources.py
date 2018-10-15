@@ -12,13 +12,13 @@ class Condition(object):
     def __init__(self, condition, value):
         self.condition = condition
         self.value = value
-        self.checkers = get_condition(self.condition)
+        self.fn = get_condition(self.condition)
 
     def __eq__(self, other):
         return other.condition == self.condition and other.value == self.value
 
     def check(self, **kwargs):
-        return any(c(self.value, **kwargs) for c in self.checkers)
+        return self.fn(self.value, **kwargs)
 
 
 class Flag(object):
