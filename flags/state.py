@@ -20,11 +20,11 @@ def flag_state(flag_name, **kwargs):
     if flags is None:
         flags = get_flags()
 
-    if flag_name not in flags:
-        return False
+    flag = flags.get(flag_name)
+    if flag is not None:
+        return flag.check_state(**kwargs)
 
-    flag = flags[flag_name]
-    return flag.check_state(**kwargs)
+    return None
 
 
 def flag_enabled(flag_name, **kwargs):

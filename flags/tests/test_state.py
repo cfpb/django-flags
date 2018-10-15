@@ -8,7 +8,11 @@ class FlagStateTestCase(TestCase):
         self.factory = RequestFactory()
 
     def test_non_existent_flag(self):
-        """ Non-existent flags always have a default state of False """
+        """ Non-existent flags return None """
+        self.assertIsNone(flag_state('FLAG_DOES_NOT_EXIST'))
+
+    def test_non_existent_flag_evaluates_to_false(self):
+        """ Non-existent flags are falsy """
         self.assertFalse(flag_state('FLAG_DOES_NOT_EXIST'))
 
     def test_flag_state_enabled(self):
