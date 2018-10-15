@@ -12,7 +12,7 @@ from flags.state import (
 
 ### `flag_state(flag_name, **kwargs)`
 
-Return the value for the flag (`True` or `False`) by passing kwargs to its conditions.
+Return the value for the flag (`True` or `False`) by passing kwargs to its conditions. If the flag does not exist, this will return `None` so that existence can be introspected but will still evaluate to `False`.
 
 ## Requiring state
 
