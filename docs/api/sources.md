@@ -1,6 +1,6 @@
 # Flag Sources
 
-Django-Flags provides a means to provide custom flag sources using the [`FLAG_SOURCES` setting](../settings/#flag_sources). Flag sources are simply classes implement a `get_flags` method that returns a dictionary of flag name keys with a list of [`Condition`](#conditioncondition-value-sourcenone-objnone) objects.
+Django-Flags provides a means to provide custom flag sources using the [`FLAG_SOURCES` setting](../settings/#flag_sources). Flag sources are classes that provide a `get_flags` method. The `get_flags` method must return a dictionary of flag name keys with a list of [`Condition`](#conditioncondition-value-sourcenone-objnone) objects.
 
 ```python
 from flags.sources import Condition
