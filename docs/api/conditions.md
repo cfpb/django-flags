@@ -29,7 +29,13 @@ def path_condition(path, request=None, **kwargs):
 conditions.register('path', fn=path_condition)
 ```
 
+Will raise a `conditions.DuplicateCondition` exception if the condition name is already registered.
+
 ## Exceptions
+
+### `conditions.DuplicateCondition`
+
+Exception raised by `conditions.register` if the condition name being registered is already registered.
 
 ### `conditions.RequiredForCondition`
 

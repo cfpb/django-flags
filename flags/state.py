@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from flags.middleware import FlagConditionsMiddleware
-from flags.settings import get_flags
+from flags.sources import get_flags
 
 
 def flag_state(flag_name, **kwargs):

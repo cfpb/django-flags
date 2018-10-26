@@ -7,6 +7,7 @@ from django.utils import timezone
 
 from flags.conditions import (
     CONDITIONS,
+    DuplicateCondition,
     RequiredForCondition,
     anonymous_condition,
     boolean_condition,
@@ -26,13 +27,21 @@ class ConditionRegistryTestCase(TestCase):
         fn = lambda conditional_value: True
         register('decorated')(fn)
         self.assertIn('decorated', CONDITIONS)
-        self.assertEqual(CONDITIONS['decorated'], [fn])
+        self.assertEqual(CONDITIONS['decorated'], fn)
 
     def test_register_fn(self):
         fn = lambda conditional_value: True
         register('undecorated', fn=fn)
         self.assertIn('undecorated', CONDITIONS)
-        self.assertEqual(CONDITIONS['undecorated'], [fn])
+        self.assertEqual(CONDITIONS['undecorated'], fn)
+
+    def test_register_dup_condition(self):
+        with self.assertRaises(DuplicateCondition):
+            register('boolean', fn=lambda value: value)
+
+    def test_register_decorator_dup_condition(self):
+        with self.assertRaises(DuplicateCondition):
+            register('boolean')(lambda value: value)
 
     def test_register_required_kwargs(self):
         pass
@@ -40,10 +49,10 @@ class ConditionRegistryTestCase(TestCase):
     def test_get_condition(self):
         fn = lambda conditional_value: True
         register('gettable', fn=fn)
-        self.assertEqual(list(get_condition('gettable')), [fn])
+        self.assertEqual(get_condition('gettable'), fn)
 
     def test_get_condition_none(self):
-        self.assertEqual(list(get_condition('notgettable')), [])
+        self.assertEqual(get_condition('notgettable'), None)
 
 
 class BooleanConditionTestCase(TestCase):
