@@ -1,76 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    
     <url>
      <loc>/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
      <loc>/usage/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
      <loc>/settings/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
      <loc>/conditions/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-        
+    <url>
+     <loc>/api/sources/</loc>
+     <lastmod>2018-10-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
     <url>
      <loc>/api/state/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>/api/decorators/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>/api/urls/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>/api/django/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>/api/jinja2/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
      <loc>/api/conditions/</loc>
-     <lastmod>2018-09-27</lastmod>
+     <lastmod>2018-10-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
+    <url>
+     <loc>/releasenotes/</loc>
+     <lastmod>2018-10-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
 </urlset>

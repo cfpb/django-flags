@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/",
-            "text": "Django-Flags\n\u00b6\n\n\nFeature flags allow you to toggle functionality in both Django code and the Django templates based on configurable conditions. Flags can be useful for staging feature deployments, for A/B testing, or for any time you need an on/off switch for blocks of code. The toggle can be by date, user, URL value, or a number of \nother conditions\n, editable in the admin or in definable in settings.\n\n\nDependencies\n\u00b6\n\n\n\n\nDjango 1.8+ (including Django 2.0)\n\n\nPython 2.7+, 3.6+\n\n\n\n\nInstallation\n\u00b6\n\n\nFirst, install django-flags:\n\n\npip install django-flags\n\n\n\nThen add \nflags\n as an installed app in your Django \nsettings.py\n:\n\n\nINSTALLED_APPS = (\n    # \u2026\n    'flags',\n    # \u2026\n)\n\n\n\nAnd \ndjango.template.context_processors.request\n to the \nTEMPLATES\n \ncontext_processors\n setting:\n\n\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # \u2026\n        'OPTIONS': {\n            # \u2026\n            'context_processors': [\n                # \u2026\n                'django.core.context_processors.request',\n                # \u2026\n            ],\n            # \u2026\n        },\n        # \u2026\n    },\n]\n\n\n\nFinally, run migrations:\n\n\n./manage.py migrate\n\n\n\nConcepts\n\u00b6\n\n\nFeature flags in Django-Flags are identified by simple strings that are enabled when the conditions they are associated with are met. These flags can be used to wrap code and template content that should only be used when a flag is enabled or disabled.\n\n\nConditions determine whether a flag is enabled or disabled by comparing a defined expected value of some kind with the value at the time the flag is checked. In many cases, the flag is checked during a request, and some piece of the request's metadata is what is compared. For example, a feature flag that is enabled for a specific user would be enabled if the request's user matches the condition's user.\n\n\nQuickstart\n\u00b6\n\n\nTo use Django-Flags you first need to define the flag, use the flag, and define conditions for the flag to be enabled.\n\n\nFirst, define the flag in Django \nsettings.py\n:\n\n\nFLAGS = {\n    'MY_FLAG': {}\n}\n\n\n\nThen use the flag in a Django template (\nmytemplate.html\n):\n\n\n{% load feature_flags %}\n{% flag_enabled 'MY_FLAG' as my_flag %}\n\n{% if my_flag %}\n  <div class=\"flagged-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nConfigure a URL for that template (\nurls.py\n):\n\n\nDjango 2.0:\n\n\nfrom django.urls import path\nfrom django.views.generic import TemplateView\n\nurlpatterns = [\n    path(r'mypage/', TemplateView.as_view(template_name='mytemplate.html')),\n]\n\n\n\nDjango 1.x:\n\n\nfrom django.conf.urls import url\nfrom django.views.generic import TemplateView\n\nurlpatterns = [\n    url(r'^mypage/$', TemplateView.as_view(template_name='mytemplate.html')),\n]\n\n\n\nThen in the Django admin add conditions for the flag in \"Django Flags\", \"Flag states\":\n\n\n\n\nThen visiting the URL \n/mypage?enable_my_flag=True\n should show you the flagged \n<div>\n in the template.",
+            "text": "Django-Flags\n\u00b6\n\n\nFeature flags allow you to toggle functionality in both Django code and the Django templates based on configurable conditions. Flags can be useful for staging feature deployments, for A/B testing, or for any time you need an on/off switch for blocks of code. The toggle can be by date, user, URL value, or a number of \nother conditions\n, editable in the admin or in definable in settings.\n\n\nDependencies\n\u00b6\n\n\n\n\nDjango 1.8+ (including Django 2.0)\n\n\nPython 2.7+, 3.6+\n\n\n\n\nInstallation\n\u00b6\n\n\nFirst, install django-flags:\n\n\npip install django-flags\n\n\n\nThen add \nflags\n as an installed app in your Django \nsettings.py\n:\n\n\nINSTALLED_APPS = (\n    # \u2026\n    'flags',\n    # \u2026\n)\n\n\n\nAnd \ndjango.template.context_processors.request\n to the \nTEMPLATES\n \ncontext_processors\n setting so that the \nrequest\n variable is available:\n\n\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # \u2026\n        'OPTIONS': {\n            # \u2026\n            'context_processors': [\n                # \u2026\n                'django.core.context_processors.request',\n                # \u2026\n            ],\n            # \u2026\n        },\n        # \u2026\n    },\n]\n\n\n\n(Optionally) add \nflags.middleware.FlagConditionsMiddleware\n to \nMIDDLEWARE\n to avoid looking up flag conditions more than once per request:\n\n\nMIDDLEWARE = (\n    # \u2026\n    'flags.middleware.FlagConditionsMiddleware',\n    # \u2026\n)\n\n\n\nFinally, run migrations:\n\n\n./manage.py migrate\n\n\n\nConcepts\n\u00b6\n\n\nFeature flags in Django-Flags are identified by simple strings that are enabled when the conditions they are associated with are met. These flags can be used to wrap code and template content that should only be used when a flag is enabled or disabled.\n\n\nConditions determine whether a flag is enabled or disabled by comparing a defined expected value of some kind with the value at the time the flag is checked. In many cases, the flag is checked during a request, and some piece of the request's metadata is what is compared. For example, a feature flag that is enabled for a specific user would be enabled if the request's user matches the condition's user.\n\n\nQuickstart\n\u00b6\n\n\nTo use Django-Flags you first need to define the flag, use the flag, and define conditions for the flag to be enabled.\n\n\nFirst, define the flag in Django \nsettings.py\n:\n\n\nFLAGS = {\n    'MY_FLAG': {}\n}\n\n\n\nThen use the flag in a Django template (\nmytemplate.html\n):\n\n\n{% load feature_flags %}\n{% flag_enabled 'MY_FLAG' as my_flag %}\n\n{% if my_flag %}\n  <div class=\"flagged-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nConfigure a URL for that template (\nurls.py\n):\n\n\nDjango 2.0:\n\n\nfrom django.urls import path\nfrom django.views.generic import TemplateView\n\nurlpatterns = [\n    path(r'mypage/', TemplateView.as_view(template_name='mytemplate.html')),\n]\n\n\n\nDjango 1.x:\n\n\nfrom django.conf.urls import url\nfrom django.views.generic import TemplateView\n\nurlpatterns = [\n    url(r'^mypage/$', TemplateView.as_view(template_name='mytemplate.html')),\n]\n\n\n\nThen in the Django admin add conditions for the flag in \"Django Flags\", \"Flag states\":\n\n\n\n\nThen visiting the URL \n/mypage?enable_my_flag=True\n should show you the flagged \n<div>\n in the template.",
             "title": "Getting started"
         },
         {
@@ -17,7 +17,7 @@
         },
         {
             "location": "/#installation",
-            "text": "First, install django-flags:  pip install django-flags  Then add  flags  as an installed app in your Django  settings.py :  INSTALLED_APPS = (\n    # \u2026\n    'flags',\n    # \u2026\n)  And  django.template.context_processors.request  to the  TEMPLATES   context_processors  setting:  TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # \u2026\n        'OPTIONS': {\n            # \u2026\n            'context_processors': [\n                # \u2026\n                'django.core.context_processors.request',\n                # \u2026\n            ],\n            # \u2026\n        },\n        # \u2026\n    },\n]  Finally, run migrations:  ./manage.py migrate",
+            "text": "First, install django-flags:  pip install django-flags  Then add  flags  as an installed app in your Django  settings.py :  INSTALLED_APPS = (\n    # \u2026\n    'flags',\n    # \u2026\n)  And  django.template.context_processors.request  to the  TEMPLATES   context_processors  setting so that the  request  variable is available:  TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # \u2026\n        'OPTIONS': {\n            # \u2026\n            'context_processors': [\n                # \u2026\n                'django.core.context_processors.request',\n                # \u2026\n            ],\n            # \u2026\n        },\n        # \u2026\n    },\n]  (Optionally) add  flags.middleware.FlagConditionsMiddleware  to  MIDDLEWARE  to avoid looking up flag conditions more than once per request:  MIDDLEWARE = (\n    # \u2026\n    'flags.middleware.FlagConditionsMiddleware',\n    # \u2026\n)  Finally, run migrations:  ./manage.py migrate",
             "title": "Installation"
         },
         {
@@ -52,7 +52,7 @@
         },
         {
             "location": "/settings/",
-            "text": "Settings\n\u00b6\n\n\nDefining flags\n\u00b6\n\n\nFLAGS\n\u00b6\n\n\nDefault: \n{}\n\n\nA dictionary of available feature flags and optional conditions. Flags must be defined in this dictionary to be available in the Django Admin for users to add and remove conditions that way.\n\n\nThis dictionary takes the following format:\n\n\nFLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'FLAG_WITH_CONDITIONS': {\n    'condition name': 'value flag is expected to match to be enabled',\n  }\n}",
+            "text": "Settings\n\u00b6\n\n\nDefining flags\n\u00b6\n\n\nFLAGS_SOURCES\n\u00b6\n\n\nDefault: \n('flags.sources.SettingsFlagsSource', 'flags.sources.DatabaseFlagsSource',)\n\n\nA list or tuple containing the full Python path strings to classes that provides a \nget_flags()\n method\n. The \nget_flags()\n method is expected to return a dictionary of flags and \nCondition\n objects\n. All flags returned by all flag sources will be available to check.\n\n\nFLAGS\n\u00b6\n\n\nDefault: \n{}\n\n\nA dictionary of feature flags and optional conditions used when \n'flags.sources.SettingsFlagsSource'\n is in \nFLAGS_SOURCES\n.\n\n\nConditions can either be included as:\n\n\n\n\nA dictionary with the condition name as the key and expected value as value\n\n\nA list of 2-tuples with the format \n(condition name: expected value)\n\n\n\n\nFLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'FLAG_WITH_DICT_CONDITIONS': {\n    'condition name': 'value flag is expected to match to be enabled',\n  },\n  'FLAG_WITH_LISTED_CONDITIONS': [\n    ('path matches',  r'^/matching-path.*'),\n    ('path matches',  r'^/other-path.*'),\n  ]\n}\n\n\n\nThe advantage of a list of 2-tuples is that the same condition can be repeated for different expected values.",
             "title": "Settings"
         },
         {
@@ -66,14 +66,24 @@
             "title": "Defining flags"
         },
         {
+            "location": "/settings/#flags_sources",
+            "text": "Default:  ('flags.sources.SettingsFlagsSource', 'flags.sources.DatabaseFlagsSource',)  A list or tuple containing the full Python path strings to classes that provides a  get_flags()  method . The  get_flags()  method is expected to return a dictionary of flags and  Condition  objects . All flags returned by all flag sources will be available to check.",
+            "title": "FLAGS_SOURCES"
+        },
+        {
             "location": "/settings/#flags",
-            "text": "Default:  {}  A dictionary of available feature flags and optional conditions. Flags must be defined in this dictionary to be available in the Django Admin for users to add and remove conditions that way.  This dictionary takes the following format:  FLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'FLAG_WITH_CONDITIONS': {\n    'condition name': 'value flag is expected to match to be enabled',\n  }\n}",
+            "text": "Default:  {}  A dictionary of feature flags and optional conditions used when  'flags.sources.SettingsFlagsSource'  is in  FLAGS_SOURCES .  Conditions can either be included as:   A dictionary with the condition name as the key and expected value as value  A list of 2-tuples with the format  (condition name: expected value)   FLAGS = {\n  'FLAG_WITH_EMPTY_CONDITIONS': {}\n  'FLAG_WITH_DICT_CONDITIONS': {\n    'condition name': 'value flag is expected to match to be enabled',\n  },\n  'FLAG_WITH_LISTED_CONDITIONS': [\n    ('path matches',  r'^/matching-path.*'),\n    ('path matches',  r'^/other-path.*'),\n  ]\n}  The advantage of a list of 2-tuples is that the same condition can be repeated for different expected values.",
             "title": "FLAGS"
         },
         {
             "location": "/conditions/",
-            "text": "Built-in conditions\n\u00b6\n\n\nDjango-Flags comes with the following conditions built-in:\n\n\nboolean\n\u00b6\n\n\nA simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.\n\n\nFLAGS = {'MY_FLAG': {'boolean': True}}\n\n\n\nuser\n\u00b6\n\n\nAllows a flag to be enabled for the username given as the condition's value.\n\n\nFLAGS = {'MY_FLAG': {'user': 'jane.doe'}}\n\n\n\nanonymous\n\u00b6\n\n\nAllows a flag to be either enabled or disabled depending on the condition's boolean value.\n\n\nFLAGS = {'MY_FLAG': {'anonymous: False}}\n\n\n\nparameter\n\u00b6\n\n\nAllows a flag to be enabled based on a GET parameter with the name given as the condition's value.\n\n\nFLAGS = {'MY_FLAG': {'parameter': 'my_flag_param'}}\n\n\n\npath\n\u00b6\n\n\nAllows a flag to be enabled if the request's path matches the condition value.\n\n\nFLAGS = {'MY_FLAG': {'path': '/flagged/path'}}\n\n\n\nafter date\n\u00b6\n\n\nAllows a flag to be enabled after a given date (and time) given in \nISO 8601 format\n. The time must be specified either in UTC or as an offset from UTC.\n\n\nFLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}\n\n\n\nCustom conditions\n\u00b6\n\n\nCustom conditions can be created and registered for use using the \nconditions API\n.",
-            "title": "Built-in conditions"
+            "text": "Conditions\n\u00b6\n\n\nBuilt-in conditions\n\u00b6\n\n\nDjango-Flags comes with the following conditions built-in:\n\n\nboolean\n\u00b6\n\n\nA simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.\n\n\nFLAGS = {'MY_FLAG': {'boolean': True}}\n\n\n\nuser\n\u00b6\n\n\nAllows a flag to be enabled for the username given as the condition's value.\n\n\nFLAGS = {'MY_FLAG': {'user': 'jane.doe'}}\n\n\n\nanonymous\n\u00b6\n\n\nAllows a flag to be either enabled or disabled depending on the condition's boolean value.\n\n\nFLAGS = {'MY_FLAG': {'anonymous': False}}\n\n\n\nparameter\n\u00b6\n\n\nAllows a flag to be enabled based on a GET parameter with the name given as the condition's value.\n\n\nFLAGS = {'MY_FLAG': {'parameter': 'my_flag_param'}}\n\n\n\npath\n\u00b6\n\n\nAllows a flag to be enabled if the request's path matches the condition value.\n\n\nFLAGS = {'MY_FLAG': {'path': '/flagged/path'}}\n\n\n\nafter date\n\u00b6\n\n\nAllows a flag to be enabled after a given date (and time) given in \nISO 8601 format\n. The time must be specified either in UTC or as an offset from UTC.\n\n\nFLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}\n\n\n\nCustom conditions\n\u00b6\n\n\nCustom conditions can be created and registered for use using the \nconditions API\n.",
+            "title": "Conditions"
+        },
+        {
+            "location": "/conditions/#conditions",
+            "text": "",
+            "title": "Conditions"
         },
         {
             "location": "/conditions/#built-in-conditions",
@@ -92,7 +102,7 @@
         },
         {
             "location": "/conditions/#anonymous",
-            "text": "Allows a flag to be either enabled or disabled depending on the condition's boolean value.  FLAGS = {'MY_FLAG': {'anonymous: False}}",
+            "text": "Allows a flag to be either enabled or disabled depending on the condition's boolean value.  FLAGS = {'MY_FLAG': {'anonymous': False}}",
             "title": "anonymous"
         },
         {
@@ -116,8 +126,48 @@
             "title": "Custom conditions"
         },
         {
+            "location": "/api/sources/",
+            "text": "Flag Sources\n\u00b6\n\n\nDjango-Flags provides a means to provide custom flag sources using the \nFLAG_SOURCES\n setting\n. Flag sources are classes that provide a \nget_flags\n method. The \nget_flags\n method must return a dictionary of flag name keys with a list of \nCondition\n objects.\n\n\nfrom flags.sources import Condition\n\n\nclass CustomFlagSource(object):\n\n    def get_flags(self):\n        flags = {\n            'MY_FLAG': [\n                Condition('parameter', 'enable_my_flag'),\n            ]\n        }\n        return flags\n\n\n\nAPI\n\u00b6\n\n\nget_flags(sources=None)\n\u00b6\n\n\nReturn a dictionary of all flag names with \nFlag\n objects that are available in the given \nsources\n. If \nsources\n is not given, the sources in the \nFLAG_SOURCES\n setting\n are used.\n\n\nCondition(condition, value, source=None, obj=None)\n\u00b6\n\n\nA simple wrapper around conditions.\n\n\nCondition.check(*kwargs)\n\u00b6\n\n\nCheck the condition against the given keyword arguments.\n\n\nFlag(name, conditions=[])\n\u00b6\n\n\nA simple wrapper around flags and their conditions. \nconditions\n is a list of \nCondition\n objects.\n\n\nFlag.check_state(*kwargs)\n\u00b6\n\n\nCheck all of a flag's conditions and return the state based on the given keyword arguments.",
+            "title": "Flag sources"
+        },
+        {
+            "location": "/api/sources/#flag-sources",
+            "text": "Django-Flags provides a means to provide custom flag sources using the  FLAG_SOURCES  setting . Flag sources are classes that provide a  get_flags  method. The  get_flags  method must return a dictionary of flag name keys with a list of  Condition  objects.  from flags.sources import Condition\n\n\nclass CustomFlagSource(object):\n\n    def get_flags(self):\n        flags = {\n            'MY_FLAG': [\n                Condition('parameter', 'enable_my_flag'),\n            ]\n        }\n        return flags",
+            "title": "Flag Sources"
+        },
+        {
+            "location": "/api/sources/#api",
+            "text": "",
+            "title": "API"
+        },
+        {
+            "location": "/api/sources/#get_flagssourcesnone",
+            "text": "Return a dictionary of all flag names with  Flag  objects that are available in the given  sources . If  sources  is not given, the sources in the  FLAG_SOURCES  setting  are used.",
+            "title": "get_flags(sources=None)"
+        },
+        {
+            "location": "/api/sources/#conditioncondition-value-sourcenone-objnone",
+            "text": "A simple wrapper around conditions.",
+            "title": "Condition(condition, value, source=None, obj=None)"
+        },
+        {
+            "location": "/api/sources/#conditioncheckkwargs",
+            "text": "Check the condition against the given keyword arguments.",
+            "title": "Condition.check(*kwargs)"
+        },
+        {
+            "location": "/api/sources/#flagname-conditions",
+            "text": "A simple wrapper around flags and their conditions.  conditions  is a list of  Condition  objects.",
+            "title": "Flag(name, conditions=[])"
+        },
+        {
+            "location": "/api/sources/#flagcheck_statekwargs",
+            "text": "Check all of a flag's conditions and return the state based on the given keyword arguments.",
+            "title": "Flag.check_state(*kwargs)"
+        },
+        {
             "location": "/api/state/",
-            "text": "Flag state\n\u00b6\n\n\nfrom flags.state import (\n    flag_state,\n    flag_enabled,\n    flag_disabled,\n)\n\n\n\nChecking state\n\u00b6\n\n\nflag_state(flag_name, **kwargs)\n\u00b6\n\n\nReturn the value for the flag (\nTrue\n or \nFalse\n) by passing kwargs to its conditions.\n\n\nRequiring state\n\u00b6\n\n\nflag_enabled(flag_name, **kwargs)\n\u00b6\n\n\nReturns \nTrue\n if a flag is enabled by passing kwargs to its conditions, otherwise returns \nFalse\n.\n\n\nif flag_enabled('MY_FLAG', request=a_request):\n    print(\"My feature flag is enabled\")\n\n\n\nflag_disabled(flag_name, **kwargs)\n\u00b6\n\n\nReturns \nTrue\n if a flag is disabled by passing kwargs to its conditions, otherwise returns \nFalse\n.\n\n\nif flag_disabled('MY_FLAG', request=a_request):\n    print(\u201cMy feature flag is disabled\u201d)",
+            "text": "Flag state\n\u00b6\n\n\nfrom flags.state import (\n    flag_state,\n    flag_enabled,\n    flag_disabled,\n)\n\n\n\nChecking state\n\u00b6\n\n\nflag_state(flag_name, **kwargs)\n\u00b6\n\n\nReturn the value for the flag (\nTrue\n or \nFalse\n) by passing kwargs to its conditions. If the flag does not exist, this will return \nNone\n so that existence can be introspected but will still evaluate to \nFalse\n.\n\n\nRequiring state\n\u00b6\n\n\nflag_enabled(flag_name, **kwargs)\n\u00b6\n\n\nReturns \nTrue\n if a flag is enabled by passing kwargs to its conditions, otherwise returns \nFalse\n.\n\n\nif flag_enabled('MY_FLAG', request=a_request):\n    print(\"My feature flag is enabled\")\n\n\n\nflag_disabled(flag_name, **kwargs)\n\u00b6\n\n\nReturns \nTrue\n if a flag is disabled by passing kwargs to its conditions, otherwise returns \nFalse\n.\n\n\nif flag_disabled('MY_FLAG', request=a_request):\n    print(\u201cMy feature flag is disabled\u201d)",
             "title": "Flag state"
         },
         {
@@ -132,7 +182,7 @@
         },
         {
             "location": "/api/state/#flag_stateflag_name-kwargs",
-            "text": "Return the value for the flag ( True  or  False ) by passing kwargs to its conditions.",
+            "text": "Return the value for the flag ( True  or  False ) by passing kwargs to its conditions. If the flag does not exist, this will return  None  so that existence can be introspected but will still evaluate to  False .",
             "title": "flag_state(flag_name, **kwargs)"
         },
         {
@@ -232,7 +282,7 @@
         },
         {
             "location": "/api/django/",
-            "text": "Django templates\n\u00b6\n\n\nDjango-Flags provides a template tag library that can be used to evaluate flags in Django templates.\n\n\n{% load feature_flags %}\n\n\n\nChecking state\n\u00b6\n\n\nflag_enabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is enabled by passing the current request to its conditions, otherwise returns \nFalse\n.\n\n\n{% flag_enabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nflag_disabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is disabled by passing the current request to its conditions, otherwise returns \nFalse\n.\n\n\n{% flag_disabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}",
+            "text": "Django templates\n\u00b6\n\n\nDjango-Flags provides a template tag library that can be used to evaluate flags in Django templates.\n\n\n{% load feature_flags %}\n\n\n\nChecking state\n\u00b6\n\n\nflag_enabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is enabled, otherwise returns \nFalse\n.\n\n\n{% flag_enabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nflag_disabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is disabled, otherwise returns \nFalse\n.\n\n\n{% flag_disabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}\n\n\n\nIf a \nrequest\n exists in the current context,\nit will be passed to any conditions that use it.\n\n\nPassing additional arguments\n\u00b6\n\n\nSome conditions take additional keyword arguments.\nFor example, you could pass a \npage\n object:\n\n\n{% flag_enabled 'MY_FLAG_THAT_CHECKS_PAGE' page=page as my_flag %}\n{% if my_flag %}\n  This flag with a condition that uses the page object evaluated to True.\n{% endif %}",
             "title": "Django templates"
         },
         {
@@ -247,22 +297,27 @@
         },
         {
             "location": "/api/django/#flag_enabled",
-            "text": "Returns  True  if a flag is enabled by passing the current request to its conditions, otherwise returns  False .  {% flag_enabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}",
+            "text": "Returns  True  if a flag is enabled, otherwise returns  False .  {% flag_enabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}",
             "title": "flag_enabled"
         },
         {
             "location": "/api/django/#flag_disabled",
-            "text": "Returns  True  if a flag is disabled by passing the current request to its conditions, otherwise returns  False .  {% flag_disabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}",
+            "text": "Returns  True  if a flag is disabled, otherwise returns  False .  {% flag_disabled 'MY_FLAG' as my_flag %}\n{% if my_flag %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}  If a  request  exists in the current context,\nit will be passed to any conditions that use it.",
             "title": "flag_disabled"
         },
         {
+            "location": "/api/django/#passing-additional-arguments",
+            "text": "Some conditions take additional keyword arguments.\nFor example, you could pass a  page  object:  {% flag_enabled 'MY_FLAG_THAT_CHECKS_PAGE' page=page as my_flag %}\n{% if my_flag %}\n  This flag with a condition that uses the page object evaluated to True.\n{% endif %}",
+            "title": "Passing additional arguments"
+        },
+        {
             "location": "/api/jinja2/",
-            "text": "Jinja2 templates\n\u00b6\n\n\nDjango-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.\n\n\nfrom flags.template_functions import (\n    flag_enabled,\n    flag_disabled\n)\nfrom jinja2 import Environment\n\n...\n\nenv = Environment(\u2026)\nenv.globals.update(\n    flag_enabled=flag_enabled,\n    flag_disabled=flag_disabled\n)\n\n\n\nChecking state\n\u00b6\n\n\nflag_enabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is enabled by for the given request, otherwise returns \nFalse\n.\n\n\n{% if flag_enabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nrequest\n is optional.\n\n\nflag_disabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is disabled by passing the current request to its conditions, otherwise returns \nFalse\n.\nReturns \nTrue\n if a flag is disabled by for the given request, otherwise returns \nFalse\n.\n\n\n{% if flag_disabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}\n\n\n\nrequest\n is optional.",
+            "text": "Jinja2 templates\n\u00b6\n\n\nDjango-Flags provides an extension for adding the template tags to your Jinja2\nbackend configuration to enable the tags to be used in Jinja2 templates.\n\n\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        ...\n    },\n    {\n        'BACKEND': 'django.template.backends.jinja2.Jinja2',\n        ...\n        'OPTIONS': {\n            'extensions': [\n                ...\n                'flags.jinja2tags.flags',  # add this line to your existing settings\n                ...\n            ],\n        }\n    },\n]\n\n\n\nChecking state\n\u00b6\n\n\nflag_enabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is enabled, otherwise returns \nFalse\n.\n\n\n{% if flag_enabled('MY_FLAG') %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}\n\n\n\nflag_disabled\n\u00b6\n\n\nReturns \nTrue\n if a flag is disabled to its conditions, otherwise returns \nFalse\n.\n\n\n{% if flag_disabled('MY_FLAG') %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}\n\n\n\nIf a \nrequest\n exists in the current context,\nit will be passed to any conditions that use it.\n\n\nPassing additional arguments\n\u00b6\n\n\nSome conditions take additional keyword arguments.\nFor example, you could pass a \npage\n object:\n\n\n{% if flag_enabled('MY_FLAG_THAT_CHECKS_PAGE', page=page) %}\n  This flag with a condition that uses the page object evaluated to True.\n{% endif %}",
             "title": "Jinja2 templates"
         },
         {
             "location": "/api/jinja2/#jinja2-templates",
-            "text": "Django-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.  from flags.template_functions import (\n    flag_enabled,\n    flag_disabled\n)\nfrom jinja2 import Environment\n\n...\n\nenv = Environment(\u2026)\nenv.globals.update(\n    flag_enabled=flag_enabled,\n    flag_disabled=flag_disabled\n)",
+            "text": "Django-Flags provides an extension for adding the template tags to your Jinja2\nbackend configuration to enable the tags to be used in Jinja2 templates.  TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        ...\n    },\n    {\n        'BACKEND': 'django.template.backends.jinja2.Jinja2',\n        ...\n        'OPTIONS': {\n            'extensions': [\n                ...\n                'flags.jinja2tags.flags',  # add this line to your existing settings\n                ...\n            ],\n        }\n    },\n]",
             "title": "Jinja2 templates"
         },
         {
@@ -272,17 +327,22 @@
         },
         {
             "location": "/api/jinja2/#flag_enabled",
-            "text": "Returns  True  if a flag is enabled by for the given request, otherwise returns  False .  {% if flag_enabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}  request  is optional.",
+            "text": "Returns  True  if a flag is enabled, otherwise returns  False .  {% if flag_enabled('MY_FLAG') %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag.   \n  </div>\n{% endif %}",
             "title": "flag_enabled"
         },
         {
             "location": "/api/jinja2/#flag_disabled",
-            "text": "Returns  True  if a flag is disabled by passing the current request to its conditions, otherwise returns  False .\nReturns  True  if a flag is disabled by for the given request, otherwise returns  False .  {% if flag_disabled('MY_FLAG', request) %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}  request  is optional.",
+            "text": "Returns  True  if a flag is disabled to its conditions, otherwise returns  False .  {% if flag_disabled('MY_FLAG') %}\n  <div class=\"m-global-banner\">\n    I\u2019m the result of a feature flag that is not enabled.\n  </div>\n{% endif %}  If a  request  exists in the current context,\nit will be passed to any conditions that use it.",
             "title": "flag_disabled"
         },
         {
+            "location": "/api/jinja2/#passing-additional-arguments",
+            "text": "Some conditions take additional keyword arguments.\nFor example, you could pass a  page  object:  {% if flag_enabled('MY_FLAG_THAT_CHECKS_PAGE', page=page) %}\n  This flag with a condition that uses the page object evaluated to True.\n{% endif %}",
+            "title": "Passing additional arguments"
+        },
+        {
             "location": "/api/conditions/",
-            "text": "Conditions\n\u00b6\n\n\nConditions are functions that take a configured value and possible keyword arguments and determines whether the given arguments are equivalent to the value. Conditions are registered with a unique name that is exposed to users in Django settings and the Django admin.\n\n\nfrom flags import conditions\n\n\n\nRegistering conditions\n\u00b6\n\n\nconditions.register(condition_name, fn=None)\n\u00b6\n\n\nRegister a new condition, either as a decorator:\n\n\nfrom flags import conditions\n\n@conditions.register('path')\ndef path_condition(path, request=None, **kwargs):\n    return request.path.startswith(path)\n\n\n\nOr as a function call:\n\n\ndef path_condition(path, request=None, **kwargs):\n    return request.path.startswith(path)\n\nconditions.register('path', fn=path_condition)\n\n\n\nExceptions\n\u00b6\n\n\nconditions.RequiredForCondition\n\u00b6\n\n\nException intended to be raised when a condition is not given a keyword argument it requires for evaluation.\n\n\n@conditions.register('path')\ndef path_condition(path, request=None, **kwargs):\n    if request is None:\n        raise conditions.RequiredForCondition(\n            \"request is required for condition 'path'\")\n\n    return request.path.startswith(path)",
+            "text": "Conditions\n\u00b6\n\n\nConditions are functions that take a configured value and possible keyword arguments and determines whether the given arguments are equivalent to the value. Conditions are registered with a unique name that is exposed to users in Django settings and the Django admin.\n\n\nfrom flags import conditions\n\n\n\nRegistering conditions\n\u00b6\n\n\nconditions.register(condition_name, fn=None)\n\u00b6\n\n\nRegister a new condition, either as a decorator:\n\n\nfrom flags import conditions\n\n@conditions.register('path')\ndef path_condition(path, request=None, **kwargs):\n    return request.path.startswith(path)\n\n\n\nOr as a function call:\n\n\ndef path_condition(path, request=None, **kwargs):\n    return request.path.startswith(path)\n\nconditions.register('path', fn=path_condition)\n\n\n\nWill raise a \nconditions.DuplicateCondition\n exception if the condition name is already registered.\n\n\nExceptions\n\u00b6\n\n\nconditions.DuplicateCondition\n\u00b6\n\n\nException raised by \nconditions.register\n if the condition name being registered is already registered.\n\n\nconditions.RequiredForCondition\n\u00b6\n\n\nException intended to be raised when a condition is not given a keyword argument it requires for evaluation.\n\n\n@conditions.register('path')\ndef path_condition(path, request=None, **kwargs):\n    if request is None:\n        raise conditions.RequiredForCondition(\n            \"request is required for condition 'path'\")\n\n    return request.path.startswith(path)",
             "title": "Conditions"
         },
         {
@@ -297,7 +357,7 @@
         },
         {
             "location": "/api/conditions/#conditionsregistercondition_name-fnnone",
-            "text": "Register a new condition, either as a decorator:  from flags import conditions\n\n@conditions.register('path')\ndef path_condition(path, request=None, **kwargs):\n    return request.path.startswith(path)  Or as a function call:  def path_condition(path, request=None, **kwargs):\n    return request.path.startswith(path)\n\nconditions.register('path', fn=path_condition)",
+            "text": "Register a new condition, either as a decorator:  from flags import conditions\n\n@conditions.register('path')\ndef path_condition(path, request=None, **kwargs):\n    return request.path.startswith(path)  Or as a function call:  def path_condition(path, request=None, **kwargs):\n    return request.path.startswith(path)\n\nconditions.register('path', fn=path_condition)  Will raise a  conditions.DuplicateCondition  exception if the condition name is already registered.",
             "title": "conditions.register(condition_name, fn=None)"
         },
         {
@@ -306,9 +366,64 @@
             "title": "Exceptions"
         },
         {
+            "location": "/api/conditions/#conditionsduplicatecondition",
+            "text": "Exception raised by  conditions.register  if the condition name being registered is already registered.",
+            "title": "conditions.DuplicateCondition"
+        },
+        {
             "location": "/api/conditions/#conditionsrequiredforcondition",
             "text": "Exception intended to be raised when a condition is not given a keyword argument it requires for evaluation.  @conditions.register('path')\ndef path_condition(path, request=None, **kwargs):\n    if request is None:\n        raise conditions.RequiredForCondition(\n            \"request is required for condition 'path'\")\n\n    return request.path.startswith(path)",
             "title": "conditions.RequiredForCondition"
+        },
+        {
+            "location": "/releasenotes/",
+            "text": "Release Notes\n\u00b6\n\n\n4.0\n\u00b6\n\n\nWhat's new?\n\u00b6\n\n\n\n\nThe template functions \nflag_enabled\n and \nflag_disabled\n in both \nDjango\n and \nJinja2\n templates now support taking keyword arguments that could be used by \ncustom conditions\n.\n\n\nJinja2 template functions are now available via a Jinja2 extension that can be \nincluded in \nsettings.py\n. \n\n\nThe optional \nflags.middleware.FlagConditionsMiddleware\n has been added to ensure that all feature flag checks throughout single request cycle use the same flag conditions.\n\n\nSupport for specifying the \nsource of feature flags in \nsettings.py\n has been added to allow further customization and the potential to limit flags to settings or database-only.\n\n\nThe \"user\" condition now supports custom user models. (\n@callorico\n)\n\n\n\n\nUpgrading\n\u00b6\n\n\nDjango-Flags 4.0 introduces backwards-incompatible changes for users of Jinja2 templates.\n\n\nPreviously Django-Flags provided \nflags.template_functions.flag_enabled\n and \nflags.template_functions.flag_disabled\n functions that had to be registered in the Jinja2 environment downstream. The Django-Flags documentation recommended doing so in \njinja2.Environment.globals.update()\n. \nflags.template_functions\n has been removed in Django-Flags 4.0.\n\n\nJinja2 function registration is now handled by a \nflags.jinja2tags.flags\n Jinja2 extension. To use Django-Flags 4.0 with Jinja2 templates, the \nTEMPLATES\n setting in \nsettings.py\n should to be modified to include the extension:\n\n\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.jinja2.Jinja2',\n        ...\n        'OPTIONS': {\n            'extensions': [\n                ...\n                'flags.jinja2tags.flags',  # add this line to your existing settings\n                ...\n            ],\n        }\n    },\n] \n\n\n\n3.0.2\n\u00b6\n\n\nWhat's new?\n\u00b6\n\n\n\n\nRequests are now optional the \nflag_enabled\n and \nflag_disabled\n template tags.\n\n\nFlag state form conditions are now bound when the form is created to ensure all custom conditions are available on the form. (\n@callorico\n)\n\n\n\n\n3.0.1\n\u00b6\n\n\nWhat's new?\n\u00b6\n\n\n\n\nDjango 2.1 is now supported.\n\n\n\n\n3.0\n\u00b6\n\n\nDjango-Flags is a fork of the Django-only components of the \nWagtail-Flags\n feature flag library. This is the initial release.",
+            "title": "Release notes"
+        },
+        {
+            "location": "/releasenotes/#release-notes",
+            "text": "",
+            "title": "Release Notes"
+        },
+        {
+            "location": "/releasenotes/#40",
+            "text": "",
+            "title": "4.0"
+        },
+        {
+            "location": "/releasenotes/#whats-new",
+            "text": "The template functions  flag_enabled  and  flag_disabled  in both  Django  and  Jinja2  templates now support taking keyword arguments that could be used by  custom conditions .  Jinja2 template functions are now available via a Jinja2 extension that can be  included in  settings.py .   The optional  flags.middleware.FlagConditionsMiddleware  has been added to ensure that all feature flag checks throughout single request cycle use the same flag conditions.  Support for specifying the  source of feature flags in  settings.py  has been added to allow further customization and the potential to limit flags to settings or database-only.  The \"user\" condition now supports custom user models. ( @callorico )",
+            "title": "What's new?"
+        },
+        {
+            "location": "/releasenotes/#upgrading",
+            "text": "Django-Flags 4.0 introduces backwards-incompatible changes for users of Jinja2 templates.  Previously Django-Flags provided  flags.template_functions.flag_enabled  and  flags.template_functions.flag_disabled  functions that had to be registered in the Jinja2 environment downstream. The Django-Flags documentation recommended doing so in  jinja2.Environment.globals.update() .  flags.template_functions  has been removed in Django-Flags 4.0.  Jinja2 function registration is now handled by a  flags.jinja2tags.flags  Jinja2 extension. To use Django-Flags 4.0 with Jinja2 templates, the  TEMPLATES  setting in  settings.py  should to be modified to include the extension:  TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.jinja2.Jinja2',\n        ...\n        'OPTIONS': {\n            'extensions': [\n                ...\n                'flags.jinja2tags.flags',  # add this line to your existing settings\n                ...\n            ],\n        }\n    },\n]",
+            "title": "Upgrading"
+        },
+        {
+            "location": "/releasenotes/#302",
+            "text": "",
+            "title": "3.0.2"
+        },
+        {
+            "location": "/releasenotes/#whats-new_1",
+            "text": "Requests are now optional the  flag_enabled  and  flag_disabled  template tags.  Flag state form conditions are now bound when the form is created to ensure all custom conditions are available on the form. ( @callorico )",
+            "title": "What's new?"
+        },
+        {
+            "location": "/releasenotes/#301",
+            "text": "",
+            "title": "3.0.1"
+        },
+        {
+            "location": "/releasenotes/#whats-new_2",
+            "text": "Django 2.1 is now supported.",
+            "title": "What's new?"
+        },
+        {
+            "location": "/releasenotes/#30",
+            "text": "Django-Flags is a fork of the Django-only components of the  Wagtail-Flags  feature flag library. This is the initial release.",
+            "title": "3.0"
         }
     ]
 }

@@ -65,13 +65,17 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../../conditions/">Built-in conditions</a>
+    <a class="" href="../../conditions/">Conditions</a>
 	    </li>
           
             <li class="toctree-l1">
 		
     <span class="caption-text">API Reference</span>
     <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../sources/">Flag sources</a>
+                </li>
                 <li class="">
                     
     <a class="" href="../state/">Flag state</a>
@@ -99,6 +103,8 @@
         
             <li><a class="toctree-l4" href="#checking-state">Checking state</a></li>
         
+            <li><a class="toctree-l4" href="#passing-additional-arguments">Passing additional arguments</a></li>
+        
         </ul>
     
 
@@ -109,6 +115,11 @@
     <a class="" href="../conditions/">Conditions</a>
                 </li>
     </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../releasenotes/">Release notes</a>
 	    </li>
           
         </ul>
@@ -151,41 +162,51 @@
             <div class="section">
               
                 <h1 id="jinja2-templates">Jinja2 templates<a class="headerlink" href="#jinja2-templates" title="Permanent link">¶</a></h1>
-<p>Django-Flags provides template functions that can be added to a Jinja2 environment and subsequently used in templates.</p>
-<pre class="highlight"><code class="language-python">from flags.template_functions import (
-    flag_enabled,
-    flag_disabled
-)
-from jinja2 import Environment
-
-...
-
-env = Environment(…)
-env.globals.update(
-    flag_enabled=flag_enabled,
-    flag_disabled=flag_disabled
-)</code></pre>
+<p>Django-Flags provides an extension for adding the template tags to your Jinja2
+backend configuration to enable the tags to be used in Jinja2 templates.</p>
+<pre class="highlight"><code class="language-python">TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        ...
+    },
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        ...
+        'OPTIONS': {
+            'extensions': [
+                ...
+                'flags.jinja2tags.flags',  # add this line to your existing settings
+                ...
+            ],
+        }
+    },
+]</code></pre>
 
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_enabled"><code>flag_enabled</code><a class="headerlink" href="#flag_enabled" title="Permanent link">¶</a></h3>
-<p>Returns <code>True</code> if a flag is enabled by for the given request, otherwise returns <code>False</code>.</p>
-<pre class="highlight"><code class="language-jinja">{% if flag_enabled('MY_FLAG', request) %}
+<p>Returns <code>True</code> if a flag is enabled, otherwise returns <code>False</code>.</p>
+<pre class="highlight"><code class="language-jinja">{% if flag_enabled('MY_FLAG') %}
   &lt;div class=&quot;m-global-banner&quot;&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
 {% endif %}</code></pre>
 
-<p><code>request</code> is optional.</p>
 <h3 id="flag_disabled"><code>flag_disabled</code><a class="headerlink" href="#flag_disabled" title="Permanent link">¶</a></h3>
-<p>Returns <code>True</code> if a flag is disabled by passing the current request to its conditions, otherwise returns <code>False</code>.
-Returns <code>True</code> if a flag is disabled by for the given request, otherwise returns <code>False</code>.</p>
-<pre class="highlight"><code class="language-jinja">{% if flag_disabled('MY_FLAG', request) %}
+<p>Returns <code>True</code> if a flag is disabled to its conditions, otherwise returns <code>False</code>.</p>
+<pre class="highlight"><code class="language-jinja">{% if flag_disabled('MY_FLAG') %}
   &lt;div class=&quot;m-global-banner&quot;&gt;
     I’m the result of a feature flag that is not enabled.
   &lt;/div&gt;
 {% endif %}</code></pre>
 
-<p><code>request</code> is optional.</p>
+<p>If a <code>request</code> exists in the current context,
+it will be passed to any conditions that use it.</p>
+<h2 id="passing-additional-arguments">Passing additional arguments<a class="headerlink" href="#passing-additional-arguments" title="Permanent link">¶</a></h2>
+<p>Some conditions take additional keyword arguments.
+For example, you could pass a <code>page</code> object:</p>
+<pre class="highlight"><code class="language-jinja">{% if flag_enabled('MY_FLAG_THAT_CHECKS_PAGE', page=page) %}
+  This flag with a condition that uses the page object evaluated to True.
+{% endif %}</code></pre>
               
             </div>
           </div>

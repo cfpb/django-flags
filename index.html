@@ -83,13 +83,17 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="conditions/">Built-in conditions</a>
+    <a class="" href="conditions/">Conditions</a>
 	    </li>
           
             <li class="toctree-l1">
 		
     <span class="caption-text">API Reference</span>
     <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="api/sources/">Flag sources</a>
+                </li>
                 <li class="">
                     
     <a class="" href="api/state/">Flag state</a>
@@ -115,6 +119,11 @@
     <a class="" href="api/conditions/">Conditions</a>
                 </li>
     </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="releasenotes/">Release notes</a>
 	    </li>
           
         </ul>
@@ -170,7 +179,7 @@
     # …
 )</code></pre>
 
-<p>And <code>django.template.context_processors.request</code> to the <code>TEMPLATES</code> <code>context_processors</code> setting:</p>
+<p>And <code>django.template.context_processors.request</code> to the <code>TEMPLATES</code> <code>context_processors</code> setting so that the <code>request</code> variable is available:</p>
 <pre class="highlight"><code class="language-python">TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -187,6 +196,13 @@
         # …
     },
 ]</code></pre>
+
+<p>(Optionally) add <code>flags.middleware.FlagConditionsMiddleware</code> to <code>MIDDLEWARE</code> to avoid looking up flag conditions more than once per request:</p>
+<pre class="highlight"><code class="language-python">MIDDLEWARE = (
+    # …
+    'flags.middleware.FlagConditionsMiddleware',
+    # …
+)</code></pre>
 
 <p>Finally, run migrations:</p>
 <pre class="highlight"><code class="language-shell">./manage.py migrate</code></pre>
@@ -281,6 +297,6 @@ urlpatterns = [
 </html>
 
 <!--
-MkDocs version : 0.17.3
-Build Date UTC : 2018-09-27 13:33:23
+MkDocs version : 0.17.4
+Build Date UTC : 2018-10-26 13:44:35
 -->

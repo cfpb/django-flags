@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Built-in conditions - Django-Flags</title>
+  <title>Conditions - Django-Flags</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Built-in conditions";
+    var mkdocs_page_name = "Conditions";
     var mkdocs_page_input_path = "conditions.md";
     var mkdocs_page_url = "/conditions/";
   </script>
@@ -65,24 +65,14 @@
           
             <li class="toctree-l1 current">
 		
-    <a class="current" href="./">Built-in conditions</a>
+    <a class="current" href="./">Conditions</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#built-in-conditions">Built-in conditions</a></li>
+    <li class="toctree-l2"><a href="#conditions">Conditions</a></li>
     
         <ul>
         
-            <li><a class="toctree-l3" href="#boolean">boolean</a></li>
-        
-            <li><a class="toctree-l3" href="#user">user</a></li>
-        
-            <li><a class="toctree-l3" href="#anonymous">anonymous</a></li>
-        
-            <li><a class="toctree-l3" href="#parameter">parameter</a></li>
-        
-            <li><a class="toctree-l3" href="#path">path</a></li>
-        
-            <li><a class="toctree-l3" href="#after-date">after date</a></li>
+            <li><a class="toctree-l3" href="#built-in-conditions">Built-in conditions</a></li>
         
             <li><a class="toctree-l3" href="#custom-conditions">Custom conditions</a></li>
         
@@ -96,6 +86,10 @@
 		
     <span class="caption-text">API Reference</span>
     <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../api/sources/">Flag sources</a>
+                </li>
                 <li class="">
                     
     <a class="" href="../api/state/">Flag state</a>
@@ -123,6 +117,11 @@
     </ul>
 	    </li>
           
+            <li class="toctree-l1">
+		
+    <a class="" href="../releasenotes/">Release notes</a>
+	    </li>
+          
         </ul>
       </div>
       &nbsp;
@@ -145,7 +144,7 @@
     
       
     
-    <li>Built-in conditions</li>
+    <li>Conditions</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/cfpb/django-flags/edit/master/docs/conditions.md"
@@ -158,7 +157,8 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="built-in-conditions">Built-in conditions<a class="headerlink" href="#built-in-conditions" title="Permanent link">¶</a></h1>
+                <h1 id="conditions">Conditions<a class="headerlink" href="#conditions" title="Permanent link">¶</a></h1>
+<h2 id="built-in-conditions">Built-in conditions<a class="headerlink" href="#built-in-conditions" title="Permanent link">¶</a></h2>
 <p>Django-Flags comes with the following conditions built-in:</p>
 <h3 id="boolean"><code>boolean</code><a class="headerlink" href="#boolean" title="Permanent link">¶</a></h3>
 <p>A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.</p>
@@ -170,7 +170,7 @@
 
 <h3 id="anonymous"><code>anonymous</code><a class="headerlink" href="#anonymous" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be either enabled or disabled depending on the condition's boolean value.</p>
-<pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': {'anonymous: False}}</code></pre>
+<pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': {'anonymous': False}}</code></pre>
 
 <h3 id="parameter"><code>parameter</code><a class="headerlink" href="#parameter" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled based on a GET parameter with the name given as the condition's value.</p>
@@ -193,7 +193,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../api/state/" class="btn btn-neutral float-right" title="Flag state">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../api/sources/" class="btn btn-neutral float-right" title="Flag sources">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../settings/" class="btn btn-neutral" title="Settings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -227,7 +227,7 @@
         <span><a href="../settings/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../api/state/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../api/sources/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

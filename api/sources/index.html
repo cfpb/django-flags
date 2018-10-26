@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Flag state - Django-Flags</title>
+  <title>Flag sources - Django-Flags</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Flag state";
-    var mkdocs_page_input_path = "api/state.md";
-    var mkdocs_page_url = "/api/state/";
+    var mkdocs_page_name = "Flag sources";
+    var mkdocs_page_input_path = "api/sources.md";
+    var mkdocs_page_url = "/api/sources/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -72,27 +72,25 @@
 		
     <span class="caption-text">API Reference</span>
     <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../sources/">Flag sources</a>
-                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Flag state</a>
+    <a class="current" href="./">Flag sources</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#flag-state">Flag state</a></li>
+    <li class="toctree-l3"><a href="#flag-sources">Flag Sources</a></li>
     
         <ul>
         
-            <li><a class="toctree-l4" href="#checking-state">Checking state</a></li>
-        
-            <li><a class="toctree-l4" href="#requiring-state">Requiring state</a></li>
+            <li><a class="toctree-l4" href="#api">API</a></li>
         
         </ul>
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../state/">Flag state</a>
                 </li>
                 <li class="">
                     
@@ -148,10 +146,10 @@
         
       
     
-    <li>Flag state</li>
+    <li>Flag sources</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/state.md"
+        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/sources.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -161,26 +159,32 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="flag-state">Flag state<a class="headerlink" href="#flag-state" title="Permanent link">¶</a></h1>
-<pre class="highlight"><code class="language-python">from flags.state import (
-    flag_state,
-    flag_enabled,
-    flag_disabled,
-)</code></pre>
+                <h1 id="flag-sources">Flag Sources<a class="headerlink" href="#flag-sources" title="Permanent link">¶</a></h1>
+<p>Django-Flags provides a means to provide custom flag sources using the <a href="../../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a>. Flag sources are classes that provide a <code>get_flags</code> method. The <code>get_flags</code> method must return a dictionary of flag name keys with a list of <a href="#conditioncondition-value-sourcenone-objnone"><code>Condition</code></a> objects.</p>
+<pre class="highlight"><code class="language-python">from flags.sources import Condition
 
-<h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
-<h3 id="flag_stateflag_name-kwargs"><code>flag_state(flag_name, **kwargs)</code><a class="headerlink" href="#flag_stateflag_name-kwargs" title="Permanent link">¶</a></h3>
-<p>Return the value for the flag (<code>True</code> or <code>False</code>) by passing kwargs to its conditions. If the flag does not exist, this will return <code>None</code> so that existence can be introspected but will still evaluate to <code>False</code>.</p>
-<h2 id="requiring-state">Requiring state<a class="headerlink" href="#requiring-state" title="Permanent link">¶</a></h2>
-<h3 id="flag_enabledflag_name-kwargs"><code>flag_enabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_enabledflag_name-kwargs" title="Permanent link">¶</a></h3>
-<p>Returns <code>True</code> if a flag is enabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
-<pre class="highlight"><code class="language-python">if flag_enabled('MY_FLAG', request=a_request):
-    print(&quot;My feature flag is enabled&quot;)</code></pre>
 
-<h3 id="flag_disabledflag_name-kwargs"><code>flag_disabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_disabledflag_name-kwargs" title="Permanent link">¶</a></h3>
-<p>Returns <code>True</code> if a flag is disabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
-<pre class="highlight"><code class="language-python">if flag_disabled('MY_FLAG', request=a_request):
-    print(“My feature flag is disabled”)</code></pre>
+class CustomFlagSource(object):
+
+    def get_flags(self):
+        flags = {
+            'MY_FLAG': [
+                Condition('parameter', 'enable_my_flag'),
+            ]
+        }
+        return flags</code></pre>
+
+<h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">¶</a></h2>
+<h3 id="get_flagssourcesnone"><code>get_flags(sources=None)</code><a class="headerlink" href="#get_flagssourcesnone" title="Permanent link">¶</a></h3>
+<p>Return a dictionary of all flag names with <a href="#flagname-conditions"><code>Flag</code></a> objects that are available in the given <code>sources</code>. If <code>sources</code> is not given, the sources in the <a href="../../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a> are used.</p>
+<h3 id="conditioncondition-value-sourcenone-objnone"><code>Condition(condition, value, source=None, obj=None)</code><a class="headerlink" href="#conditioncondition-value-sourcenone-objnone" title="Permanent link">¶</a></h3>
+<p>A simple wrapper around conditions.</p>
+<h4 id="conditioncheckkwargs"><code>Condition.check(*kwargs)</code><a class="headerlink" href="#conditioncheckkwargs" title="Permanent link">¶</a></h4>
+<p>Check the condition against the given keyword arguments.</p>
+<h3 id="flagname-conditions"><code>Flag(name, conditions=[])</code><a class="headerlink" href="#flagname-conditions" title="Permanent link">¶</a></h3>
+<p>A simple wrapper around flags and their conditions. <code>conditions</code> is a list of <a href="#conditioncondition-value-sourcenone-objnone"><code>Condition</code></a> objects.</p>
+<h4 id="flagcheck_statekwargs"><code>Flag.check_state(*kwargs)</code><a class="headerlink" href="#flagcheck_statekwargs" title="Permanent link">¶</a></h4>
+<p>Check all of a flag's conditions and return the state based on the given keyword arguments.</p>
               
             </div>
           </div>
@@ -188,10 +192,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../decorators/" class="btn btn-neutral float-right" title="Flag decorators">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../state/" class="btn btn-neutral float-right" title="Flag state">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../sources/" class="btn btn-neutral" title="Flag sources"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../conditions/" class="btn btn-neutral" title="Conditions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -219,10 +223,10 @@
           <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../sources/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../conditions/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../decorators/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../state/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
