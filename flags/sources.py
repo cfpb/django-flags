@@ -18,10 +18,6 @@ class Condition(object):
         self.value = value
         self.fn = get_condition(self.condition)
 
-        if self.fn is None:
-            logger.warning('No condition registered for name '
-                           '"{condition}"'.format(condition=self.condition))
-
     def __eq__(self, other):
         return other.condition == self.condition and other.value == self.value
 
