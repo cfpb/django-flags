@@ -1,9 +1,13 @@
+import logging
 
 from django.apps import apps
 from django.conf import settings
 from django.utils.module_loading import import_string
 
 from flags.conditions import get_condition
+
+
+logger = logging.getLogger(__name__)
 
 
 class Condition(object):
@@ -14,11 +18,16 @@ class Condition(object):
         self.value = value
         self.fn = get_condition(self.condition)
 
+        if self.fn is None:
+            logger.warning('No condition registered for name '
+                           '"{condition}"'.format(condition=self.condition))
+
     def __eq__(self, other):
         return other.condition == self.condition and other.value == self.value
 
     def check(self, **kwargs):
-        return self.fn(self.value, **kwargs)
+        if self.fn is not None:
+            return self.fn(self.value, **kwargs)
 
 
 class Flag(object):
