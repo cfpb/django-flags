@@ -29,14 +29,12 @@ deploy:
     distributions: "sdist bdist_wheel --universal"
     user: cfpb
     password:
-      secure: "Wr1Cv8sjYdfsW9QZ7RiKhwd4R+0XATFRzZ6emj1TBq5YODFmKpBfaAd+L2E4jL/yBzqws2R/U0H1u4AAXarQVTwYTXIQGeXy1AgJr45l1v1JH1uXFaSj5O+j3uVO5mNoDdZIblEH4kQ62+1TCsoCW8+l726oU2DhKcGGHOgSfUoX/cZewO5fZm/r3Yp/Y5FY3brJhB/89WEvaoBoB2WRuDP9cPD9Kf5SgaDZp3ak4EVtrTBRaFZkPi5QVqNrRa15Sv6WrQ7AqBRq1vPuTfTSj+iKCzPebeASMIb43BCgcKGnsh+ImUF+HlZyymSTfVGm/7hFgNemF6gWVeQ86sft31rrEqQNJFu5Y4HRDKRoj4MpBsluqGkcy7R/abpUeEJ5bDgtLXLyxXhZRE7vUd06DIUyB8UnYIA1kSCkqwmYg7w2SIEUK7yJHxd7YAnQX8ny3vY1CJY1PuHZlus2jku1XRoNCThVmxTEBQLeKfXAuxNfIVgAkcn/q2epjsE98hNF0UouFARpwt4ehH/Wsu26vB/Q6yDNUsfJfRJJW7RGEluW8B27/JitPEEDbc7FR7Ap+R3pKjs9UBVJDI4RUwpXzPjkcXedRL21PXYZ23pMmzloljrWSCJhcI5x6kcZQzbNWj6mAFajeyVIr5HWkKLMx06sKwGYYDwcQXgQqRjOFR0="
+      secure: "IdkZRJrqQHpjloKJ2Be2AJwdt/udxPqmu1koav63zBsqjSMMDPUWl+KBbXwFhhdKJN/r7U3hnLKEtn3ia1we0hMwsQ372Z6aho/FvCA8UbNjLoT3cXIwHWxcXZfOcInctpvn8cOMjJfQBlMe2FnuAWa44zn+9U8g3ujF6xajbxGXYgpbuqWmitizVDACw85ZyFY8sgFvIfK8pVeyffWG0WPp7QXlS48HI+LjmWK6jAz4M4bu6nvgsbEHVZ72bIKfLhw+Gx4EJ+P0CTh2nFgZ9d1MOYlv8HF8G9c5ZE865XdLmsI5uxhaXr8HSgEQkFVjk9Q6v54SI1FVuvcpa88HOMbctqoVZ+OLczHh9ibreqYe1I0Zstd51uChDCP624VH4pOo7lmLe5yVug25m5iyG5lXaiXd5r0tQUM5SduleG1twFCZU2TcD0JvG9FhCZXP3fAvk2IMad4cn65EFKbEgCVzCQSUSNmQ6y4bqTg7nTgyG7KKjeKw74bOnsvsUWUcul1KlJcpUefKelLPYVKvdk7jT+W8vhx/ihrywcoRSCOZ476ut0js7o7wBBFSPlGdvxPCkfzjJswMmZWgiq5Kkjo8oWrFKCvjDJd5Aro1+8AnVR8PqpxLW1drX5H5zKCL16zDOWmyWYc2M+Us0I7d4ZgygU77FnfUG7u52JC679I="
     on:
       tags: true
       condition: $TOXENV = "py36-dj111"
   - provider: pages
     local_dir: site
-    skip-cleanup: true
-    keep-history: true
     github_token: $GITHUB_TOKEN
     on:
       tags: true

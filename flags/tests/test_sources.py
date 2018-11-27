@@ -1,7 +1,7 @@
 try:
-    from unittest.mock import Mock, patch
+    from unittest.mock import Mock
 except ImportError:  # pragma: no cover
-    from mock import Mock, patch
+    from mock import Mock
 
 from django.test import TestCase, override_settings
 
@@ -53,13 +53,9 @@ class DatabaseFlagsSourceTestCase(TestCase):
 
 class ConditionTestCase(TestCase):
 
-    @patch('logging.Logger.warning')
-    def test_check_fn_none(self, mock_warning):
+    def test_check_fn_none(self):
         condition = Condition('nonexistent', 'value')
         result = condition.check()
-        mock_warning.assert_called_with(
-            'No condition registered for name "nonexistent"'
-        )
         self.assertIsNone(result)
 
 
