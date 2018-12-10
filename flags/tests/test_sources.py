@@ -1,8 +1,9 @@
 try:
-    from unittest.mock import Mock
+    from unittest.mock import Mock, patch
 except ImportError:  # pragma: no cover
-    from mock import Mock
+    from mock import Mock, patch
 
+from django.db.utils import OperationalError
 from django.test import TestCase, override_settings
 
 from flags.models import FlagState
@@ -49,6 +50,19 @@ class DatabaseFlagsSourceTestCase(TestCase):
         source = DatabaseFlagsSource()
         flags = source.get_flags()
         self.assertEqual(flags, {'MY_FLAG': [Condition('boolean', 'False'), ]})
+
+    @patch(
+        'flags.sources.DatabaseFlagsSource.get_queryset',
+        side_effect=OperationalError
+    )
+    @patch('logging.Logger.exception')
+    def test_get_flags_operational_error(self, mock_logger_exception,
+                                         mock_get_queryset):
+        source = DatabaseFlagsSource()
+        source.get_flags()
+        mock_logger_exception.assert_called_with(
+            'Error fetching DatabaseFlagsSource flags.'
+        )
 
 
 class ConditionTestCase(TestCase):

@@ -2,6 +2,7 @@ import logging
 
 from django.apps import apps
 from django.conf import settings
+from django.db.utils import OperationalError
 from django.utils.module_loading import import_string
 
 from flags.conditions import get_condition
@@ -74,12 +75,15 @@ class DatabaseFlagsSource(object):
 
     def get_flags(self):
         flags = {}
-        for o in self.get_queryset():
-            if o.name not in flags:
-                flags[o.name] = []
-            flags[o.name].append(DatabaseCondition(
-                o.condition, o.value, obj=o
-            ))
+        try:
+            for o in self.get_queryset():
+                if o.name not in flags:
+                    flags[o.name] = []
+                flags[o.name].append(DatabaseCondition(
+                    o.condition, o.value, obj=o
+                ))
+        except OperationalError:
+            logger.exception("Error fetching DatabaseFlagsSource flags.")
 
         return flags
 
