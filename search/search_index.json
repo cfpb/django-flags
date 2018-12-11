@@ -127,7 +127,7 @@
         },
         {
             "location": "/api/sources/",
-            "text": "Flag Sources\n\u00b6\n\n\nDjango-Flags provides a means to provide custom flag sources using the \nFLAG_SOURCES\n setting\n. Flag sources are classes that provide a \nget_flags\n method. The \nget_flags\n method must return a dictionary of flag name keys with a list of \nCondition\n objects.\n\n\nfrom flags.sources import Condition\n\n\nclass CustomFlagSource(object):\n\n    def get_flags(self):\n        flags = {\n            'MY_FLAG': [\n                Condition('parameter', 'enable_my_flag'),\n            ]\n        }\n        return flags\n\n\n\nAPI\n\u00b6\n\n\nget_flags(sources=None)\n\u00b6\n\n\nReturn a dictionary of all flag names with \nFlag\n objects that are available in the given \nsources\n. If \nsources\n is not given, the sources in the \nFLAG_SOURCES\n setting\n are used.\n\n\nCondition(condition, value, source=None, obj=None)\n\u00b6\n\n\nA simple wrapper around conditions.\n\n\nCondition.check(*kwargs)\n\u00b6\n\n\nCheck the condition against the given keyword arguments.\n\n\nFlag(name, conditions=[])\n\u00b6\n\n\nA simple wrapper around flags and their conditions. \nconditions\n is a list of \nCondition\n objects.\n\n\nFlag.check_state(*kwargs)\n\u00b6\n\n\nCheck all of a flag's conditions and return the state based on the given keyword arguments.",
+            "text": "Flag Sources\n\u00b6\n\n\nDjango-Flags provides a means to provide custom flag sources using the \nFLAG_SOURCES\n setting\n. Flag sources are classes that provide a \nget_flags\n method. The \nget_flags\n method must return a dictionary of flag name keys with a list of \nCondition\n objects.\n\n\nfrom flags.sources import Condition\n\n\nclass CustomFlagSource(object):\n\n    def get_flags(self):\n        flags = {\n            'MY_FLAG': [\n                Condition('parameter', 'enable_my_flag'),\n            ]\n        }\n        return flags\n\n\n\nAPI\n\u00b6\n\n\nget_flags(sources=None, ignore_errors=False)\n\u00b6\n\n\nReturn a dictionary of all flag names with \nFlag\n objects that are available in the given \nsources\n. If \nsources\n is not given, the sources in the \nFLAG_SOURCES\n setting\n are used. If \nignore_errors\n is \nTrue\n, any exceptions that occur when getting flags from a source will be caught and ignored.\n\n\nCondition(condition, value, source=None, obj=None)\n\u00b6\n\n\nA simple wrapper around conditions.\n\n\nCondition.check(*kwargs)\n\u00b6\n\n\nCheck the condition against the given keyword arguments.\n\n\nFlag(name, conditions=[])\n\u00b6\n\n\nA simple wrapper around flags and their conditions. \nconditions\n is a list of \nCondition\n objects.\n\n\nFlag.check_state(*kwargs)\n\u00b6\n\n\nCheck all of a flag's conditions and return the state based on the given keyword arguments.",
             "title": "Flag sources"
         },
         {
@@ -141,9 +141,9 @@
             "title": "API"
         },
         {
-            "location": "/api/sources/#get_flagssourcesnone",
-            "text": "Return a dictionary of all flag names with  Flag  objects that are available in the given  sources . If  sources  is not given, the sources in the  FLAG_SOURCES  setting  are used.",
-            "title": "get_flags(sources=None)"
+            "location": "/api/sources/#get_flagssourcesnone-ignore_errorsfalse",
+            "text": "Return a dictionary of all flag names with  Flag  objects that are available in the given  sources . If  sources  is not given, the sources in the  FLAG_SOURCES  setting  are used. If  ignore_errors  is  True , any exceptions that occur when getting flags from a source will be caught and ignored.",
+            "title": "get_flags(sources=None, ignore_errors=False)"
         },
         {
             "location": "/api/sources/#conditioncondition-value-sourcenone-objnone",
