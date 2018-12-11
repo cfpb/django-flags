@@ -26,6 +26,11 @@ class TestFlagsSource(object):
         }
 
 
+class ExceptionalFlagsSource(object):
+    def get_flags(self):
+        raise Exception('This flag source is exceptional!')
+
+
 class SettingsFlagsSourceTestCase(TestCase):
 
     @override_settings(FLAGS={'MY_FLAG': {'boolean': True}})
@@ -112,3 +117,17 @@ class GetFlagsTestCase(TestCase):
         self.assertIn('SOURCED_FLAG', flags)
         self.assertEqual(len(flags['OTHER_FLAG'].conditions), 0)
         self.assertEqual(len(flags['SOURCED_FLAG'].conditions), 1)
+
+    def test_ignore_errors(self):
+        # Without ignore_errors
+        with self.assertRaises(Exception):
+            get_flags(
+                sources=['flags.tests.test_sources.ExceptionalFlagsSource', ]
+            )
+
+        # With ignore_errors
+        flags = get_flags(
+            sources=['flags.tests.test_sources.ExceptionalFlagsSource', ],
+            ignore_errors=True
+        )
+        self.assertEqual(flags, {})

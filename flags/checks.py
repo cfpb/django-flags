@@ -10,7 +10,7 @@ def flag_conditions_check(app_configs, **kwargs):
 
     errors = []
 
-    flags = get_flags()
+    flags = get_flags(ignore_errors=True)
     for name, flag in flags.items():
         for condition in flag.conditions:
             if condition.fn is None:
