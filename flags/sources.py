@@ -80,11 +80,10 @@ class DatabaseFlagsSource(object):
             flags[o.name].append(DatabaseCondition(
                 o.condition, o.value, obj=o
             ))
-
         return flags
 
 
-def get_flags(sources=None):
+def get_flags(sources=None, ignore_errors=False):
     """ Get all flag sources sources defined in settings.FLAG_SOURCES.
     FLAG_SOURCES is expected to be a list of Python paths to classes providing
     a get_flags() method that returns a dict with the same format as the
@@ -100,7 +99,14 @@ def get_flags(sources=None):
     for source_str in sources:
         source_cls = import_string(source_str)
         source_obj = source_cls()
-        source_flags = source_obj.get_flags()
+
+        try:
+            source_flags = source_obj.get_flags()
+        except Exception:
+            if ignore_errors:
+                continue
+            else:
+                raise
 
         for flag, conditions in source_flags.items():
             if flag in flags:

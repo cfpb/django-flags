@@ -19,9 +19,9 @@ class CustomFlagSource(object):
 
 ## API
 
-### `get_flags(sources=None)`
+### `get_flags(sources=None, ignore_errors=False)`
 
-Return a dictionary of all flag names with [`Flag`](#flagname-conditions) objects that are available in the given `sources`. If `sources` is not given, the sources in the [`FLAG_SOURCES` setting](../settings/#flag_sources) are used.
+Return a dictionary of all flag names with [`Flag`](#flagname-conditions) objects that are available in the given `sources`. If `sources` is not given, the sources in the [`FLAG_SOURCES` setting](../settings/#flag_sources) are used. If `ignore_errors` is `True`, any exceptions that occur when getting flags from a source will be caught and ignored.
 
 ### `Condition(condition, value, source=None, obj=None)`
 
