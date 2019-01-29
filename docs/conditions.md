@@ -12,6 +12,8 @@ A simple boolean true/false intended to enable or disable a flag explicitly. The
 FLAGS = {'MY_FLAG': {'boolean': True}}
 ```
 
+The value can be given as a Python `True` or `False` Boolean value or as the strings `"true"`, `"True"`, `"False"`, or `"false"`.
+
 ### `user`
 
 Allows a flag to be enabled for the username given as the condition's value.
@@ -27,6 +29,8 @@ Allows a flag to be either enabled or disabled depending on the condition's bool
 ```python
 FLAGS = {'MY_FLAG': {'anonymous': False}}
 ```
+
+The value can be given as a Python `True` or `False` Boolean value or as the strings `"true"`, `"True"`, `"False"`, or `"false"`.
 
 ### `parameter`
 
@@ -50,6 +54,14 @@ Allows a flag to be enabled after a given date (and time) given in [ISO 8601 for
 
 ```python
 FLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}
+```
+
+### `before_date`
+
+Allows a flag to be enabled before a given date (and time) given in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). The time must be specified either in UTC or as an offset from UTC.
+
+```python
+FLAGS = {'MY_FLAG': {'before date': '2022-06-01T12:00Z'}}
 ```
 
 ## Custom conditions
