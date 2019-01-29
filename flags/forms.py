@@ -13,7 +13,7 @@ class FlagStateForm(forms.ModelForm):
         label="Is enabled when", required=True
     )
     value = forms.CharField(
-        label="Is", required=True
+        label="Is", required=True, widget=forms.Textarea
     )
 
     def __init__(self, *args, **kwargs):

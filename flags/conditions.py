@@ -1,3 +1,4 @@
+import csv
 import re
 
 import django
@@ -126,3 +127,20 @@ def date_condition(date_or_str, **kwargs):
         date_test = False
 
     return date_test
+
+
+@register('and')
+def and_condition(conditions_list, **kwargs):
+    """ Are multiple conditions all True?,
+    conditions_list is in the format [('condition', value), ...] or as
+    comma-seprated 'condition, value' strings with one pair per line. """
+    try:
+        conditions_list = csv.reader(conditions_list.split())
+    except AttributeError:
+        pass
+
+    conditions = ((get_condition(c), v) for c, v in conditions_list)
+    return all(
+        fn(v, **kwargs) if fn is not None else False
+        for fn, v in conditions
+    )

@@ -9,6 +9,7 @@ from flags.conditions import (
     CONDITIONS,
     DuplicateCondition,
     RequiredForCondition,
+    and_condition,
     anonymous_condition,
     boolean_condition,
     date_condition,
@@ -212,3 +213,32 @@ class DateConditionTestCase(TestCase):
 
     def test_not_valid_date_str(self):
         self.assertFalse(date_condition('I am not a valid date'))
+
+
+class AndConditionTestCase(TestCase):
+
+    def test_and_condition_true(self):
+        self.assertTrue(and_condition(
+            [('boolean', True), ('boolean', True)]
+        ))
+
+    def test_and_condition_false(self):
+        self.assertFalse(and_condition(
+            [('boolean', False), ('boolean', False)]
+        ))
+        self.assertFalse(and_condition(
+            [('boolean', False), ('boolean', True)]
+        ))
+
+    def test_and_condition_sub_condition_dne(self):
+        self.assertFalse(and_condition(
+            [('boolean', True), ('blorp', True)]
+        ))
+
+    def test_parse_csv(self):
+        self.assertTrue(and_condition(
+            '''
+            boolean,True
+            boolean,True
+            '''
+        ))
