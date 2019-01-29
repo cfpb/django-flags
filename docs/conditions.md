@@ -56,6 +56,14 @@ Allows a flag to be enabled after a given date (and time) given in [ISO 8601 for
 FLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}
 ```
 
+### `before_date`
+
+Allows a flag to be enabled before a given date (and time) given in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). The time must be specified either in UTC or as an offset from UTC.
+
+```python
+FLAGS = {'MY_FLAG': {'before date': '2022-06-01T12:00Z'}}
+```
+
 ### `and`
 
 Allows a flag to be enabled only when a set of conditions are all true. 

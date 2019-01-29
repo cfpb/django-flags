@@ -9,10 +9,11 @@ from flags.conditions import (
     CONDITIONS,
     DuplicateCondition,
     RequiredForCondition,
+    after_date_condition,
     and_condition,
     anonymous_condition,
+    before_date_condition,
     boolean_condition,
-    date_condition,
     get_condition,
     parameter_condition,
     path_condition,
@@ -170,7 +171,7 @@ class PathConditionTestCase(TestCase):
             path_condition('/my/path')
 
 
-class DateConditionTestCase(TestCase):
+class AfterDateConditionTestCase(TestCase):
 
     def setUp(self):
         # Set up some datetimes relative to now for testing
@@ -188,31 +189,76 @@ class DateConditionTestCase(TestCase):
         self.future_datetime_notz_str = self.future_datetime_notz.isoformat()
 
     def test_date_timeone_true(self):
-        self.assertTrue(date_condition(self.past_datetime_tz))
+        self.assertTrue(after_date_condition(self.past_datetime_tz))
 
     def test_date_no_timeone_true(self):
-        self.assertTrue(date_condition(self.past_datetime_notz))
+        self.assertTrue(after_date_condition(self.past_datetime_notz))
 
     def test_date_str_timeone_true(self):
-        self.assertTrue(date_condition(self.past_datetime_tz_str))
+        self.assertTrue(after_date_condition(self.past_datetime_tz_str))
 
     def test_date_str_no_timeone_true(self):
-        self.assertTrue(date_condition(self.past_datetime_notz_str))
+        self.assertTrue(after_date_condition(self.past_datetime_notz_str))
 
     def test_date_timeone_false(self):
-        self.assertFalse(date_condition(self.future_datetime_tz))
+        self.assertFalse(after_date_condition(self.future_datetime_tz))
 
     def test_date_no_timeone_false(self):
-        self.assertFalse(date_condition(self.future_datetime_notz))
+        self.assertFalse(after_date_condition(self.future_datetime_notz))
 
     def test_date_str_timeone_false(self):
-        self.assertFalse(date_condition(self.future_datetime_tz_str))
+        self.assertFalse(after_date_condition(self.future_datetime_tz_str))
 
     def test_date_str_no_timeone_false(self):
-        self.assertFalse(date_condition(self.future_datetime_notz_str))
+        self.assertFalse(after_date_condition(self.future_datetime_notz_str))
 
     def test_not_valid_date_str(self):
-        self.assertFalse(date_condition('I am not a valid date'))
+        self.assertFalse(after_date_condition('I am not a valid date'))
+
+
+class BeforeDateConditionTestCase(TestCase):
+
+    def setUp(self):
+        # Set up some datetimes relative to now for testing
+        delta = timedelta(days=1)
+
+        self.past_datetime_tz = timezone.now() - delta
+        self.past_datetime_notz = self.past_datetime_tz.replace(tzinfo=None)
+        self.past_datetime_tz_str = self.past_datetime_tz.isoformat()
+        self.past_datetime_notz_str = self.past_datetime_notz.isoformat()
+
+        self.future_datetime_tz = timezone.now() + delta
+        self.future_datetime_notz = self.future_datetime_tz.replace(
+            tzinfo=None)
+        self.future_datetime_tz_str = self.future_datetime_tz.isoformat()
+        self.future_datetime_notz_str = self.future_datetime_notz.isoformat()
+
+    def test_date_timeone_true(self):
+        self.assertTrue(before_date_condition(self.future_datetime_tz))
+
+    def test_date_no_timeone_true(self):
+        self.assertTrue(before_date_condition(self.future_datetime_notz))
+
+    def test_date_str_timeone_true(self):
+        self.assertTrue(before_date_condition(self.future_datetime_tz_str))
+
+    def test_date_str_no_timeone_true(self):
+        self.assertTrue(before_date_condition(self.future_datetime_notz_str))
+
+    def test_date_timeone_false(self):
+        self.assertFalse(before_date_condition(self.past_datetime_tz))
+
+    def test_date_no_timeone_false(self):
+        self.assertFalse(before_date_condition(self.past_datetime_notz))
+
+    def test_date_str_timeone_false(self):
+        self.assertFalse(before_date_condition(self.past_datetime_tz_str))
+
+    def test_date_str_no_timeone_false(self):
+        self.assertFalse(before_date_condition(self.past_datetime_notz_str))
+
+    def test_not_valid_date_str(self):
+        self.assertFalse(before_date_condition('I am not a valid date'))
 
 
 class AndConditionTestCase(TestCase):

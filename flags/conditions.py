@@ -92,7 +92,7 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
 
 @register('parameter')
 def parameter_condition(param_name, request=None, **kwargs):
-    """ is the parameter name part of the GET parameters? """
+    """ Is the parameter name part of the GET parameters? """
     if request is None:
         raise RequiredForCondition("request is required for condition "
                                    "'parameter'")
@@ -111,8 +111,8 @@ def path_condition(pattern, request=None, **kwargs):
 
 
 @register('after date')
-def date_condition(date_or_str, **kwargs):
-    """ Does the current date match the given date?
+def after_date_condition(date_or_str, **kwargs):
+    """ Is the the current date after the given date?
     date_or_str is either a date object or an ISO 8601 string """
     try:
         date = dateparse.parse_datetime(date_or_str)
@@ -123,6 +123,30 @@ def date_condition(date_or_str, **kwargs):
 
     try:
         date_test = (now >= date)
+    except TypeError:
+        date_test = False
+
+    return date_test
+
+
+# Keeping the old name of this condition function around for
+# backwards-compatibility.
+date_condition = after_date_condition
+
+
+@register('before date')
+def before_date_condition(date_or_str, **kwargs):
+    """ Is the current date before the given date?
+    date_or_str is either a date object or an ISO 8601 string """
+    try:
+        date = dateparse.parse_datetime(date_or_str)
+    except TypeError:
+        date = date_or_str
+
+    now = timezone.now()
+
+    try:
+        date_test = (now <= date)
     except TypeError:
         date_test = False
 
