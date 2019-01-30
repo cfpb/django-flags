@@ -122,7 +122,7 @@ class DatabaseFlagsSource(object):
             if o.name not in flags:
                 flags[o.name] = []
             flags[o.name].append(DatabaseCondition(
-                o.condition, o.value, required=False, obj=o
+                o.condition, o.value, required=o.required, obj=o
             ))
         return flags
 
