@@ -10,26 +10,25 @@ A list or tuple containing the full Python path strings to classes that provides
 
 ### `FLAGS`
 
-Default: `{}`
+Default: `[]`
 
 A dictionary of feature flags and optional conditions used when `'flags.sources.SettingsFlagsSource'` is in [`FLAGS_SOURCES`](#flag_sources).
 
 Conditions can either be included as:
 
 - A dictionary with the condition name as the key and expected value as value
-- A list of 2-tuples with the format `(condition name: expected value)`
+- A list of dictionaries with the format `{'condition': 'condition name', 'value': 'expected value', 'required': False}`
+- A list of 2-tuples with the format `(condition name, expected value)` (`required` is `False`)
 
 ```python
 FLAGS = {
-  'FLAG_WITH_EMPTY_CONDITIONS': {}
-  'FLAG_WITH_DICT_CONDITIONS': {
-    'condition name': 'value flag is expected to match to be enabled',
-  },
-  'FLAG_WITH_LISTED_CONDITIONS': [
-    ('path matches',  r'^/matching-path.*'),
-    ('path matches',  r'^/other-path.*'),
-  ]
+  'FLAG_WITH_DICT_CONDITIONS': [
+    {'condition': 'condition name', 'value': 'expected value to be enabled'},
+  ],
+  'FLAG_WITH_TUPLE_CONDITIONS': [
+    ('condition name',  'expected value to be enabled'),
+  ],
 }
 ```
 
-The advantage of a list of 2-tuples is that the same condition can be repeated for different expected values.
+Previously `FLAGS` supported a single dictionary (rather than a list) with the condition name as the key and expected value as value. This method of specifying flags is deprecated.

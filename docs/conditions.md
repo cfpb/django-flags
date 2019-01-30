@@ -9,7 +9,7 @@ Django-Flags comes with the following conditions built-in:
 A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.
 
 ```python
-FLAGS = {'MY_FLAG': {'boolean': True}}
+FLAGS = {'MY_FLAG': [{'condition': 'boolean', 'value': True}]}
 ```
 
 The value can be given as a Python `True` or `False` Boolean value or as the strings `"true"`, `"True"`, `"False"`, or `"false"`.
@@ -19,7 +19,7 @@ The value can be given as a Python `True` or `False` Boolean value or as the str
 Allows a flag to be enabled for the username given as the condition's value.
 
 ```python
-FLAGS = {'MY_FLAG': {'user': 'jane.doe'}}
+FLAGS = {'MY_FLAG': [{'condition': 'user', 'value': 'jane.doe'}]}
 ```
 
 ### `anonymous`
@@ -27,7 +27,7 @@ FLAGS = {'MY_FLAG': {'user': 'jane.doe'}}
 Allows a flag to be either enabled or disabled depending on the condition's boolean value.
 
 ```python
-FLAGS = {'MY_FLAG': {'anonymous': False}}
+FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}
 ```
 
 The value can be given as a Python `True` or `False` Boolean value or as the strings `"true"`, `"True"`, `"False"`, or `"false"`.
@@ -37,15 +37,15 @@ The value can be given as a Python `True` or `False` Boolean value or as the str
 Allows a flag to be enabled based on a GET parameter with the name given as the condition's value.
 
 ```python
-FLAGS = {'MY_FLAG': {'parameter': 'my_flag_param'}}
+FLAGS = {'MY_FLAG': [{'condition': 'parameter', 'value': 'my_flag_param'}]}
 ```
 
-### `path`
+### `path matches`
 
-Allows a flag to be enabled if the request's path matches the condition value.
+Allows a flag to be enabled if the request's path matches the regular expression value.
 
 ```python
-FLAGS = {'MY_FLAG': {'path': '/flagged/path'}}
+FLAGS = {'MY_FLAG': [{'condition': 'path matches', 'value': r'^/flagged/path'}]}
 ```
 
 ### `after date`
@@ -53,7 +53,7 @@ FLAGS = {'MY_FLAG': {'path': '/flagged/path'}}
 Allows a flag to be enabled after a given date (and time) given in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). The time must be specified either in UTC or as an offset from UTC.
 
 ```python
-FLAGS = {'MY_FLAG': {'after date': '2017-06-01T12:00Z'}}
+FLAGS = {'MY_FLAG': [{'condition': 'after date', 'value': '2017-06-01T12:00Z'}]}
 ```
 
 ### `before_date`

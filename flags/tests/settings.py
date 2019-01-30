@@ -60,10 +60,10 @@ TEMPLATES = [{
 }]
 
 FLAGS = {
-    'FLAG_ENABLED': {'boolean': True},
-    'FLAG_ENABLED_WITH_KWARG': {'flag_enabled_with_kwarg': (2 + 2)},
-    'FLAG_DISABLED': {'boolean': False},
-    'DB_FLAG': {},
+    'FLAG_ENABLED': [('boolean', True)],
+    'FLAG_ENABLED_WITH_KWARG': [('flag_enabled_with_kwarg', (2 + 2))],
+    'FLAG_DISABLED': [('boolean', False)],
+    'DB_FLAG': [],
 }
 
 

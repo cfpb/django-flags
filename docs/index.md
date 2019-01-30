@@ -76,7 +76,7 @@ First, define the flag in Django `settings.py`:
 
 ```python
 FLAGS = {
-    'MY_FLAG': {}
+    'MY_FLAG': []
 }
 ```
 

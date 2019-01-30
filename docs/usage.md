@@ -6,11 +6,11 @@ Flags are defined in Django settings with the conditions in which they are enabl
 
 ```python
 FLAGS = {
-  'FLAG_WITH_EMPTY_CONDITIONS': {}
-  'MY_FLAG': {
-    'condition name': 'value flag is expected to match to be enabled',
-    'user': 'lady.liberty'
-  }
+  'FLAG_WITH_EMPTY_CONDITIONS': []
+  'FLAG_WITH_ANY_CONDITIONS': [
+    {'condition': 'condition name', 'value': 'expected value to be enabled'},
+    {'condition': 'user', 'value': 'lady.liberty'},
+  ],
 }
 ```
 
