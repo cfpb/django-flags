@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class Condition(object):
     """ A simple wrapper around conditions """
 
-    def __init__(self, condition, value, required=False):
+    def __init__(self, condition, value=None, required=False):
         self.condition = condition
         self.value = value
         self.fn = get_condition(self.condition)
@@ -24,7 +24,7 @@ class Condition(object):
         return other.condition == self.condition and other.value == self.value
 
     def check(self, **kwargs):
-        if self.fn is not None:
+        if self.fn is not None and self.value is not None:
             return self.fn(self.value, **kwargs)
 
 
@@ -83,17 +83,17 @@ class SettingsFlagsSource(object):
                 if isinstance(c, dict):
                     condition = Condition(
                         c['condition'],
-                        c['value'],
+                        value=c.get('value'),
                         required=c.get('required', False)
                     )
 
                 # (condition, value, required)
                 elif len(c) == 3:
-                    condition = Condition(c[0], c[1], required=c[2])
+                    condition = Condition(c[0], value=c[1], required=c[2])
 
                 # (condition, value)
                 else:
-                    condition = Condition(c[0], c[1], required=False)
+                    condition = Condition(c[0], value=c[1], required=False)
 
                 flags[flag].append(condition)
 
@@ -122,7 +122,7 @@ class DatabaseFlagsSource(object):
             if o.name not in flags:
                 flags[o.name] = []
             flags[o.name].append(DatabaseCondition(
-                o.condition, o.value, required=o.required, obj=o
+                o.condition, value=o.value, required=o.required, obj=o
             ))
         return flags
 

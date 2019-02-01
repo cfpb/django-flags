@@ -56,4 +56,6 @@ FLAGS = {
 }
 ```
 
+A condition's value can be None, or not given in the condition dictionary, and the condition will not never be met.
+
 Previously flag definitions in `FLAGS` supported a single dictionary (rather than a list) with the condition name as the key and expected value as value. This method of specifying flags is deprecated and will be removed in Django-Flags 5.0.

@@ -162,6 +162,10 @@ class FlagTestCase(TestCase):
         ])
         self.assertFalse(flag.check_state(request=request))
 
+    def test_check_state_empty_value(self):
+        flag = Flag('MY_FLAG', [Condition('boolean')])
+        self.assertFalse(flag.check_state())
+
 
 class GetFlagsTestCase(TestCase):
 
