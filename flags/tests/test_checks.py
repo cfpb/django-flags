@@ -7,11 +7,11 @@ from flags.checks import flag_conditions_check
 
 class TestFlagsConditionsCheck(TestCase):
 
-    @override_settings(FLAGS={'FLAG_TO_CHECK': {'boolean': True}})
+    @override_settings(FLAGS={'FLAG_TO_CHECK': [('boolean', True)]})
     def test_check_passes_if_conditions_exist(self):
         self.assertFalse(flag_conditions_check(apps.get_app_configs()))
 
-    @override_settings(FLAGS={'FLAG_TO_CHECK': {'nonexistent': 'value'}})
+    @override_settings(FLAGS={'FLAG_TO_CHECK': [('nonexistent', 'value')]})
     def test_check_fails_if_conditions_do_not_exist(self):
         errors = flag_conditions_check(apps.get_app_configs())
         self.assertEqual(len(errors), 1)

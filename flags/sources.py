@@ -1,4 +1,5 @@
 import logging
+import warnings
 
 from django.apps import apps
 from django.conf import settings
@@ -13,10 +14,11 @@ logger = logging.getLogger(__name__)
 class Condition(object):
     """ A simple wrapper around conditions """
 
-    def __init__(self, condition, value):
+    def __init__(self, condition, value, required=False):
         self.condition = condition
         self.value = value
         self.fn = get_condition(self.condition)
+        self.required = required
 
     def __eq__(self, other):
         return other.condition == self.condition and other.value == self.value
@@ -39,7 +41,19 @@ class Flag(object):
 
     def check_state(self, **kwargs):
         """ Determine this flag's state based on any of its conditions """
-        return any(c.check(**kwargs) for c in self.conditions)
+        not_required = [c for c in self.conditions if not c.required]
+        required = [c for c in self.conditions if c.required]
+
+        if len(not_required) == 0 and len(required) == 0:
+            return False
+
+        return (
+            any(c.check(**kwargs) for c in not_required)
+            if len(not_required) > 0
+            else True
+        ) and (
+            all(c.check(**kwargs) for c in required)
+        )
 
 
 class SettingsFlagsSource(object):
@@ -48,12 +62,40 @@ class SettingsFlagsSource(object):
         settings_flags = getattr(settings, 'FLAGS', {}).items()
         flags = {}
         for flag, conditions in settings_flags:
-            # Flag conditions in settings used to be dicts. We expect 2-tuples
-            # now but contiune to support dicts. At some point, we should issue
-            # deprecation warnings about dicts and then deprecate support.
+            # Flag conditions in settings used to be dicts, which are now
+            # deprecated.
             if isinstance(conditions, dict):
+                warnings.warn(
+                    'dict feature flag definitions are deprecated and will be '
+                    'removed in a future version of Django-Flags. '
+                    'Please use a list of dicts or tuples instead.',
+                    FutureWarning,
+                )
                 conditions = conditions.items()
-            flags[flag] = [Condition(c, v) for c, v in conditions]
+
+            # Flag conditions should be a list of either 3-tuples of
+            # dictionaries in the form (condition, value, required) or
+            # {'name': 'condition', 'value': value, 'required': True}
+            # but contiune to support 2-tuples for unrequired conditions.
+            flags[flag] = []
+            for c in conditions:
+                # {'name': 'condition', 'value': value, 'required': True}
+                if isinstance(c, dict):
+                    condition = Condition(
+                        c['condition'],
+                        c['value'],
+                        required=c.get('required', False)
+                    )
+
+                # (condition, value, required)
+                elif len(c) == 3:
+                    condition = Condition(c[0], c[1], required=c[2])
+
+                # (condition, value)
+                else:
+                    condition = Condition(c[0], c[1], required=False)
+
+                flags[flag].append(condition)
 
         return flags
 
@@ -61,8 +103,10 @@ class SettingsFlagsSource(object):
 class DatabaseCondition(Condition):
     """ Condition that includes the FlagState database object """
 
-    def __init__(self, condition, value, obj=None):
-        super(DatabaseCondition, self).__init__(condition, value)
+    def __init__(self, condition, value, required=False, obj=None):
+        super(DatabaseCondition, self).__init__(
+            condition, value, required=required
+        )
         self.obj = obj
 
 
@@ -78,7 +122,7 @@ class DatabaseFlagsSource(object):
             if o.name not in flags:
                 flags[o.name] = []
             flags[o.name].append(DatabaseCondition(
-                o.condition, o.value, obj=o
+                o.condition, o.value, required=o.required, obj=o
             ))
         return flags
 

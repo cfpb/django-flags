@@ -33,12 +33,12 @@ class FlaggedViewMixinTestCase(TestCase):
         view = TestView.as_view(flag_name=self.flag_name)
         self.assertRaises(Http404, view, self.request())
 
-    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': {'boolean': True}})
+    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': [('boolean', True)]})
     def test_flag_set_view_enabled(self):
         view = TestView.as_view(flag_name=self.flag_name)
         self.assertEqual(view(self.request()).status_code, 200)
 
-    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': {'boolean': False}})
+    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': [('boolean', False)]})
     def test_flag_set_view_disabled(self):
         view = TestView.as_view(flag_name=self.flag_name)
         self.assertRaises(Http404, view, self.request())
@@ -56,7 +56,7 @@ class FlaggedViewMixinTestCase(TestCase):
         response = view(self.request())
         self.assertContains(response, 'fallback fn')
 
-    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': {'boolean': True}})
+    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': [('boolean', True)]})
     def test_fallback_view_function_enabled(self):
         view = TestView.as_view(
             flag_name=self.flag_name,

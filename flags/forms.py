@@ -7,13 +7,22 @@ from flags.sources import get_flags
 
 class FlagStateForm(forms.ModelForm):
     name = forms.ChoiceField(
-        label="Flag", required=True
+        label='Flag',
+        required=True
     )
     condition = forms.ChoiceField(
-        label="Is enabled when", required=True
+        label='Condition name',
+        required=True
     )
     value = forms.CharField(
-        label="Is", required=True
+        label='Expected value',
+        required=True
+    )
+    required = forms.BooleanField(
+        label='Required',
+        required=False,
+        help_text=('All conditions marked "required" must be met to enable '
+                   'the flag'),
     )
 
     def __init__(self, *args, **kwargs):
@@ -29,4 +38,4 @@ class FlagStateForm(forms.ModelForm):
 
     class Meta:
         model = FlagState
-        fields = ('name', 'condition', 'value')
+        fields = ('name', 'condition', 'value', 'required')

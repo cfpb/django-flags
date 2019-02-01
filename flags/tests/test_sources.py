@@ -1,7 +1,4 @@
-try:
-    from unittest.mock import Mock
-except ImportError:  # pragma: no cover
-    from mock import Mock
+import warnings
 
 from django.test import TestCase, override_settings
 
@@ -15,6 +12,12 @@ from flags.sources import (
 )
 
 
+try:
+    from unittest.mock import Mock
+except ImportError:  # pragma: no cover
+    from mock import Mock
+
+
 # Test flag source for using this module to test
 class TestFlagsSource(object):
     def get_flags(self):
@@ -22,7 +25,7 @@ class TestFlagsSource(object):
             'SOURCED_FLAG': [Condition('boolean', True), ],
             'NOT_IN_SETTINGS_FLAG': [
                 Condition('boolean', False),
-            ]
+            ],
         }
 
 
@@ -34,12 +37,64 @@ class ExceptionalFlagsSource(object):
 class SettingsFlagsSourceTestCase(TestCase):
 
     @override_settings(FLAGS={'MY_FLAG': {'boolean': True}})
-    def test_get_flags(self):
+    def test_get_flags_dict(self):
+        source = SettingsFlagsSource()
+        with warnings.catch_warnings(record=True) as warning_list:
+            flags = source.get_flags()
+            self.assertTrue(
+                any(item.category == FutureWarning for item in warning_list)
+            )
+
+        self.assertEqual(
+            flags,
+            {'MY_FLAG': [Condition('boolean', True, required=False), ]}
+        )
+
+    @override_settings(FLAGS={'MY_FLAG': [('boolean', True), ]})
+    def test_get_flags_two_tuple(self):
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
             flags,
-            {'MY_FLAG': [Condition('boolean', True), ]}
+            {'MY_FLAG': [Condition('boolean', True, required=False), ]}
+        )
+
+    @override_settings(FLAGS={'MY_FLAG': [('boolean', True, True), ]})
+    def test_get_flags_three_tuple(self):
+        source = SettingsFlagsSource()
+        flags = source.get_flags()
+        self.assertEqual(
+            flags,
+            {'MY_FLAG': [Condition('boolean', True, required=True), ]}
+        )
+
+    @override_settings(FLAGS={'MY_FLAG': [
+        {
+            'condition': 'boolean',
+            'value': True,
+            'required': True
+        },
+    ]})
+    def test_get_flags_list_of_dicts(self):
+        source = SettingsFlagsSource()
+        flags = source.get_flags()
+        self.assertEqual(
+            flags,
+            {'MY_FLAG': [Condition('boolean', True, required=True), ]}
+        )
+
+    @override_settings(FLAGS={'MY_FLAG': [
+        {
+            'condition': 'boolean',
+            'value': True,
+        },
+    ]})
+    def test_get_flags_list_of_dicts_without_required(self):
+        source = SettingsFlagsSource()
+        flags = source.get_flags()
+        self.assertEqual(
+            flags,
+            {'MY_FLAG': [Condition('boolean', True, required=False), ]}
         )
 
 
@@ -83,13 +138,29 @@ class FlagTestCase(TestCase):
         flag = Flag('MY_FLAG', [])
         self.assertFalse(flag.check_state())
 
-    def test_check_state_multiple_conditions(self):
+    def test_check_state_multiple_conditions_not_required(self):
         request = Mock(path='/foo')
         flag = Flag('MY_FLAG', [
-            Condition('boolean', True),
+            Condition('boolean', False),
             Condition('path matches', '/foo')
         ])
         self.assertTrue(flag.check_state(request=request))
+
+    def test_check_state_multiple_conditions_required(self):
+        request = Mock(path='/foo')
+        flag = Flag('MY_FLAG', [
+            Condition('boolean', True, required=True),
+            Condition('path matches', '/foo', required=True)
+        ])
+        self.assertTrue(flag.check_state(request=request))
+
+    def test_check_state_multiple_conditions_required_failure(self):
+        request = Mock(path='/foo')
+        flag = Flag('MY_FLAG', [
+            Condition('boolean', False, required=True),
+            Condition('path matches', '/foo', required=True)
+        ])
+        self.assertFalse(flag.check_state(request=request))
 
 
 class GetFlagsTestCase(TestCase):
@@ -105,7 +176,7 @@ class GetFlagsTestCase(TestCase):
         with self.assertRaises(ImportError):
             get_flags(sources=['non.existent.module'])
 
-    @override_settings(FLAGS={'SOURCED_FLAG': {}, 'OTHER_FLAG': {}})
+    @override_settings(FLAGS={'SOURCED_FLAG': [], 'OTHER_FLAG': []})
     def test_get_flags(self):
         flags = get_flags(
             sources=[
