@@ -1,5 +1,28 @@
 # Release Notes
 
+## 4.1
+
+### What's new?
+
+- Added the option to specifiy [required conditions](/usage/#defining-flags) that must always be met.
+- Deprecated support for using a single dictionary to hold key/values of conditions for a settings-based feature flag. Support will be removed in Django-Flags 5.0. Use [a list of dictionaries or tuples instead](/settings/#flags).
+- Added a [`before date` condition](/conditions) that is met whenever the current date is before the expected date.
+
+## 4.0.3
+
+### What's new?
+- The system check introduced in 4.0.2 will no longer raise a `ProgrammingError` or an `OperationalError` when run pre-migration.
+
+## 4.0.2
+
+### What's new?
+- Logging of non-existent conditions is now a Django system check.
+
+## 4.0.1
+
+### What's new?
+- `condition.check()` returns a Falsy `None` instead of raising a `TypeError` when a configured condition has no function registered.
+
 ## 4.0
 
 ### What's new?
