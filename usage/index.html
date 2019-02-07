@@ -58,7 +58,6 @@
     <a class="current" href="./">Usage guide</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#usage-guide">Usage guide</a></li>
     
         <ul>
         
@@ -161,25 +160,29 @@
 <h2 id="defining-flags">Defining flags<a class="headerlink" href="#defining-flags" title="Permanent link">¶</a></h2>
 <p>Flags are defined in Django settings with the conditions in which they are enabled.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {
-  'FLAG_WITH_EMPTY_CONDITIONS': {}
-  'MY_FLAG': {
-    'condition name': 'value flag is expected to match to be enabled',
-    'user': 'lady.liberty'
-  }
+  'FLAG_WITH_EMPTY_CONDITIONS': []
+  'FLAG_WITH_ANY_CONDITIONS': [
+    {'condition': 'condition name', 'value': 'expected value to be enabled'},
+    {'condition': 'user', 'value': 'lady.liberty'},
+  ],
+  'FLAG_WITH_REQUIRED_CONDITIONS': [
+    {'condition': 'user', 'value': 'lady.liberty'},
+    {'condition': 'path matches', 'value': r'^/liberty/island', required=True},
+  ]
 }</code></pre>
 
-<p>The set of conditions can be none (flag will never be enabled), one (only condition that has to be met for the flag to be enabled), or many (all have to be met for the flag to be enabled).</p>
+<p>The set of conditions can be empty (flag will never be enabled), have one or more conditions that are not required (any of those conditions can be met for the flag to be enabled), or one or more required conditions (all required conditions have to be met for the flag to be enabled).</p>
 <p>Additional conditions can be added in the Django admin for any defined flag (illustrated in <a href="../../#quickstart">Quickstart</a>). Conditions added in the Django admin can be changed without restarting Django, conditions defined in <code>settings.py</code> cannot. See <a href="../conditions">the list of built-in conditions</a>.</p>
 <h2 id="using-flags-in-code">Using flags in code<a class="headerlink" href="#using-flags-in-code" title="Permanent link">¶</a></h2>
 <p>Flags can be used in Python code:</p>
 <pre class="highlight"><code class="language-python">from flags.state import flag_enabled
 
-if flag_enabled('MY_FLAG', request=a_request):
+if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
     print(&quot;My feature flag is enabled&quot;) </code></pre>
 
 <p>Django templates:</p>
 <pre class="highlight"><code class="language-django">{% load feature_flags %}
-{% flag_enabled 'MY_FLAG' as my_flag %}
+{% flag_enabled 'FLAG_WITH_ANY_CONDITIONS' as my_flag %}
 {% if my_flag %}
   &lt;div&gt;
     I’m the result of a feature flag.   
@@ -187,7 +190,7 @@ if flag_enabled('MY_FLAG', request=a_request):
 {% endif %}</code></pre>
 
 <p>Jinja2 templates (after <a href="../api/jinja2/">adding <code>flag_enabled</code> to the Jinja2 environment</a>):</p>
-<pre class="highlight"><code class="language-jinja">{% if flag_enabled('MY_FLAG', request) %}
+<pre class="highlight"><code class="language-jinja">{% if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request) %}
   &lt;div&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
@@ -197,14 +200,14 @@ if flag_enabled('MY_FLAG', request=a_request):
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_path
 
 urlpatterns = [
-    flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),
+    flagged_path('FLAG_WITH_REQUIRED_CONDITIONS', 'a-url/', view_requiring_flag, state=True),
 ]</code></pre>
 
 <p>And Django 1.x <code>urls.py</code>:</p>
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_url
 
 urlpatterns = [
-    flagged_url('MY_FLAG', r'^a-url$', view_requiring_flag, state=True),
+    flagged_url('FLAG_WITH_REQUIRED_CONDITIONS', r'^a-url$', view_requiring_flag, state=True),
 ]</code></pre>
 
 <p>See the <a href="../api/state">API reference</a> for more details and examples.</p>

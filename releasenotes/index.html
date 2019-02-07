@@ -108,9 +108,16 @@
     <a class="current" href="./">Release notes</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#release-notes">Release Notes</a></li>
     
         <ul>
+        
+            <li><a class="toctree-l3" href="#41">4.1</a></li>
+        
+            <li><a class="toctree-l3" href="#403">4.0.3</a></li>
+        
+            <li><a class="toctree-l3" href="#402">4.0.2</a></li>
+        
+            <li><a class="toctree-l3" href="#401">4.0.1</a></li>
         
             <li><a class="toctree-l3" href="#40">4.0</a></li>
         
@@ -162,8 +169,30 @@
             <div class="section">
               
                 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">¶</a></h1>
-<h2 id="40">4.0<a class="headerlink" href="#40" title="Permanent link">¶</a></h2>
+<h2 id="41">4.1<a class="headerlink" href="#41" title="Permanent link">¶</a></h2>
 <h3 id="whats-new">What's new?<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
+<ul>
+<li>Added the option to specifiy <a href="../usage/#defining-flags">required conditions</a> that must always be met.</li>
+<li>Deprecated support for using a single dictionary to hold key/values of conditions for a settings-based feature flag. Support will be removed in Django-Flags 5.0. Use <a href="../settings/#flags">a list of dictionaries or tuples instead</a>.</li>
+<li>Added a <a href="../conditions"><code>before date</code> condition</a> that is met whenever the current date is before the expected date.</li>
+</ul>
+<h2 id="403">4.0.3<a class="headerlink" href="#403" title="Permanent link">¶</a></h2>
+<h3 id="whats-new_1">What's new?<a class="headerlink" href="#whats-new_1" title="Permanent link">¶</a></h3>
+<ul>
+<li>The system check introduced in 4.0.2 will no longer raise a <code>ProgrammingError</code> or an <code>OperationalError</code> when run pre-migration.</li>
+</ul>
+<h2 id="402">4.0.2<a class="headerlink" href="#402" title="Permanent link">¶</a></h2>
+<h3 id="whats-new_2">What's new?<a class="headerlink" href="#whats-new_2" title="Permanent link">¶</a></h3>
+<ul>
+<li>Logging of non-existent conditions is now a Django system check.</li>
+</ul>
+<h2 id="401">4.0.1<a class="headerlink" href="#401" title="Permanent link">¶</a></h2>
+<h3 id="whats-new_3">What's new?<a class="headerlink" href="#whats-new_3" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>condition.check()</code> returns a Falsy <code>None</code> instead of raising a <code>TypeError</code> when a configured condition has no function registered.</li>
+</ul>
+<h2 id="40">4.0<a class="headerlink" href="#40" title="Permanent link">¶</a></h2>
+<h3 id="whats-new_4">What's new?<a class="headerlink" href="#whats-new_4" title="Permanent link">¶</a></h3>
 <ul>
 <li>The template functions <code>flag_enabled</code> and <code>flag_disabled</code> in both <a href="../api/django">Django</a> and <a href="../api/jinja2">Jinja2</a> templates now support taking keyword arguments that could be used by <a href="../api/conditions">custom conditions</a>.</li>
 <li>Jinja2 template functions are now available via a Jinja2 extension that can be <a href="../api/jinja2">included in <code>settings.py</code></a>. </li>
@@ -190,13 +219,13 @@
 ] </code></pre>
 
 <h2 id="302">3.0.2<a class="headerlink" href="#302" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_1">What's new?<a class="headerlink" href="#whats-new_1" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_5">What's new?<a class="headerlink" href="#whats-new_5" title="Permanent link">¶</a></h3>
 <ul>
 <li>Requests are now optional the <code>flag_enabled</code> and <code>flag_disabled</code> template tags.</li>
 <li>Flag state form conditions are now bound when the form is created to ensure all custom conditions are available on the form. (<a href="https://github.com/callorico">@callorico</a>)</li>
 </ul>
 <h2 id="301">3.0.1<a class="headerlink" href="#301" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_2">What's new?<a class="headerlink" href="#whats-new_2" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_6">What's new?<a class="headerlink" href="#whats-new_6" title="Permanent link">¶</a></h3>
 <ul>
 <li>Django 2.1 is now supported.</li>
 </ul>

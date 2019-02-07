@@ -63,7 +63,6 @@
     <a class="current" href="./">Settings</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#settings">Settings</a></li>
     
         <ul>
         
@@ -165,21 +164,36 @@
 <p>A dictionary of feature flags and optional conditions used when <code>'flags.sources.SettingsFlagsSource'</code> is in <a href="#flag_sources"><code>FLAGS_SOURCES</code></a>.</p>
 <p>Conditions can either be included as:</p>
 <ul>
-<li>A dictionary with the condition name as the key and expected value as value</li>
-<li>A list of 2-tuples with the format <code>(condition name: expected value)</code></li>
+<li>A list of dictionaries with the format:
+  <pre class="highlight"><code class="language-python">{'condition': 'condition name', 'value': 'expected value', 'required': True}`</code></pre>
+  or
+  <pre class="highlight"><code class="language-python">{'condition': 'condition name', 'value': 'expected value'}</code></pre>
+  (<code>required</code> defaults to <code>False</code>).</li>
+<li>A list of 3-tuples with the format: 
+  <pre class="highlight"><code class="language-python">(condition name, expected value, required)</code></pre></li>
+<li>A list of 2-tuples with the format:
+  <pre class="highlight"><code class="language-python">(condition name, expected value)</code></pre>
+  (<code>required</code> defaults to <code>False</code>)</li>
 </ul>
+<p>For example:</p>
 <pre class="highlight"><code class="language-python">FLAGS = {
-  'FLAG_WITH_EMPTY_CONDITIONS': {}
-  'FLAG_WITH_DICT_CONDITIONS': {
-    'condition name': 'value flag is expected to match to be enabled',
-  },
-  'FLAG_WITH_LISTED_CONDITIONS': [
-    ('path matches',  r'^/matching-path.*'),
-    ('path matches',  r'^/other-path.*'),
-  ]
+  'FLAG_WITH_EMPTY_CONDITIONS': [],
+  'FLAG_WITH_DICT_CONDITIONS': [
+    {'condition': 'condition name', 'value': 'expected value to be enabled'},
+    {'condition': 'condition name', 'value': 'expected value to be enabled', 'required': True},
+  ],
+  'FLAG_WITH_TUPLE_CONDITIONS': [
+    ('condition name', 'expected value to be enabled'),
+    ('condition name', 'expected value to be enabled', True),
+  ],
+  # This is possible, but not recommended
+  'FLAG_WITH_MIXED_CONDITIONS': [
+    {'condition': 'condition name', 'value': 'expected value to be enabled'},
+    ('condition name', 'expected value to be enabled', True),
+  ],
 }</code></pre>
 
-<p>The advantage of a list of 2-tuples is that the same condition can be repeated for different expected values.</p>
+<p>Previously flag definitions in <code>FLAGS</code> supported a single dictionary (rather than a list) with the condition name as the key and expected value as value. This method of specifying flags is deprecated and will be removed in Django-Flags 5.0.</p>
               
             </div>
           </div>
