@@ -25,11 +25,11 @@ def view_requiring_flag(request):
     return HttpResponse('flag was set')
 
 @flag_check('MY_OTHER_FLAG', False)
-def view_when_flag_is_not_set(request):
+def view_when_other_flag_is_set(request):
     return HttpResponse('flag was set')
 
 def other_view(request):
-    return HttpResponse('flag was not set')
+    return HttpResponse('always available')
 
 @flag_check('MY_FLAG_WITH_FALLBACK', True, fallback=other_view)
 def view_with_fallback(request):
