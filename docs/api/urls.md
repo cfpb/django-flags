@@ -13,9 +13,9 @@ from flags.urls import flagged_path, flagged_paths, flagged_re_path, flagged_re_
 
 Make a URL depend on the state of a feature flag. 
 
-`flagged_path()` can be used in place of [Django's `path()`](https://docs.djangoproject.com/en/2.0/ref/urls/#django.urls.path).
+`flagged_path()` can be used in place of [Django's `path()`](https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.path).
 
-`flagged_re_path()` can be used in place of [Django's `re_path()`](https://docs.djangoproject.com/en/2.0/ref/urls/#django.urls.re_path).
+`flagged_re_path()` can be used in place of [Django's `re_path()`](https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.re_path).
 
 The `view` and the `fallback` can both be a set of `include()`ed patterns but any matching URL patterns in the includes must match *exactly* in terms of regular expression, keyword arguments, and name, otherwise a `404` may be unexpectedly raised. 
 
@@ -38,9 +38,9 @@ urlpatterns = [
 
 Flag multiple URLs in the same context with a context manager.
 
-`flagged_paths()` returns a function that takes the same arguments as [Django's `path()`](https://docs.djangoproject.com/en/2.0/ref/urls/#django.urls.path) and which will flag the pattern's view.
+`flagged_paths()` returns a function that takes the same arguments as [Django's `path()`](https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.path) and which will flag the pattern's view.
 
-`flagged_re_paths()` returns a function that takes the same arguments as [Django's `re_path()`](https://docs.djangoproject.com/en/2.0/ref/urls/#django.urls.re_path) and which will flag the pattern's view.
+`flagged_re_paths()` returns a function that takes the same arguments as [Django's `re_path()`](https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.re_path) and which will flag the pattern's view.
 
 ```python
 with flagged_paths('MY_FLAG') as path:
