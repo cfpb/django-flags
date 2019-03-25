@@ -1,3 +1,5 @@
+import warnings
+
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpRequest, HttpResponse
 from django.test import TestCase, override_settings
@@ -49,7 +51,7 @@ class FlaggedViewMixinTestCase(TestCase):
 
         view = TestView.as_view(
             flag_name=self.flag_name,
-            condition=True,
+            state=True,
             fallback=test_view_function
         )
 
@@ -60,7 +62,7 @@ class FlaggedViewMixinTestCase(TestCase):
     def test_fallback_view_function_enabled(self):
         view = TestView.as_view(
             flag_name=self.flag_name,
-            condition=True,
+            state=True,
             fallback=lambda r: HttpResponse('fallback fn')
         )
 
@@ -74,9 +76,21 @@ class FlaggedViewMixinTestCase(TestCase):
 
         view = TestView.as_view(
             flag_name=self.flag_name,
-            condition=True,
+            state=True,
             fallback=OtherTestView.as_view()
         )
 
         response = view(self.request())
         self.assertContains(response, 'fallback cbv')
+
+    @override_settings(FLAGS={'FLAGGED_VIEW_MIXIN': [('boolean', True)]})
+    def test_deprecated_condition_attr(self):
+        with warnings.catch_warnings(record=True) as warning_list:
+            view = TestView.as_view(flag_name=self.flag_name, condition=True)
+            response = view(self.request())
+
+            self.assertTrue(
+                any(item.category == FutureWarning for item in warning_list)
+            )
+
+            self.assertContains(response, 'ok')
