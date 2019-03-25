@@ -34,7 +34,7 @@ The value can be given as a Python `True` or `False` Boolean value or as the str
 
 ### `parameter`
 
-Allows a flag to be enabled based on a GET parameter with the name given as the condition's value.
+Allows a flag to be enabled if a GET parameter with the condition's value as its name exists for a request.
 
 ```python
 FLAGS = {'MY_FLAG': [{'condition': 'parameter', 'value': 'my_flag_param'}]}
