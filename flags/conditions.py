@@ -1,4 +1,5 @@
 import re
+from distutils.util import strtobool
 
 import django
 from django.utils import dateparse, timezone
@@ -58,9 +59,7 @@ def get_condition(condition_name):
 def boolean_condition(condition, **kwargs):
     """ Basic boolean check """
     try:
-        if condition.lower() == 'true':
-            return True
-        return False
+        return strtobool(condition.strip().lower())
     except AttributeError:
         return bool(condition)
 
@@ -96,7 +95,8 @@ def parameter_condition(param_name, request=None, **kwargs):
         raise RequiredForCondition("request is required for condition "
                                    "'parameter'")
 
-    return request.GET.get(param_name) == 'True'
+    return param_name in request.GET
+    # return request.GET.get(param_name, '').lower() == 'true'
 
 
 @register('path matches')

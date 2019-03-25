@@ -67,10 +67,22 @@ class BooleanConditionTestCase(TestCase):
     def test_boolean_condition_valid_string(self):
         self.assertTrue(boolean_condition('True'))
         self.assertTrue(boolean_condition('true'))
+        self.assertTrue(boolean_condition('t'))
+        self.assertTrue(boolean_condition('yes'))
+        self.assertTrue(boolean_condition('y'))
+        self.assertTrue(boolean_condition('on'))
+        self.assertTrue(boolean_condition('1'))
+        self.assertTrue(boolean_condition(' true'))
+        self.assertTrue(boolean_condition('true   '))
 
     def test_boolean_condition_invalid_string(self):
         self.assertFalse(boolean_condition('False'))
         self.assertFalse(boolean_condition('false'))
+        self.assertFalse(boolean_condition('f'))
+        self.assertFalse(boolean_condition('no'))
+        self.assertFalse(boolean_condition('n'))
+        self.assertFalse(boolean_condition('off'))
+        self.assertFalse(boolean_condition('0'))
 
 
 class UserConditionTestCase(TestCase):
@@ -125,23 +137,25 @@ class ParameterConditionTestCase(TestCase):
         self.request = HttpRequest()
 
     def test_parameter_condition_valid(self):
-        self.request.GET = QueryDict('query_flag=True')
-        self.assertTrue(parameter_condition('query_flag',
-                                            request=self.request))
+        self.request.GET = QueryDict('my_flag=True')
+        self.assertTrue(parameter_condition('my_flag', request=self.request))
 
-    def test_parameter_condition_invalid(self):
-        self.request.GET = QueryDict('query_flag=False')
-        self.assertFalse(parameter_condition('query_flag',
-                                             request=self.request))
+        self.request.GET = QueryDict('my_flag=true')
+        self.assertTrue(parameter_condition('my_flag', request=self.request))
+
+        self.request.GET = QueryDict('my_flag=excellent')
+        self.assertTrue(parameter_condition('my_flag', request=self.request))
+
+        self.request.GET = QueryDict('my_flag')
+        self.assertTrue(parameter_condition('my_flag', request=self.request))
 
     def test_parameter_condition_non_existent(self):
-        self.request.GET = QueryDict('not_query_flag=True')
-        self.assertFalse(parameter_condition('query_flag',
-                                             request=self.request))
+        self.request.GET = QueryDict('not_my_flag=True')
+        self.assertFalse(parameter_condition('my_flag', request=self.request))
 
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):
-            parameter_condition('query_flag')
+            parameter_condition('my_flag')
 
 
 class PathConditionTestCase(TestCase):
