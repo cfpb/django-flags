@@ -35,7 +35,7 @@ The value can given as a Python `True` or `False` or  as any [string representat
 
 ### `parameter`
 
-Allows a flag to be enabled by including a parameter in the request's query string. `value` is the name of the parameter, or a name and expected value. If an expected value isn't provided, the value must by `true`.
+Allows a flag to be enabled by including a parameter in the request's query string. `value` is the name of the parameter, or a name and expected value. If an expected value isn't provided, the value must be `True`.
 
 ```python
 FLAGS = {
