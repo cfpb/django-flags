@@ -6,13 +6,14 @@ Django-Flags comes with the following conditions built-in:
 
 ### `boolean`
 
-A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.
+A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition. 
+
 
 ```python
 FLAGS = {'MY_FLAG': [{'condition': 'boolean', 'value': True}]}
 ```
 
-The value can be given as a Python `True` or `False` Boolean value or as the strings `"true"`, `"True"`, `"False"`, or `"false"`.
+The value can given as a Python `True` or `False` or  as any [string representation of truth](https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool), such as `y`, `yes`, `t`, `true`, `on` and `1` for true values, and `n`, `no`, `f`, `false`, `off` and `0` for false values.
 
 ### `user`
 
@@ -30,14 +31,20 @@ Allows a flag to be either enabled or disabled depending on the condition's bool
 FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}
 ```
 
-The value can be given as a Python `True` or `False` Boolean value or as the strings `"true"`, `"True"`, `"False"`, or `"false"`.
+The value can given as a Python `True` or `False` or  as any [string representation of truth](https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool), such as `y`, `yes`, `t`, `true`, `on` and `1` for true values, and `n`, `no`, `f`, `false`, `off` and `0` for false values.
 
 ### `parameter`
 
-Allows a flag to be enabled based on a GET parameter with the name given as the condition's value.
+Allows a flag to be enabled by including a parameter in the request's query string. `value` is the name of the parameter, or a name and expected value. If an expected value isn't provided, the value must be `True`.
 
 ```python
-FLAGS = {'MY_FLAG': [{'condition': 'parameter', 'value': 'my_flag_param'}]}
+FLAGS = {
+    'MY_FLAG': [
+        {'condition': 'parameter', 'value': 'my_flag_param1'},      # ?my_flag_param1=true
+        {'condition': 'parameter', 'value': 'my_flag_param2=now'},  # ?my_flag_param2=now
+        {'condition': 'parameter', 'value': 'my_flag_param3='},     # ?my_flag_param3
+    ]
+}
 ```
 
 ### `path matches`

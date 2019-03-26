@@ -1,4 +1,5 @@
 import re
+from distutils.util import strtobool
 
 import django
 from django.utils import dateparse, timezone
@@ -58,9 +59,7 @@ def get_condition(condition_name):
 def boolean_condition(condition, **kwargs):
     """ Basic boolean check """
     try:
-        if condition.lower() == 'true':
-            return True
-        return False
+        return strtobool(condition.strip().lower())
     except AttributeError:
         return bool(condition)
 
@@ -84,9 +83,14 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
                                    "'anonymous'")
 
     if django.VERSION[0] >= 2:  # pragma: no cover
-        return bool(boolean_value) == bool(request.user.is_anonymous)
+        is_anonymous = bool(request.user.is_anonymous)
     else:  # pragma: no cover
-        return bool(boolean_value) == bool(request.user.is_anonymous())
+        is_anonymous = bool(request.user.is_anonymous())
+
+    try:
+        return strtobool(boolean_value.strip().lower()) == is_anonymous
+    except AttributeError:
+        return bool(boolean_value) == is_anonymous
 
 
 @register('parameter')
@@ -95,8 +99,12 @@ def parameter_condition(param_name, request=None, **kwargs):
     if request is None:
         raise RequiredForCondition("request is required for condition "
                                    "'parameter'")
+    try:
+        param_name, param_value = param_name.split('=')
+    except ValueError:
+        param_value = 'True'
 
-    return request.GET.get(param_name) == 'True'
+    return request.GET.get(param_name) == param_value
 
 
 @register('path matches')
