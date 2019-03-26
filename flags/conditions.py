@@ -83,9 +83,14 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
                                    "'anonymous'")
 
     if django.VERSION[0] >= 2:  # pragma: no cover
-        return bool(boolean_value) == bool(request.user.is_anonymous)
+        is_anonymous = bool(request.user.is_anonymous)
     else:  # pragma: no cover
-        return bool(boolean_value) == bool(request.user.is_anonymous())
+        is_anonymous = bool(request.user.is_anonymous())
+
+    try:
+        return strtobool(boolean_value.strip().lower()) == is_anonymous
+    except AttributeError:
+        return bool(boolean_value) == is_anonymous
 
 
 @register('parameter')
