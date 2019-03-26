@@ -6,13 +6,14 @@ Django-Flags comes with the following conditions built-in:
 
 ### `boolean`
 
-A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.
+A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition. 
+
 
 ```python
 FLAGS = {'MY_FLAG': [{'condition': 'boolean', 'value': True}]}
 ```
 
-The value can be given as a Python `True` or `False` Boolean value or as the strings `"true"`, `"True"`, `"False"`, or `"false"`.
+The value can given as a Python `True` or `False` or  as any [string representation of truth](https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool), such as `y`, `yes`, `t`, `true`, `on` and `1` for true values, and `n`, `no`, `f`, `false`, `off` and `0` for false values.
 
 ### `user`
 
@@ -30,7 +31,7 @@ Allows a flag to be either enabled or disabled depending on the condition's bool
 FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}
 ```
 
-The value can be given as a Python `True` or `False` Boolean value or as the strings `"true"`, `"True"`, `"False"`, or `"false"`.
+The value can given as a Python `True` or `False` or  as any [string representation of truth](https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool), such as `y`, `yes`, `t`, `true`, `on` and `1` for true values, and `n`, `no`, `f`, `false`, `off` and `0` for false values.
 
 ### `parameter`
 
