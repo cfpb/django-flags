@@ -13,19 +13,20 @@
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../css/highlight.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   <link href="../css/overrides.css" rel="stylesheet">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Usage guide";
     var mkdocs_page_input_path = "usage.md";
-    var mkdocs_page_url = "/usage/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../js/jquery-2.1.1.min.js"></script>
-  <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -39,7 +40,7 @@
         <a href=".." class="icon icon-home"> Django-Flags</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -172,13 +173,13 @@
 }</code></pre>
 
 <p>The set of conditions can be empty (flag will never be enabled), have one or more conditions that are not required (any of those conditions can be met for the flag to be enabled), or one or more required conditions (all required conditions have to be met for the flag to be enabled).</p>
-<p>Additional conditions can be added in the Django admin for any defined flag (illustrated in <a href="../../#quickstart">Quickstart</a>). Conditions added in the Django admin can be changed without restarting Django, conditions defined in <code>settings.py</code> cannot. See <a href="../conditions">the list of built-in conditions</a>.</p>
+<p>Additional conditions can be added in the Django admin for any defined flag (illustrated in <a href="../#quickstart">Quickstart</a>). Conditions added in the Django admin can be changed without restarting Django, conditions defined in <code>settings.py</code> cannot. See <a href="conditions">the list of built-in conditions</a>.</p>
 <h2 id="using-flags-in-code">Using flags in code<a class="headerlink" href="#using-flags-in-code" title="Permanent link">¶</a></h2>
 <p>Flags can be used in Python code:</p>
 <pre class="highlight"><code class="language-python">from flags.state import flag_enabled
 
 if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
-    print(&quot;My feature flag is enabled&quot;) </code></pre>
+    print("My feature flag is enabled") </code></pre>
 
 <p>Django templates:</p>
 <pre class="highlight"><code class="language-django">{% load feature_flags %}
@@ -189,7 +190,7 @@ if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
   &lt;/div&gt;
 {% endif %}</code></pre>
 
-<p>Jinja2 templates (after <a href="../api/jinja2/">adding <code>flag_enabled</code> to the Jinja2 environment</a>):</p>
+<p>Jinja2 templates (after <a href="api/jinja2/">adding <code>flag_enabled</code> to the Jinja2 environment</a>):</p>
 <pre class="highlight"><code class="language-jinja">{% if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request) %}
   &lt;div&gt;
     I’m the result of a feature flag.   
@@ -210,7 +211,7 @@ urlpatterns = [
     flagged_url('FLAG_WITH_REQUIRED_CONDITIONS', r'^a-url$', view_requiring_flag, state=True),
 ]</code></pre>
 
-<p>See the <a href="../api/state">API reference</a> for more details and examples.</p>
+<p>See the <a href="/api/state">API reference</a> for more details and examples.</p>
               
             </div>
           </div>
@@ -257,9 +258,8 @@ urlpatterns = [
     </span>
 </div>
     <script>var base_url = '..';</script>
-    <script src="../js/theme.js"></script>
-      <script src="../search/require.js"></script>
-      <script src="../search/search.js"></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
 
 </body>
 </html>

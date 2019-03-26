@@ -13,19 +13,20 @@
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../../css/highlight.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   <link href="../../css/overrides.css" rel="stylesheet">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Flag sources";
     var mkdocs_page_input_path = "api/sources.md";
-    var mkdocs_page_url = "/api/sources/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../../js/jquery-2.1.1.min.js"></script>
-  <script src="../../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -39,7 +40,7 @@
         <a href="../.." class="icon icon-home"> Django-Flags</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -159,7 +160,7 @@
             <div class="section">
               
                 <h1 id="flag-sources">Flag Sources<a class="headerlink" href="#flag-sources" title="Permanent link">¶</a></h1>
-<p>Django-Flags provides a means to provide custom flag sources using the <a href="../../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a>. Flag sources are classes that provide a <code>get_flags</code> method. The <code>get_flags</code> method must return a dictionary of flag name keys with a list of <a href="#conditioncondition-value-sourcenone-objnone"><code>Condition</code></a> objects.</p>
+<p>Django-Flags provides a means to provide custom flag sources using the <a href="../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a>. Flag sources are classes that provide a <code>get_flags</code> method. The <code>get_flags</code> method must return a dictionary of flag name keys with a list of <a href="#conditioncondition-value-sourcenone-objnone"><code>Condition</code></a> objects.</p>
 <pre class="highlight"><code class="language-python">from flags.sources import Condition
 
 
@@ -175,7 +176,7 @@ class CustomFlagSource(object):
 
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">¶</a></h2>
 <h3 id="get_flagssourcesnone-ignore_errorsfalse"><code>get_flags(sources=None, ignore_errors=False)</code><a class="headerlink" href="#get_flagssourcesnone-ignore_errorsfalse" title="Permanent link">¶</a></h3>
-<p>Return a dictionary of all flag names with <a href="#flagname-conditions"><code>Flag</code></a> objects that are available in the given <code>sources</code>. If <code>sources</code> is not given, the sources in the <a href="../../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a> are used. If <code>ignore_errors</code> is <code>True</code>, any exceptions that occur when getting flags from a source will be caught and ignored.</p>
+<p>Return a dictionary of all flag names with <a href="#flagname-conditions"><code>Flag</code></a> objects that are available in the given <code>sources</code>. If <code>sources</code> is not given, the sources in the <a href="../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a> are used. If <code>ignore_errors</code> is <code>True</code>, any exceptions that occur when getting flags from a source will be caught and ignored.</p>
 <h3 id="conditioncondition-value-requiredfalse"><code>Condition(condition, value, required=False)</code><a class="headerlink" href="#conditioncondition-value-requiredfalse" title="Permanent link">¶</a></h3>
 <p>A simple wrapper around conditions.</p>
 <h4 id="conditioncheckkwargs"><code>Condition.check(*kwargs)</code><a class="headerlink" href="#conditioncheckkwargs" title="Permanent link">¶</a></h4>
@@ -230,9 +231,8 @@ class CustomFlagSource(object):
     </span>
 </div>
     <script>var base_url = '../..';</script>
-    <script src="../../js/theme.js"></script>
-      <script src="../../search/require.js"></script>
-      <script src="../../search/search.js"></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
 
 </body>
 </html>

@@ -7,25 +7,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="None">
   
-  <link rel="shortcut icon" href="./img/favicon.ico">
+  <link rel="shortcut icon" href="img/favicon.ico">
   <title>Getting started - Django-Flags</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="./css/highlight.css">
-  <link href="./css/overrides.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="css/overrides.css" rel="stylesheet">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Getting started";
     var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = "/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="./js/jquery-2.1.1.min.js"></script>
-  <script src="./js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -39,7 +40,7 @@
         <a href="." class="icon icon-home"> Django-Flags</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -161,7 +162,7 @@
             <div class="section">
               
                 <h1 id="django-flags">Django-Flags<a class="headerlink" href="#django-flags" title="Permanent link">¶</a></h1>
-<p>Feature flags allow you to toggle functionality in both Django code and the Django templates based on configurable conditions. Flags can be useful for staging feature deployments, for A/B testing, or for any time you need an on/off switch for blocks of code. The toggle can be by date, user, URL value, or a number of <a href="./conditions">other conditions</a>, editable in the admin or in definable in settings.</p>
+<p>Feature flags allow you to toggle functionality in both Django code and the Django templates based on configurable conditions. Flags can be useful for staging feature deployments, for A/B testing, or for any time you need an on/off switch for blocks of code. The toggle can be by date, user, URL value, or a number of <a href="conditions">other conditions</a>, editable in the admin or in definable in settings.</p>
 <h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">¶</a></h2>
 <ul>
 <li>Django 1.8+ (including Django 2.0)</li>
@@ -221,7 +222,7 @@
 {% flag_enabled 'MY_FLAG' as my_flag %}
 
 {% if my_flag %}
-  &lt;div class=&quot;flagged-banner&quot;&gt;
+  &lt;div class="flagged-banner"&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
 {% endif %}</code></pre>
@@ -244,7 +245,7 @@ urlpatterns = [
 ]</code></pre>
 
 <p>Then in the Django admin add conditions for the flag in "Django Flags", "Flag states":</p>
-<p><img alt="Creating conditions in the Django admin" src="./images/screenshot_create.png" /></p>
+<p><img alt="Creating conditions in the Django admin" src="images/screenshot_create.png" /></p>
 <p>Then visiting the URL <code>/mypage?enable_my_flag=True</code> should show you the flagged <code>&lt;div&gt;</code> in the template.</p>
               
             </div>
@@ -288,14 +289,13 @@ urlpatterns = [
     </span>
 </div>
     <script>var base_url = '.';</script>
-    <script src="./js/theme.js"></script>
-      <script src="./search/require.js"></script>
-      <script src="./search/search.js"></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 0.17.3
-Build Date UTC : 2019-02-07 13:47:01
+MkDocs version : 1.0.4
+Build Date UTC : 2019-03-26 15:52:30
 -->

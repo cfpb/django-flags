@@ -13,19 +13,20 @@
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../css/highlight.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   <link href="../css/overrides.css" rel="stylesheet">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Conditions";
     var mkdocs_page_input_path = "conditions.md";
-    var mkdocs_page_url = "/conditions/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../js/jquery-2.1.1.min.js"></script>
-  <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -39,7 +40,7 @@
         <a href=".." class="icon icon-home"> Django-Flags</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -160,10 +161,10 @@
 <h2 id="built-in-conditions">Built-in conditions<a class="headerlink" href="#built-in-conditions" title="Permanent link">¶</a></h2>
 <p>Django-Flags comes with the following conditions built-in:</p>
 <h3 id="boolean"><code>boolean</code><a class="headerlink" href="#boolean" title="Permanent link">¶</a></h3>
-<p>A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.</p>
+<p>A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition. </p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'boolean', 'value': True}]}</code></pre>
 
-<p>The value can be given as a Python <code>True</code> or <code>False</code> Boolean value or as the strings <code>"true"</code>, <code>"True"</code>, <code>"False"</code>, or <code>"false"</code>.</p>
+<p>The value can given as a Python <code>True</code> or <code>False</code> or  as any <a href="https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool">string representation of truth</a>, such as <code>y</code>, <code>yes</code>, <code>t</code>, <code>true</code>, <code>on</code> and <code>1</code> for true values, and <code>n</code>, <code>no</code>, <code>f</code>, <code>false</code>, <code>off</code> and <code>0</code> for false values.</p>
 <h3 id="user"><code>user</code><a class="headerlink" href="#user" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled for the username given as the condition's value.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'user', 'value': 'jane.doe'}]}</code></pre>
@@ -172,10 +173,16 @@
 <p>Allows a flag to be either enabled or disabled depending on the condition's boolean value.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}</code></pre>
 
-<p>The value can be given as a Python <code>True</code> or <code>False</code> Boolean value or as the strings <code>"true"</code>, <code>"True"</code>, <code>"False"</code>, or <code>"false"</code>.</p>
+<p>The value can given as a Python <code>True</code> or <code>False</code> or  as any <a href="https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool">string representation of truth</a>, such as <code>y</code>, <code>yes</code>, <code>t</code>, <code>true</code>, <code>on</code> and <code>1</code> for true values, and <code>n</code>, <code>no</code>, <code>f</code>, <code>false</code>, <code>off</code> and <code>0</code> for false values.</p>
 <h3 id="parameter"><code>parameter</code><a class="headerlink" href="#parameter" title="Permanent link">¶</a></h3>
-<p>Allows a flag to be enabled based on a GET parameter with the name given as the condition's value.</p>
-<pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'parameter', 'value': 'my_flag_param'}]}</code></pre>
+<p>Allows a flag to be enabled by including a parameter in the request's query string. <code>value</code> is the name of the parameter, or a name and expected value. If an expected value isn't provided, the value must be <code>True</code>.</p>
+<pre class="highlight"><code class="language-python">FLAGS = {
+    'MY_FLAG': [
+        {'condition': 'parameter', 'value': 'my_flag_param1'},      # ?my_flag_param1=true
+        {'condition': 'parameter', 'value': 'my_flag_param2=now'},  # ?my_flag_param2=now
+        {'condition': 'parameter', 'value': 'my_flag_param3='},     # ?my_flag_param3
+    ]
+}</code></pre>
 
 <h3 id="path-matches"><code>path matches</code><a class="headerlink" href="#path-matches" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled if the request's path matches the regular expression value.</p>
@@ -190,7 +197,7 @@
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': {'before date': '2022-06-01T12:00Z'}}</code></pre>
 
 <h2 id="custom-conditions">Custom conditions<a class="headerlink" href="#custom-conditions" title="Permanent link">¶</a></h2>
-<p>Custom conditions can be created and registered for use using the <a href="../api/conditions">conditions API</a>.</p>
+<p>Custom conditions can be created and registered for use using the <a href="api/conditions">conditions API</a>.</p>
               
             </div>
           </div>
@@ -237,9 +244,8 @@
     </span>
 </div>
     <script>var base_url = '..';</script>
-    <script src="../js/theme.js"></script>
-      <script src="../search/require.js"></script>
-      <script src="../search/search.js"></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
 
 </body>
 </html>
