@@ -22,13 +22,3 @@ script:
 
 after_success:
   coveralls
-
-deploy:
-  provider: pypi
-  user: cfpb
-  password:
-      secure: "FL0NaTRHR5tsyhmI5Fba1oHCt6132aEx1Wc9tpxN7aYJTnQTj7tbs9t2UYPG9mRRh8OGn/krqsuskqrvPN1bhoCusbnuwXk8WzcXNqziFAwTqcNoJTFPKN1BGv0xuYpVn7uvbMR3r4v/ap5NQVLHO2e6HodquikQKp4O8gdSu49MTlMhn1zaKuGzaT6yZ27g6CxSE300zw4X7ZovYy33RyvIbzw5i60PCRibW9e3b/2WG5PHveucpDHzD1CiY31hykc9L0LyNKGZR+1onIG2l6P6rj/YLlv4wJWhJyJRmAeAFFvV1JaiwncfCtfEexbr8ZNAw7OsP2oAnJFL3SEWL3oyE1Vx42yKYz1OvyneWDVX5dQPwwhvmKet/yee/DHzd3eN7ngApHRUROdInhlpwA9eGadYWaqVUTrTvZfAdPPehaJlZqx7AZqRhdzKup9OVGdr76Akz3s859MCAJLgW8bwNT2W0nvwcR3emn8zCBQgS5uFef4Cp7D8qg5/3vHn7UhsyXqtuiUGALDVQEXygnmgJcBJQm3eC/pqB0HMm+4AQtC5/Lj/9wYx5oR0JCpyqkpLRwM9JjsMuardtqI7B4EuR+hYRtslJt6kPyi/LkPV9ibNsC0Iu+EFK9oQp2AsP9ECTP3DqAg3Q6kt9J041HIVpZHgfQ+EzeZRIiBy4KE="
-  distributions: "sdist bdist_wheel --universal"
-  on:
-    tags: true
-    condition: $TOXENV = "py36-dj111"
