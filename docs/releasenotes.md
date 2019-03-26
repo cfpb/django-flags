@@ -1,5 +1,12 @@
 # Release Notes
 
+## 4.1.1
+
+### What's new?
+
+- `boolean` and `anonymous` conditions now accept [multiple possible string representations of truth](/conditions/#boolean) as their values.
+- `parameter` conditions now accept [possible parameter values](http://localhost:7777/conditions/#parameter).
+
 ## 4.1
 
 ### What's new?
