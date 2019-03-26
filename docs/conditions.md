@@ -34,10 +34,16 @@ The value can be given as a Python `True` or `False` Boolean value or as the str
 
 ### `parameter`
 
-Allows a flag to be enabled if a GET parameter with the condition's value as its name exists for a request.
+Allows a flag to be enabled by including a parameter in the request's query string. `value` is the name of the parameter, or a name and expected value. If an expected value isn't provided, the value must by `true`.
 
 ```python
-FLAGS = {'MY_FLAG': [{'condition': 'parameter', 'value': 'my_flag_param'}]}
+FLAGS = {
+    'MY_FLAG': [
+        {'condition': 'parameter', 'value': 'my_flag_param1'},      # ?my_flag_param1=true
+        {'condition': 'parameter', 'value': 'my_flag_param2=now'},  # ?my_flag_param2=now
+        {'condition': 'parameter', 'value': 'my_flag_param3='},     # ?my_flag_param3
+    ]
+}
 ```
 
 ### `path matches`

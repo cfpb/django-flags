@@ -94,9 +94,12 @@ def parameter_condition(param_name, request=None, **kwargs):
     if request is None:
         raise RequiredForCondition("request is required for condition "
                                    "'parameter'")
+    try:
+        param_name, param_value = param_name.split('=')
+    except ValueError:
+        param_value = 'True'
 
-    return param_name in request.GET
-    # return request.GET.get(param_name, '').lower() == 'true'
+    return request.GET.get(param_name) == param_value
 
 
 @register('path matches')

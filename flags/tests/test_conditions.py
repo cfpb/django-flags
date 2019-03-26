@@ -140,18 +140,32 @@ class ParameterConditionTestCase(TestCase):
         self.request.GET = QueryDict('my_flag=True')
         self.assertTrue(parameter_condition('my_flag', request=self.request))
 
-        self.request.GET = QueryDict('my_flag=true')
-        self.assertTrue(parameter_condition('my_flag', request=self.request))
-
-        self.request.GET = QueryDict('my_flag=excellent')
-        self.assertTrue(parameter_condition('my_flag', request=self.request))
+        self.request.GET = QueryDict('my_flag=today')
+        self.assertTrue(
+            parameter_condition('my_flag=today', request=self.request)
+        )
 
         self.request.GET = QueryDict('my_flag')
-        self.assertTrue(parameter_condition('my_flag', request=self.request))
+        self.assertTrue(parameter_condition('my_flag=', request=self.request))
 
     def test_parameter_condition_non_existent(self):
-        self.request.GET = QueryDict('not_my_flag=True')
-        self.assertFalse(parameter_condition('my_flag', request=self.request))
+        self.request.GET = QueryDict('my_flag=True')
+        self.assertFalse(
+            parameter_condition('my_flag=false', request=self.request)
+        )
+
+        self.request.GET = QueryDict('my_flag=True')
+        self.assertFalse(
+            parameter_condition('my_flag=today', request=self.request)
+        )
+
+        self.request.GET = QueryDict('my_flag')
+        self.assertFalse(
+            parameter_condition('my_flag', request=self.request)
+        )
+
+        self.request.GET = QueryDict('')
+        self.assertFalse(parameter_condition('my_flag=', request=self.request))
 
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):
