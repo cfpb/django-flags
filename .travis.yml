@@ -11,6 +11,12 @@ matrix:
       python: 3.6
     - env: TOXENV=py36-dj20
       python: 3.6
+    - env: TOXENV=py36-dj21
+      python: 3.6
+    - env: TOXENV=py37-dj21
+      python: 3.7
+    - env: TOXENV=py37-dj22
+      python: 3.7
     - env: TOXENV=docs
       python: 3.6
 
