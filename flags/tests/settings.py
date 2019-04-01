@@ -30,6 +30,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.messages',
     'django.contrib.sessions',
 )
 
@@ -41,6 +42,7 @@ if django.VERSION >= (1, 10):  # pragma: no cover
     MIDDLEWARE = (
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
     )
 else:  # pragma: no cover
     MIDDLEWARE_CLASSES = (
@@ -48,16 +50,19 @@ else:  # pragma: no cover
         'django.contrib.auth.middleware.AuthenticationMiddleware',
     )
 
-TEMPLATES = [{
-    'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'APP_DIRS': True,
-    'OPTIONS': {
-        'context_processors': [
-            'django.template.context_processors.request',
-            'django.contrib.auth.context_processors.auth',
-        ],
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ]
+        },
     }
-}]
+]
 
 FLAGS = {
     'FLAG_ENABLED': [('boolean', True)],
