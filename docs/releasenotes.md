@@ -1,5 +1,11 @@
 # Release Notes
 
+## 4.1.2
+
+### What's new?
+
+- Added support for [Django 2.2](https://docs.djangoproject.com/en/2.2/releases/2.2/) and [Python 3.7](https://docs.python.org/3/whatsnew/3.7.html) (Chris Adams).
+
 ## 4.1.1
 
 ### What's new?
