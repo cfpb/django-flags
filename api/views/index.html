@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Conditions - Django-Flags</title>
+  <title>Class-based views - Django-Flags</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Conditions";
-    var mkdocs_page_input_path = "api/conditions.md";
+    var mkdocs_page_name = "Class-based views";
+    var mkdocs_page_input_path = "api/views.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -89,9 +89,20 @@
                     
     <a class="" href="../urls/">Flagged URL patterns</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../views/">Class-based views</a>
+    <a class="current" href="./">Class-based views</a>
+    <ul class="subnav">
+            
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#api">API</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -101,22 +112,9 @@
                     
     <a class="" href="../jinja2/">Jinja2 templates</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Conditions</a>
-    <ul class="subnav">
-            
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#registering-conditions">Registering conditions</a></li>
-        
-            <li><a class="toctree-l4" href="#exceptions">Exceptions</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../conditions/">Conditions</a>
                 </li>
     </ul>
 	    </li>
@@ -152,10 +150,10 @@
         
       
     
-    <li>Conditions</li>
+    <li>Class-based views</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/conditions.md"
+        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/views.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -165,38 +163,87 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="conditions">Conditions<a class="headerlink" href="#conditions" title="Permanent link">¶</a></h1>
-<p>Conditions are functions that take a configured value and possible keyword arguments and determines whether the given arguments are equivalent to the value. Conditions are registered with a unique name that is exposed to users in Django settings and the Django admin.</p>
-<pre class="highlight"><code class="language-python">from flags import conditions</code></pre>
+                <h1 id="class-based-views">Class-based views<a class="headerlink" href="#class-based-views" title="Permanent link">¶</a></h1>
+<pre class="highlight"><code class="language-python">from flags.views import (
+    FlaggedViewMixin,
+    FlaggedTemplateView,
+)</code></pre>
 
-<h2 id="registering-conditions">Registering conditions<a class="headerlink" href="#registering-conditions" title="Permanent link">¶</a></h2>
-<h3 id="conditionsregistercondition_name-fnnone"><code>conditions.register(condition_name, fn=None)</code><a class="headerlink" href="#conditionsregistercondition_name-fnnone" title="Permanent link">¶</a></h3>
-<p>Register a new condition, either as a decorator:</p>
-<pre class="highlight"><code class="language-python">from flags import conditions
+<h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">¶</a></h2>
+<h3 id="flaggedviewmixin"><code>FlaggedViewMixin</code><a class="headerlink" href="#flaggedviewmixin" title="Permanent link">¶</a></h3>
+<p>Adds flag-checking to HTTP method dispatching in <a href="https://docs.djangoproject.com/en/2.2/topics/class-based-views/">class-based views</a>.</p>
+<h4 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">¶</a></h4>
+<dl>
+  <dt>`flag_name`</dt>
+  <dd>The feature flag this view depends on.</dd>
 
-@conditions.register('path')
-def path_condition(path, request=None, **kwargs):
-    return request.path.startswith(path)</code></pre>
+  <dt>`state`</dt>
+  <dd>Either `True` or `False`, the state the feature flag should be in. By default, `state` is `True`, requiring the flag to evaluate to `True`.</dd>
 
-<p>Or as a function call:</p>
-<pre class="highlight"><code class="language-python">def path_condition(path, request=None, **kwargs):
-    return request.path.startswith(path)
+  <dt>`fallback`</dt>
+  <dd>A view to fallback on if the flag does not match the required `state`. Defaults to `None`, causing the view to raise a `404` if the flag does not match the required `state`.</dd>
+</dl>
 
-conditions.register('path', fn=path_condition)</code></pre>
+<p>For example, in <code>views.py</code>:</p>
+<pre class="highlight"><code class="language-python">from django.views.generic import View
+from flags.views import FlaggedViewMixin
 
-<p>Will raise a <code>conditions.DuplicateCondition</code> exception if the condition name is already registered.</p>
-<h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">¶</a></h2>
-<h3 id="conditionsduplicatecondition"><code>conditions.DuplicateCondition</code><a class="headerlink" href="#conditionsduplicatecondition" title="Permanent link">¶</a></h3>
-<p>Exception raised by <code>conditions.register</code> if the condition name being registered is already registered.</p>
-<h3 id="conditionsrequiredforcondition"><code>conditions.RequiredForCondition</code><a class="headerlink" href="#conditionsrequiredforcondition" title="Permanent link">¶</a></h3>
-<p>Exception intended to be raised when a condition is not given a keyword argument it requires for evaluation.</p>
-<pre class="highlight"><code class="language-python">@conditions.register('path')
-def path_condition(path, request=None, **kwargs):
-    if request is None:
-        raise conditions.RequiredForCondition(
-            "request is required for condition 'path'")
+class MyFlaggedView(FlaggedViewMixin, View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('ok')</code></pre>
 
-    return request.path.startswith(path)</code></pre>
+<p>And in <code>urls.py</code>:</p>
+<pre class="highlight"><code class="language-python">from django.urls import path
+from flags.urls import flagged_path
+
+urlpatterns = [
+    path('my-url/', MyFlaggedView.as_view(flag_name='MY_FLAG'))
+]</code></pre>
+
+<h4 id="django-1x">Django 1.x<a class="headerlink" href="#django-1x" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code class="language-python">from django.urls import path
+from flags.urls import flagged_path
+
+urlpatterns = [
+    url(r'^my-url/$', MyFlaggedView.as_view(flag_name='MY_FLAG'))
+]</code></pre>
+
+<h3 id="flaggedtemplateview"><code>FlaggedTemplateView</code><a class="headerlink" href="#flaggedtemplateview" title="Permanent link">¶</a></h3>
+<p>A combination of <a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#templateview"><code>TemplateView</code></a> and <a href="#flaggedviewmixin"><code>FlaggedViewMixin</code></a>.</p>
+<p>For example, in <code>views.py</code>:</p>
+<pre class="highlight"><code class="language-python">from flags.views import FlaggedTemplateView
+
+class MyFlaggedView(FlaggedTemplateView):
+    template_name = "mytemplate.html"
+    flag_name = 'MY_FLAG'</code></pre>
+
+<p>Or to serve a template directly in <code>urls.py</code>:</p>
+<pre class="highlight"><code>from django.urls import path
+from flags.views import FlaggedTemplateView
+
+urlpatterns = [
+    path(
+        'my_url/', 
+        FlaggedTemplateView.as_view(
+            template_name='mytemplate.html', 
+            flag_name='MY_FLAG'
+        )
+    ),
+]</code></pre>
+
+<h4 id="django-1x_1">Django 1.x<a class="headerlink" href="#django-1x_1" title="Permanent link">¶</a></h4>
+<pre class="highlight"><code>from django.urls import url
+from flags.views import FlaggedTemplateView
+
+urlpatterns = [
+    url(
+        r'^my_url/$', 
+        FlaggedTemplateView.as_view(
+            template_name='mytemplate.html', 
+            flag_name='MY_FLAG'
+        )
+    ),
+]</code></pre>
               
             </div>
           </div>
@@ -204,10 +251,10 @@ def path_condition(path, request=None, **kwargs):
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../releasenotes/" class="btn btn-neutral float-right" title="Release notes">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../django/" class="btn btn-neutral float-right" title="Django templates">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../jinja2/" class="btn btn-neutral" title="Jinja2 templates"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../urls/" class="btn btn-neutral" title="Flagged URL patterns"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -235,10 +282,10 @@ def path_condition(path, request=None, **kwargs):
           <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../jinja2/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../urls/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../releasenotes/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../django/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

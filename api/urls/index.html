@@ -104,6 +104,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../views/">Class-based views</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../django/">Django templates</a>
                 </li>
                 <li class="">
@@ -169,8 +173,8 @@
 <h3 id="flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <h3 id="flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_re_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <p>Make a URL depend on the state of a feature flag. </p>
-<p><code>flagged_path()</code> can be used in place of <a href="https://docs.djangoproject.com/en/2.0/ref/urls/#django.urls.path">Django's <code>path()</code></a>.</p>
-<p><code>flagged_re_path()</code> can be used in place of <a href="https://docs.djangoproject.com/en/2.0/ref/urls/#django.urls.re_path">Django's <code>re_path()</code></a>.</p>
+<p><code>flagged_path()</code> can be used in place of <a href="https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.path">Django's <code>path()</code></a>.</p>
+<p><code>flagged_re_path()</code> can be used in place of <a href="https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.re_path">Django's <code>re_path()</code></a>.</p>
 <p>The <code>view</code> and the <code>fallback</code> can both be a set of <code>include()</code>ed patterns but any matching URL patterns in the includes must match <em>exactly</em> in terms of regular expression, keyword arguments, and name, otherwise a <code>404</code> may be unexpectedly raised. </p>
 <p>If a <code>fallback</code> is not given the flagged url will raise a <code>404</code> if the flag state does not match the required <code>state</code>. </p>
 <pre class="highlight"><code class="language-python">urlpatterns = [
@@ -186,8 +190,8 @@
 <h3 id="flagged_pathsflag_name-statetrue-fallbacknone"><code>flagged_paths(flag_name, state=True, fallback=None)</code><a class="headerlink" href="#flagged_pathsflag_name-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <h3 id="flagged_re_pathsflag_name-statetrue-fallbacknone"><code>flagged_re_paths(flag_name, state=True, fallback=None)</code><a class="headerlink" href="#flagged_re_pathsflag_name-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <p>Flag multiple URLs in the same context with a context manager.</p>
-<p><code>flagged_paths()</code> returns a function that takes the same arguments as <a href="https://docs.djangoproject.com/en/2.0/ref/urls/#django.urls.path">Django's <code>path()</code></a> and which will flag the pattern's view.</p>
-<p><code>flagged_re_paths()</code> returns a function that takes the same arguments as <a href="https://docs.djangoproject.com/en/2.0/ref/urls/#django.urls.re_path">Django's <code>re_path()</code></a> and which will flag the pattern's view.</p>
+<p><code>flagged_paths()</code> returns a function that takes the same arguments as <a href="https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.path">Django's <code>path()</code></a> and which will flag the pattern's view.</p>
+<p><code>flagged_re_paths()</code> returns a function that takes the same arguments as <a href="https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.re_path">Django's <code>re_path()</code></a> and which will flag the pattern's view.</p>
 <pre class="highlight"><code class="language-python">with flagged_paths('MY_FLAG') as path:
     flagged_url_patterns = [
         path('a-url/', view_requiring_flag),
@@ -229,7 +233,7 @@ urlpatterns = urlpatterns + flagged_url_patterns</code></pre>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../django/" class="btn btn-neutral float-right" title="Django templates">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../views/" class="btn btn-neutral float-right" title="Class-based views">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../decorators/" class="btn btn-neutral" title="Flag decorators"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -263,7 +267,7 @@ urlpatterns = urlpatterns + flagged_url_patterns</code></pre>
         <span><a href="../decorators/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../django/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../views/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
