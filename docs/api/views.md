@@ -23,7 +23,7 @@ Adds flag-checking to HTTP method dispatching in [class-based views](https://doc
   <dd>Either `True` or `False`, the state the feature flag should be in. By default, `state` is `True`, requiring the flag to evaluate to `True`.</dd>
 
   <dt>`fallback`</dt>
-  <dd>A view to fallback on if the flag does not match the required `state`. Defaults to `None`, causing the to raise a `404` if the flag does not match the required `state`.</dd>
+  <dd>A view to fallback on if the flag does not match the required `state`. Defaults to `None`, causing the view to raise a `404` if the flag does not match the required `state`.</dd>
 </dl> 
 
 For example, in `views.py`:
@@ -68,7 +68,7 @@ For example, in `views.py`:
 ```python
 from flags.views import FlaggedTemplateView
 
-class MyFlaggedView(TemplateView):
+class MyFlaggedView(FlaggedTemplateView):
     template_name = "mytemplate.html"
     flag_name = 'MY_FLAG'
 ```
