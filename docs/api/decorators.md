@@ -22,18 +22,18 @@ from flags.decorators import flag_check
 
 @flag_check('MY_FLAG', True)
 def view_requiring_flag(request):
-    return HttpResponse('flag was set')
+    return HttpResponse('MY_FLAG was true')
 
 @flag_check('MY_OTHER_FLAG', False)
-def view_when_flag_is_not_set(request):
-    return HttpResponse('flag was set')
+def view_requiring_other_flag_not_true(request):
+    return HttpResponse('MY_OTHER_FLAG was False')
 
-def other_view(request):
-    return HttpResponse('flag was not set')
+def fallback_view(request):
+    return HttpResponse('MY_FLAG_WITH_FALLBACK was False')
 
-@flag_check('MY_FLAG_WITH_FALLBACK', True, fallback=other_view)
+@flag_check('MY_FLAG_WITH_FALLBACK', True, fallback=fallback_view)
 def view_with_fallback(request):
-    return HttpResponse('flag was set')
+    return HttpResponse('MY_FLAG_WITH_FALLBACK was True')
 ```
 
 ## Requiring state
