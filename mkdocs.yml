@@ -10,6 +10,7 @@ pages:
         - Flag state: api/state.md
         - Flag decorators: api/decorators.md 
         - Flagged URL patterns: api/urls.md
+        - Class-based views : api/views.md
         - Django templates: api/django.md
         - Jinja2 templates: api/jinja2.md
         - Conditions: api/conditions.md
