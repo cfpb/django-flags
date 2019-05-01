@@ -71,6 +71,8 @@ FLAGS = {
     'DB_FLAG': [],
 }
 
+DEBUG_TOOLBAR_PANELS = ['flags.panels.FlagsPanel']
+
 
 @register('flag_enabled_with_kwarg')
 def kwarg_condition(expected_value, passed_value=None, **kwargs):
