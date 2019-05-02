@@ -1,6 +1,6 @@
 # Flag decorators
 
-Decorators are provided for use with Django views and conditions that take a `request` argument. The default behavior is to return a 404 if a callable fallback is not given. 
+Decorators are provided for use with Django views and conditions that take a `request` argument. The default behavior is to return a 404 if a callable fallback is not given.
 
 ```python
 from flags.decorators import (
