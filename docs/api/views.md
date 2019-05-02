@@ -26,6 +26,9 @@ Adds flag-checking to HTTP method dispatching in [class-based views](https://doc
   <dd>A view to fallback on if the flag does not match the required `state`. Defaults to `None`, causing the view to raise a `404` if the flag does not match the required `state`.</dd>
 </dl> 
 
+!!! note
+    When a fallback view is given it *must* take the same arguments as the flagged view.
+
 For example, in `views.py`:
 
 ```python

@@ -21,6 +21,9 @@ The `view` and the `fallback` can both be a set of `include()`ed patterns but an
 
 If a `fallback` is not given the flagged url will raise a `404` if the flag state does not match the required `state`. 
 
+!!! note
+    When a fallback view is given it *must* take the same arguments as the flagged view.
+
 ```python
 urlpatterns = [
     flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),
@@ -41,6 +44,9 @@ Flag multiple URLs in the same context with a context manager.
 `flagged_paths()` returns a function that takes the same arguments as [Django's `path()`](https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.path) and which will flag the pattern's view.
 
 `flagged_re_paths()` returns a function that takes the same arguments as [Django's `re_path()`](https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.re_path) and which will flag the pattern's view.
+
+!!! note
+    When a fallback view is given it *must* take the same arguments as the flagged view.
 
 ```python
 with flagged_paths('MY_FLAG') as path:
@@ -67,6 +73,9 @@ The `view` and the `fallback` can both be a set of `include()`ed patterns but an
 
 If a `fallback` is not given the flagged url will raise a `404` if the flag state does not match the required `state`. 
 
+!!! note
+    When a fallback view is given it *must* take the same arguments as the flagged view.
+
 ```python
 urlpatterns = [
     flagged_url('MY_FLAG', r'a-url/', view_requiring_flag, state=True),
@@ -84,6 +93,9 @@ urlpatterns = [
 Flag multiple URLs in the same context with a context manager.
 
 `flagged_urls()` returns a function that takes the same arguments as [Django's `url()`](https://docs.djangoproject.com/en/1.11/ref/urls/#django.conf.urls.url).
+
+!!! note
+    When a fallback view is given it *must* take the same arguments as the flagged view.
 
 ```python
 with flagged_urls('MY_FLAG') as url:
