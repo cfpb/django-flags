@@ -21,6 +21,7 @@ theme:
 extra_css:
     - css/overrides.css
 markdown_extensions:
+    - admonition
     - tables
     - markdown.extensions.tables
     - pymdownx.magiclink

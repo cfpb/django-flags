@@ -15,7 +15,11 @@ from flags.decorators import (
 
 Check that a given flag has the given state. If the state does not match, perform the fallback.
 
-**Note**, because flags that do not exist are taken to be `False` by default, `@flag_check('MY_FLAG', False)` and `@flag_check('MY_FLAG', None)` will both succeed if `MY_FLAG` does not exist.
+!!! note
+    Because flags that do not exist are taken to be `False` by default, `@flag_check('MY_FLAG', False)` and `@flag_check('MY_FLAG', None)` will both succeed if `MY_FLAG` does not exist.
+
+!!! note
+    When a fallback view is given it *must* take the same arguments as the decorated view.
 
 ```python
 from flags.decorators import flag_check
@@ -36,11 +40,15 @@ def view_with_fallback(request):
     return HttpResponse('MY_FLAG_WITH_FALLBACK was True')
 ```
 
+
 ## Requiring state
 
 ### `flag_required(flag_name, fallback_view=None, pass_if_set=True)`
 
 Require the given flag to be enabled.
+
+!!! note
+    When a fallback view is given it *must* take the same arguments as the decorated view.
 
 ```python
 from flags.decorators import flag_required
