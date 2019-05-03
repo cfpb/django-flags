@@ -1,9 +1,13 @@
-import mock
-
 from django.core.exceptions import AppRegistryNotReady
 from django.test import RequestFactory, TestCase
 
 from flags.state import flag_disabled, flag_enabled, flag_state
+
+
+try:
+    from unittest import mock
+except ImportError:  # pragma: no cover
+    import mock
 
 
 class FlagStateTestCase(TestCase):

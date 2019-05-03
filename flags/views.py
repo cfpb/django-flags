@@ -2,8 +2,8 @@ import logging
 import warnings
 
 from django.core.exceptions import ImproperlyConfigured
-from django.views.generic import TemplateView
 from django.utils.decorators import classonlymethod
+from django.views.generic import TemplateView
 
 from flags.decorators import flag_check
 

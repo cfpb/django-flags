@@ -1,3 +1,8 @@
+import six
+
+import inspect
+import warnings
+
 from django.http import Http404
 from django.utils.functional import wraps
 
@@ -8,6 +13,25 @@ def flag_check(flag_name, state, fallback=None, **fc_kwargs):
     """ Check that a given flag has the given state.
     If the state does not match, perform the fallback. """
     def decorator(func):
+        # At decoration-time, ensure that the fallback for the decorated
+        # function has the same argspec
+        if fallback is not None:
+
+            if six.PY2:  # pragma: no cover
+                func_argspec = inspect.getargspec(func)
+                fallback_argspec = inspect.getargspec(fallback)
+            else:  # pragma: no cover
+                func_argspec = inspect.getfullargspec(func)
+                fallback_argspec = inspect.getfullargspec(fallback)
+
+            if func_argspec.args != fallback_argspec.args:
+                warnings.warn(
+                    'Feature flag check fallback for ' + func.__name__ +
+                    ' takes different arguments.',
+                    RuntimeWarning,
+                    stacklevel=2
+                )
+
         def inner(request, *args, **kwargs):
             enabled = flag_state(flag_name, request=request, **fc_kwargs)
 
