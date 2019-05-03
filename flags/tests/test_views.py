@@ -28,8 +28,8 @@ class FlaggedViewMixinTestCase(TestCase):
         return request
 
     def test_no_flag_key_raises_improperly_configured(self):
-        view = TestView.as_view()
-        self.assertRaises(ImproperlyConfigured, view, self.request())
+        with self.assertRaises(ImproperlyConfigured):
+            TestView.as_view()
 
     def test_no_flag_acts_as_disabled(self):
         view = TestView.as_view(flag_name=self.flag_name)
@@ -63,7 +63,7 @@ class FlaggedViewMixinTestCase(TestCase):
         view = TestView.as_view(
             flag_name=self.flag_name,
             state=True,
-            fallback=lambda r: HttpResponse('fallback fn')
+            fallback=lambda r, *args, **kwargs: HttpResponse('fallback fn')
         )
 
         response = view(self.request())
