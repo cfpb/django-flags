@@ -1,5 +1,8 @@
 from __future__ import absolute_import
 
+from django.apps import apps
+from django.core.exceptions import AppRegistryNotReady
+
 from flags.middleware import FlagConditionsMiddleware
 from flags.sources import get_flags
 
@@ -29,6 +32,12 @@ def _flag_state(flag_name, **kwargs):
 
 def flag_state(flag_name, **kwargs):
     """ Return the value for the flag by passing kwargs to its conditions """
+    if not apps.ready:
+        raise AppRegistryNotReady(
+            'Feature flag state cannot be checked before the app registry '
+            'is ready.'
+        )
+
     return _flag_state(flag_name, **kwargs)
 
 

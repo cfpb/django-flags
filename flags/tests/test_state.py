@@ -1,3 +1,6 @@
+import mock
+
+from django.core.exceptions import AppRegistryNotReady
 from django.test import RequestFactory, TestCase
 
 from flags.state import flag_disabled, flag_enabled, flag_state
@@ -28,6 +31,12 @@ class FlagStateTestCase(TestCase):
         request = self.factory.get('/test')
         self.assertFalse(flag_state('FLAG_DOES_NOT_EXIST',
                                     request=request))
+
+    @mock.patch('flags.state.apps')
+    def test_flag_state_apps_not_ready(self, mock_apps):
+        mock_apps.ready = False
+        with self.assertRaises(AppRegistryNotReady):
+            self.assertTrue(flag_state('FLAG_ENABLED'))
 
     def test_flag_enabled_enabled(self):
         """ Global flags enabled should be True """
