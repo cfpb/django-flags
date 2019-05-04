@@ -62,11 +62,11 @@ Previously flag definitions in `FLAGS` supported a single dictionary (rather tha
 
 Default: `True`
 
-If this setting is `True` Django-Flags will log all flag state checks that evaluate to True. These will appear in the log file like:
+If this setting is `True` Django-Flags will log all flag state checks with how the conditions were evaluated. These will appear in the log file like:
 
 ```
-INFO:flags.sources:Flag MY_FLAG evaluated to True by boolean condition.
-INFO:flags.sources:Flag MY_FLAG evaluated to True by boolean, path matches conditions.
+INFO:flags.sources:Flag MY_FLAG evaluated False with conditions: boolean (False).
+INFO:flags.sources:Flag MY_FLAG evaluated True with conditions: boolean (False), path matches (True).
 ```
 
 This is intended for use in tracking the history and usage of enabled featured flags.

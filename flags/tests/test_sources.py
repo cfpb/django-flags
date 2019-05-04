@@ -168,7 +168,7 @@ class FlagTestCase(TestCase):
     @skipIf(six.PY2, 'assertLogs is not available in Python 2.7')
     def test_flag_check_state_logs_state(self):
         flag = Flag('MY_FLAG', [
-            Condition('boolean', True),
+            Condition('boolean', False),
             Condition('path matches', '/foo')
         ])
         with self.assertLogs('flags.sources', level='INFO') as logger:
@@ -178,10 +178,10 @@ class FlagTestCase(TestCase):
         self.assertEqual(
             logger.output,
             [
-                'INFO:flags.sources:Flag MY_FLAG evaluated to True by '
-                'boolean condition.',
-                'INFO:flags.sources:Flag MY_FLAG evaluated to True by '
-                'boolean, path matches conditions.',
+                'INFO:flags.sources:Flag MY_FLAG evaluated False with '
+                'conditions: boolean (False), path matches (False).',
+                'INFO:flags.sources:Flag MY_FLAG evaluated True with '
+                'conditions: boolean (False), path matches (True).'
             ]
         )
 

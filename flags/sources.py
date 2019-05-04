@@ -69,18 +69,18 @@ class Flag(object):
             )
         )
 
-        if state and getattr(settings, 'FLAGS_STATE_LOGGING', True):
-            true_conditions = [
-                c.condition for c, s in checked_conditions if s is True
-            ]
-
+        if getattr(settings, 'FLAGS_STATE_LOGGING', True):
             logger.info(
-                'Flag {name} evaluated to {state} by '
-                '{conditions} condition{conditions_plural}.'.format(
+                'Flag {name} evaluated {state} with '
+                'condition{conditions_plural}: {conditions}.'.format(
                     name=self.name,
                     state=state,
-                    conditions=', '.join(true_conditions),
-                    conditions_plural='s' if len(true_conditions) > 1 else '',
+                    conditions=', '.join(
+                        '{} ({})'.format(c.condition, v)
+                        for c, v in checked_conditions
+                    ),
+                    conditions_plural='s' if len(self.conditions) > 1 else '',
+
                 )
             )
 
