@@ -57,3 +57,16 @@ FLAGS = {
 ```
 
 Previously flag definitions in `FLAGS` supported a single dictionary (rather than a list) with the condition name as the key and expected value as value. This method of specifying flags is deprecated and will be removed in Django-Flags 5.0.
+
+### `FLAGS_STATE_LOGGING`
+
+Default: `True`
+
+If this setting is `True` Django-Flags will log all flag state checks that evaluate to True. These will appear in the log file like:
+
+```
+INFO:flags.sources:Flag MY_FLAG evaluated to True by boolean condition.
+INFO:flags.sources:Flag MY_FLAG evaluated to True by boolean, path matches conditions.
+```
+
+This is intended for use in tracking the history and usage of enabled featured flags.

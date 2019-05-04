@@ -1,4 +1,7 @@
+import six
+
 import warnings
+from unittest import skipIf
 
 from django.test import TestCase, override_settings
 
@@ -161,6 +164,26 @@ class FlagTestCase(TestCase):
             Condition('path matches', '/foo', required=True)
         ])
         self.assertFalse(flag.check_state(request=request))
+
+    @skipIf(six.PY2, 'assertLogs is not available in Python 2.7')
+    def test_flag_check_state_logs_state(self):
+        flag = Flag('MY_FLAG', [
+            Condition('boolean', True),
+            Condition('path matches', '/foo')
+        ])
+        with self.assertLogs('flags.sources', level='INFO') as logger:
+            flag.check_state(request=Mock(path='/bar'))
+            flag.check_state(request=Mock(path='/foo'))
+
+        self.assertEqual(
+            logger.output,
+            [
+                'INFO:flags.sources:Flag MY_FLAG evaluated to True by '
+                'boolean condition.',
+                'INFO:flags.sources:Flag MY_FLAG evaluated to True by '
+                'boolean, path matches conditions.',
+            ]
+        )
 
 
 class GetFlagsTestCase(TestCase):
