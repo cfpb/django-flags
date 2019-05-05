@@ -98,9 +98,9 @@ Flag multiple URLs in the same context with a context manager.
     When a fallback view is given it *must* take the same arguments as the flagged view.
 
 ```python
-with flagged_urls('MY_FLAG') as url:
+with flagged_urls('MY_FLAG') as furl:
     flagged_url_patterns = [
-        url(^'a-url/', view_requiring_flag),
+        furl(^'a-url/', view_requiring_flag),
     ]
 
 urlpatterns = urlpatterns + flagged_url_patterns
