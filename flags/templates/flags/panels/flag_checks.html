@@ -1,0 +1,21 @@
+{% load i18n feature_flags flags_debug %}
+
+{% for check in checks %}
+  <h4>{{ check.flag }}</h4>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "Text" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in check.traceback %}
+      <tr class="{% if forloop.counter|divisibleby:2 %}djDebugEven{% else %}djDebugOdd{% endif %}">
+        <td>{{ line }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endfor %}

@@ -1,7 +1,6 @@
 {% load i18n feature_flags flags_debug %}
 
 {% for flag in flags %}
-  {% flag_enabled flag.name request=request as is_flag_enabled %}
   <h4>{{ flag.name }}</h4>
 
   <p>{{ flag|state_str }}</p>
@@ -13,7 +12,6 @@
           <tr>
             <th>{% trans "Condition" %}</th>
             <th>{% trans "Value" %}</th>
-            <th>{% trans "" %}</th>
             <th>{% trans "" %}</th>
           </tr>
         </thead>
@@ -32,14 +30,6 @@
                 {% else %}
                   {% trans "Optional" %}
                 {% endif %}
-              </td>
-              <td>
-                {% if is_flag_enabled %}
-                  <b>{% trans "enabled" %}</b>
-                {% else %}
-                  <b>{% trans "disabled" %}</b>
-                {% endif %}
-                {% trans "for current request" %}
               </td>
             </tr>
           {% endfor %}
