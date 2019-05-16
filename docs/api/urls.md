@@ -1,6 +1,6 @@
 # Flagged URL patterns
 
-Flagged URL patterns are an alternative to [flagging views with decorators](https://github.com/cfpb/wagtail-flags#flag_checkflag_name-state-fallbacknone-kwargs).
+Flagged URL patterns are an alternative to [flagging views with decorators](../../api/decorators).
 
 ## Django 2.0+
 
