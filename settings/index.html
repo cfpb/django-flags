@@ -161,12 +161,12 @@
               
                 <h1 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">¶</a></h1>
 <h2 id="defining-flags">Defining flags<a class="headerlink" href="#defining-flags" title="Permanent link">¶</a></h2>
-<h3 id="flags_sources"><code>FLAGS_SOURCES</code><a class="headerlink" href="#flags_sources" title="Permanent link">¶</a></h3>
+<h3 id="flag_sources"><code>FLAG_SOURCES</code><a class="headerlink" href="#flag_sources" title="Permanent link">¶</a></h3>
 <p>Default: <code>('flags.sources.SettingsFlagsSource', 'flags.sources.DatabaseFlagsSource',)</code></p>
-<p>A list or tuple containing the full Python path strings to classes that provides a <a href="../api/sources/#flag-sources"><code>get_flags()</code> method</a>. The <code>get_flags()</code> method is expected to return a dictionary of flags and <a href="../api/sources/#conditioncondition-value-sourcenone-objnone"><code>Condition</code> objects</a>. All flags returned by all flag sources will be available to check.</p>
+<p>A list or tuple containing the full Python path strings to classes that provides a <a href="../api/sources/#flag-sources"><code>get_flags()</code> method</a>. The <code>get_flags()</code> method is expected to return a dictionary of flags and <a href="../api/sources/#conditioncondition-value-requiredfalse"><code>Condition</code> objects</a>. All flags returned by all flag sources will be available to check.</p>
 <h3 id="flags"><code>FLAGS</code><a class="headerlink" href="#flags" title="Permanent link">¶</a></h3>
 <p>Default: <code>{}</code></p>
-<p>A dictionary of feature flags and optional conditions used when <code>'flags.sources.SettingsFlagsSource'</code> is in <a href="#flag_sources"><code>FLAGS_SOURCES</code></a>.</p>
+<p>A dictionary of feature flags and optional conditions used when <code>'flags.sources.SettingsFlagsSource'</code> is in <a href="#flag_sources"><code>FLAG_SOURCES</code></a>.</p>
 <p>Conditions can either be included as:</p>
 <ul>
 <li>A list of dictionaries with the format:
