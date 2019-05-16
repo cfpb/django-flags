@@ -184,6 +184,10 @@
   <dd>A view to fallback on if the flag does not match the required `state`. Defaults to `None`, causing the view to raise a `404` if the flag does not match the required `state`.</dd>
 </dl>
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
+</div>
 <p>For example, in <code>views.py</code>:</p>
 <pre class="highlight"><code class="language-python">from django.views.generic import View
 from flags.views import FlaggedViewMixin

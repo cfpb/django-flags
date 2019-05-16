@@ -164,7 +164,7 @@
             <div class="section">
               
                 <h1 id="flag-sources">Flag Sources<a class="headerlink" href="#flag-sources" title="Permanent link">¶</a></h1>
-<p>Django-Flags provides a means to provide custom flag sources using the <a href="../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a>. Flag sources are classes that provide a <code>get_flags</code> method. The <code>get_flags</code> method must return a dictionary of flag name keys with a list of <a href="#conditioncondition-value-sourcenone-objnone"><code>Condition</code></a> objects.</p>
+<p>Django-Flags provides a means to provide custom flag sources using the <a href="../../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a>. Flag sources are classes that provide a <code>get_flags</code> method. The <code>get_flags</code> method must return a dictionary of flag name keys with a list of <a href="#conditioncondition-value-requiredfalse"><code>Condition</code></a> objects.</p>
 <pre class="highlight"><code class="language-python">from flags.sources import Condition
 
 
@@ -180,13 +180,13 @@ class CustomFlagSource(object):
 
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">¶</a></h2>
 <h3 id="get_flagssourcesnone-ignore_errorsfalse"><code>get_flags(sources=None, ignore_errors=False)</code><a class="headerlink" href="#get_flagssourcesnone-ignore_errorsfalse" title="Permanent link">¶</a></h3>
-<p>Return a dictionary of all flag names with <a href="#flagname-conditions"><code>Flag</code></a> objects that are available in the given <code>sources</code>. If <code>sources</code> is not given, the sources in the <a href="../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a> are used. If <code>ignore_errors</code> is <code>True</code>, any exceptions that occur when getting flags from a source will be caught and ignored.</p>
+<p>Return a dictionary of all flag names with <a href="#flagname-conditions"><code>Flag</code></a> objects that are available in the given <code>sources</code>. If <code>sources</code> is not given, the sources in the <a href="../../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a> are used. If <code>ignore_errors</code> is <code>True</code>, any exceptions that occur when getting flags from a source will be caught and ignored.</p>
 <h3 id="conditioncondition-value-requiredfalse"><code>Condition(condition, value, required=False)</code><a class="headerlink" href="#conditioncondition-value-requiredfalse" title="Permanent link">¶</a></h3>
 <p>A simple wrapper around conditions.</p>
 <h4 id="conditioncheckkwargs"><code>Condition.check(*kwargs)</code><a class="headerlink" href="#conditioncheckkwargs" title="Permanent link">¶</a></h4>
 <p>Check the condition against the given keyword arguments.</p>
 <h3 id="flagname-conditions"><code>Flag(name, conditions=[])</code><a class="headerlink" href="#flagname-conditions" title="Permanent link">¶</a></h3>
-<p>A simple wrapper around flags and their conditions. <code>conditions</code> is a list of <a href="#conditioncondition-value-sourcenone-objnone"><code>Condition</code></a> objects.</p>
+<p>A simple wrapper around flags and their conditions. <code>conditions</code> is a list of <a href="#conditioncondition-value-requiredfalse"><code>Condition</code></a> objects.</p>
 <h4 id="flagcheck_statekwargs"><code>Flag.check_state(*kwargs)</code><a class="headerlink" href="#flagcheck_statekwargs" title="Permanent link">¶</a></h4>
 <p>Check all of a flag's conditions and return the state based on the given keyword arguments.</p>
               

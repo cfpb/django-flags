@@ -175,7 +175,14 @@
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_checkflag_name-state-fallbacknone-kwargs"><code>flag_check(flag_name, state, fallback=None, **kwargs)</code><a class="headerlink" href="#flag_checkflag_name-state-fallbacknone-kwargs" title="Permanent link">¶</a></h3>
 <p>Check that a given flag has the given state. If the state does not match, perform the fallback.</p>
-<p><strong>Note</strong>, because flags that do not exist are taken to be <code>False</code> by default, <code>@flag_check('MY_FLAG', False)</code> and <code>@flag_check('MY_FLAG', None)</code> will both succeed if <code>MY_FLAG</code> does not exist.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Because flags that do not exist are taken to be <code>False</code> by default, <code>@flag_check('MY_FLAG', False)</code> and <code>@flag_check('MY_FLAG', None)</code> will both succeed if <code>MY_FLAG</code> does not exist.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a fallback view is given it <em>must</em> take the same arguments as the decorated view.</p>
+</div>
 <pre class="highlight"><code class="language-python">from flags.decorators import flag_check
 
 @flag_check('MY_FLAG', True)
@@ -196,6 +203,10 @@ def view_with_fallback(request):
 <h2 id="requiring-state">Requiring state<a class="headerlink" href="#requiring-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_requiredflag_name-fallback_viewnone-pass_if_settrue"><code>flag_required(flag_name, fallback_view=None, pass_if_set=True)</code><a class="headerlink" href="#flag_requiredflag_name-fallback_viewnone-pass_if_settrue" title="Permanent link">¶</a></h3>
 <p>Require the given flag to be enabled.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a fallback view is given it <em>must</em> take the same arguments as the decorated view.</p>
+</div>
 <pre class="highlight"><code class="language-python">from flags.decorators import flag_required
 
 @flag_required('MY_FLAG')

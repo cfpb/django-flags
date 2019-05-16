@@ -166,7 +166,7 @@
             <div class="section">
               
                 <h1 id="flagged-url-patterns">Flagged URL patterns<a class="headerlink" href="#flagged-url-patterns" title="Permanent link">¶</a></h1>
-<p>Flagged URL patterns are an alternative to <a href="https://github.com/cfpb/wagtail-flags#flag_checkflag_name-state-fallbacknone-kwargs">flagging views with decorators</a>.</p>
+<p>Flagged URL patterns are an alternative to <a href="../../api/decorators">flagging views with decorators</a>.</p>
 <h2 id="django-20">Django 2.0+<a class="headerlink" href="#django-20" title="Permanent link">¶</a></h2>
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_path, flagged_paths, flagged_re_path, flagged_re_paths</code></pre>
 
@@ -177,6 +177,10 @@
 <p><code>flagged_re_path()</code> can be used in place of <a href="https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.re_path">Django's <code>re_path()</code></a>.</p>
 <p>The <code>view</code> and the <code>fallback</code> can both be a set of <code>include()</code>ed patterns but any matching URL patterns in the includes must match <em>exactly</em> in terms of regular expression, keyword arguments, and name, otherwise a <code>404</code> may be unexpectedly raised. </p>
 <p>If a <code>fallback</code> is not given the flagged url will raise a <code>404</code> if the flag state does not match the required <code>state</code>. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
+</div>
 <pre class="highlight"><code class="language-python">urlpatterns = [
     flagged_path('MY_FLAG', 'a-url/', view_requiring_flag, state=True),
     flagged_re_path('MY_FLAG_WITH_FALLBACK', r'^another-url$', 
@@ -192,6 +196,10 @@
 <p>Flag multiple URLs in the same context with a context manager.</p>
 <p><code>flagged_paths()</code> returns a function that takes the same arguments as <a href="https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.path">Django's <code>path()</code></a> and which will flag the pattern's view.</p>
 <p><code>flagged_re_paths()</code> returns a function that takes the same arguments as <a href="https://docs.djangoproject.com/en/2.2/ref/urls/#django.urls.re_path">Django's <code>re_path()</code></a> and which will flag the pattern's view.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
+</div>
 <pre class="highlight"><code class="language-python">with flagged_paths('MY_FLAG') as path:
     flagged_url_patterns = [
         path('a-url/', view_requiring_flag),
@@ -207,6 +215,10 @@ urlpatterns = urlpatterns + flagged_url_patterns</code></pre>
 <p><code>flagged_url()</code> can be used in place of <a href="https://docs.djangoproject.com/en/1.11/ref/urls/#django.conf.urls.url">Django's <code>url()</code></a>.</p>
 <p>The <code>view</code> and the <code>fallback</code> can both be a set of <code>include()</code>ed patterns but any matching URL patterns in the includes must match <em>exactly</em> in terms of regular expression, keyword arguments, and name, otherwise a <code>404</code> may be unexpectedly raised. </p>
 <p>If a <code>fallback</code> is not given the flagged url will raise a <code>404</code> if the flag state does not match the required <code>state</code>. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
+</div>
 <pre class="highlight"><code class="language-python">urlpatterns = [
     flagged_url('MY_FLAG', r'a-url/', view_requiring_flag, state=True),
     flagged_url('MY_FLAG_WITH_FALLBACK', r'^another-url$', 
@@ -220,6 +232,10 @@ urlpatterns = urlpatterns + flagged_url_patterns</code></pre>
 <h3 id="flagged_urlsflag_name-statetrue-fallbacknone"><code>flagged_urls(flag_name, state=True, fallback=None)</code><a class="headerlink" href="#flagged_urlsflag_name-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <p>Flag multiple URLs in the same context with a context manager.</p>
 <p><code>flagged_urls()</code> returns a function that takes the same arguments as <a href="https://docs.djangoproject.com/en/1.11/ref/urls/#django.conf.urls.url">Django's <code>url()</code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
+</div>
 <pre class="highlight"><code class="language-python">with flagged_urls('MY_FLAG') as url:
     flagged_url_patterns = [
         url(^'a-url/', view_requiring_flag),
