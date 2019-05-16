@@ -73,4 +73,4 @@ FLAGS = {'MY_FLAG': {'before date': '2022-06-01T12:00Z'}}
 
 ## Custom conditions
 
-Custom conditions can be created and registered for use using the [conditions API](/api/conditions).
+Custom conditions can be created and registered for use using the [conditions API](../api/conditions).

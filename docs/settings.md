@@ -2,17 +2,17 @@
 
 ## Defining flags
 
-### `FLAGS_SOURCES`
+### `FLAG_SOURCES`
 
 Default: `('flags.sources.SettingsFlagsSource', 'flags.sources.DatabaseFlagsSource',)`
 
-A list or tuple containing the full Python path strings to classes that provides a [`get_flags()` method](api/sources/#flag-sources). The `get_flags()` method is expected to return a dictionary of flags and [`Condition` objects](api/sources/#conditioncondition-value-sourcenone-objnone). All flags returned by all flag sources will be available to check.
+A list or tuple containing the full Python path strings to classes that provides a [`get_flags()` method](../api/sources/#flag-sources). The `get_flags()` method is expected to return a dictionary of flags and [`Condition` objects](../api/sources/#conditioncondition-value-requiredfalse). All flags returned by all flag sources will be available to check.
 
 ### `FLAGS`
 
 Default: `{}`
 
-A dictionary of feature flags and optional conditions used when `'flags.sources.SettingsFlagsSource'` is in [`FLAGS_SOURCES`](#flag_sources).
+A dictionary of feature flags and optional conditions used when `'flags.sources.SettingsFlagsSource'` is in [`FLAG_SOURCES`](#flag_sources).
 
 Conditions can either be included as:
 
