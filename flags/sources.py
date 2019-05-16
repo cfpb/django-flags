@@ -5,7 +5,7 @@ from django.apps import apps
 from django.conf import settings
 from django.utils.module_loading import import_string
 
-from flags.conditions import get_condition
+from flags.conditions import RequiredForCondition, get_condition
 
 
 logger = logging.getLogger(__name__)
@@ -25,7 +25,14 @@ class Condition(object):
 
     def check(self, **kwargs):
         if self.fn is not None:
-            return self.fn(self.value, **kwargs)
+            try:
+                return self.fn(self.value, **kwargs)
+            except RequiredForCondition:
+                logger.exception(
+                    'Missing required argument for condition {}'.format(
+                        self.condition
+                    )
+                )
 
 
 class Flag(object):

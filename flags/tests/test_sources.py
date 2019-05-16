@@ -1,7 +1,14 @@
+import six
+
 import warnings
+from unittest import skipIf
 
 from django.test import TestCase, override_settings
 
+from flags.conditions import (
+    RequiredForCondition,
+    register as register_condition,
+)
 from flags.models import FlagState
 from flags.sources import (
     Condition,
@@ -16,6 +23,12 @@ try:
     from unittest.mock import Mock
 except ImportError:  # pragma: no cover
     from mock import Mock
+
+
+@register_condition('condition_with_required_arg')
+def condition_with_kwarg(condition, required_arg=None, **kwargs):
+    if required_arg is None:
+        raise RequiredForCondition('required_arg required')
 
 
 # Test flag source for using this module to test
@@ -117,6 +130,27 @@ class ConditionTestCase(TestCase):
         condition = Condition('nonexistent', 'value')
         result = condition.check()
         self.assertIsNone(result)
+
+    def test_check_fn_true(self):
+        condition = Condition('boolean', True)
+        result = condition.check()
+        self.assertTrue(result)
+
+    def test_check_evaluates_false_without_required_arg(self):
+        condition = Condition('condition_with_required_arg', True)
+        result = condition.check()
+        self.assertFalse(result)
+
+    @skipIf(six.PY2, 'assertLogs is not available in Python 2.7')
+    def test_check_logs_missing_required_arg(self):
+        condition = Condition('condition_with_required_arg', True)
+        with self.assertLogs('flags.sources', level='INFO') as logger:
+            condition.check()
+
+        self.assertIn(
+            'Missing required argument for condition',
+            logger.output[0]
+        )
 
 
 class FlagTestCase(TestCase):
