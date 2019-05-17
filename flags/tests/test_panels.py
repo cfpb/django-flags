@@ -53,4 +53,5 @@ class FlagChecksPanelTestCase(TestCase):
         self.panel.generate_stats(self.request, response)
         checks = self.panel.get_stats()['checks']
 
-        self.assertIn('MYFLAG', [c.flag for c in checks])
+        self.assertIn('MYFLAG', checks)
+        self.assertEqual([True, ], checks['MYFLAG'])

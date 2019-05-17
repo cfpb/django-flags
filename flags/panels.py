@@ -1,6 +1,4 @@
 import logging
-import traceback
-from collections import namedtuple
 
 from django.utils.translation import gettext_lazy as _
 
@@ -9,8 +7,6 @@ from flags import state
 from flags.middleware import FlagConditionsMiddleware
 from flags.sources import get_flags
 
-
-FlagCheck = namedtuple('FlagCheck', ['flag', 'traceback'])
 
 logger = logging.getLogger(__name__)
 
@@ -51,18 +47,19 @@ class FlagChecksPanel(Panel):
 
     def __init__(self, *args, **kwargs):
         super(FlagChecksPanel, self).__init__(*args, **kwargs)
-        self.checks = []
+        self.checks = {}
 
     def enable_instrumentation(self):
         # Monkey-patch flag checking to record where the call happens
         def recording_flag_state(flag_name, **kwargs):
-            stack = traceback.extract_stack()
-            # Remove Django-Flags from the list
+            if flag_name not in self.checks:
+                self.checks[flag_name] = []
 
-            self.checks.append(
-                FlagCheck(flag_name, traceback.format_list(stack))
-            )
-            return _original_flag_state(flag_name, **kwargs)
+            result = _original_flag_state(flag_name, **kwargs)
+
+            self.checks[flag_name].append(result)
+
+            return result
 
         state._flag_state = recording_flag_state
 
