@@ -3,6 +3,7 @@ repo_url: https://github.com/cfpb/django-flags/
 pages:
     - Getting started: index.md
     - Usage guide: usage.md
+    - Debugging: debugging.md
     - Settings: settings.md
     - Conditions: conditions.md
     - API Reference:

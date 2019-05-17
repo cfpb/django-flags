@@ -76,19 +76,3 @@ urlpatterns = [
 ```
 
 See the [API reference](/api/state) for more details and examples.
-
-## Seeing flag conditions
-
-Django-Flags comes with a panel for [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/index.html) that will list all flags, their conditions, and the state of each flag for the current request.
-
-![Feature flags Django Debug Toolbar panel](images/screenshot_flags_debug_panel.png)
-
-To enable the panel first follow the [installation and setup instructions for Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html). Then add `flags.panels.FlagsPanel` to the `DEBUG_TOOLBAR_PANELS` setting:
-
-```python
-DEBUG_TOOLBAR_PANELS = [
-    # …
-    'flags.panels.FlagsPanel',
-    # …
-]
-```
