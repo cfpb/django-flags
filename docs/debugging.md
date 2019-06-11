@@ -45,7 +45,7 @@ DEBUG_TOOLBAR_PANELS = [
 
 Django-Flags comes with a panel for [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/index.html) that will show which flags were checked during a request, how many times it was checked, and what the results of those checks were.
 
-![Flag Checks Django Debug Toolbar panel](images/screenshot_flag_panel.png)
+![Flag Checks Django Debug Toolbar panel](images/screenshot_flag_checks_panel.png)
 
 To enable the panel first follow the [installation and setup instructions for Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html). Then add `flags.panels.FlagChecksPanel` to the `DEBUG_TOOLBAR_PANELS` setting:
 

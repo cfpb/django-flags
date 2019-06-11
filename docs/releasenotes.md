@@ -1,5 +1,14 @@
 # Release Notes
 
+## 4.2.0
+
+### What's new?
+
+- Added optional [Django Debug Toolbar panels](https://cfpb.github.io/django-flags/debugging/#django-debug-toolbar-panels) to [list all flag conditions](https://cfpb.github.io/django-flags/debugging/#flag-conditions) and to [report flag checks for a request](https://cfpb.github.io/django-flags/debugging/#flag-checks).
+- Added flag state check logging and [`FLAGS_STATE_LOGGING` setting](https://cfpb.github.io/django-flags/settings/#flags_state_logging) to enable it.
+- Modified flag state checking to raise an `AppRegistryNotReady` if an attempt to check flag state is made before the app registry is ready.
+- Modified flag view decorators to warn if a fallback view do not take the same arguments as the flag view.
+
 ## 4.1.2
 
 ### What's new?
