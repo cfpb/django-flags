@@ -199,7 +199,7 @@ HINT: Register "condition name" as a Django-Flags condition.</code></pre>
 
 <h3 id="flag-checks">Flag checks<a class="headerlink" href="#flag-checks" title="Permanent link">¶</a></h3>
 <p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will show which flags were checked during a request, how many times it was checked, and what the results of those checks were.</p>
-<p><img alt="Flag Checks Django Debug Toolbar panel" src="images/screenshot_flag_panel.png" /></p>
+<p><img alt="Flag Checks Django Debug Toolbar panel" src="../images/screenshot_flag_checks_panel.png" /></p>
 <p>To enable the panel first follow the <a href="https://django-debug-toolbar.readthedocs.io/en/latest/installation.html">installation and setup instructions for Django Debug Toolbar</a>. Then add <code>flags.panels.FlagChecksPanel</code> to the <code>DEBUG_TOOLBAR_PANELS</code> setting:</p>
 <pre class="highlight"><code class="language-python">DEBUG_TOOLBAR_PANELS = [
     # …
