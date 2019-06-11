@@ -188,14 +188,10 @@
 <h2 id="420">4.2.0<a class="headerlink" href="#420" title="Permanent link">¶</a></h2>
 <h3 id="whats-new">What's new?<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
 <ul>
-<li>Add logging to flag state checking #40</li>
-<li>Provide clarity around when feature flag state can be checked #39</li>
-<li>Add a Feature Flags panel for Django Debug Toolbar #36</li>
-<li>Fix supported versions of Django in README #44</li>
-<li>Fix link to conditions API #42</li>
-<li>Add notes to the docs about fallback view arguments #38</li>
-<li>Clarify the decorators example in docs #33</li>
-<li>Document the flagged-class-based view API #32</li>
+<li>Added optional <a href="https://cfpb.github.io/django-flags/debugging/#django-debug-toolbar-panels">Django Debug Toolbar panels</a> to <a href="https://cfpb.github.io/django-flags/debugging/#flag-conditions">list all flag conditions</a> and to <a href="https://cfpb.github.io/django-flags/debugging/#flag-checks">report flag checks for a request</a>.</li>
+<li>Added flag state check logging and <a href="https://cfpb.github.io/django-flags/settings/#flags_state_logging"><code>FLAGS_STATE_LOGGING</code> setting</a> to enable it.</li>
+<li>Modified flag state checking to raise an <code>AppRegistryNotReady</code> if an attempt to check flag state is made before the app registry is ready.</li>
+<li>Modified flag view decorators to warn if a fallback view do not take the same arguments as the flag view.</li>
 </ul>
 <h2 id="412">4.1.2<a class="headerlink" href="#412" title="Permanent link">¶</a></h2>
 <h3 id="whats-new_1">What's new?<a class="headerlink" href="#whats-new_1" title="Permanent link">¶</a></h3>
