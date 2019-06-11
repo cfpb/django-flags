@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Settings - Django-Flags</title>
+  <title>Debugging - Django-Flags</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Settings";
-    var mkdocs_page_input_path = "settings.md";
+    var mkdocs_page_name = "Debugging";
+    var mkdocs_page_input_path = "debugging.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -59,25 +59,29 @@
     <a class="" href="../usage/">Usage guide</a>
 	    </li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../debugging/">Debugging</a>
-	    </li>
-          
             <li class="toctree-l1 current">
 		
-    <a class="current" href="./">Settings</a>
+    <a class="current" href="./">Debugging</a>
     <ul class="subnav">
             
     
         <ul>
         
-            <li><a class="toctree-l3" href="#defining-flags">Defining flags</a></li>
+            <li><a class="toctree-l3" href="#warnings">Warnings</a></li>
+        
+            <li><a class="toctree-l3" href="#exceptions">Exceptions</a></li>
+        
+            <li><a class="toctree-l3" href="#django-debug-toolbar-panels">Django Debug Toolbar Panels</a></li>
         
         </ul>
     
 
     </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../settings/">Settings</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -151,10 +155,10 @@
     
       
     
-    <li>Settings</li>
+    <li>Debugging</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/settings.md"
+        <a href="https://github.com/cfpb/django-flags/edit/master/docs/debugging.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -164,53 +168,44 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">¶</a></h1>
-<h2 id="defining-flags">Defining flags<a class="headerlink" href="#defining-flags" title="Permanent link">¶</a></h2>
-<h3 id="flag_sources"><code>FLAG_SOURCES</code><a class="headerlink" href="#flag_sources" title="Permanent link">¶</a></h3>
-<p>Default: <code>('flags.sources.SettingsFlagsSource', 'flags.sources.DatabaseFlagsSource',)</code></p>
-<p>A list or tuple containing the full Python path strings to classes that provides a <a href="../api/sources/#flag-sources"><code>get_flags()</code> method</a>. The <code>get_flags()</code> method is expected to return a dictionary of flags and <a href="../api/sources/#conditioncondition-value-requiredfalse"><code>Condition</code> objects</a>. All flags returned by all flag sources will be available to check.</p>
-<h3 id="flags"><code>FLAGS</code><a class="headerlink" href="#flags" title="Permanent link">¶</a></h3>
-<p>Default: <code>{}</code></p>
-<p>A dictionary of feature flags and optional conditions used when <code>'flags.sources.SettingsFlagsSource'</code> is in <a href="#flag_sources"><code>FLAG_SOURCES</code></a>.</p>
-<p>Conditions can either be included as:</p>
-<ul>
-<li>A list of dictionaries with the format:
-  <pre class="highlight"><code class="language-python">{'condition': 'condition name', 'value': 'expected value', 'required': True}`</code></pre>
-  or
-  <pre class="highlight"><code class="language-python">{'condition': 'condition name', 'value': 'expected value'}</code></pre>
-  (<code>required</code> defaults to <code>False</code>).</li>
-<li>A list of 3-tuples with the format: 
-  <pre class="highlight"><code class="language-python">(condition name, expected value, required)</code></pre></li>
-<li>A list of 2-tuples with the format:
-  <pre class="highlight"><code class="language-python">(condition name, expected value)</code></pre>
-  (<code>required</code> defaults to <code>False</code>)</li>
-</ul>
-<p>For example:</p>
-<pre class="highlight"><code class="language-python">FLAGS = {
-  'FLAG_WITH_EMPTY_CONDITIONS': [],
-  'FLAG_WITH_DICT_CONDITIONS': [
-    {'condition': 'condition name', 'value': 'expected value to be enabled'},
-    {'condition': 'condition name', 'value': 'expected value to be enabled', 'required': True},
-  ],
-  'FLAG_WITH_TUPLE_CONDITIONS': [
-    ('condition name', 'expected value to be enabled'),
-    ('condition name', 'expected value to be enabled', True),
-  ],
-  # This is possible, but not recommended
-  'FLAG_WITH_MIXED_CONDITIONS': [
-    {'condition': 'condition name', 'value': 'expected value to be enabled'},
-    ('condition name', 'expected value to be enabled', True),
-  ],
-}</code></pre>
+                <h1 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">¶</a></h1>
+<h2 id="warnings">Warnings<a class="headerlink" href="#warnings" title="Permanent link">¶</a></h2>
+<dl>
+  <dt>`flags.E001`</dt>
+  <dd>
+    <p>Django-Flags includes a <a href="https://docs.djangoproject.com/en/2.2/topics/checks/">Django system check</a> to check for flags that have non-existent conditions on start-up.</p>
+    <pre><code>?: (flags.E001) Flag FLAG_WITH_ANY_CONDITIONS has non-existent condition "condition name"
+HINT: Register "condition name" as a Django-Flags condition.</code></pre>
+  </dd>
+</dl>
 
-<p>Previously flag definitions in <code>FLAGS</code> supported a single dictionary (rather than a list) with the condition name as the key and expected value as value. This method of specifying flags is deprecated and will be removed in Django-Flags 5.0.</p>
-<h3 id="flags_state_logging"><code>FLAGS_STATE_LOGGING</code><a class="headerlink" href="#flags_state_logging" title="Permanent link">¶</a></h3>
-<p>Default: <code>True</code></p>
-<p>If this setting is <code>True</code> Django-Flags will log all flag state checks with how the conditions were evaluated. These will appear in the log file like:</p>
-<pre class="highlight"><code>INFO:flags.sources:Flag MY_FLAG evaluated False with conditions: boolean (False).
-INFO:flags.sources:Flag MY_FLAG evaluated True with conditions: boolean (False), path matches (True).</code></pre>
+<h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">¶</a></h2>
+<h3 id="requiredforcondition"><code>RequiredForCondition</code><a class="headerlink" href="#requiredforcondition" title="Permanent link">¶</a></h3>
+<p>Django-Flags allows conditions to require any number of keyword arguments that must be passed when checking the condition. If a condition does not receive the necessary arguments, it may raise a <code>RequiredForCondition</code> exception, for example:</p>
+<pre class="highlight"><code class="language-python">Traceback (most recent call last):
+  …
+    raise RequiredForCondition("request is required for condition 'path'")</code></pre>
 
-<p>This is intended for use in tracking the history and usage of enabled featured flags.</p>
+<h2 id="django-debug-toolbar-panels">Django Debug Toolbar Panels<a class="headerlink" href="#django-debug-toolbar-panels" title="Permanent link">¶</a></h2>
+<h3 id="flag-conditions">Flag conditions<a class="headerlink" href="#flag-conditions" title="Permanent link">¶</a></h3>
+<p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will list all flags, their conditions, and the state of each flag for the current request.</p>
+<p><img alt="Feature flags Django Debug Toolbar panel" src="../images/screenshot_flags_debug_panel.png" /></p>
+<p>To enable the panel first follow the <a href="https://django-debug-toolbar.readthedocs.io/en/latest/installation.html">installation and setup instructions for Django Debug Toolbar</a>. Then add <code>flags.panels.FlagsPanel</code> to the <code>DEBUG_TOOLBAR_PANELS</code> setting:</p>
+<pre class="highlight"><code class="language-python">DEBUG_TOOLBAR_PANELS = [
+    # …
+    'flags.panels.FlagsPanel',
+    # …
+]</code></pre>
+
+<h3 id="flag-checks">Flag checks<a class="headerlink" href="#flag-checks" title="Permanent link">¶</a></h3>
+<p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will show which flags were checked during a request, how many times it was checked, and what the results of those checks were.</p>
+<p><img alt="Flag Checks Django Debug Toolbar panel" src="images/screenshot_flag_panel.png" /></p>
+<p>To enable the panel first follow the <a href="https://django-debug-toolbar.readthedocs.io/en/latest/installation.html">installation and setup instructions for Django Debug Toolbar</a>. Then add <code>flags.panels.FlagChecksPanel</code> to the <code>DEBUG_TOOLBAR_PANELS</code> setting:</p>
+<pre class="highlight"><code class="language-python">DEBUG_TOOLBAR_PANELS = [
+    # …
+    'flags.panels.FlagChecksPanel',
+    # …
+]</code></pre>
               
             </div>
           </div>
@@ -218,10 +213,10 @@ INFO:flags.sources:Flag MY_FLAG evaluated True with conditions: boolean (False),
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../conditions/" class="btn btn-neutral float-right" title="Conditions">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../settings/" class="btn btn-neutral float-right" title="Settings">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../debugging/" class="btn btn-neutral" title="Debugging"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../usage/" class="btn btn-neutral" title="Usage guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -249,10 +244,10 @@ INFO:flags.sources:Flag MY_FLAG evaluated True with conditions: boolean (False),
           <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../debugging/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../usage/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../conditions/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../settings/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

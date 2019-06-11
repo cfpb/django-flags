@@ -61,6 +61,11 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="../../debugging/">Debugging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <a class="" href="../../settings/">Settings</a>
 	    </li>
           
@@ -172,6 +177,11 @@
     flag_disabled,
 )</code></pre>
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If any of the flag state checking functions below is used at the top-level of a module (in <code>urls.py</code>, for example), it will be evaluated at import-time. This may have unintended consequences. <a href="/api/sources/#flag-sources">Database flag conditions</a> may not be available, <a href="/api/conditions/">custom conditions</a> may not be registered, and any dynamic change in flag state (such as date-based conditions or a newly added database condition) will not have an effect.</p>
+<p>Consider using <a href="/api/urls/">the flagged URLs API</a> for state-checking in <code>urls.py</code>, <a href="/api/decorators/">the view decorators</a> and <a href="/api/views/">the class-based view mixin</a> for state-checking Django views, and using the state checking functions below inside methods and functions. This will have the added benefit of ensuring that the intention is clear, and that flagged code is as tightly-scoped as possible.</p>
+</div>
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_stateflag_name-kwargs"><code>flag_state(flag_name, **kwargs)</code><a class="headerlink" href="#flag_stateflag_name-kwargs" title="Permanent link">¶</a></h3>
 <p>Return the value for the flag (<code>True</code> or <code>False</code>) by passing kwargs to its conditions. If the flag does not exist, this will return <code>None</code> so that existence can be introspected but will still evaluate to <code>False</code>.</p>

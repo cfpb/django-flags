@@ -61,6 +61,11 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="../../debugging/">Debugging</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <a class="" href="../../settings/">Settings</a>
 	    </li>
           
@@ -236,9 +241,9 @@ urlpatterns = urlpatterns + flagged_url_patterns</code></pre>
 <p class="admonition-title">Note</p>
 <p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
 </div>
-<pre class="highlight"><code class="language-python">with flagged_urls('MY_FLAG') as url:
+<pre class="highlight"><code class="language-python">with flagged_urls('MY_FLAG') as furl:
     flagged_url_patterns = [
-        url(^'a-url/', view_requiring_flag),
+        furl(^'a-url/', view_requiring_flag),
     ]
 
 urlpatterns = urlpatterns + flagged_url_patterns</code></pre>
