@@ -34,6 +34,12 @@ class Flag(object):
     def __init__(self, name, conditions=[]):
         self.name = name
         self.conditions = conditions
+        self.optional_conditions = [
+            c for c in self.conditions if not c.required
+        ]
+        self.required_conditions = [
+            c for c in self.conditions if c.required
+        ]
 
     def __eq__(self, other):
         """ There can be only one feature flag of a given name """
@@ -41,19 +47,44 @@ class Flag(object):
 
     def check_state(self, **kwargs):
         """ Determine this flag's state based on any of its conditions """
-        not_required = [c for c in self.conditions if not c.required]
-        required = [c for c in self.conditions if c.required]
-
-        if len(not_required) == 0 and len(required) == 0:
+        if (len(self.optional_conditions) == 0
+                and len(self.required_conditions) == 0):
             return False
 
-        return (
-            any(c.check(**kwargs) for c in not_required)
-            if len(not_required) > 0
+        checked_conditions = [
+            (c, c.check(**kwargs)) for c in self.conditions
+        ]
+
+        state = (
+            any(
+                state for c, state in checked_conditions
+                if c in self.optional_conditions
+            )
+            if len(self.optional_conditions) > 0
             else True
         ) and (
-            all(c.check(**kwargs) for c in required)
+            all(
+                state for c, state in checked_conditions
+                if c in self.required_conditions
+            )
         )
+
+        if getattr(settings, 'FLAGS_STATE_LOGGING', True):
+            logger.info(
+                'Flag {name} evaluated {state} with '
+                'condition{conditions_plural}: {conditions}.'.format(
+                    name=self.name,
+                    state=state,
+                    conditions=', '.join(
+                        '{} ({})'.format(c.condition, v)
+                        for c, v in checked_conditions
+                    ),
+                    conditions_plural='s' if len(self.conditions) > 1 else '',
+
+                )
+            )
+
+        return state
 
 
 class SettingsFlagsSource(object):
