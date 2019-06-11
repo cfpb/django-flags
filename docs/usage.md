@@ -6,15 +6,15 @@ Flags are defined in Django settings with the conditions in which they are enabl
 
 ```python
 FLAGS = {
-  'FLAG_WITH_EMPTY_CONDITIONS': []
-  'FLAG_WITH_ANY_CONDITIONS': [
-    {'condition': 'condition name', 'value': 'expected value to be enabled'},
-    {'condition': 'user', 'value': 'lady.liberty'},
-  ],
-  'FLAG_WITH_REQUIRED_CONDITIONS': [
-    {'condition': 'user', 'value': 'lady.liberty'},
-    {'condition': 'path matches', 'value': r'^/liberty/island', required=True},
-  ]
+    'FLAG_WITH_EMPTY_CONDITIONS': [],
+    'FLAG_WITH_ANY_CONDITIONS': [
+        {'condition': 'condition name', 'value': 'expected value to be enabled'},
+        {'condition': 'user', 'value': 'lady.liberty'},
+    ],
+    'FLAG_WITH_REQUIRED_CONDITIONS': [
+        {'condition': 'user', 'value': 'lady.liberty'},
+        {'condition': 'path matches', 'value': r'^/liberty/island', 'required': True},
+    ]
 }
 ```
 
@@ -75,4 +75,4 @@ urlpatterns = [
 ]
 ```
 
-See the [API reference](../api/state) for more details and examples.
+See the [API reference](/api/state) for more details and examples.

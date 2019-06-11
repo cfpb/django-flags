@@ -32,6 +32,8 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
+    'django.contrib.staticfiles',
+    'debug_toolbar',
 )
 
 INSTALLED_APPS += (
@@ -40,6 +42,7 @@ INSTALLED_APPS += (
 
 if django.VERSION >= (1, 10):  # pragma: no cover
     MIDDLEWARE = (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
@@ -64,6 +67,8 @@ TEMPLATES = [
     }
 ]
 
+STATIC_URL = '/static/'
+
 FLAGS = {
     'FLAG_ENABLED': [('boolean', True)],
     'FLAG_ENABLED_WITH_KWARG': [('flag_enabled_with_kwarg', (2 + 2))],
@@ -71,8 +76,22 @@ FLAGS = {
     'DB_FLAG': [],
 }
 
+DEBUG_TOOLBAR_PANELS = [
+    'flags.panels.FlagsPanel',
+    'flags.panels.FlagChecksPanel'
+]
+
 
 @register('flag_enabled_with_kwarg')
 def kwarg_condition(expected_value, passed_value=None, **kwargs):
     """Checks that an expected value matches a passed value"""
     return expected_value == passed_value
+
+# DEBUG=True
+# INTERNAL_IPS=['127.0.0.1']
+# ROOT_URLCONF=__name__
+# from django.urls import include, path
+# import debug_toolbar
+# urlpatterns = [
+#     path('__debug__/', include(debug_toolbar.urls)),
+# ]

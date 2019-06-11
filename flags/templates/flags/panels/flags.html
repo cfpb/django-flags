@@ -1,0 +1,41 @@
+{% load i18n feature_flags flags_debug %}
+
+{% for flag in flags %}
+  <h4>{{ flag.name }}</h4>
+
+  <p>{{ flag|state_str }}</p>
+
+  {% with flag|conditions_without_bool as conditions %}     
+    {% if conditions|length > 0 %}
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Condition" %}</th>
+            <th>{% trans "Value" %}</th>
+            <th>{% trans "" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for condition in flag|conditions_without_bool %}
+            <tr class="{% if forloop.counter|divisibleby:2 %}djDebugEven{% else %}djDebugOdd{% endif %}">
+              <td>
+                <b>{{ condition.condition }}</b>
+              </td>
+              <td>
+                {{ condition.value }}
+              </td>
+              <td>
+                {% if condition.required %}
+                  {% trans "Required" %}
+                {% else %}
+                  {% trans "Optional" %}
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  {% endwith %}
+
+{% endfor %}

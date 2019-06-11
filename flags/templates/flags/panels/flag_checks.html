@@ -1,0 +1,20 @@
+{% load i18n %}
+
+<table>
+    <thead>
+        <tr>
+            <th>{% trans "Flag" %}</th>
+            <th>{% trans "Checked" %}</th>
+            <th>{% trans "Results" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flag, results in checks.items %}
+        <tr class="{% if forloop.counter|divisibleby:2 %}djDebugEven{% else %}djDebugOdd{% endif %}">
+            <td>{{ flag }}</td>
+            <td>{{ results|length }} time{{ results|length|pluralize }}</td>
+            <td>{{ results|join:', ' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

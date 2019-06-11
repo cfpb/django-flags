@@ -4,8 +4,8 @@ from flags.middleware import FlagConditionsMiddleware
 from flags.sources import get_flags
 
 
-def flag_state(flag_name, **kwargs):
-    """ Return the value for the flag by passing kwargs to its conditions """
+def _flag_state(flag_name, **kwargs):
+    """ This is a private functino that performs the actual state checking """
     flags = None
 
     # If the request is given as a kwargs, and the FlagConditionsMiddleware is
@@ -25,6 +25,11 @@ def flag_state(flag_name, **kwargs):
         return flag.check_state(**kwargs)
 
     return None
+
+
+def flag_state(flag_name, **kwargs):
+    """ Return the value for the flag by passing kwargs to its conditions """
+    return _flag_state(flag_name, **kwargs)
 
 
 def flag_enabled(flag_name, **kwargs):
