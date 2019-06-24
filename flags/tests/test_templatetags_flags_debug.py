@@ -70,8 +70,8 @@ class TestStateStrTemplateTag(TestCase):
     def test_state_str_required_no_optional_bool_false(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
-            'MYFLAG is <b>disabled</b> when <i>all</i> required conditions '
-            'are met.',
+            'MYFLAG is <b>disabled</b> for all requests, '
+            'even when <i>all</i> required conditions are met.',
             state_str(flag)
         )
 
