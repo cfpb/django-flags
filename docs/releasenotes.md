@@ -1,5 +1,12 @@
 # Release Notes
 
+## 4.2.1
+
+### What's new?
+
+- Made the language around optional boolean conditions with required conditions clearer in the [Flag Conditions Debug Toolbar panel](https://cfpb.github.io/django-flags/debugging/#django-debug-toolbar-panels)
+
+
 ## 4.2.0
 
 ### What's new?
