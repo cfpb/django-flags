@@ -212,6 +212,23 @@ class GetFlagsTestCase(TestCase):
         self.assertEqual(len(flags['OTHER_FLAG'].conditions), 0)
         self.assertEqual(len(flags['SOURCED_FLAG'].conditions), 1)
 
+    @override_settings(FLAGS={'MY_FLAG': []})
+    def test_get_flags_ensure_combined_conditions_work(self):
+        FlagState.objects.create(
+            name='MY_FLAG',
+            condition='boolean',
+            value='True'
+        )
+        flags = get_flags(
+            sources=[
+                'flags.sources.SettingsFlagsSource',
+                'flags.sources.DatabaseFlagsSource',
+            ]
+        )
+        self.assertIn('MY_FLAG', flags)
+        my_flag = flags['MY_FLAG']
+        self.assertTrue(my_flag.check_state())
+
     def test_ignore_errors(self):
         # Without ignore_errors
         with self.assertRaises(Exception):
