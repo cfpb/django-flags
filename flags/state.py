@@ -8,7 +8,7 @@ from flags.sources import get_flags
 
 
 def _flag_state(flag_name, **kwargs):
-    """ This is a private functino that performs the actual state checking """
+    """ This is a private function that performs the actual state checking """
     flags = None
 
     # If the request is given as a kwargs, and the FlagConditionsMiddleware is
