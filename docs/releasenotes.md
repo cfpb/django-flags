@@ -1,5 +1,12 @@
 # Release Notes
 
+## 4.2.2
+
+### What's new?
+
+- Fixed a bug where if a flag was defined in multiple [sources](/settings#flag_sources) the conditions defined in subsequent sources would not be evaluated. This means (with the default sources) if a flag is defined in Django settings and has conditions defined the database, only the settings conditions would be evaluated.
+
+
 ## 4.2.1
 
 ### What's new?
