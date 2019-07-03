@@ -34,12 +34,6 @@ class Flag(object):
     def __init__(self, name, conditions=[]):
         self.name = name
         self.conditions = conditions
-        self.optional_conditions = [
-            c for c in self.conditions if not c.required
-        ]
-        self.required_conditions = [
-            c for c in self.conditions if c.required
-        ]
 
     def __eq__(self, other):
         """ There can be only one feature flag of a given name """
@@ -47,8 +41,15 @@ class Flag(object):
 
     def check_state(self, **kwargs):
         """ Determine this flag's state based on any of its conditions """
-        if (len(self.optional_conditions) == 0
-                and len(self.required_conditions) == 0):
+        optional_conditions = [
+            c for c in self.conditions if not c.required
+        ]
+        required_conditions = [
+            c for c in self.conditions if c.required
+        ]
+
+        if (len(optional_conditions) == 0
+                and len(required_conditions) == 0):
             return False
 
         checked_conditions = [
@@ -58,14 +59,14 @@ class Flag(object):
         state = (
             any(
                 state for c, state in checked_conditions
-                if c in self.optional_conditions
+                if c in optional_conditions
             )
-            if len(self.optional_conditions) > 0
+            if len(optional_conditions) > 0
             else True
         ) and (
             all(
                 state for c, state in checked_conditions
-                if c in self.required_conditions
+                if c in required_conditions
             )
         )
 
