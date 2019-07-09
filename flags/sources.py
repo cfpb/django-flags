@@ -41,14 +41,14 @@ class Flag(object):
 
     def check_state(self, **kwargs):
         """ Determine this flag's state based on any of its conditions """
-        optional_conditions = [
+        non_required_conditions = [
             c for c in self.conditions if not c.required
         ]
         required_conditions = [
             c for c in self.conditions if c.required
         ]
 
-        if (len(optional_conditions) == 0
+        if (len(non_required_conditions) == 0
                 and len(required_conditions) == 0):
             return False
 
@@ -59,9 +59,9 @@ class Flag(object):
         state = (
             any(
                 state for c, state in checked_conditions
-                if c in optional_conditions
+                if c in non_required_conditions
             )
-            if len(optional_conditions) > 0
+            if len(non_required_conditions) > 0
             else True
         ) and (
             all(

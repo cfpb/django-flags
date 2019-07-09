@@ -43,7 +43,7 @@ class TestStateStrTemplateTag(TestCase):
     @override_settings(FLAGS={'MYFLAG': [
         ('anonymous', 'False', True),
     ]})
-    def test_state_str_required_no_optional_no_bool(self):
+    def test_state_str_required_no_non_required_no_bool(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
             'MYFLAG is <b>enabled</b> when <i>all</i> required conditions '
@@ -55,7 +55,7 @@ class TestStateStrTemplateTag(TestCase):
         ('anonymous', 'False', True),
         ('boolean', True),
     ]})
-    def test_state_str_required_no_optional_bool_true(self):
+    def test_state_str_required_no_non_required_bool_true(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
             'MYFLAG is <b>enabled</b> when <i>all</i> required conditions '
@@ -67,7 +67,7 @@ class TestStateStrTemplateTag(TestCase):
         ('anonymous', 'False', True),
         ('boolean', False),
     ]})
-    def test_state_str_required_no_optional_bool_false(self):
+    def test_state_str_required_no_non_required_bool_false(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
             'MYFLAG is <b>disabled</b> for all requests, '
@@ -80,11 +80,11 @@ class TestStateStrTemplateTag(TestCase):
         ('path matches', '/mypath'),
         ('boolean', False),
     ]})
-    def test_state_str_required_optional_bool_false(self):
+    def test_state_str_required_non_required_bool_false(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
             'MYFLAG is <b>enabled</b> when <i>all</i> required conditions '
-            'and <i>any</i> optional condition is met.',
+            'and <i>any</i> non-required condition is met.',
             state_str(flag)
         )
 
@@ -93,7 +93,7 @@ class TestStateStrTemplateTag(TestCase):
         ('boolean', True, True),
         ('path matches', '/mypath'),
     ]})
-    def test_state_str_required_optional_bool_true_required(self):
+    def test_state_str_required_non_required_bool_true_required(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
             'MYFLAG is <b>enabled</b> for all requests.',
@@ -105,7 +105,7 @@ class TestStateStrTemplateTag(TestCase):
         ('boolean', False, True),
         ('path matches', '/mypath'),
     ]})
-    def test_state_str_required_optional_bool_false_required(self):
+    def test_state_str_required_non_required_bool_false_required(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
             'MYFLAG is <b>disabled</b> for all requests.',
@@ -116,7 +116,7 @@ class TestStateStrTemplateTag(TestCase):
         ('anonymous', 'False'),
         ('boolean', True),
     ]})
-    def test_state_str_no_required_optional_bool_true(self):
+    def test_state_str_no_required_non_required_bool_true(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
             'MYFLAG is <b>enabled</b> for all requests.',
@@ -127,21 +127,21 @@ class TestStateStrTemplateTag(TestCase):
         ('anonymous', 'False', True),
         ('path matches', '/mypath'),
     ]})
-    def test_state_str_required_optional_no_bool(self):
+    def test_state_str_required_non_required_no_bool(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
             'MYFLAG is <b>enabled</b> when <i>all</i> required conditions '
-            'and <i>any</i> optional condition is met.',
+            'and <i>any</i> non-required condition is met.',
             state_str(flag)
         )
 
     @override_settings(FLAGS={'MYFLAG': [
         ('path matches', '/mypath'),
     ]})
-    def test_state_str_non_bool_optional(self):
+    def test_state_str_non_bool_non_required(self):
         flag = get_flags().get('MYFLAG')
         self.assertEqual(
-            'MYFLAG is <b>enabled</b> when <i>any</i> optional condition '
+            'MYFLAG is <b>enabled</b> when <i>any</i> condition '
             'is met.',
             state_str(flag)
         )
