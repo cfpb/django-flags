@@ -136,6 +136,19 @@ class TestStateStrTemplateTag(TestCase):
         )
 
     @override_settings(FLAGS={'MYFLAG': [
+        ('anonymous', 'False', True),
+        ('path matches', '/mypath'),
+        ('boolean', True)
+    ]})
+    def test_state_str_required_non_required_bool(self):
+        flag = get_flags().get('MYFLAG')
+        self.assertEqual(
+            'MYFLAG is <b>enabled</b> when <i>all</i> required conditions '
+            'are met.',
+            state_str(flag)
+        )
+
+    @override_settings(FLAGS={'MYFLAG': [
         ('path matches', '/mypath'),
     ]})
     def test_state_str_non_bool_non_required(self):

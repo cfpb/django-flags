@@ -66,7 +66,7 @@ def state_str(flag):
 
             state_str += _(' when <i>all</i> required conditions')
 
-            if len(non_bool_conditions) == len(req_conditions):
+            if len(non_bool_conditions) == len(req_conditions) or is_enabled:
                 state_str += _(' are met')
 
         # If there aren't any required conditions, it's simpler.
