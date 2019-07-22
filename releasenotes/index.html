@@ -121,6 +121,8 @@
     
         <ul>
         
+            <li><a class="toctree-l3" href="#423">4.2.3</a></li>
+        
             <li><a class="toctree-l3" href="#422">4.2.2</a></li>
         
             <li><a class="toctree-l3" href="#421">4.2.1</a></li>
@@ -189,18 +191,23 @@
             <div class="section">
               
                 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">¶</a></h1>
-<h2 id="422">4.2.2<a class="headerlink" href="#422" title="Permanent link">¶</a></h2>
+<h2 id="423">4.2.3<a class="headerlink" href="#423" title="Permanent link">¶</a></h2>
 <h3 id="whats-new">What's new?<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
+<ul>
+<li>Removed the word "optional" to describe non-required conditions in the <a href="https://cfpb.github.io/django-flags/debugging/#django-debug-toolbar-panels">Flag Conditions Debug Toolbar panel</a>.</li>
+</ul>
+<h2 id="422">4.2.2<a class="headerlink" href="#422" title="Permanent link">¶</a></h2>
+<h3 id="whats-new_1">What's new?<a class="headerlink" href="#whats-new_1" title="Permanent link">¶</a></h3>
 <ul>
 <li>Fixed a bug where if a flag was defined in multiple <a href="/settings#flag_sources">sources</a> the conditions defined in subsequent sources would not be evaluated. This means (with the default sources) if a flag is defined in Django settings and has conditions defined the database, only the settings conditions would be evaluated.</li>
 </ul>
 <h2 id="421">4.2.1<a class="headerlink" href="#421" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_1">What's new?<a class="headerlink" href="#whats-new_1" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_2">What's new?<a class="headerlink" href="#whats-new_2" title="Permanent link">¶</a></h3>
 <ul>
 <li>Made the language around optional boolean conditions with required conditions clearer in the <a href="https://cfpb.github.io/django-flags/debugging/#django-debug-toolbar-panels">Flag Conditions Debug Toolbar panel</a></li>
 </ul>
 <h2 id="420">4.2.0<a class="headerlink" href="#420" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_2">What's new?<a class="headerlink" href="#whats-new_2" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_3">What's new?<a class="headerlink" href="#whats-new_3" title="Permanent link">¶</a></h3>
 <ul>
 <li>Added optional <a href="https://cfpb.github.io/django-flags/debugging/#django-debug-toolbar-panels">Django Debug Toolbar panels</a> to <a href="https://cfpb.github.io/django-flags/debugging/#flag-conditions">list all flag conditions</a> and to <a href="https://cfpb.github.io/django-flags/debugging/#flag-checks">report flag checks for a request</a>.</li>
 <li>Added flag state check logging and <a href="https://cfpb.github.io/django-flags/settings/#flags_state_logging"><code>FLAGS_STATE_LOGGING</code> setting</a> to enable it.</li>
@@ -208,40 +215,40 @@
 <li>Modified flag view decorators to warn if a fallback view do not take the same arguments as the flag view.</li>
 </ul>
 <h2 id="412">4.1.2<a class="headerlink" href="#412" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_3">What's new?<a class="headerlink" href="#whats-new_3" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_4">What's new?<a class="headerlink" href="#whats-new_4" title="Permanent link">¶</a></h3>
 <ul>
 <li>Added support for <a href="https://docs.djangoproject.com/en/2.2/releases/2.2/">Django 2.2</a> and <a href="https://docs.python.org/3/whatsnew/3.7.html">Python 3.7</a> (Chris Adams).</li>
 </ul>
 <h2 id="411">4.1.1<a class="headerlink" href="#411" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_4">What's new?<a class="headerlink" href="#whats-new_4" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_5">What's new?<a class="headerlink" href="#whats-new_5" title="Permanent link">¶</a></h3>
 <ul>
 <li><code>boolean</code> and <code>anonymous</code> conditions now accept <a href="/conditions/#boolean">multiple possible string representations of truth</a> as their values.</li>
 <li><code>parameter</code> conditions now accept <a href="http://localhost:7777/conditions/#parameter">possible parameter values</a>.</li>
 </ul>
 <h2 id="41">4.1<a class="headerlink" href="#41" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_5">What's new?<a class="headerlink" href="#whats-new_5" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_6">What's new?<a class="headerlink" href="#whats-new_6" title="Permanent link">¶</a></h3>
 <ul>
 <li>Added the option to specifiy <a href="/usage/#defining-flags">required conditions</a> that must always be met.</li>
 <li>Deprecated support for using a single dictionary to hold key/values of conditions for a settings-based feature flag. Support will be removed in Django-Flags 5.0. Use <a href="/settings/#flags">a list of dictionaries or tuples instead</a>.</li>
 <li>Added a <a href="/conditions"><code>before date</code> condition</a> that is met whenever the current date is before the expected date.</li>
 </ul>
 <h2 id="403">4.0.3<a class="headerlink" href="#403" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_6">What's new?<a class="headerlink" href="#whats-new_6" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_7">What's new?<a class="headerlink" href="#whats-new_7" title="Permanent link">¶</a></h3>
 <ul>
 <li>The system check introduced in 4.0.2 will no longer raise a <code>ProgrammingError</code> or an <code>OperationalError</code> when run pre-migration.</li>
 </ul>
 <h2 id="402">4.0.2<a class="headerlink" href="#402" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_7">What's new?<a class="headerlink" href="#whats-new_7" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_8">What's new?<a class="headerlink" href="#whats-new_8" title="Permanent link">¶</a></h3>
 <ul>
 <li>Logging of non-existent conditions is now a Django system check.</li>
 </ul>
 <h2 id="401">4.0.1<a class="headerlink" href="#401" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_8">What's new?<a class="headerlink" href="#whats-new_8" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_9">What's new?<a class="headerlink" href="#whats-new_9" title="Permanent link">¶</a></h3>
 <ul>
 <li><code>condition.check()</code> returns a Falsy <code>None</code> instead of raising a <code>TypeError</code> when a configured condition has no function registered.</li>
 </ul>
 <h2 id="40">4.0<a class="headerlink" href="#40" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_9">What's new?<a class="headerlink" href="#whats-new_9" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_10">What's new?<a class="headerlink" href="#whats-new_10" title="Permanent link">¶</a></h3>
 <ul>
 <li>The template functions <code>flag_enabled</code> and <code>flag_disabled</code> in both <a href="/api/django">Django</a> and <a href="/api/jinja2">Jinja2</a> templates now support taking keyword arguments that could be used by <a href="/api/conditions">custom conditions</a>.</li>
 <li>Jinja2 template functions are now available via a Jinja2 extension that can be <a href="/api/jinja2">included in <code>settings.py</code></a>. </li>
@@ -268,13 +275,13 @@
 ] </code></pre>
 
 <h2 id="302">3.0.2<a class="headerlink" href="#302" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_10">What's new?<a class="headerlink" href="#whats-new_10" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_11">What's new?<a class="headerlink" href="#whats-new_11" title="Permanent link">¶</a></h3>
 <ul>
 <li>Requests are now optional the <code>flag_enabled</code> and <code>flag_disabled</code> template tags.</li>
 <li>Flag state form conditions are now bound when the form is created to ensure all custom conditions are available on the form. (<a href="https://github.com/callorico">@callorico</a>)</li>
 </ul>
 <h2 id="301">3.0.1<a class="headerlink" href="#301" title="Permanent link">¶</a></h2>
-<h3 id="whats-new_11">What's new?<a class="headerlink" href="#whats-new_11" title="Permanent link">¶</a></h3>
+<h3 id="whats-new_12">What's new?<a class="headerlink" href="#whats-new_12" title="Permanent link">¶</a></h3>
 <ul>
 <li>Django 2.1 is now supported.</li>
 </ul>
