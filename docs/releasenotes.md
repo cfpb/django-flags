@@ -1,5 +1,12 @@
 # Release Notes
 
+## 4.2.3
+
+### What's new?
+
+- Removed the word "optional" to describe non-required conditions in the [Flag Conditions Debug Toolbar panel](https://cfpb.github.io/django-flags/debugging/#django-debug-toolbar-panels).
+
+
 ## 4.2.2
 
 ### What's new?
