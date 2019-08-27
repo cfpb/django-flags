@@ -70,7 +70,7 @@ class Flag(object):
             )
         )
 
-        if getattr(settings, 'FLAGS_STATE_LOGGING', True):
+        if getattr(settings, 'FLAGS_STATE_LOGGING', False):
             logger.info(
                 'Flag {name} evaluated {state} with '
                 'condition{conditions_plural}: {conditions}.'.format(

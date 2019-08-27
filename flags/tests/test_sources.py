@@ -166,6 +166,7 @@ class FlagTestCase(TestCase):
         self.assertFalse(flag.check_state(request=request))
 
     @skipIf(six.PY2, 'assertLogs is not available in Python 2.7')
+    @override_settings(FLAGS_STATE_LOGGING=True)
     def test_flag_check_state_logs_state(self):
         flag = Flag('MY_FLAG', [
             Condition('boolean', False),

@@ -60,7 +60,7 @@ Previously flag definitions in `FLAGS` supported a single dictionary (rather tha
 
 ### `FLAGS_STATE_LOGGING`
 
-Default: `True`
+Default: `False`
 
 If this setting is `True` Django-Flags will log all flag state checks with how the conditions were evaluated. These will appear in the log file like:
 
