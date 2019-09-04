@@ -205,7 +205,7 @@
 
 <p>Previously flag definitions in <code>FLAGS</code> supported a single dictionary (rather than a list) with the condition name as the key and expected value as value. This method of specifying flags is deprecated and will be removed in Django-Flags 5.0.</p>
 <h3 id="flags_state_logging"><code>FLAGS_STATE_LOGGING</code><a class="headerlink" href="#flags_state_logging" title="Permanent link">¶</a></h3>
-<p>Default: <code>True</code></p>
+<p>Default: <code>False</code></p>
 <p>If this setting is <code>True</code> Django-Flags will log all flag state checks with how the conditions were evaluated. These will appear in the log file like:</p>
 <pre class="highlight"><code>INFO:flags.sources:Flag MY_FLAG evaluated False with conditions: boolean (False).
 INFO:flags.sources:Flag MY_FLAG evaluated True with conditions: boolean (False), path matches (True).</code></pre>
