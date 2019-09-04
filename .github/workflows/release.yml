@@ -1,0 +1,14 @@
+on: release
+name: Publish
+jobs:
+  publishToPyPI:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to PyPI
+      uses: cfpb/pypi-publish-action@master
+      env:
+        LIVE_PYPI: "True"
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
