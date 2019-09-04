@@ -27,7 +27,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='CC0',
-    version='4.2.3',
+    version='4.2.4',
     include_package_data=True,
     packages=find_packages(),
     install_requires=install_requires,

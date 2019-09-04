@@ -1,5 +1,12 @@
 # Release Notes
 
+## 4.2.4
+
+### What's new?
+
+- `FLAGS_STATE_LOGGING` is now `False` by default to cut down on potentially unwanted noise ([@darakian](https://github.com/darakian)).
+
+
 ## 4.2.3
 
 ### What's new?
