@@ -25,9 +25,10 @@ FLAGS = {'MY_FLAG': [{'condition': 'user', 'value': 'jane.doe'}]}
 
 ### `anonymous`
 
-Allows a flag to be either enabled or disabled depending on the condition's boolean value.
+Allows a flag to be either enabled or disabled depending on whether a user is anonymous (not logged in) to Django.
 
 ```python
+# MY_FLAG is enabled if the user is not anonymous (is logged in)
 FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}
 ```
 
