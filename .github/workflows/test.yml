@@ -1,11 +1,11 @@
-name: Tests
+name: test
 
 on: [push]
 
 jobs:
 
   lint:
-    name: Linting
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -26,7 +26,7 @@ jobs:
           TOXENV: lint
 
   test:
-    name: Unit tests
+    name: unittests
     runs-on: ubuntu-latest
 
     strategy:
@@ -69,28 +69,9 @@ jobs:
           pip install tox coveralls
 
       - name: Run tox
-        run: tox
+        run: |
+            tox
+            coveralls
         env: 
           TOXENV: ${{ matrix.toxenv }}
-
-  coverage:
-    name: Coverage
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Set up Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install coveralls
-
-      - name: Submit coverage 
-        run: coveralls
-        env: 
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
