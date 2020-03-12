@@ -1,0 +1,23 @@
+[tool.black]
+line-length = 78
+target-version = ['py36', 'py38']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs
+    | \.git
+    | \.tox
+    | \*.egg-info
+    | _build
+    | build
+    | dist
+    | migrations
+    | site
+  )/
+)
+'''
+
+[build-system]
+requires = ["setuptools", "wheel"]

@@ -31,8 +31,8 @@ class FlagsPanel(Panel):
 
         self.record_stats(
             {
-                'request': request,
-                'flags': sorted(flags.values(), key=lambda x: x.name),
+                "request": request,
+                "flags": sorted(flags.values(), key=lambda x: x.name),
             }
         )
 
@@ -68,9 +68,4 @@ class FlagChecksPanel(Panel):
         state._flag_state = _original_flag_state
 
     def generate_stats(self, request, response):
-        self.record_stats(
-            {
-                'request': request,
-                'checks': self.checks,
-            }
-        )
+        self.record_stats({"request": request, "checks": self.checks})

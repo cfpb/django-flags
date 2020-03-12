@@ -1,5 +1,3 @@
-import six
-
 import inspect
 import warnings
 
@@ -12,30 +10,27 @@ from flags.state import flag_state
 def flag_check(flag_name, state, fallback=None, **fc_kwargs):
     """ Check that a given flag has the given state.
     If the state does not match, perform the fallback. """
+
     def decorator(func):
         # At decoration-time, ensure that the fallback for the decorated
         # function has the same argspec
         if fallback is not None:
-
-            if six.PY2:  # pragma: no cover
-                func_argspec = inspect.getargspec(func)
-                fallback_argspec = inspect.getargspec(fallback)
-            else:  # pragma: no cover
-                func_argspec = inspect.getfullargspec(func)
-                fallback_argspec = inspect.getfullargspec(fallback)
+            func_argspec = inspect.getfullargspec(func)
+            fallback_argspec = inspect.getfullargspec(fallback)
 
             if func_argspec.args != fallback_argspec.args:
                 warnings.warn(
-                    'Feature flag check fallback for ' + func.__name__ +
-                    ' takes different arguments.',
+                    "Feature flag check fallback for "
+                    + func.__name__
+                    + " takes different arguments.",
                     RuntimeWarning,
-                    stacklevel=2
+                    stacklevel=2,
                 )
 
         def inner(request, *args, **kwargs):
             enabled = flag_state(flag_name, request=request, **fc_kwargs)
 
-            if ((state and enabled) or (not state and not enabled)):
+            if (state and enabled) or (not state and not enabled):
                 return func(request, *args, **kwargs)
             elif fallback is not None:
                 return fallback(request, *args, **kwargs)
