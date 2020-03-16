@@ -175,9 +175,7 @@ class FlagTestCase(TestCase):
 
 class GetFlagsTestCase(TestCase):
     def test_get_flags_from_sources(self):
-        flags = get_flags(
-            sources=["flags.tests.test_sources.TestFlagsSource"]
-        )
+        flags = get_flags(sources=["flags.tests.test_sources.TestFlagsSource"])
         self.assertTrue(flags["SOURCED_FLAG"].conditions[0].value)
         self.assertIn("NOT_IN_SETTINGS_FLAG", flags)
 

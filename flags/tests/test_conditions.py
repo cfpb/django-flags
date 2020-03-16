@@ -85,9 +85,7 @@ class BooleanConditionTestCase(TestCase):
 
 class UserConditionTestCase(TestCase):
     def setUp(self):
-        user = User.objects.create_user(
-            username="testuser", email="test@user"
-        )
+        user = User.objects.create_user(username="testuser", email="test@user")
         self.request = HttpRequest()
         self.request.user = user
 
@@ -160,9 +158,7 @@ class ParameterConditionTestCase(TestCase):
         self.assertFalse(parameter_condition("my_flag", request=self.request))
 
         self.request.GET = QueryDict("")
-        self.assertFalse(
-            parameter_condition("my_flag=", request=self.request)
-        )
+        self.assertFalse(parameter_condition("my_flag=", request=self.request))
 
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):

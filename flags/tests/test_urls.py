@@ -248,9 +248,7 @@ class FlagCheckTestCase(TestCase):
             )
 
     @override_settings(FLAGS={"FLAGGED_URL": [("boolean", False)]})
-    def test_flagged_url_false_include_fallback_include_nonmatching_url(
-        self,
-    ):
+    def test_flagged_url_false_include_fallback_include_nonmatching_url(self,):
         response = self.get_url_response(
             "/include-fallback-include/other-included-url"
         )
