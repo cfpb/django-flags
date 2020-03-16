@@ -1,1 +1,1 @@
-default_app_config = 'flags.apps.DjangoFlagsConfig'
+default_app_config = "flags.apps.DjangoFlagsConfig"

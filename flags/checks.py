@@ -19,10 +19,8 @@ def flag_conditions_check(app_configs, **kwargs):
                         error_str.format(
                             flag=name, condition=condition.condition
                         ),
-                        hint=error_hint.format(
-                            condition=condition.condition
-                        ),
-                        id='flags.E001',
+                        hint=error_hint.format(condition=condition.condition),
+                        id="flags.E001",
                     )
                 )
 

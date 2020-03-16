@@ -44,44 +44,43 @@ class Flag(object):
         non_required_conditions = [
             c for c in self.conditions if not c.required
         ]
-        required_conditions = [
-            c for c in self.conditions if c.required
-        ]
+        required_conditions = [c for c in self.conditions if c.required]
 
-        if (len(non_required_conditions) == 0
-                and len(required_conditions) == 0):
+        if (
+            len(non_required_conditions) == 0
+            and len(required_conditions) == 0
+        ):
             return False
 
-        checked_conditions = [
-            (c, c.check(**kwargs)) for c in self.conditions
-        ]
+        checked_conditions = [(c, c.check(**kwargs)) for c in self.conditions]
 
         state = (
             any(
-                state for c, state in checked_conditions
+                state
+                for c, state in checked_conditions
                 if c in non_required_conditions
             )
             if len(non_required_conditions) > 0
             else True
         ) and (
             all(
-                state for c, state in checked_conditions
+                state
+                for c, state in checked_conditions
                 if c in required_conditions
             )
         )
 
-        if getattr(settings, 'FLAGS_STATE_LOGGING', False):
+        if getattr(settings, "FLAGS_STATE_LOGGING", False):
             logger.info(
-                'Flag {name} evaluated {state} with '
-                'condition{conditions_plural}: {conditions}.'.format(
+                "Flag {name} evaluated {state} with "
+                "condition{conditions_plural}: {conditions}.".format(
                     name=self.name,
                     state=state,
-                    conditions=', '.join(
-                        '{} ({})'.format(c.condition, v)
+                    conditions=", ".join(
+                        "{} ({})".format(c.condition, v)
                         for c, v in checked_conditions
                     ),
-                    conditions_plural='s' if len(self.conditions) > 1 else '',
-
+                    conditions_plural="s" if len(self.conditions) > 1 else "",
                 )
             )
 
@@ -89,18 +88,17 @@ class Flag(object):
 
 
 class SettingsFlagsSource(object):
-
     def get_flags(self):
-        settings_flags = getattr(settings, 'FLAGS', {}).items()
+        settings_flags = getattr(settings, "FLAGS", {}).items()
         flags = {}
         for flag, conditions in settings_flags:
             # Flag conditions in settings used to be dicts, which are now
             # deprecated.
             if isinstance(conditions, dict):
                 warnings.warn(
-                    'dict feature flag definitions are deprecated and will be '
-                    'removed in a future version of Django-Flags. '
-                    'Please use a list of dicts or tuples instead.',
+                    "dict feature flag definitions are deprecated and will be "
+                    "removed in a future version of Django-Flags. "
+                    "Please use a list of dicts or tuples instead.",
                     FutureWarning,
                 )
                 conditions = conditions.items()
@@ -114,9 +112,9 @@ class SettingsFlagsSource(object):
                 # {'name': 'condition', 'value': value, 'required': True}
                 if isinstance(c, dict):
                     condition = Condition(
-                        c['condition'],
-                        c['value'],
-                        required=c.get('required', False)
+                        c["condition"],
+                        c["value"],
+                        required=c.get("required", False),
                     )
 
                 # (condition, value, required)
@@ -143,9 +141,8 @@ class DatabaseCondition(Condition):
 
 
 class DatabaseFlagsSource(object):
-
     def get_queryset(self):
-        FlagState = apps.get_model('flags', 'FlagState')
+        FlagState = apps.get_model("flags", "FlagState")
         return FlagState.objects.all()
 
     def get_flags(self):
@@ -153,9 +150,11 @@ class DatabaseFlagsSource(object):
         for o in self.get_queryset():
             if o.name not in flags:
                 flags[o.name] = []
-            flags[o.name].append(DatabaseCondition(
-                o.condition, o.value, required=o.required, obj=o
-            ))
+            flags[o.name].append(
+                DatabaseCondition(
+                    o.condition, o.value, required=o.required, obj=o
+                )
+            )
         return flags
 
 
@@ -167,10 +166,14 @@ def get_flags(sources=None, ignore_errors=False):
     flags = {}
 
     if sources is None:
-        sources = getattr(settings, 'FLAG_SOURCES', (
-            'flags.sources.SettingsFlagsSource',
-            'flags.sources.DatabaseFlagsSource',
-        ))
+        sources = getattr(
+            settings,
+            "FLAG_SOURCES",
+            (
+                "flags.sources.SettingsFlagsSource",
+                "flags.sources.DatabaseFlagsSource",
+            ),
+        )
 
     for source_str in sources:
         source_cls = import_string(source_str)

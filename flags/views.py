@@ -21,10 +21,10 @@ class FlaggedViewMixin(object):
 
     @classonlymethod
     def as_view(cls, **initkwargs):
-        flag_name = initkwargs.get('flag_name')
-        state = initkwargs.get('state', True)
-        fallback = initkwargs.get('fallback')
-        condition = initkwargs.get('condition')
+        flag_name = initkwargs.get("flag_name")
+        state = initkwargs.get("state", True)
+        fallback = initkwargs.get("fallback")
+        condition = initkwargs.get("condition")
 
         if flag_name is None:
             raise ImproperlyConfigured(
@@ -33,20 +33,16 @@ class FlaggedViewMixin(object):
 
         if condition is not None:
             warnings.warn(
-                'condition attribute of FlaggedViewMixin is deprecated and '
-                'will be removed in a future version of Django-Flags. '
-                'Please use the state attribute instead.',
+                "condition attribute of FlaggedViewMixin is deprecated and "
+                "will be removed in a future version of Django-Flags. "
+                "Please use the state attribute instead.",
                 FutureWarning,
             )
             state = condition
 
         view = super(FlaggedViewMixin, cls).as_view(**initkwargs)
 
-        decorator = flag_check(
-            flag_name,
-            state,
-            fallback=fallback,
-        )
+        decorator = flag_check(flag_name, state, fallback=fallback,)
 
         return decorator(view)
 

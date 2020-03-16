@@ -23,12 +23,12 @@ else:  # pragma: no cover
 @simple_tag(takes_context=True)
 def flag_enabled(context, flag_name, request=None, **kwargs):
     if request is None:
-        request = context.get('request')
+        request = context.get("request")
     return base_flag_enabled(flag_name, request=request, **kwargs)
 
 
 @simple_tag(takes_context=True)
 def flag_disabled(context, flag_name, request=None, **kwargs):
     if request is None:
-        request = context.get('request')
+        request = context.get("request")
     return base_flag_disabled(flag_name, request=request, **kwargs)

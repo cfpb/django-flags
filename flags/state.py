@@ -13,11 +13,11 @@ def _flag_state(flag_name, **kwargs):
 
     # If the request is given as a kwargs, and the FlagConditionsMiddleware is
     # enabled, use the flag conditions attached to the request.
-    if 'request' in kwargs:
+    if "request" in kwargs:
         flags = getattr(
-            kwargs['request'],
+            kwargs["request"],
             FlagConditionsMiddleware.request_attribute,
-            None
+            None,
         )
 
     if flags is None:
@@ -34,8 +34,8 @@ def flag_state(flag_name, **kwargs):
     """ Return the value for the flag by passing kwargs to its conditions """
     if not apps.ready:
         raise AppRegistryNotReady(
-            'Feature flag state cannot be checked before the app registry '
-            'is ready.'
+            "Feature flag state cannot be checked before the app registry "
+            "is ready."
         )
 
     return _flag_state(flag_name, **kwargs)

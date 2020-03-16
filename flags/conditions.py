@@ -31,6 +31,7 @@ def register(condition_name, fn=None):
         def decorator(fn):
             register(condition_name, fn=fn)
             return fn
+
         return decorator
 
     # Don't be a decorator, just register
@@ -55,7 +56,7 @@ def get_condition(condition_name):
         return CONDITIONS[condition_name]
 
 
-@register('boolean')
+@register("boolean")
 def boolean_condition(condition, **kwargs):
     """ Basic boolean check """
     try:
@@ -64,23 +65,23 @@ def boolean_condition(condition, **kwargs):
         return bool(condition)
 
 
-@register('user')
+@register("user")
 def user_condition(username, request=None, **kwargs):
     """ Does request.user match the expected username? """
     if request is None:
-        raise RequiredForCondition("request is required for condition "
-                                   "'user'")
+        raise RequiredForCondition("request is required for condition 'user'")
 
     return request.user.get_username() == username
 
 
-@register('anonymous')
+@register("anonymous")
 def anonymous_condition(boolean_value, request=None, **kwargs):
     """ request.user an anonymous user, true or false based on boolean_value
     """
     if request is None:
-        raise RequiredForCondition("request is required for condition "
-                                   "'anonymous'")
+        raise RequiredForCondition(
+            "request is required for condition 'anonymous'"
+        )
 
     if django.VERSION[0] >= 2:  # pragma: no cover
         is_anonymous = bool(request.user.is_anonymous)
@@ -93,31 +94,31 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
         return bool(boolean_value) == is_anonymous
 
 
-@register('parameter')
+@register("parameter")
 def parameter_condition(param_name, request=None, **kwargs):
     """ Is the parameter name part of the GET parameters? """
     if request is None:
-        raise RequiredForCondition("request is required for condition "
-                                   "'parameter'")
+        raise RequiredForCondition(
+            "request is required for condition 'parameter'"
+        )
     try:
-        param_name, param_value = param_name.split('=')
+        param_name, param_value = param_name.split("=")
     except ValueError:
-        param_value = 'True'
+        param_value = "True"
 
     return request.GET.get(param_name) == param_value
 
 
-@register('path matches')
+@register("path matches")
 def path_condition(pattern, request=None, **kwargs):
     """ Does the request's path match the given regular expression? """
     if request is None:
-        raise RequiredForCondition("request is required for condition "
-                                   "'path'")
+        raise RequiredForCondition("request is required for condition 'path'")
 
     return bool(re.search(pattern, request.path))
 
 
-@register('after date')
+@register("after date")
 def after_date_condition(date_or_str, **kwargs):
     """ Is the the current date after the given date?
     date_or_str is either a date object or an ISO 8601 string """
@@ -129,7 +130,7 @@ def after_date_condition(date_or_str, **kwargs):
     now = timezone.now()
 
     try:
-        date_test = (now > date)
+        date_test = now > date
     except TypeError:
         date_test = False
 
@@ -141,7 +142,7 @@ def after_date_condition(date_or_str, **kwargs):
 date_condition = after_date_condition
 
 
-@register('before date')
+@register("before date")
 def before_date_condition(date_or_str, **kwargs):
     """ Is the current date before the given date?
     date_or_str is either a date object or an ISO 8601 string """
@@ -153,7 +154,7 @@ def before_date_condition(date_or_str, **kwargs):
     now = timezone.now()
 
     try:
-        date_test = (now < date)
+        date_test = now < date
     except TypeError:
         date_test = False
 
