@@ -46,10 +46,7 @@ class Flag(object):
         ]
         required_conditions = [c for c in self.conditions if c.required]
 
-        if (
-            len(non_required_conditions) == 0
-            and len(required_conditions) == 0
-        ):
+        if len(non_required_conditions) == 0 and len(required_conditions) == 0:
             return False
 
         checked_conditions = [(c, c.check(**kwargs)) for c in self.conditions]
