@@ -8,7 +8,7 @@ install_requires = ["Django>=1.11,<3.1"]
 testing_extras = [
     "mock>=2.0.0",
     "coverage>=3.7.0",
-    "django-debug-toolbar>=1.11,<1.12",
+    "django-debug-toolbar>=1.11,<2.3",
     "jinja2",
 ]
 
@@ -34,16 +34,16 @@ setup(
     extras_require={"testing": testing_extras, "docs": docs_extras},
     classifiers=[
         "Framework :: Django",
-        "Framework :: Django :: 1.11",
         "Framework :: Django :: 2.0",
         "Framework :: Django :: 2.1",
         "Framework :: Django :: 2.2",
+        "Framework :: Django :: 3.0",
         "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
         "License :: Public Domain",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
 )
