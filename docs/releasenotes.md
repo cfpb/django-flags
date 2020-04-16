@@ -1,5 +1,11 @@
 # Release Notes
 
+## Unreleased
+
+### What's new?
+
+- Deprecated the optional `flags.middleware.FlagConditionsMiddleware` in favor of always lazily caching flags on the request object.
+
 ## 4.2.4
 
 ### What's new?

@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 
 from debug_toolbar.panels import Panel
 from flags import state
-from flags.middleware import FlagConditionsMiddleware
 from flags.sources import get_flags
 
 
@@ -22,12 +21,7 @@ class FlagsPanel(Panel):
     title = _("Feature Flags")
 
     def generate_stats(self, request, response):
-        if hasattr(request, FlagConditionsMiddleware.request_attribute):
-            flags = getattr(
-                request, FlagConditionsMiddleware.request_attribute
-            )
-        else:
-            flags = get_flags()
+        flags = get_flags(request=request)
 
         self.record_stats(
             {
