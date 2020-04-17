@@ -1,6 +1,6 @@
 from django import forms
 
-from flags.conditions import get_conditions
+from flags.conditions import get_condition, get_conditions
 from flags.models import FlagState
 from flags.sources import get_flags
 
@@ -28,6 +28,17 @@ class FlagStateForm(forms.ModelForm):
         self.fields["condition"].choices = [
             (c, c) for c in sorted(get_conditions())
         ]
+
+    def clean_value(self):
+        condition = self.cleaned_data.get("condition")
+        value = self.cleaned_data.get("value")
+
+        try:
+            get_condition(condition)(value)
+        except Exception as e:
+            raise forms.ValidationError(e)
+
+        return value
 
     class Meta:
         model = FlagState

@@ -27,6 +27,15 @@ class FormTestCase(TestCase):
             },
         )
 
+    def test_bad_data(self):
+        form = FlagStateForm(
+            {"name": "FLAG_ENABLED", "condition": "boolean", "value": "flase"}
+        )
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors, {"value": ["invalid truth value 'flase'"]}
+        )
+
     def test_condition_choices_are_bound_late(self):
         @register("fake_condition")
         def fake_condition():
