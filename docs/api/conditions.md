@@ -8,14 +8,14 @@ from flags import conditions
 
 ## Registering conditions
 
-### `conditions.register(condition_name, fn=None)`
+### `conditions.register(condition_name, fn=None, validator=None)`
 
 Register a new condition, either as a decorator:
 
 ```python
 from flags import conditions
 
-@conditions.register('path')
+@conditions.register('path', validator=conditions.validate_path)
 def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)
 ```
@@ -26,10 +26,12 @@ Or as a function call:
 def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)
 
-conditions.register('path', fn=path_condition)
+conditions.register('path', fn=path_condition, validator=conditions.validate_path)
 ```
 
 Will raise a `conditions.DuplicateCondition` exception if the condition name is already registered.
+
+A [validator](https://docs.djangoproject.com/en/stable/ref/validators/) can be given to validate the condition's expected value as provided by [the flag sources](../sources/).
 
 ## Exceptions
 

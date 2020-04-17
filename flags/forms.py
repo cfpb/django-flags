@@ -1,6 +1,6 @@
 from django import forms
 
-from flags.conditions import get_condition, get_conditions
+from flags.conditions import get_condition_validator, get_conditions
 from flags.models import FlagState
 from flags.sources import get_flags
 
@@ -34,7 +34,7 @@ class FlagStateForm(forms.ModelForm):
         value = self.cleaned_data.get("value")
 
         try:
-            get_condition(condition)(value)
+            get_condition_validator(condition)(value)
         except Exception as e:
             raise forms.ValidationError(e)
 
