@@ -46,16 +46,6 @@ TEMPLATES = [
 ]
 ```
 
-(Optionally) add `flags.middleware.FlagConditionsMiddleware` to `MIDDLEWARE` to avoid looking up flag conditions more than once per request:
-
-```python
-MIDDLEWARE = (
-    # …
-    'flags.middleware.FlagConditionsMiddleware',
-    # …
-)
-```
-
 Finally, run migrations:
 
 ```shell

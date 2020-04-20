@@ -1,5 +1,6 @@
 import warnings
 
+from django.http import HttpRequest
 from django.test import TestCase, override_settings
 
 from flags.models import FlagState
@@ -224,3 +225,25 @@ class GetFlagsTestCase(TestCase):
             ignore_errors=True,
         )
         self.assertEqual(flags, {})
+
+    def test_caches_flags_on_request_if_provided(self):
+        request = HttpRequest()
+        self.assertFalse(hasattr(request, "flag_conditions"))
+        get_flags(request=request)
+        self.assertIsInstance(request.flag_conditions, dict)
+
+    def test_uses_cached_flags_from_request(self):
+        request = HttpRequest()
+
+        # The initial call looks up flag conditions from the database source.
+        with self.assertNumQueries(1):
+            get_flags(request=request)
+
+        # Subsequent calls with a request object don't need to redo the lookup
+        # because they have the cached flags.
+        with self.assertNumQueries(0):
+            get_flags(request=request)
+
+        # But subsequent calls without a request object still redo the lookup.
+        with self.assertNumQueries(1):
+            get_flags()

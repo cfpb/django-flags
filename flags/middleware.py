@@ -1,19 +1,13 @@
-from __future__ import absolute_import
-
-from django.utils.deprecation import MiddlewareMixin
-
-from flags.sources import get_flags
+import warnings
 
 
-class FlagConditionsMiddleware(MiddlewareMixin):
-    """
-    Simple middleware that adds all available feature flag conditions to the
-    request so that flag state can be checked.
-    """
+class FlagConditionsMiddleware:
+    def __init__(self, get_response):
+        warnings.warn(
+            "FlagConditionsMiddleware is deprecated and no longer has any "
+            "effect. It will be removed in a future version of Django-Flags. ",
+            FutureWarning,
+        )
 
-    request_attribute = "flag_conditions"
-
-    def process_request(self, request):
-        flags = get_flags()
-
-        setattr(request, self.request_attribute, flags)
+    def __call__(self, request):
+        pass

@@ -155,11 +155,25 @@ class DatabaseFlagsSource(object):
         return flags
 
 
-def get_flags(sources=None, ignore_errors=False):
-    """ Get all flag sources sources defined in settings.FLAG_SOURCES.
+def get_flags(sources=None, ignore_errors=False, request=None):
+    """Get all flag sources defined in settings.FLAG_SOURCES.
+
     FLAG_SOURCES is expected to be a list of Python paths to classes providing
     a get_flags() method that returns a dict with the same format as the
-    FLAG setting. """
+    FLAG setting.
+
+    If a Django request object is provided, it is used as a place to cache
+    flag conditions (as request.flag_conditions) or retrieve them if already
+    cached on a previous call.
+    """
+    REQUEST_CACHE_ATTRIBUTE = "flag_conditions"
+
+    if request:
+        flags = getattr(request, REQUEST_CACHE_ATTRIBUTE, None)
+
+        if flags:
+            return flags
+
     flags = {}
 
     if sources is None:
@@ -189,5 +203,8 @@ def get_flags(sources=None, ignore_errors=False):
                 flags[flag].conditions += conditions
             else:
                 flags[flag] = Flag(flag, conditions)
+
+    if request:
+        setattr(request, REQUEST_CACHE_ATTRIBUTE, flags)
 
     return flags
