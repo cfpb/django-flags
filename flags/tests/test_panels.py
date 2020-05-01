@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.test import RequestFactory, TestCase, override_settings
 
 from debug_toolbar.toolbar import DebugToolbar
@@ -7,7 +8,8 @@ from flags.state import flag_state
 class FlagsPanelTestCase(TestCase):
     def setUp(self):
         self.request = RequestFactory().get("/")
-        self.toolbar = DebugToolbar(self.request)
+        self.get_response = lambda req: HttpResponse()
+        self.toolbar = DebugToolbar(self.request, self.get_response)
         self.toolbar.stats = {}
         self.panel = self.toolbar.get_panel_by_id("FlagsPanel")
 
@@ -23,7 +25,8 @@ class FlagsPanelTestCase(TestCase):
 class FlagChecksPanelTestCase(TestCase):
     def setUp(self):
         self.request = RequestFactory().get("/")
-        self.toolbar = DebugToolbar(self.request)
+        self.get_response = lambda req: HttpResponse()
+        self.toolbar = DebugToolbar(self.request, self.get_response)
         self.toolbar.stats = {}
         self.panel = self.toolbar.get_panel_by_id("FlagChecksPanel")
 
