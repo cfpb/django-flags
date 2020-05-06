@@ -1,6 +1,7 @@
 import re
 from distutils.util import strtobool
 
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils import dateparse
@@ -36,11 +37,11 @@ def validate_boolean(value):
 
 
 def validate_user(value):
-    from django.contrib.auth.models import User
+    UserModel = get_user_model()
 
     try:
-        User.objects.get(username=value)
-    except User.DoesNotExist:
+        UserModel.objects.get(**{UserModel.USERNAME_FIELD: value})
+    except UserModel.DoesNotExist:
         raise ValidationError("Enter the username of a valid user.")
 
 

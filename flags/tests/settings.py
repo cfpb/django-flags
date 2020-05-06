@@ -30,7 +30,7 @@ INSTALLED_APPS = (
     "debug_toolbar",
 )
 
-INSTALLED_APPS += ("flags",)
+INSTALLED_APPS += ("flags", "flags.tests.testapp")
 
 if django.VERSION >= (1, 10):  # pragma: no cover
     MIDDLEWARE = (

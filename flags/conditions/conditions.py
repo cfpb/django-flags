@@ -2,6 +2,7 @@ import re
 from distutils.util import strtobool
 
 import django
+from django.contrib.auth import get_user_model
 from django.utils import dateparse, timezone
 
 from flags.conditions.registry import register
@@ -33,7 +34,7 @@ def user_condition(username, request=None, **kwargs):
     if request is None:
         raise RequiredForCondition("request is required for condition 'user'")
 
-    return request.user.get_username() == username
+    return getattr(request.user, get_user_model().USERNAME_FIELD) == username
 
 
 @register("anonymous", validator=validate_boolean)

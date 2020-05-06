@@ -1,8 +1,9 @@
 from datetime import timedelta
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser, User
 from django.http import HttpRequest, QueryDict
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils import timezone
 
 from flags.conditions.conditions import (
@@ -15,7 +16,6 @@ from flags.conditions.conditions import (
     path_condition,
     user_condition,
 )
-from mock import MagicMock
 
 
 class BooleanConditionTestCase(TestCase):
@@ -62,12 +62,12 @@ class UserConditionTestCase(TestCase):
         with self.assertRaises(RequiredForCondition):
             user_condition("testuser")
 
-    def test_with_custom_user(self):
-        mock_user = MagicMock()
-        mock_user.get_username.return_value = "test@test.com"
-        self.request.user = mock_user
-
-        self.assertTrue(user_condition("test@test.com", request=self.request))
+    @override_settings(AUTH_USER_MODEL="testapp.MyUserModel")
+    def test_custom_user_model_valid(self):
+        user = get_user_model()(identifier="customuser")
+        user.save()
+        self.request.user = user
+        self.assertTrue(user_condition("customuser", request=self.request))
 
 
 class AnonymousConditionTestCase(TestCase):

@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from flags.conditions.validators import (
     validate_boolean,
@@ -64,15 +64,26 @@ class ValidateBooleanTestCase(TestCase):
 
 
 class ValidateUserTestCase(TestCase):
-    def setUp(self):
-        User.objects.create_user(username="testuser", email="test@user")
-
     def test_invalid_user(self):
         with self.assertRaises(ValidationError):
             validate_user("nottestuser")
 
     def test_valid_user(self):
+        User = get_user_model()
+        User.objects.create_user(username="testuser", email="test@user")
         validate_user("testuser")
+
+    @override_settings(AUTH_USER_MODEL="testapp.MyUserModel")
+    def test_custom_user_valid(self):
+        User = get_user_model()
+        u = User(identifier="customuser")
+        u.save()
+        validate_user("customuser")
+
+    @override_settings(AUTH_USER_MODEL="testapp.MyUserModel")
+    def test_custom_user_invalid(self):
+        with self.assertRaises(ValidationError):
+            validate_user("nottestuser")
 
 
 class ValidateDateTestCase(TestCase):
