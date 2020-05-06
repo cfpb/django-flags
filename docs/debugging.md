@@ -16,7 +16,7 @@ HINT: Register "condition name" as a Django-Flags condition.</code></pre>
   <dd>
     <p>Django-Flags includes a <a href="https://docs.djangoproject.com/en/stable/topics/checks/">Django system check</a> to check to ensure that flag conditions have valid expected values on start-up.</p>
     <pre><code>?: (flags.E002) Flag FLAG_WITH_ANY_CONDITIONS's "boolean" condition has an invalid value.
-HINT: Enter one of "on", "off", "true", "false", etc.</code></pre>
+HINT: Enter one of "on", "off", "true", "false".</code></pre>
   </dd>
 </dl> 
 

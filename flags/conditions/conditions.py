@@ -22,7 +22,7 @@ class RequiredForCondition(AttributeError):
 def boolean_condition(condition, **kwargs):
     """ Basic boolean check """
     try:
-        return strtobool(condition.strip().lower())
+        return strtobool(condition.strip())
     except AttributeError:
         return bool(condition)
 
