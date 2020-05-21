@@ -1,6 +1,6 @@
 from django import forms
 
-from flags.conditions import get_condition_validator, get_conditions
+from flags.conditions import get_condition, get_conditions
 from flags.models import FlagState
 from flags.sources import get_flags
 
@@ -30,13 +30,16 @@ class FlagStateForm(forms.ModelForm):
         ]
 
     def clean_value(self):
-        condition = self.cleaned_data.get("condition")
+        condition_name = self.cleaned_data.get("condition")
         value = self.cleaned_data.get("value")
+        condition = get_condition(condition_name)
+        validator = getattr(condition, "validate")
 
-        try:
-            get_condition_validator(condition)(value)
-        except Exception as e:
-            raise forms.ValidationError(e)
+        if validator is not None:
+            try:
+                validator(value)
+            except Exception as e:
+                raise forms.ValidationError(e)
 
         return value
 

@@ -13,7 +13,6 @@ from flags.conditions.conditions import (
 from flags.conditions.registry import (
     DuplicateCondition,
     get_condition,
-    get_condition_validator,
     get_conditions,
     register,
 )

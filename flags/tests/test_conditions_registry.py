@@ -3,7 +3,6 @@ from django.test import TestCase
 from flags.conditions.registry import (
     DuplicateCondition,
     _conditions,
-    _validators,
     get_condition,
     register,
 )
@@ -16,7 +15,7 @@ class ConditionRegistryTestCase(TestCase):
         register("decorated", validator=validator)(fn)
         self.assertIn("decorated", _conditions)
         self.assertEqual(_conditions["decorated"], fn)
-        self.assertEqual(_validators["decorated"], validator)
+        self.assertEqual(_conditions["decorated"].validate, validator)
 
     def test_register_fn(self):
         fn = lambda conditional_value: True
@@ -24,7 +23,7 @@ class ConditionRegistryTestCase(TestCase):
         register("undecorated", fn=fn, validator=validator)
         self.assertIn("undecorated", _conditions)
         self.assertEqual(_conditions["undecorated"], fn)
-        self.assertEqual(_validators["undecorated"], validator)
+        self.assertEqual(_conditions["undecorated"].validate, validator)
 
     def test_register_dup_condition(self):
         with self.assertRaises(DuplicateCondition):

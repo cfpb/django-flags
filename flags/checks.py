@@ -25,9 +25,9 @@ def flag_conditions_check(app_configs, **kwargs):
                         id="flags.E001",
                     )
                 )
-            elif condition.validator is not None:
+            elif condition.fn.validate is not None:
                 try:
-                    condition.validator(condition.value)
+                    condition.fn.validate(condition.value)
                 except ValidationError as e:
                     errors.append(
                         Warning(

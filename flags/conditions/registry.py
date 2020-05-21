@@ -1,7 +1,6 @@
-# These will be maintained by register() as a global dictionary of
-# condition_name: function/validator_function
+# This will be maintained by register() as the global dictionary of
+# condition_name: function
 _conditions = {}
-_validators = {}
 
 
 class DuplicateCondition(ValueError):
@@ -9,7 +8,16 @@ class DuplicateCondition(ValueError):
 
 
 def register(condition_name, fn=None, validator=None):
-    """ Register a condition to test for flag state. Can be decorator.
+    """ Register a condition to test for flag state.
+
+    This function can be used as a decorator or the condition callable can be
+    passed as `fn`.
+
+    Validators can be passed as a separate callable, `validator`, or can be an
+    attribute of the condition callable, fn.validate. If `validator` is
+    explicitly given, it will override an existing `validate` attribute of the
+    condition callable.
+
     Conditions can be any callable that takes a value and some number of
     required arguments (specified in 'requires') that were passed as kwargs
     when checking the flag state. """
@@ -31,8 +39,13 @@ def register(condition_name, fn=None, validator=None):
             )
         )
 
+    # We attach the validator to the callable to allow for both a single source
+    # of truth for conditions (_conditions) and to allow for validators to be
+    # defined on a callable class along with their condition.
+    if validator is not None or not hasattr(fn, "validate"):
+        fn.validate = validator
+
     _conditions[condition_name] = fn
-    _validators[condition_name] = validator
 
 
 def get_conditions():
@@ -44,9 +57,3 @@ def get_condition(condition_name):
     """ Fetch condition checker functions from the registry """
     if condition_name in _conditions:
         return _conditions[condition_name]
-
-
-def get_condition_validator(condition_name):
-    """ Fetch condition validators from the registry """
-    if condition_name in _validators:
-        return _validators[condition_name]

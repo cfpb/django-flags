@@ -5,7 +5,7 @@ from django.apps import apps
 from django.conf import settings
 from django.utils.module_loading import import_string
 
-from flags.conditions import get_condition, get_condition_validator
+from flags.conditions import get_condition
 
 
 logger = logging.getLogger(__name__)
@@ -18,7 +18,6 @@ class Condition(object):
         self.condition = condition
         self.value = value
         self.fn = get_condition(self.condition)
-        self.validator = get_condition_validator(self.condition)
         self.required = required
 
     def __eq__(self, other):
