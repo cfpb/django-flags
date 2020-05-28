@@ -21,7 +21,11 @@ class Condition(object):
         self.required = required
 
     def __eq__(self, other):
-        return other.condition == self.condition and other.value == self.value
+        return (
+            other.condition == self.condition
+            and other.value == self.value
+            and other.required == self.required
+        )
 
     def check(self, **kwargs):
         if self.fn is not None:
@@ -31,9 +35,10 @@ class Condition(object):
 class Flag(object):
     """ A simple wrapper around feature flags and their conditions """
 
-    def __init__(self, name, conditions=[]):
+    def __init__(self, name, conditions=[], metadata={}):
         self.name = name
         self.conditions = conditions
+        self.metadata = metadata
 
     def __eq__(self, other):
         """ There can be only one feature flag of a given name """
@@ -87,32 +92,43 @@ class Flag(object):
 class SettingsFlagsSource(object):
     def get_flags(self):
         settings_flags = getattr(settings, "FLAGS", {}).items()
-        flags = {}
-        for flag, conditions in settings_flags:
+        flags = []
 
+        for flag, conditions in settings_flags:
             # Flag conditions should be a list of either 3-tuples of
             # dictionaries in the form (condition, value, required) or
             # {'name': 'condition', 'value': value, 'required': True}
             # but contiune to support 2-tuples for unrequired conditions.
-            flags[flag] = []
+            condition_objs = []
+            metadata = {}
             for c in conditions:
-                # {'name': 'condition', 'value': value, 'required': True}
                 if isinstance(c, dict):
-                    condition = Condition(
-                        c["condition"],
-                        c["value"],
-                        required=c.get("required", False),
-                    )
+                    # {'name': 'condition', 'value': value, 'required': True}
+                    if "condition" in c:
+                        name = c["condition"]
+                        value = c["value"]
+                        required = c.get("required", False)
 
-                # (condition, value, required)
-                elif len(c) == 3:
-                    condition = Condition(c[0], c[1], required=c[2])
+                    # metadata in the form {"key": "value"}
+                    else:
+                        metadata = c
+                        continue
 
-                # (condition, value)
                 else:
-                    condition = Condition(c[0], c[1], required=False)
+                    # (condition, value, required) or (condition, value)
+                    name = c[0]
+                    value = c[1]
+                    required = c[2] if len(c) == 3 else False
 
-                flags[flag].append(condition)
+                    # metadata in the form ("_metadata": {"key": "value"})
+                    if name == "_metadata":
+                        metadata = value
+                        continue
+
+                condition = Condition(name, value, required=required)
+                condition_objs.append(condition)
+
+            flags.append((flag, condition_objs, metadata))
 
         return flags
 
@@ -188,7 +204,21 @@ def get_flags(sources=None, ignore_errors=False, request=None):
             else:
                 raise
 
-        for flag, conditions in source_flags.items():
+        if isinstance(source_flags, dict):
+            warnings.warn(
+                "flag sources returning dict ({flag: conditions}) are "
+                "deprecated and will be removed in a future version of "
+                "Django-Flags. "
+                f"{source_str} should return a list of three-tuples of "
+                "(flag, conditions, metadata) instead.",
+                FutureWarning,
+            )
+            source_flags = [
+                (flag, conditions, {})
+                for flag, conditions in source_flags.items()
+            ]
+
+        for flag, conditions, metadata in source_flags:
             if flag in flags:
                 flags[flag].conditions += conditions
             else:

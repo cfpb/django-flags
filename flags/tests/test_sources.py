@@ -1,5 +1,3 @@
-import warnings
-
 from django.http import HttpRequest
 from django.test import TestCase, override_settings
 
@@ -22,9 +20,17 @@ except ImportError:  # pragma: no cover
 # Test flag source for using this module to test
 class TestFlagsSource(object):
     def get_flags(self):
+        return [
+            ("SOURCED_FLAG", [Condition("boolean", True)], {}),
+            ("NOT_IN_SETTINGS_FLAG", [Condition("boolean", False)], {}),
+        ]
+
+
+# Test flag source that uses deprecated API
+class TestDeprecatedFlagsSource(object):
+    def get_flags(self):
         return {
-            "SOURCED_FLAG": [Condition("boolean", True)],
-            "NOT_IN_SETTINGS_FLAG": [Condition("boolean", False)],
+            "DEP_SOURCED_FLAG": [Condition("boolean", True)],
         }
 
 
@@ -39,7 +45,8 @@ class SettingsFlagsSourceTestCase(TestCase):
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
-            flags, {"MY_FLAG": [Condition("boolean", True, required=False)]},
+            flags,
+            [("MY_FLAG", [Condition("boolean", True, required=False)], {})],
         )
 
     @override_settings(FLAGS={"MY_FLAG": [("boolean", True, True)]})
@@ -47,7 +54,39 @@ class SettingsFlagsSourceTestCase(TestCase):
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
-            flags, {"MY_FLAG": [Condition("boolean", True, required=True)]}
+            flags,
+            [("MY_FLAG", [Condition("boolean", True, required=True)], {})],
+        )
+
+    @override_settings(
+        FLAGS={
+            "MY_FLAG": [
+                ("boolean", True, True),
+                (
+                    "_metadata",
+                    {
+                        "help_text": "enable the thing",
+                        "category": "long-lived",
+                    },
+                ),
+            ]
+        }
+    )
+    def test_get_flags_three_tuple_metadata(self):
+        source = SettingsFlagsSource()
+        flags = source.get_flags()
+        self.assertEqual(
+            flags,
+            [
+                (
+                    "MY_FLAG",
+                    [Condition("boolean", True, required=True)],
+                    {
+                        "help_text": "enable the thing",
+                        "category": "long-lived",
+                    },
+                )
+            ],
         )
 
     @override_settings(
@@ -61,7 +100,8 @@ class SettingsFlagsSourceTestCase(TestCase):
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
-            flags, {"MY_FLAG": [Condition("boolean", True, required=True)]}
+            flags,
+            [("MY_FLAG", [Condition("boolean", True, required=True)], {})],
         )
 
     @override_settings(
@@ -71,7 +111,33 @@ class SettingsFlagsSourceTestCase(TestCase):
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
-            flags, {"MY_FLAG": [Condition("boolean", True, required=False)]},
+            flags,
+            [("MY_FLAG", [Condition("boolean", True, required=False)], {})],
+        )
+
+    @override_settings(
+        FLAGS={
+            "MY_FLAG": [
+                {"condition": "boolean", "value": True, "required": True},
+                {"help_text": "enable the thing", "category": "long-lived"},
+            ]
+        }
+    )
+    def test_get_flags_list_of_dicts_metadata(self):
+        source = SettingsFlagsSource()
+        flags = source.get_flags()
+        self.assertEqual(
+            flags,
+            [
+                (
+                    "MY_FLAG",
+                    [Condition("boolean", True, required=True)],
+                    {
+                        "help_text": "enable the thing",
+                        "category": "long-lived",
+                    },
+                )
+            ],
         )
 
 
@@ -183,6 +249,13 @@ class GetFlagsTestCase(TestCase):
         self.assertIn("SOURCED_FLAG", flags)
         self.assertEqual(len(flags["OTHER_FLAG"].conditions), 0)
         self.assertEqual(len(flags["SOURCED_FLAG"].conditions), 1)
+
+    def test_get_flags_dict_deprecation_warning(self):
+        with self.assertWarns(FutureWarning):
+            flags = get_flags(
+                sources=["flags.tests.test_sources.TestDeprecatedFlagsSource"]
+            )
+        self.assertIn("DEP_SOURCED_FLAG", flags)
 
     @override_settings(FLAGS={"MY_FLAG": []})
     def test_get_flags_ensure_combined_conditions_work(self):
