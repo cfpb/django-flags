@@ -34,19 +34,6 @@ class ExceptionalFlagsSource(object):
 
 
 class SettingsFlagsSourceTestCase(TestCase):
-    @override_settings(FLAGS={"MY_FLAG": {"boolean": True}})
-    def test_get_flags_dict(self):
-        source = SettingsFlagsSource()
-        with warnings.catch_warnings(record=True) as warning_list:
-            flags = source.get_flags()
-            self.assertTrue(
-                any(item.category == FutureWarning for item in warning_list)
-            )
-
-        self.assertEqual(
-            flags, {"MY_FLAG": [Condition("boolean", True, required=False)]},
-        )
-
     @override_settings(FLAGS={"MY_FLAG": [("boolean", True)]})
     def test_get_flags_two_tuple(self):
         source = SettingsFlagsSource()
