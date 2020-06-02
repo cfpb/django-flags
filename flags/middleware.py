@@ -1,5 +1,7 @@
 import warnings
 
+from django.core.exceptions import MiddlewareNotUsed
+
 
 class FlagConditionsMiddleware:
     def __init__(self, get_response):
@@ -8,6 +10,4 @@ class FlagConditionsMiddleware:
             "effect. It will be removed in a future version of Django-Flags. ",
             FutureWarning,
         )
-
-    def __call__(self, request):
-        pass
+        raise MiddlewareNotUsed
