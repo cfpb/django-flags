@@ -4,6 +4,8 @@
 
 ### What's new?
 
+- Added Django 3.0 support
+- Added validator support to ensure that the values that flag conditions test against are valid.
 - Deprecated the optional `flags.middleware.FlagConditionsMiddleware` in favor of always lazily caching flags on the request object.
 
 ## 4.2.4

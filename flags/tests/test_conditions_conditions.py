@@ -1,58 +1,21 @@
 from datetime import timedelta
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser, User
 from django.http import HttpRequest, QueryDict
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils import timezone
 
-from flags.conditions import (
-    CONDITIONS,
-    DuplicateCondition,
+from flags.conditions.conditions import (
     RequiredForCondition,
     after_date_condition,
     anonymous_condition,
     before_date_condition,
     boolean_condition,
-    get_condition,
     parameter_condition,
     path_condition,
-    register,
     user_condition,
 )
-from mock import MagicMock
-
-
-class ConditionRegistryTestCase(TestCase):
-    def test_register_decorator(self):
-        fn = lambda conditional_value: True
-        register("decorated")(fn)
-        self.assertIn("decorated", CONDITIONS)
-        self.assertEqual(CONDITIONS["decorated"], fn)
-
-    def test_register_fn(self):
-        fn = lambda conditional_value: True
-        register("undecorated", fn=fn)
-        self.assertIn("undecorated", CONDITIONS)
-        self.assertEqual(CONDITIONS["undecorated"], fn)
-
-    def test_register_dup_condition(self):
-        with self.assertRaises(DuplicateCondition):
-            register("boolean", fn=lambda value: value)
-
-    def test_register_decorator_dup_condition(self):
-        with self.assertRaises(DuplicateCondition):
-            register("boolean")(lambda value: value)
-
-    def test_register_required_kwargs(self):
-        pass
-
-    def test_get_condition(self):
-        fn = lambda conditional_value: True
-        register("gettable", fn=fn)
-        self.assertEqual(get_condition("gettable"), fn)
-
-    def test_get_condition_none(self):
-        self.assertEqual(get_condition("notgettable"), None)
 
 
 class BooleanConditionTestCase(TestCase):
@@ -70,7 +33,7 @@ class BooleanConditionTestCase(TestCase):
         self.assertTrue(boolean_condition("y"))
         self.assertTrue(boolean_condition("on"))
         self.assertTrue(boolean_condition("1"))
-        self.assertTrue(boolean_condition(" true"))
+        self.assertTrue(boolean_condition("true"))
         self.assertTrue(boolean_condition("true   "))
 
     def test_boolean_condition_invalid_string(self):
@@ -99,12 +62,12 @@ class UserConditionTestCase(TestCase):
         with self.assertRaises(RequiredForCondition):
             user_condition("testuser")
 
-    def test_with_custom_user(self):
-        mock_user = MagicMock()
-        mock_user.get_username.return_value = "test@test.com"
-        self.request.user = mock_user
-
-        self.assertTrue(user_condition("test@test.com", request=self.request))
+    @override_settings(AUTH_USER_MODEL="testapp.MyUserModel")
+    def test_custom_user_model_valid(self):
+        user = get_user_model()(identifier="customuser")
+        user.save()
+        self.request.user = user
+        self.assertTrue(user_condition("customuser", request=self.request))
 
 
 class AnonymousConditionTestCase(TestCase):

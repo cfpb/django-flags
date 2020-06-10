@@ -1,12 +1,10 @@
 from django.core.checks import Warning, register
+from django.core.exceptions import ValidationError
 
 
 @register()
 def flag_conditions_check(app_configs, **kwargs):
     from flags.sources import get_flags
-
-    error_str = 'Flag {flag} has non-existent condition "{condition}"'
-    error_hint = 'Register "{condition}" as a Django-Flags condition.'
 
     errors = []
 
@@ -16,12 +14,30 @@ def flag_conditions_check(app_configs, **kwargs):
             if condition.fn is None:
                 errors.append(
                     Warning(
-                        error_str.format(
-                            flag=name, condition=condition.condition
+                        (
+                            f"Flag {name} has non-existent condition "
+                            f"'{condition.condition}'."
                         ),
-                        hint=error_hint.format(condition=condition.condition),
+                        hint=(
+                            f"Register '{condition.condition}' as a "
+                            "Django-Flags condition."
+                        ),
                         id="flags.E001",
                     )
                 )
+            elif condition.fn.validate is not None:
+                try:
+                    condition.fn.validate(condition.value)
+                except ValidationError as e:
+                    errors.append(
+                        Warning(
+                            (
+                                f"Flag {name}'s '{condition.condition}' "
+                                "condition has an invalid value."
+                            ),
+                            hint=e.message,
+                            id="flags.E002",
+                        )
+                    )
 
     return errors

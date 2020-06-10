@@ -8,7 +8,7 @@ from flags import conditions
 
 ## Registering conditions
 
-### `conditions.register(condition_name, fn=None)`
+### `conditions.register(condition_name, fn=None, validator=None)`
 
 Register a new condition, either as a decorator:
 
@@ -30,6 +30,45 @@ conditions.register('path', fn=path_condition)
 ```
 
 Will raise a `conditions.DuplicateCondition` exception if the condition name is already registered.
+
+A [validator](https://docs.djangoproject.com/en/stable/ref/validators/) can be given to validate the condition's expected value as provided by [the flag sources](../sources/), either as another callable as an argument to the `register` function:
+
+
+```python
+from flags import conditions
+
+def validate_path(value):
+    if not value.startswith('/'):
+        raise ValidationError('Enter a valid path')
+
+@conditions.register('path', validator=validate_path)
+def path_condition(path, request=None, **kwargs):
+    return request.path.startswith(path)
+```
+
+Or as an attribute on the condition callable:
+
+```python
+from flags import conditions
+
+class PathCondition:
+    def __call__(self, path, request=None, **kwargs):
+        return request.path.startswith(path)
+
+    def validate(self, value):
+        if not value.startswith('/'):
+            raise ValidationError('Enter a valid path')
+
+conditions.register('path', fn=path_condition)
+```
+
+Validators specified in both ways are available on condition callables as 
+a `validate` attribute:
+
+```python
+condition = get_condition('path')
+condition.validate(value)
+```
 
 ## Exceptions
 

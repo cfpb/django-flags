@@ -2,79 +2,42 @@ import re
 from distutils.util import strtobool
 
 import django
+from django.contrib.auth import get_user_model
 from django.utils import dateparse, timezone
 
-
-# This will be maintained by register() as a global dictionary of
-# condition_name: [list of functions], so we can have multiple conditions
-# for a given name and they all must pass when checking.
-CONDITIONS = {}
-
-
-class DuplicateCondition(ValueError):
-    """ Raised when registering a condition that is already registered """
+from flags.conditions.registry import register
+from flags.conditions.validators import (
+    validate_boolean,
+    validate_date,
+    validate_parameter,
+    validate_path,
+    validate_user,
+)
 
 
 class RequiredForCondition(AttributeError):
     """ Raised when a kwarg that is required for a condition is not given """
 
 
-def register(condition_name, fn=None):
-    """ Register a condition to test for flag state. Can be decorator.
-    Conditions can be any callable that takes a value and some number of
-    required arguments (specified in 'requires') that were passed as kwargs
-    when checking the flag state. """
-    global CONDITIONS
-
-    if fn is None:
-        # Be a decorator
-        def decorator(fn):
-            register(condition_name, fn=fn)
-            return fn
-
-        return decorator
-
-    # Don't be a decorator, just register
-    if condition_name in CONDITIONS:
-        raise DuplicateCondition(
-            'Flag condition "{name}" already registered.'.format(
-                name=condition_name
-            )
-        )
-
-    CONDITIONS[condition_name] = fn
-
-
-def get_conditions():
-    """ Return the names of all available conditions """
-    return CONDITIONS.keys()
-
-
-def get_condition(condition_name):
-    """ Generator to fetch condition checkers from the registry """
-    if condition_name in CONDITIONS:
-        return CONDITIONS[condition_name]
-
-
-@register("boolean")
+@register("boolean", validator=validate_boolean)
 def boolean_condition(condition, **kwargs):
     """ Basic boolean check """
     try:
-        return strtobool(condition.strip().lower())
+        return strtobool(condition.strip())
     except AttributeError:
         return bool(condition)
 
 
-@register("user")
+@register("user", validator=validate_user)
 def user_condition(username, request=None, **kwargs):
     """ Does request.user match the expected username? """
     if request is None:
         raise RequiredForCondition("request is required for condition 'user'")
 
-    return request.user.get_username() == username
+    return getattr(request.user, get_user_model().USERNAME_FIELD) == username
 
 
-@register("anonymous")
+@register("anonymous", validator=validate_boolean)
 def anonymous_condition(boolean_value, request=None, **kwargs):
     """ request.user an anonymous user, true or false based on boolean_value
     """
@@ -94,7 +57,7 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
         return bool(boolean_value) == is_anonymous
 
 
-@register("parameter")
+@register("parameter", validator=validate_parameter)
 def parameter_condition(param_name, request=None, **kwargs):
     """ Is the parameter name part of the GET parameters? """
     if request is None:
@@ -109,7 +72,7 @@ def parameter_condition(param_name, request=None, **kwargs):
     return request.GET.get(param_name) == param_value
 
 
-@register("path matches")
+@register("path matches", validator=validate_path)
 def path_condition(pattern, request=None, **kwargs):
     """ Does the request's path match the given regular expression? """
     if request is None:
@@ -118,7 +81,7 @@ def path_condition(pattern, request=None, **kwargs):
     return bool(re.search(pattern, request.path))
 
 
-@register("after date")
+@register("after date", validator=validate_date)
 def after_date_condition(date_or_str, **kwargs):
     """ Is the the current date after the given date?
     date_or_str is either a date object or an ISO 8601 string """
@@ -142,7 +105,7 @@ def after_date_condition(date_or_str, **kwargs):
 date_condition = after_date_condition
 
 
-@register("before date")
+@register("before date", validator=validate_date)
 def before_date_condition(date_or_str, **kwargs):
     """ Is the current date before the given date?
     date_or_str is either a date object or an ISO 8601 string """
