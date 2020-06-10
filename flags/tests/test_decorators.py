@@ -1,15 +1,10 @@
 import warnings
+from unittest.mock import Mock
 
 from django.http import Http404, HttpRequest, HttpResponse
 from django.test import TestCase
 
 from flags.decorators import flag_check, flag_required
-
-
-try:
-    from unittest.mock import Mock
-except ImportError:  # pragma: no cover
-    from mock import Mock
 
 
 class FlagCheckTestCase(TestCase):

@@ -1,3 +1,4 @@
+from unittest.mock import Mock
 
 from django.http import HttpRequest
 from django.test import TestCase, override_settings
@@ -10,12 +11,6 @@ from flags.sources import (
     SettingsFlagsSource,
     get_flags,
 )
-
-
-try:
-    from unittest.mock import Mock
-except ImportError:  # pragma: no cover
-    from mock import Mock
 
 
 # Test flag source for using this module to test

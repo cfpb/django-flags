@@ -6,7 +6,6 @@ long_description = open("README.md", "r").read()
 install_requires = ["Django>=1.11,<3.1"]
 
 testing_extras = [
-    "mock>=2.0.0",
     "coverage>=3.7.0",
     "django-debug-toolbar>=2.0,<2.3",
     "jinja2",
