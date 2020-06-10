@@ -1,7 +1,6 @@
 import re
 from distutils.util import strtobool
 
-import django
 from django.contrib.auth import get_user_model
 from django.utils import dateparse, timezone
 
@@ -46,10 +45,7 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
             "request is required for condition 'anonymous'"
         )
 
-    if django.VERSION[0] >= 2:  # pragma: no cover
-        is_anonymous = bool(request.user.is_anonymous)
-    else:  # pragma: no cover
-        is_anonymous = bool(request.user.is_anonymous())
+    is_anonymous = bool(request.user.is_anonymous)
 
     try:
         return strtobool(boolean_value.strip().lower()) == is_anonymous

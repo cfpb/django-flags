@@ -33,7 +33,7 @@ if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
     print("My feature flag is enabled")	
 ```
 
-Django templates:
+In Django templates:
 
 ```django
 {% load feature_flags %}
@@ -45,7 +45,7 @@ Django templates:
 {% endif %}
 ```
 
-Jinja2 templates (after [adding `flag_enabled` to the Jinja2 environment](../api/jinja2/)):
+In Jinja2 templates (after [adding `flag_enabled` to the Jinja2 environment](../api/jinja2/)):
 
 ```jinja
 {% if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request) %}
@@ -55,23 +55,13 @@ Jinja2 templates (after [adding `flag_enabled` to the Jinja2 environment](../api
 {% endif %}
 ```
 
-Django 2.0 `urls.py`:
+In `urls.py`:
 
 ```python
 from flags.urls import flagged_path
 
 urlpatterns = [
     flagged_path('FLAG_WITH_REQUIRED_CONDITIONS', 'a-url/', view_requiring_flag, state=True),
-]
-```
-
-And Django 1.x `urls.py`:
-
-```python
-from flags.urls import flagged_url
-
-urlpatterns = [
-    flagged_url('FLAG_WITH_REQUIRED_CONDITIONS', r'^a-url$', view_requiring_flag, state=True),
 ]
 ```
 

@@ -33,8 +33,6 @@ setup(
     extras_require={"testing": testing_extras, "docs": docs_extras},
     classifiers=[
         "Framework :: Django",
-        "Framework :: Django :: 2.0",
-        "Framework :: Django :: 2.1",
         "Framework :: Django :: 2.2",
         "Framework :: Django :: 3.0",
         "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",

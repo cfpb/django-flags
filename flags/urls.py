@@ -1,23 +1,14 @@
 from contextlib import contextmanager
 from functools import partial
 
-import django
+from django.urls.resolvers import (
+    RegexPattern,
+    RoutePattern,
+    URLPattern,
+    URLResolver,
+)
 
 from flags.decorators import flag_check
-
-
-try:  # pragma: no cover
-    from django.urls.resolvers import (
-        RegexPattern,
-        RoutePattern,
-        URLPattern,
-        URLResolver,
-    )
-except ImportError:  # pragma: no cover
-    from django.core.urlresolvers import (
-        RegexURLPattern as URLPattern,
-        RegexURLResolver as URLResolver,
-    )
 
 
 class FlaggedURLResolver(URLResolver):
@@ -66,34 +57,20 @@ class FlaggedURLResolver(URLResolver):
             # the list of fallback patterns.
             fallback = self.fallback
             if isinstance(self.fallback, (list, tuple)):
-                if django.VERSION[0] >= 2:  # pragma: no cover
-                    fallback = next(
-                        (
-                            p.callback
-                            for p in self.fallback_patterns
-                            if p.pattern.describe()
-                            == pattern.pattern.describe()
-                        ),
-                        None,
-                    )
-                else:  # pragma: no cover
-                    fallback = next(
-                        (
-                            p.callback
-                            for p in self.fallback_patterns
-                            if p.regex == pattern.regex
-                        ),
-                        None,
-                    )
+                fallback = next(
+                    (
+                        p.callback
+                        for p in self.fallback_patterns
+                        if p.pattern.describe() == pattern.pattern.describe()
+                    ),
+                    None,
+                )
 
             flag_decorator = flag_check(
                 self.flag_name, self.state, fallback=fallback
             )
 
-            if django.VERSION[0] >= 2:  # pragma: no cover
-                route_pattern = pattern.pattern
-            else:  # pragma: no cover
-                route_pattern = pattern.regex.pattern
+            route_pattern = pattern.pattern
 
             flagged_pattern = URLPattern(
                 route_pattern,
@@ -107,29 +84,17 @@ class FlaggedURLResolver(URLResolver):
         # Next, add "negatively" flagged URLs, where the flag does not match
         # the defined state, for any remaining fallback patterns that didn't
         # match other url patterns.
-        if django.VERSION[0] >= 2:  # pragma: no cover
-            # Django >= 2.0
-            described_patterns = [p.pattern.describe() for p in url_patterns]
-            negative_patterns = (
-                p
-                for p in self.fallback_patterns
-                if p.pattern.describe() not in described_patterns
-            )
-        else:  # pragma: no cover
-            described_patterns = [p.regex for p in url_patterns]
-            negative_patterns = (
-                p
-                for p in self.fallback_patterns
-                if p.regex not in described_patterns
-            )
+        described_patterns = [p.pattern.describe() for p in url_patterns]
+        negative_patterns = (
+            p
+            for p in self.fallback_patterns
+            if p.pattern.describe() not in described_patterns
+        )
 
         for pattern in negative_patterns:
             flag_decorator = flag_check(self.flag_name, not self.state)
 
-            if django.VERSION[0] >= 2:  # pragma: no cover
-                route_pattern = pattern.pattern
-            else:  # pragma: no cover
-                route_pattern = pattern.regex.pattern
+            route_pattern = pattern.pattern
 
             flagged_pattern = URLPattern(
                 route_pattern,
@@ -156,21 +121,13 @@ def _flagged_path(
     """ Make a URL depend on the state of a feature flag """
     if callable(view):
         flagged_view = flag_check(flag_name, state, fallback=fallback)(view)
-
-        if Pattern:  # pragma: no cover
-            route_pattern = Pattern(route, name=name, is_endpoint=True)
-        else:  # pragma: no cover
-            route_pattern = route
-
+        route_pattern = Pattern(route, name=name, is_endpoint=True)
         return URLPattern(route_pattern, flagged_view, kwargs, name)
 
     elif isinstance(view, (list, tuple)):
         urlconf_module, app_name, namespace = view
 
-        if Pattern:  # pragma: no cover
-            route_pattern = Pattern(route, name=name, is_endpoint=True)
-        else:  # pragma: no cover
-            route_pattern = route
+        route_pattern = Pattern(route, name=name, is_endpoint=True)
 
         return FlaggedURLResolver(
             flag_name,
@@ -207,11 +164,7 @@ def _flagged_paths(flag_name, state=True, fallback=None, Pattern=None):
     yield flagged_url_wrapper
 
 
-if django.VERSION[0] >= 2:  # pragma: no cover
-    flagged_path = partial(_flagged_path, Pattern=RoutePattern)
-    flagged_re_path = partial(_flagged_path, Pattern=RegexPattern)
-    flagged_paths = partial(_flagged_paths, Pattern=RoutePattern)
-    flagged_re_paths = partial(_flagged_paths, Pattern=RegexPattern)
-else:  # pragma: no cover
-    flagged_url = partial(_flagged_path, Pattern=None)
-    flagged_urls = partial(_flagged_paths, Pattern=None)
+flagged_path = partial(_flagged_path, Pattern=RoutePattern)
+flagged_re_path = partial(_flagged_path, Pattern=RegexPattern)
+flagged_paths = partial(_flagged_paths, Pattern=RoutePattern)
+flagged_re_paths = partial(_flagged_paths, Pattern=RegexPattern)

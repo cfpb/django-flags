@@ -4,7 +4,7 @@ Feature flags allow you to toggle functionality in both Django code and the Djan
 
 ## Dependencies
 
-- Django 1.11+ (including Django 2)
+- Django 2.2, 3.0
 - Python 3.6+
 
 ## Installation
@@ -85,25 +85,12 @@ Then use the flag in a Django template (`mytemplate.html`):
 
 Configure a URL for that template (`urls.py`):
 
-Django 2.0:
-
 ```python
 from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
     path(r'mypage/', TemplateView.as_view(template_name='mytemplate.html')),
-]
-```
-
-Django 1.x:
-
-```python
-from django.conf.urls import url
-from django.views.generic import TemplateView
-
-urlpatterns = [
-    url(r'^mypage/$', TemplateView.as_view(template_name='mytemplate.html')),
 ]
 ```
 

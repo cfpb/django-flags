@@ -32,21 +32,15 @@ jobs:
     strategy:
       matrix:
         toxenv:
-            - py36-dj111
             - py36-dj22
             - py36-dj30
-            - py38-dj111
             - py38-dj22
             - py38-dj30
         include:
-          - toxenv: py36-dj111
-            python-version: 3.6
           - toxenv: py36-dj22
             python-version: 3.6
           - toxenv: py36-dj30
             python-version: 3.6
-          - toxenv: py38-dj111
-            python-version: 3.8
           - toxenv: py38-dj22
             python-version: 3.8
           - toxenv: py38-dj30

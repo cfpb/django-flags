@@ -9,11 +9,12 @@
 
 ### Deprecations
 
- - Deprecated the optional `flags.middleware.FlagConditionsMiddleware` in favor of always lazily caching flags on the request object.
+- Deprecated the optional `flags.middleware.FlagConditionsMiddleware` in favor of always lazily caching flags on the request object.
 
 ### Removals
 
- - Django Flags 4.1 deprecated support for using a single dictionary to hold key/values of conditions for a settings-based feature flag, and this has been removed. Use [a list of dictionaries or tuples instead](/settings/#flags).
+- Django Flags 4.1 deprecated support for using a single dictionary to hold key/values of conditions for a settings-based feature flag, and this has been removed. Use [a list of dictionaries or tuples instead](/settings/#flags).
+- Removed support for Django 1.11.
 
 
 ## 4.2.4
