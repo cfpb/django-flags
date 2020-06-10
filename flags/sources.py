@@ -148,17 +148,30 @@ class DatabaseFlagsSource(object):
         FlagState = apps.get_model("flags", "FlagState")
         return FlagState.objects.all()
 
+    def get_metadata_queryset(self):
+        FlagMetadata = apps.get_model("flags", "FlagMetadata")
+        return FlagMetadata.objects.all()
+
     def get_flags(self):
         flags = {}
-        for o in self.get_queryset():
+        for o in self.get_queryset().all():
             if o.name not in flags:
-                flags[o.name] = []
-            flags[o.name].append(
+                flags[o.name] = {"conditions": [], "metadata": {}}
+            flags[o.name]["conditions"].append(
                 DatabaseCondition(
                     o.condition, o.value, required=o.required, obj=o
                 )
             )
-        return flags
+
+        for o in self.get_metadata_queryset().all():
+            if o.name not in flags:
+                flags[o.name] = {"conditions": [], "metadata": {}}
+            flags[o.name]["metadata"][o.key] = o.value
+
+        return [
+            (flag, flags[flag]["conditions"], flags[flag]["metadata"])
+            for flag in flags
+        ]
 
 
 def get_flags(sources=None, ignore_errors=False, request=None):

@@ -12,7 +12,7 @@ A list or tuple containing the full Python path strings to classes that provides
 
 Default: `{}`
 
-A dictionary of feature flags and optional conditions used when `'flags.sources.SettingsFlagsSource'` is in [`FLAG_SOURCES`](#flag_sources).
+A dictionary of feature flags with a list of optional conditions and metadata used when `'flags.sources.SettingsFlagsSource'` is in [`FLAG_SOURCES`](#flag_sources).
 
 Each key is the name of a feature flag, and the value should be a list contining conditions and metadata for that flag.
 
@@ -30,6 +30,8 @@ Metadata is defined in a dictionary along with conditions with in the format:
 ```python
 {'help_text': 'enable a cool new future', 'category': 'temporary'}
 ```
+
+There should be only one metadata dictionary per flag. Any dictionary within the feature flag's list that does not contain `condition` and `value` keys will be treated as the metadata dictionary.
 
 For example:
 
@@ -50,8 +52,9 @@ FLAGS = {
 For brevity, conditions can also be defined as either 2- or 3- tuples:
 
 ```python
-(condition name, expected value)
-(condition name, expected value, required)
+(condition name, expected value),
+(condition name, expected value, required),
+("_metadata": {"key": "value"}),
 ```
 
 ### `FLAGS_STATE_LOGGING`

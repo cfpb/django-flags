@@ -6,7 +6,15 @@
 
 - Added Django 3.0 support
 - Added validator support to ensure that the values that flag conditions test against are valid.
+- Added metadata support for flags.
+
+### Deprecations
+
 - Deprecated the optional `flags.middleware.FlagConditionsMiddleware` in favor of always lazily caching flags on the request object.
+
+### Removals
+
+- Django Flags 4.1 deprecated support for using a single dictionary to hold key/values of conditions for a settings-based feature flag, and this has been removed. Use [a list of dictionaries or tuples instead](/settings/#flags).
 
 ## 4.2.4
 

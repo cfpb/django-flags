@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 from django.test import TestCase, override_settings
 
-from flags.models import FlagState
+from flags.models import FlagMetadata, FlagState
 from flags.sources import (
     Condition,
     DatabaseFlagsSource,
@@ -148,7 +148,21 @@ class DatabaseFlagsSourceTestCase(TestCase):
         )
         source = DatabaseFlagsSource()
         flags = source.get_flags()
-        self.assertEqual(flags, {"MY_FLAG": [Condition("boolean", "False")]})
+        self.assertEqual(
+            flags, [("MY_FLAG", [Condition("boolean", "False")], {})]
+        )
+
+    def test_get_flags_metadata(self):
+        FlagMetadata.objects.create(
+            name="MY_FLAG", key="help_text", value="enable a cool thing"
+        )
+        source = DatabaseFlagsSource()
+
+        flags = source.get_flags()
+
+        self.assertEqual(
+            flags, [("MY_FLAG", [], {"help_text": "enable a cool thing"})]
+        )
 
 
 class ConditionTestCase(TestCase):
@@ -296,7 +310,7 @@ class GetFlagsTestCase(TestCase):
         request = HttpRequest()
 
         # The initial call looks up flag conditions from the database source.
-        with self.assertNumQueries(1):
+        with self.assertNumQueries(2):
             get_flags(request=request)
 
         # Subsequent calls with a request object don't need to redo the lookup
@@ -305,5 +319,5 @@ class GetFlagsTestCase(TestCase):
             get_flags(request=request)
 
         # But subsequent calls without a request object still redo the lookup.
-        with self.assertNumQueries(1):
+        with self.assertNumQueries(2):
             get_flags()

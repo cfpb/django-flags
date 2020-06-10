@@ -1,10 +1,38 @@
 from django.test import TestCase
 
 from flags.conditions.registry import _conditions, register
-from flags.forms import FlagStateForm
+from flags.forms import FlagMetadataForm, FlagStateForm
 
 
-class FormTestCase(TestCase):
+class FlagMetadataFormTestCase(TestCase):
+    def test_valid_data(self):
+        form = FlagMetadataForm(
+            {
+                "name": "FLAG_ENABLED",
+                "key": "help_text",
+                "value": "enable a cool thing",
+            }
+        )
+        self.assertTrue(form.is_valid())
+        metadata = form.save()
+        self.assertEqual(metadata.name, "FLAG_ENABLED")
+        self.assertEqual(metadata.key, "help_text")
+        self.assertEqual(metadata.value, "enable a cool thing")
+
+    def test_blank_data(self):
+        form = FlagMetadataForm({})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors,
+            {
+                "name": ["This field is required."],
+                "key": ["This field is required."],
+                "value": ["This field is required."],
+            },
+        )
+
+
+class FlagStateFormTestCase(TestCase):
     def test_valid_data(self):
         form = FlagStateForm(
             {"name": "FLAG_ENABLED", "condition": "boolean", "value": "True"}

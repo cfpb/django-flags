@@ -1,8 +1,25 @@
 from django import forms
 
 from flags.conditions import get_condition, get_conditions
-from flags.models import FlagState
+from flags.models import FlagMetadata, FlagState
 from flags.sources import get_flags
+
+
+class FlagMetadataForm(forms.ModelForm):
+    name = forms.ChoiceField(label="Flag", required=True)
+    key = forms.CharField(label="Key", required=True)
+    value = forms.CharField(label="Value", required=True)
+
+    def __init__(self, *args, **kwargs):
+        super(FlagMetadataForm, self).__init__(*args, **kwargs)
+
+        self.fields["name"].choices = [
+            (f, f) for f in sorted(get_flags().keys())
+        ]
+
+    class Meta:
+        model = FlagMetadata
+        fields = ("name", "key", "value")
 
 
 class FlagStateForm(forms.ModelForm):
