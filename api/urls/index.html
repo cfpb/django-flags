@@ -81,9 +81,13 @@
     
         <ul>
         
-            <li><a class="toctree-l4" href="#django-20">Django 2.0+</a></li>
+            <li><a class="toctree-l4" href="#flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone">flagged_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</a></li>
         
-            <li><a class="toctree-l4" href="#django-1x">Django 1.x</a></li>
+            <li><a class="toctree-l4" href="#flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone">flagged_re_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</a></li>
+        
+            <li><a class="toctree-l4" href="#flagged_pathsflag_name-statetrue-fallbacknone">flagged_paths(flag_name, state=True, fallback=None)</a></li>
+        
+            <li><a class="toctree-l4" href="#flagged_re_pathsflag_name-statetrue-fallbacknone">flagged_re_paths(flag_name, state=True, fallback=None)</a></li>
         
         </ul>
     
@@ -144,7 +148,6 @@
               
                 <h1 id="flagged-url-patterns">Flagged URL patterns<a class="headerlink" href="#flagged-url-patterns" title="Permanent link">¶</a></h1>
 <p>Flagged URL patterns are an alternative to <a href="../../api/decorators">flagging views with decorators</a>.</p>
-<h2 id="django-20">Django 2.0+<a class="headerlink" href="#django-20" title="Permanent link">¶</a></h2>
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_path, flagged_paths, flagged_re_path, flagged_re_paths</code></pre>
 
 <h3 id="flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
@@ -180,42 +183,6 @@
 <pre class="highlight"><code class="language-python">with flagged_paths('MY_FLAG') as path:
     flagged_url_patterns = [
         path('a-url/', view_requiring_flag),
-    ]
-
-urlpatterns = urlpatterns + flagged_url_patterns</code></pre>
-
-<h2 id="django-1x">Django 1.x<a class="headerlink" href="#django-1x" title="Permanent link">¶</a></h2>
-<pre class="highlight"><code class="language-python">from flags.urls import flagged_url, flagged_urls</code></pre>
-
-<h3 id="flagged_urlflag_name-regex-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_url(flag_name, regex, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_urlflag_name-regex-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
-<p>Make a URL depend on the state of a feature flag. </p>
-<p><code>flagged_url()</code> can be used in place of <a href="https://docs.djangoproject.com/en/1.11/ref/urls/#django.conf.urls.url">Django's <code>url()</code></a>.</p>
-<p>The <code>view</code> and the <code>fallback</code> can both be a set of <code>include()</code>ed patterns but any matching URL patterns in the includes must match <em>exactly</em> in terms of regular expression, keyword arguments, and name, otherwise a <code>404</code> may be unexpectedly raised. </p>
-<p>If a <code>fallback</code> is not given the flagged url will raise a <code>404</code> if the flag state does not match the required <code>state</code>. </p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
-</div>
-<pre class="highlight"><code class="language-python">urlpatterns = [
-    flagged_url('MY_FLAG', r'a-url/', view_requiring_flag, state=True),
-    flagged_url('MY_FLAG_WITH_FALLBACK', r'^another-url$', 
-                view_with_fallback, state=True, fallback=other_view)
-    flagged_url('MY_FLAGGED_INCLUDE', '^myapp/', include('myapp.urls'),
-                state=True, fallback=other_view)
-    flagged_url('MY_NEW_APP_FLAG', r'^mynewapp$', include('mynewapp.urls'),
-                state=True, fallback=include('myoldapp.urls'))
-]</code></pre>
-
-<h3 id="flagged_urlsflag_name-statetrue-fallbacknone"><code>flagged_urls(flag_name, state=True, fallback=None)</code><a class="headerlink" href="#flagged_urlsflag_name-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
-<p>Flag multiple URLs in the same context with a context manager.</p>
-<p><code>flagged_urls()</code> returns a function that takes the same arguments as <a href="https://docs.djangoproject.com/en/1.11/ref/urls/#django.conf.urls.url">Django's <code>url()</code></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
-</div>
-<pre class="highlight"><code class="language-python">with flagged_urls('MY_FLAG') as furl:
-    flagged_url_patterns = [
-        furl(^'a-url/', view_requiring_flag),
     ]
 
 urlpatterns = urlpatterns + flagged_url_patterns</code></pre>

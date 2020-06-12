@@ -146,7 +146,7 @@
 <p>Feature flags allow you to toggle functionality in both Django code and the Django templates based on configurable conditions. Flags can be useful for staging feature deployments, for A/B testing, or for any time you need an on/off switch for blocks of code. The toggle can be by date, user, URL value, or a number of <a href="./conditions">other conditions</a>, editable in the admin or in definable in settings.</p>
 <h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">¶</a></h2>
 <ul>
-<li>Django 1.11+ (including Django 2)</li>
+<li>Django 2.2, 3.0</li>
 <li>Python 3.6+</li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
@@ -202,20 +202,11 @@
 {% endif %}</code></pre>
 
 <p>Configure a URL for that template (<code>urls.py</code>):</p>
-<p>Django 2.0:</p>
 <pre class="highlight"><code class="language-python">from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
     path(r'mypage/', TemplateView.as_view(template_name='mytemplate.html')),
-]</code></pre>
-
-<p>Django 1.x:</p>
-<pre class="highlight"><code class="language-python">from django.conf.urls import url
-from django.views.generic import TemplateView
-
-urlpatterns = [
-    url(r'^mypage/$', TemplateView.as_view(template_name='mytemplate.html')),
 ]</code></pre>
 
 <p>Then in the Django admin add conditions for the flag in "Django Flags", "Flag states":</p>
@@ -276,5 +267,5 @@ urlpatterns = [
 
 <!--
 MkDocs version : 1.1
-Build Date UTC : 2020-06-12 14:08:46
+Build Date UTC : 2020-06-12 14:12:25
 -->

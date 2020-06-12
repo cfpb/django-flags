@@ -162,7 +162,7 @@
 if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
     print("My feature flag is enabled") </code></pre>
 
-<p>Django templates:</p>
+<p>In Django templates:</p>
 <pre class="highlight"><code class="language-django">{% load feature_flags %}
 {% flag_enabled 'FLAG_WITH_ANY_CONDITIONS' as my_flag %}
 {% if my_flag %}
@@ -171,25 +171,18 @@ if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
   &lt;/div&gt;
 {% endif %}</code></pre>
 
-<p>Jinja2 templates (after <a href="../api/jinja2/">adding <code>flag_enabled</code> to the Jinja2 environment</a>):</p>
+<p>In Jinja2 templates (after <a href="../api/jinja2/">adding <code>flag_enabled</code> to the Jinja2 environment</a>):</p>
 <pre class="highlight"><code class="language-jinja">{% if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request) %}
   &lt;div&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
 {% endif %}</code></pre>
 
-<p>Django 2.0 <code>urls.py</code>:</p>
+<p>In <code>urls.py</code>:</p>
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_path
 
 urlpatterns = [
     flagged_path('FLAG_WITH_REQUIRED_CONDITIONS', 'a-url/', view_requiring_flag, state=True),
-]</code></pre>
-
-<p>And Django 1.x <code>urls.py</code>:</p>
-<pre class="highlight"><code class="language-python">from flags.urls import flagged_url
-
-urlpatterns = [
-    flagged_url('FLAG_WITH_REQUIRED_CONDITIONS', r'^a-url$', view_requiring_flag, state=True),
 ]</code></pre>
 
 <p>See the <a href="/api/state">API reference</a> for more details and examples.</p>
