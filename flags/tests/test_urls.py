@@ -2,23 +2,9 @@ from unittest import skipIf
 
 from django.http import Http404, HttpResponse
 from django.test import RequestFactory, TestCase, override_settings
+from django.urls import include, path, re_path, resolve
 
-
-try:
-    from django.urls import include, path, resolve, re_path
-except ImportError:  # pragma: no cover
-    from django.core.urlresolvers import resolve
-    from django.conf.urls import include, url as re_path
-
-    path = None
-
-try:
-    from flags.urls import flagged_path, flagged_re_path, flagged_re_paths
-except ImportError:  # pragma: no cover
-    from flags.urls import (
-        flagged_url as flagged_re_path,
-        flagged_urls as flagged_re_paths,
-    )
+from flags.urls import flagged_path, flagged_re_path, flagged_re_paths
 
 
 def view(request):
@@ -119,17 +105,16 @@ with flagged_re_paths("FLAGGED_URL", fallback=fallback) as re_path:
     ]
 urlpatterns = urlpatterns + flagged_patterns_true_fallback
 
-if path:  # pragma: no cover
-    path_patterns = [
-        flagged_path(
-            "FLAGGED_URL",
-            "path-true-no-fallback",
-            view,
-            name="some-view",
-            state=True,
-        ),
-    ]
-    urlpatterns = urlpatterns + path_patterns
+path_patterns = [
+    flagged_path(
+        "FLAGGED_URL",
+        "path-true-no-fallback",
+        view,
+        name="some-view",
+        state=True,
+    ),
+]
+urlpatterns = urlpatterns + path_patterns
 
 
 @override_settings(ROOT_URLCONF=__name__,)

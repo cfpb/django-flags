@@ -51,17 +51,6 @@ urlpatterns = [
 ]
 ```
 
-#### Django 1.x
-
-```python
-from django.urls import path
-from flags.urls import flagged_path
-
-urlpatterns = [
-    url(r'^my-url/$', MyFlaggedView.as_view(flag_name='MY_FLAG'))
-]
-```
-
 ### `FlaggedTemplateView`
 
 A combination of [`TemplateView`](https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#templateview) and [`FlaggedViewMixin`](#flaggedviewmixin).
@@ -85,23 +74,6 @@ from flags.views import FlaggedTemplateView
 urlpatterns = [
     path(
         'my_url/', 
-        FlaggedTemplateView.as_view(
-            template_name='mytemplate.html', 
-            flag_name='MY_FLAG'
-        )
-    ),
-]
-```
-
-#### Django 1.x
-
-```
-from django.urls import url
-from flags.views import FlaggedTemplateView
-
-urlpatterns = [
-    url(
-        r'^my_url/$', 
         FlaggedTemplateView.as_view(
             template_name='mytemplate.html', 
             flag_name='MY_FLAG'

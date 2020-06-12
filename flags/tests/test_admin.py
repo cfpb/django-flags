@@ -1,12 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.test import Client, TestCase, override_settings
-
-
-try:
-    from django.urls import re_path
-except ImportError:  # pragma: no cover
-    from django.conf.urls import url as re_path
+from django.urls import re_path
 
 
 urlpatterns = [

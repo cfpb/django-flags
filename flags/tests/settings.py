@@ -1,7 +1,5 @@
 import os
 
-import django
-
 from flags.conditions import register
 
 
@@ -32,18 +30,12 @@ INSTALLED_APPS = (
 
 INSTALLED_APPS += ("flags", "flags.tests.testapp")
 
-if django.VERSION >= (1, 10):  # pragma: no cover
-    MIDDLEWARE = (
-        "debug_toolbar.middleware.DebugToolbarMiddleware",
-        "django.contrib.sessions.middleware.SessionMiddleware",
-        "django.contrib.auth.middleware.AuthenticationMiddleware",
-        "django.contrib.messages.middleware.MessageMiddleware",
-    )
-else:  # pragma: no cover
-    MIDDLEWARE_CLASSES = (
-        "django.contrib.sessions.middleware.SessionMiddleware",
-        "django.contrib.auth.middleware.AuthenticationMiddleware",
-    )
+MIDDLEWARE = (
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+)
 
 TEMPLATES = [
     {

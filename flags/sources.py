@@ -1,5 +1,4 @@
 import logging
-import warnings
 
 from django.apps import apps
 from django.conf import settings
@@ -89,16 +88,6 @@ class SettingsFlagsSource(object):
         settings_flags = getattr(settings, "FLAGS", {}).items()
         flags = {}
         for flag, conditions in settings_flags:
-            # Flag conditions in settings used to be dicts, which are now
-            # deprecated.
-            if isinstance(conditions, dict):
-                warnings.warn(
-                    "dict feature flag definitions are deprecated and will be "
-                    "removed in a future version of Django-Flags. "
-                    "Please use a list of dicts or tuples instead.",
-                    FutureWarning,
-                )
-                conditions = conditions.items()
 
             # Flag conditions should be a list of either 3-tuples of
             # dictionaries in the form (condition, value, required) or

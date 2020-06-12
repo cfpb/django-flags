@@ -1,4 +1,4 @@
-import warnings
+from unittest.mock import Mock
 
 from django.http import HttpRequest
 from django.test import TestCase, override_settings
@@ -11,12 +11,6 @@ from flags.sources import (
     SettingsFlagsSource,
     get_flags,
 )
-
-
-try:
-    from unittest.mock import Mock
-except ImportError:  # pragma: no cover
-    from mock import Mock
 
 
 # Test flag source for using this module to test
@@ -34,19 +28,6 @@ class ExceptionalFlagsSource(object):
 
 
 class SettingsFlagsSourceTestCase(TestCase):
-    @override_settings(FLAGS={"MY_FLAG": {"boolean": True}})
-    def test_get_flags_dict(self):
-        source = SettingsFlagsSource()
-        with warnings.catch_warnings(record=True) as warning_list:
-            flags = source.get_flags()
-            self.assertTrue(
-                any(item.category == FutureWarning for item in warning_list)
-            )
-
-        self.assertEqual(
-            flags, {"MY_FLAG": [Condition("boolean", True, required=False)]},
-        )
-
     @override_settings(FLAGS={"MY_FLAG": [("boolean", True)]})
     def test_get_flags_two_tuple(self):
         source = SettingsFlagsSource()
