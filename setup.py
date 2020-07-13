@@ -1,8 +1,6 @@
 from setuptools import find_packages, setup
 
 
-long_description = open("README.md", "r").read()
-
 install_requires = ["Django>=1.11,<3.1"]
 
 testing_extras = [
@@ -23,12 +21,13 @@ setup(
     author="CFPB",
     author_email="tech@cfpb.gov",
     description="Feature flags for Django projects",
-    long_description=long_description,
+    long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="CC0",
     version="5.0.0",
     include_package_data=True,
     packages=find_packages(),
+    python_requires=">=3.8",
     install_requires=install_requires,
     extras_require={"testing": testing_extras, "docs": docs_extras},
     classifiers=[
@@ -39,8 +38,5 @@ setup(
         "License :: Public Domain",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
     ],
 )
