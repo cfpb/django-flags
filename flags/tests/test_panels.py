@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.test import RequestFactory, TestCase, override_settings
 
 from debug_toolbar.toolbar import DebugToolbar
+
 from flags.state import flag_state
 
 

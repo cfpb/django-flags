@@ -3,6 +3,7 @@ import logging
 from django.utils.translation import gettext_lazy as _
 
 from debug_toolbar.panels import Panel
+
 from flags import state
 from flags.sources import get_flags
 
