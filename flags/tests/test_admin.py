@@ -9,7 +9,9 @@ urlpatterns = [
 ]
 
 
-@override_settings(ROOT_URLCONF=__name__,)
+@override_settings(
+    ROOT_URLCONF=__name__,
+)
 class FlagsAdminTestCase(TestCase):
     def setUp(self):
         self.client = Client()

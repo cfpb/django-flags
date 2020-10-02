@@ -8,7 +8,7 @@ class DuplicateCondition(ValueError):
 
 
 def register(condition_name, fn=None, validator=None):
-    """ Register a condition to test for flag state.
+    """Register a condition to test for flag state.
 
     This function can be used as a decorator or the condition callable can be
     passed as `fn`.
@@ -20,7 +20,7 @@ def register(condition_name, fn=None, validator=None):
 
     Conditions can be any callable that takes a value and some number of
     required arguments (specified in 'requires') that were passed as kwargs
-    when checking the flag state. """
+    when checking the flag state."""
     global _conditions, _validators
 
     if fn is None:

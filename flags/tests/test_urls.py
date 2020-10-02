@@ -117,7 +117,7 @@ path_patterns = [
 urlpatterns = urlpatterns + path_patterns
 
 
-@override_settings(ROOT_URLCONF=__name__,)
+@override_settings(ROOT_URLCONF=__name__)
 class FlagCheckTestCase(TestCase):
     def setUp(self):
         self.flag_name = "FLAGGED_URL"
@@ -226,14 +226,14 @@ class FlagCheckTestCase(TestCase):
             self.get_url_response("/include-fallback-include/included-url")
 
     @override_settings(FLAGS={"FLAGGED_URL": [("boolean", True)]})
-    def test_flagged_url_true_include_fallback_include_nonmatching_url(self,):
+    def test_flagged_url_true_include_fallback_include_nonmatching_url(self):
         with self.assertRaises(Http404):
             self.get_url_response(
                 "/include-fallback-include/other-included-url"
             )
 
     @override_settings(FLAGS={"FLAGGED_URL": [("boolean", False)]})
-    def test_flagged_url_false_include_fallback_include_nonmatching_url(self,):
+    def test_flagged_url_false_include_fallback_include_nonmatching_url(self):
         response = self.get_url_response(
             "/include-fallback-include/other-included-url"
         )

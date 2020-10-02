@@ -42,7 +42,11 @@ class FlaggedViewMixin(object):
 
         view = super(FlaggedViewMixin, cls).as_view(**initkwargs)
 
-        decorator = flag_check(flag_name, state, fallback=fallback,)
+        decorator = flag_check(
+            flag_name,
+            state,
+            fallback=fallback,
+        )
 
         return decorator(view)
 

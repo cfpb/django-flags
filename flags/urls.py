@@ -146,8 +146,8 @@ def _flagged_path(
 
 @contextmanager
 def _flagged_paths(flag_name, state=True, fallback=None, Pattern=None):
-    """ Flag multiple URLs in the same context
-    Returns a url()-compatible wrapper for flagged_url() """
+    """Flag multiple URLs in the same context
+    Returns a url()-compatible wrapper for flagged_url()"""
 
     def flagged_url_wrapper(route, view, kwargs=None, name=None):
         return _flagged_path(
