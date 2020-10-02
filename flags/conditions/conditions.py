@@ -38,8 +38,7 @@ def user_condition(username, request=None, **kwargs):
 
 @register("anonymous", validator=validate_boolean)
 def anonymous_condition(boolean_value, request=None, **kwargs):
-    """ request.user an anonymous user, true or false based on boolean_value
-    """
+    """request.user an anonymous user, true or false based on boolean_value"""
     if request is None:
         raise RequiredForCondition(
             "request is required for condition 'anonymous'"
@@ -79,8 +78,8 @@ def path_condition(pattern, request=None, **kwargs):
 
 @register("after date", validator=validate_date)
 def after_date_condition(date_or_str, **kwargs):
-    """ Is the the current date after the given date?
-    date_or_str is either a date object or an ISO 8601 string """
+    """Is the the current date after the given date?
+    date_or_str is either a date object or an ISO 8601 string"""
     try:
         date = dateparse.parse_datetime(date_or_str)
     except TypeError:
@@ -103,8 +102,8 @@ date_condition = after_date_condition
 
 @register("before date", validator=validate_date)
 def before_date_condition(date_or_str, **kwargs):
-    """ Is the current date before the given date?
-    date_or_str is either a date object or an ISO 8601 string """
+    """Is the current date before the given date?
+    date_or_str is either a date object or an ISO 8601 string"""
     try:
         date = dateparse.parse_datetime(date_or_str)
     except TypeError:

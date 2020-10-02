@@ -69,7 +69,11 @@ class FlagCheckTestCase(TestCase):
         def fallback(request, **kwargs):
             return HttpResponse("fallback")
 
-        decorator = flag_check("FLAG_ENABLED", False, fallback=fallback,)
+        decorator = flag_check(
+            "FLAG_ENABLED",
+            False,
+            fallback=fallback,
+        )
 
         decorated = decorator(self.view)
         response = decorated(self.request)

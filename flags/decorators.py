@@ -8,8 +8,8 @@ from flags.state import flag_state
 
 
 def flag_check(flag_name, state, fallback=None, **fc_kwargs):
-    """ Check that a given flag has the given state.
-    If the state does not match, perform the fallback. """
+    """Check that a given flag has the given state.
+    If the state does not match, perform the fallback."""
 
     def decorator(func):
         # At decoration-time, ensure that the fallback for the decorated

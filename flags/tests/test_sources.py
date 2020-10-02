@@ -33,7 +33,8 @@ class SettingsFlagsSourceTestCase(TestCase):
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
-            flags, {"MY_FLAG": [Condition("boolean", True, required=False)]},
+            flags,
+            {"MY_FLAG": [Condition("boolean", True, required=False)]},
         )
 
     @override_settings(FLAGS={"MY_FLAG": [("boolean", True, True)]})
@@ -65,7 +66,8 @@ class SettingsFlagsSourceTestCase(TestCase):
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
-            flags, {"MY_FLAG": [Condition("boolean", True, required=False)]},
+            flags,
+            {"MY_FLAG": [Condition("boolean", True, required=False)]},
         )
 
 

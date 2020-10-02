@@ -50,7 +50,9 @@ class FlaggedViewMixinTestCase(TestCase):
             return HttpResponse("fallback fn")
 
         view = TestView.as_view(
-            flag_name=self.flag_name, state=True, fallback=test_view_function,
+            flag_name=self.flag_name,
+            state=True,
+            fallback=test_view_function,
         )
 
         response = view(self.request())
