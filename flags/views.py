@@ -21,10 +21,10 @@ class FlaggedViewMixin(object):
 
     @classonlymethod
     def as_view(cls, **initkwargs):
-        flag_name = initkwargs.get("flag_name")
-        state = initkwargs.get("state", True)
-        fallback = initkwargs.get("fallback")
-        condition = initkwargs.get("condition")
+        flag_name = initkwargs.get("flag_name", cls.flag_name)
+        state = initkwargs.get("state", cls.state)
+        fallback = initkwargs.get("fallback", cls.fallback)
+        condition = initkwargs.get("condition", cls.condition)
 
         if flag_name is None:
             raise ImproperlyConfigured(
