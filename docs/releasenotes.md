@@ -1,5 +1,12 @@
 # Release Notes
 
+## 5.0.2
+
+### What's new?
+
+- Added defaults for `FlaggedViewMixin`'s `kwargs` (by [@jackton1](https://github.com/jackton1))
+
+
 ## 5.0.1
 
 ### What's new?
