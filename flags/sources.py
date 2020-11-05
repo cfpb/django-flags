@@ -14,15 +14,37 @@ class Condition(object):
     """ A simple wrapper around conditions """
 
     def __init__(self, condition, value, required=False):
+        """
+        Initialize the condition.
+
+        Args:
+            self: (todo): write your description
+            condition: (dict): write your description
+            value: (todo): write your description
+            required: (todo): write your description
+        """
         self.condition = condition
         self.value = value
         self.fn = get_condition(self.condition)
         self.required = required
 
     def __eq__(self, other):
+        """
+        Determine if other is equal to other.
+
+        Args:
+            self: (todo): write your description
+            other: (todo): write your description
+        """
         return other.condition == self.condition and other.value == self.value
 
     def check(self, **kwargs):
+        """
+        Check if fn. fn.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.fn is not None:
             return self.fn(self.value, **kwargs)
 
@@ -31,6 +53,14 @@ class Flag(object):
     """ A simple wrapper around feature flags and their conditions """
 
     def __init__(self, name, conditions=[]):
+        """
+        Create a new conditions.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+            conditions: (dict): write your description
+        """
         self.name = name
         self.conditions = conditions
 
@@ -85,6 +115,12 @@ class Flag(object):
 
 class SettingsFlagsSource(object):
     def get_flags(self):
+        """
+        Returns a dictionary of flags for the given in the config.
+
+        Args:
+            self: (todo): write your description
+        """
         settings_flags = getattr(settings, "FLAGS", {}).items()
         flags = {}
         for flag, conditions in settings_flags:
@@ -120,6 +156,16 @@ class DatabaseCondition(Condition):
     """ Condition that includes the FlagState database object """
 
     def __init__(self, condition, value, required=False, obj=None):
+        """
+        Initialize the condition.
+
+        Args:
+            self: (todo): write your description
+            condition: (dict): write your description
+            value: (todo): write your description
+            required: (todo): write your description
+            obj: (todo): write your description
+        """
         super(DatabaseCondition, self).__init__(
             condition, value, required=required
         )
@@ -128,10 +174,22 @@ class DatabaseCondition(Condition):
 
 class DatabaseFlagsSource(object):
     def get_queryset(self):
+        """
+        Return queryset objects
+
+        Args:
+            self: (todo): write your description
+        """
         FlagState = apps.get_model("flags", "FlagState")
         return FlagState.objects.all()
 
     def get_flags(self):
+        """
+        Returns a list of all the flags for this object.
+
+        Args:
+            self: (todo): write your description
+        """
         flags = {}
         for o in self.get_queryset():
             if o.name not in flags:

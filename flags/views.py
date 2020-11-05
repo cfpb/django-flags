@@ -21,6 +21,13 @@ class FlaggedViewMixin(object):
 
     @classonlymethod
     def as_view(cls, **initkwargs):
+        """
+        This decorator adds a flag.
+
+        Args:
+            cls: (todo): write your description
+            initkwargs: (dict): write your description
+        """
         flag_name = initkwargs.get("flag_name", cls.flag_name)
         state = initkwargs.get("state", cls.state)
         fallback = initkwargs.get("fallback", cls.fallback)

@@ -24,6 +24,12 @@ validate_parameter = RegexValidator(
 
 
 def validate_boolean(value):
+    """
+    Validates that value is a boolean.
+
+    Args:
+        value: (todo): write your description
+    """
     message = "Enter one of 'on', 'off', 'true', 'false', etc."
     try:
         strtobool(value)
@@ -37,6 +43,12 @@ def validate_boolean(value):
 
 
 def validate_user(value):
+    """
+    Validate user. user.
+
+    Args:
+        value: (todo): write your description
+    """
     UserModel = get_user_model()
 
     try:
@@ -46,6 +58,12 @@ def validate_user(value):
 
 
 def validate_date(value):
+    """
+    Validates that value.
+
+    Args:
+        value: (todo): write your description
+    """
     datetime = dateparse.parse_datetime(value)
     if datetime is None:
         raise ValidationError("Enter an ISO 8601 date representation.")

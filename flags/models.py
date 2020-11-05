@@ -12,6 +12,12 @@ class FlagState(models.Model):
         unique_together = ("name", "condition", "value")
 
     def __str__(self):
+        """
+        Return a string representation.
+
+        Args:
+            self: (todo): write your description
+        """
         return (
             "{name} is enabled when {condition} is "
             "{value}{required}".format(

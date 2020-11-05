@@ -4,6 +4,12 @@ from django.core.exceptions import ValidationError
 
 @register()
 def flag_conditions_check(app_configs, **kwargs):
+    """
+    Checks conditions to see if conditions exist.
+
+    Args:
+        app_configs: (todo): write your description
+    """
     from flags.sources import get_flags
 
     errors = []

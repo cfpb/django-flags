@@ -8,6 +8,12 @@ from flags.middleware import FlagConditionsMiddleware
 
 class FlagConditionsMiddlewareTests(SimpleTestCase):
     def test_middleware_raises_warning(self):
+        """
+        Deprecated version of middleware the middleware.
+
+        Args:
+            self: (todo): write your description
+        """
         with warnings.catch_warnings(record=True) as warning_list:
             with self.assertRaises(MiddlewareNotUsed):
                 FlagConditionsMiddleware(None)

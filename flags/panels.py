@@ -22,6 +22,14 @@ class FlagsPanel(Panel):
     title = _("Feature Flags")
 
     def generate_stats(self, request, response):
+        """
+        Generate stats.
+
+        Args:
+            self: (todo): write your description
+            request: (todo): write your description
+            response: (todo): write your description
+        """
         flags = get_flags(request=request)
 
         self.record_stats(
@@ -41,12 +49,30 @@ class FlagChecksPanel(Panel):
     title = _("Flag Checks")
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the checks.
+
+        Args:
+            self: (todo): write your description
+        """
         super(FlagChecksPanel, self).__init__(*args, **kwargs)
         self.checks = {}
 
     def enable_instrumentation(self):
+        """
+        Enables the instrument instrument flag.
+
+        Args:
+            self: (todo): write your description
+        """
         # Monkey-patch flag checking to record where the call happens
         def recording_flag_state(flag_name, **kwargs):
+            """
+            Returns a list of checksum of the given flag.
+
+            Args:
+                flag_name: (str): write your description
+            """
             if flag_name not in self.checks:
                 self.checks[flag_name] = []
 
@@ -59,8 +85,22 @@ class FlagChecksPanel(Panel):
         state._flag_state = recording_flag_state
 
     def disable_instrumentation(self):
+        """
+        Disable the instrumentation.
+
+        Args:
+            self: (todo): write your description
+        """
         # Restore the original functions
         state._flag_state = _original_flag_state
 
     def generate_stats(self, request, response):
+        """
+        Generate the statistics object.
+
+        Args:
+            self: (todo): write your description
+            request: (todo): write your description
+            response: (todo): write your description
+        """
         self.record_stats({"request": request, "checks": self.checks})

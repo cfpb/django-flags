@@ -23,6 +23,20 @@ class FlaggedURLResolver(URLResolver):
         state=True,
         fallback=None,
     ):
+        """
+        Initialize a urlconf module.
+
+        Args:
+            self: (todo): write your description
+            flag_name: (str): write your description
+            regex: (bool): write your description
+            urlconf_name: (str): write your description
+            default_kwargs: (dict): write your description
+            app_name: (str): write your description
+            namespace: (str): write your description
+            state: (int): write your description
+            fallback: (list): write your description
+        """
         super(FlaggedURLResolver, self).__init__(
             regex,
             urlconf_name,
@@ -48,6 +62,12 @@ class FlaggedURLResolver(URLResolver):
 
     @property
     def url_patterns(self):
+        """
+        Add url patterns.
+
+        Args:
+            self: (todo): write your description
+        """
         # First, add our "positively" flagged URLs, where when the flag
         # matches the defined state, the view is served for the pattern
         # and not the fallback.
@@ -150,6 +170,14 @@ def _flagged_paths(flag_name, state=True, fallback=None, Pattern=None):
     Returns a url()-compatible wrapper for flagged_url()"""
 
     def flagged_url_wrapper(route, view, kwargs=None, name=None):
+        """
+        Flagged url route.
+
+        Args:
+            route: (str): write your description
+            view: (todo): write your description
+            name: (str): write your description
+        """
         return _flagged_path(
             flag_name,
             route,

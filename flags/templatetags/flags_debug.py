@@ -8,16 +8,34 @@ register = template.Library()
 
 @register.filter
 def bool_enabled(flag):
+    """
+    Return true if any flag is enabled.
+
+    Args:
+        flag: (todo): write your description
+    """
     return any(c.check() for c in flag.conditions if c.condition == "boolean")
 
 
 @register.filter
 def conditions_without_bool(flag):
+    """
+    Return true if conditions are true false otherwise.
+
+    Args:
+        flag: (todo): write your description
+    """
     return [c for c in flag.conditions if c.condition != "boolean"]
 
 
 @register.filter
 def required_conditions_without_bool(flag):
+    """
+    Return true if conditions are true false otherwise.
+
+    Args:
+        flag: (todo): write your description
+    """
     return [c for c in conditions_without_bool(flag) if c.required]
 
 

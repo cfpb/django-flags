@@ -16,6 +16,12 @@ from flags.sources import (
 # Test flag source for using this module to test
 class TestFlagsSource(object):
     def get_flags(self):
+        """
+        Returns a dict of flags.
+
+        Args:
+            self: (todo): write your description
+        """
         return {
             "SOURCED_FLAG": [Condition("boolean", True)],
             "NOT_IN_SETTINGS_FLAG": [Condition("boolean", False)],
@@ -24,12 +30,24 @@ class TestFlagsSource(object):
 
 class ExceptionalFlagsSource(object):
     def get_flags(self):
+        """
+        Gets the flags.
+
+        Args:
+            self: (todo): write your description
+        """
         raise Exception("This flag source is exceptional!")
 
 
 class SettingsFlagsSourceTestCase(TestCase):
     @override_settings(FLAGS={"MY_FLAG": [("boolean", True)]})
     def test_get_flags_two_tuple(self):
+        """
+        Returns a tuple of flags for the test.
+
+        Args:
+            self: (todo): write your description
+        """
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
@@ -39,6 +57,12 @@ class SettingsFlagsSourceTestCase(TestCase):
 
     @override_settings(FLAGS={"MY_FLAG": [("boolean", True, True)]})
     def test_get_flags_three_tuple(self):
+        """
+        Gets the required flags for the test.
+
+        Args:
+            self: (todo): write your description
+        """
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
@@ -53,6 +77,12 @@ class SettingsFlagsSourceTestCase(TestCase):
         }
     )
     def test_get_flags_list_of_dicts(self):
+        """
+        Gets the list of required bytest options
+
+        Args:
+            self: (todo): write your description
+        """
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
@@ -63,6 +93,12 @@ class SettingsFlagsSourceTestCase(TestCase):
         FLAGS={"MY_FLAG": [{"condition": "boolean", "value": True}]}
     )
     def test_get_flags_list_of_dicts_without_required(self):
+        """
+        Gets the list of required flags.
+
+        Args:
+            self: (todo): write your description
+        """
         source = SettingsFlagsSource()
         flags = source.get_flags()
         self.assertEqual(
@@ -73,6 +109,12 @@ class SettingsFlagsSourceTestCase(TestCase):
 
 class DatabaseFlagsSourceTestCase(TestCase):
     def test_get_flags(self):
+        """
+        This method is_getflags.
+
+        Args:
+            self: (todo): write your description
+        """
         FlagState.objects.create(
             name="MY_FLAG", condition="boolean", value="False"
         )
@@ -83,6 +125,12 @@ class DatabaseFlagsSourceTestCase(TestCase):
 
 class ConditionTestCase(TestCase):
     def test_check_fn_none(self):
+        """
+        Asserts that the condition is true.
+
+        Args:
+            self: (todo): write your description
+        """
         condition = Condition("nonexistent", "value")
         result = condition.check()
         self.assertIsNone(result)
@@ -90,23 +138,53 @@ class ConditionTestCase(TestCase):
 
 class FlagTestCase(TestCase):
     def test_eq(self):
+        """
+        Test if the flag
+
+        Args:
+            self: (todo): write your description
+        """
         flag1 = Flag("MY_FLAG")
         flag2 = Flag("MY_FLAG")
         self.assertEqual(flag1, flag2)
 
     def test_conditions(self):
+        """
+        Test if conditions are conditions
+
+        Args:
+            self: (todo): write your description
+        """
         flag = Flag("MY_FLAG", [Condition("boolean", True)])
         self.assertEqual(len(list(flag.conditions)), 1)
 
     def test_check_state(self):
+        """
+        Test if the test state
+
+        Args:
+            self: (todo): write your description
+        """
         flag = Flag("MY_FLAG", [Condition("boolean", True)])
         self.assertTrue(flag.check_state())
 
     def test_check_state_no_conditions(self):
+        """
+        Check if the condition conditions to true.
+
+        Args:
+            self: (todo): write your description
+        """
         flag = Flag("MY_FLAG", [])
         self.assertFalse(flag.check_state())
 
     def test_check_state_multiple_conditions_not_required(self):
+        """
+        Set the state condition condition condition.
+
+        Args:
+            self: (todo): write your description
+        """
         request = Mock(path="/foo")
         flag = Flag(
             "MY_FLAG",
@@ -115,6 +193,12 @@ class FlagTestCase(TestCase):
         self.assertTrue(flag.check_state(request=request))
 
     def test_check_state_multiple_conditions_required(self):
+        """
+        Check if the state of the state condition is set.
+
+        Args:
+            self: (todo): write your description
+        """
         request = Mock(path="/foo")
         flag = Flag(
             "MY_FLAG",
@@ -126,6 +210,12 @@ class FlagTestCase(TestCase):
         self.assertTrue(flag.check_state(request=request))
 
     def test_check_state_multiple_conditions_required_failure(self):
+        """
+        Check that the state condition condition condition exists.
+
+        Args:
+            self: (todo): write your description
+        """
         request = Mock(path="/foo")
         flag = Flag(
             "MY_FLAG",
@@ -138,6 +228,12 @@ class FlagTestCase(TestCase):
 
     @override_settings(FLAGS_STATE_LOGGING=True)
     def test_flag_check_state_logs_state(self):
+        """
+        Test that logs that logs logs
+
+        Args:
+            self: (todo): write your description
+        """
         flag = Flag(
             "MY_FLAG",
             [Condition("boolean", False), Condition("path matches", "/foo")],
@@ -159,16 +255,34 @@ class FlagTestCase(TestCase):
 
 class GetFlagsTestCase(TestCase):
     def test_get_flags_from_sources(self):
+        """
+        Gets the condition flags from the sources.
+
+        Args:
+            self: (todo): write your description
+        """
         flags = get_flags(sources=["flags.tests.test_sources.TestFlagsSource"])
         self.assertTrue(flags["SOURCED_FLAG"].conditions[0].value)
         self.assertIn("NOT_IN_SETTINGS_FLAG", flags)
 
     def test_add_flags_from_sources_non_existent(self):
+        """
+        Add sources to see if any of the sources in the same.
+
+        Args:
+            self: (todo): write your description
+        """
         with self.assertRaises(ImportError):
             get_flags(sources=["non.existent.module"])
 
     @override_settings(FLAGS={"SOURCED_FLAG": [], "OTHER_FLAG": []})
     def test_get_flags(self):
+        """
+        Get the flags for the flags
+
+        Args:
+            self: (todo): write your description
+        """
         flags = get_flags(
             sources=[
                 "flags.sources.SettingsFlagsSource",
@@ -182,6 +296,12 @@ class GetFlagsTestCase(TestCase):
 
     @override_settings(FLAGS={"MY_FLAG": []})
     def test_get_flags_ensure_combined_conditions_work(self):
+        """
+        Ensure the conditions of - conditions of the same.
+
+        Args:
+            self: (todo): write your description
+        """
         FlagState.objects.create(
             name="MY_FLAG", condition="boolean", value="True"
         )
@@ -196,6 +316,12 @@ class GetFlagsTestCase(TestCase):
         self.assertTrue(my_flag.check_state())
 
     def test_ignore_errors(self):
+        """
+        Test for errors are ignored.
+
+        Args:
+            self: (todo): write your description
+        """
         # Without ignore_errors
         with self.assertRaises(Exception):
             get_flags(
@@ -210,12 +336,24 @@ class GetFlagsTestCase(TestCase):
         self.assertEqual(flags, {})
 
     def test_caches_flags_on_request_if_provided(self):
+        """
+        Test if request flags to test.
+
+        Args:
+            self: (todo): write your description
+        """
         request = HttpRequest()
         self.assertFalse(hasattr(request, "flag_conditions"))
         get_flags(request=request)
         self.assertIsInstance(request.flag_conditions, dict)
 
     def test_uses_cached_flags_from_request(self):
+        """
+        Test if the request is enabled.
+
+        Args:
+            self: (todo): write your description
+        """
         request = HttpRequest()
 
         # The initial call looks up flag conditions from the database source.

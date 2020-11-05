@@ -6,6 +6,13 @@ from flags.templatetags.feature_flags import flag_disabled, flag_enabled
 
 class FlagsExtension(Extension):
     def __init__(self, environment):
+        """
+        Initialize the environment.
+
+        Args:
+            self: (todo): write your description
+            environment: (todo): write your description
+        """
         super(FlagsExtension, self).__init__(environment)
         self.environment.globals.update(
             {

@@ -14,6 +14,12 @@ urlpatterns = [
 )
 class FlagsAdminTestCase(TestCase):
     def setUp(self):
+        """
+        Set up a new login.
+
+        Args:
+            self: (todo): write your description
+        """
         self.client = Client()
         self.user = User.objects.create_superuser(
             "test", "test@email.com", "testing"
@@ -21,5 +27,11 @@ class FlagsAdminTestCase(TestCase):
         self.client.login(username="test", password="testing")
 
     def test_flags_admin(self):
+        """
+        Check the status of the test status.
+
+        Args:
+            self: (todo): write your description
+        """
         response = self.client.get("/admin/")
         self.assertEqual(response.status_code, 200)

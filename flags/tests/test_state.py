@@ -8,6 +8,12 @@ from flags.state import flag_disabled, flag_enabled, flag_state
 
 class FlagStateTestCase(TestCase):
     def setUp(self):
+        """
+        Sets a new thread.
+
+        Args:
+            self: (todo): write your description
+        """
         self.factory = RequestFactory()
 
     def test_non_existent_flag(self):
@@ -33,6 +39,13 @@ class FlagStateTestCase(TestCase):
 
     @mock.patch("flags.state.apps")
     def test_flag_state_apps_not_ready(self, mock_apps):
+        """
+        Test whether the state of the state of the app.
+
+        Args:
+            self: (todo): write your description
+            mock_apps: (todo): write your description
+        """
         mock_apps.ready = False
         with self.assertRaises(AppRegistryNotReady):
             self.assertTrue(flag_state("FLAG_ENABLED"))

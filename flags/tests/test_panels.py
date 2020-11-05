@@ -8,6 +8,12 @@ from flags.state import flag_state
 
 class FlagsPanelTestCase(TestCase):
     def setUp(self):
+        """
+        Displays the current panel
+
+        Args:
+            self: (todo): write your description
+        """
         self.request = RequestFactory().get("/")
         self.get_response = lambda req: HttpResponse()
         self.toolbar = DebugToolbar(self.request, self.get_response)
@@ -16,6 +22,12 @@ class FlagsPanelTestCase(TestCase):
 
     @override_settings(FLAGS={"MYFLAG": [("boolean", True)]})
     def test_flags_panel_has_flags(self):
+        """
+        Test for flags that have_stats.
+
+        Args:
+            self: (todo): write your description
+        """
         response = self.panel.process_request(self.request)
         self.panel.generate_stats(self.request, response)
         flags = self.panel.get_stats()["flags"]
@@ -25,6 +37,12 @@ class FlagsPanelTestCase(TestCase):
 
 class FlagChecksPanelTestCase(TestCase):
     def setUp(self):
+        """
+        Displays the current panel
+
+        Args:
+            self: (todo): write your description
+        """
         self.request = RequestFactory().get("/")
         self.get_response = lambda req: HttpResponse()
         self.toolbar = DebugToolbar(self.request, self.get_response)
@@ -33,6 +51,12 @@ class FlagChecksPanelTestCase(TestCase):
 
     @override_settings(FLAGS={"MYFLAG": [("boolean", True)]})
     def test_recording(self):
+        """
+        Test for recording
+
+        Args:
+            self: (todo): write your description
+        """
         self.assertEqual(len(self.panel.checks), 0)
 
         self.panel.enable_instrumentation()

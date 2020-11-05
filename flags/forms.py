@@ -19,6 +19,12 @@ class FlagStateForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize fields. fields
+
+        Args:
+            self: (todo): write your description
+        """
         super(FlagStateForm, self).__init__(*args, **kwargs)
 
         self.fields["name"].choices = [
@@ -30,6 +36,12 @@ class FlagStateForm(forms.ModelForm):
         ]
 
     def clean_value(self):
+        """
+        Validate the field value.
+
+        Args:
+            self: (todo): write your description
+        """
         condition_name = self.cleaned_data.get("condition")
         value = self.cleaned_data.get("value")
         condition = get_condition(condition_name)

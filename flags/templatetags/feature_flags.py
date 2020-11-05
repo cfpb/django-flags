@@ -16,6 +16,14 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def flag_enabled(context, flag_name, request=None, **kwargs):
+    """
+    Returns true if the given flag is enabled.
+
+    Args:
+        context: (dict): write your description
+        flag_name: (str): write your description
+        request: (todo): write your description
+    """
     if request is None:
         request = context.get("request")
     return base_flag_enabled(flag_name, request=request, **kwargs)
@@ -23,6 +31,14 @@ def flag_enabled(context, flag_name, request=None, **kwargs):
 
 @register.simple_tag(takes_context=True)
 def flag_disabled(context, flag_name, request=None, **kwargs):
+    """
+    Returns a flag that filters.
+
+    Args:
+        context: (dict): write your description
+        flag_name: (str): write your description
+        request: (todo): write your description
+    """
     if request is None:
         request = context.get("request")
     return base_flag_disabled(flag_name, request=request, **kwargs)

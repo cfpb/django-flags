@@ -26,6 +26,12 @@ def register(condition_name, fn=None, validator=None):
     if fn is None:
         # Be a decorator
         def decorator(fn):
+            """
+            Decorator to register a validator.
+
+            Args:
+                fn: (str): write your description
+            """
             register(condition_name, fn=fn, validator=validator)
             return fn
 
