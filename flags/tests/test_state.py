@@ -3,7 +3,14 @@ from unittest import mock
 from django.core.exceptions import AppRegistryNotReady
 from django.test import RequestFactory, TestCase
 
-from flags.state import flag_disabled, flag_enabled, flag_state
+from flags.models import FlagState
+from flags.state import (
+    disable_flag,
+    enable_flag,
+    flag_disabled,
+    flag_enabled,
+    flag_state,
+)
 
 
 class FlagStateTestCase(TestCase):
@@ -52,3 +59,32 @@ class FlagStateTestCase(TestCase):
     def test_flag_disabled_global_enabled(self):
         """ Global flags enabled should be False """
         self.assertFalse(flag_disabled("FLAG_ENABLED"))
+
+    def test_enable_flag_boolean_exists(self):
+        FlagState.objects.create(
+            name="DB_FLAG", condition="boolean", value="False"
+        )
+        self.assertFalse(flag_enabled("DB_FLAG"))
+        enable_flag("DB_FLAG")
+        self.assertTrue(flag_enabled("DB_FLAG"))
+
+    def test_enable_flag_creates_boolean(self):
+        self.assertFalse(flag_enabled("DB_FLAG"))
+        enable_flag("DB_FLAG")
+        self.assertTrue(flag_enabled("DB_FLAG"))
+
+    def test_enable_flag_without_creating_boolean(self):
+        with self.assertRaises(ValueError):
+            enable_flag("DB_FLAG", create_boolean_condition=False)
+
+    def test_enable_flag_non_existent_flag(self):
+        with self.assertRaises(KeyError):
+            enable_flag("FLAG_DOES_NOT_EXIST")
+
+    def test_disable_flag(self):
+        FlagState.objects.create(
+            name="DB_FLAG", condition="boolean", value="True"
+        )
+        self.assertFalse(flag_disabled("DB_FLAG"))
+        disable_flag("DB_FLAG")
+        self.assertTrue(flag_disabled("DB_FLAG"))

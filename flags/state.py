@@ -1,11 +1,12 @@
 from django.apps import apps
 from django.core.exceptions import AppRegistryNotReady
 
+from flags.models import FlagState
 from flags.sources import get_flags
 
 
-def _flag_state(flag_name, **kwargs):
-    """ This is a private function that performs the actual state checking """
+def _get_flag_state(flag_name, **kwargs):
+    """ A private function that performs the actual state checking """
     flags = get_flags(request=kwargs.get("request"))
 
     flag = flags.get(flag_name)
@@ -13,6 +14,39 @@ def _flag_state(flag_name, **kwargs):
         return flag.check_state(**kwargs)
 
     return None
+
+
+def _set_flag_state(
+    flag_name, state, create_boolean_condition=True, request=None
+):
+    """ A private function to set a boolean condition to the desired state """
+    flags = get_flags(request=request)
+    flag = flags.get(flag_name)
+    if flag is None:
+        raise KeyError(f"No flag with name {flag_name} exists")
+
+    db_boolean_condition = next(
+        (
+            c
+            for c in flag.conditions
+            if c.condition == "boolean" and getattr(c, "obj", None) is not None
+        ),
+        None,
+    )
+
+    if db_boolean_condition is not None:
+        # We already have a boolean condition
+        boolean_condition_obj = db_boolean_condition.obj
+    elif db_boolean_condition is None and create_boolean_condition:
+        # We can create a boolean condition and we need to.
+        boolean_condition_obj = FlagState.objects.create(
+            name=flag_name, condition="boolean", value="True"
+        )
+    else:
+        raise ValueError(f"Flag {flag_name} does not have a boolean condition")
+
+    boolean_condition_obj.value = state
+    boolean_condition_obj.save()
 
 
 def flag_state(flag_name, **kwargs):
@@ -23,7 +57,7 @@ def flag_state(flag_name, **kwargs):
             "is ready."
         )
 
-    return _flag_state(flag_name, **kwargs)
+    return _get_flag_state(flag_name, **kwargs)
 
 
 def flag_enabled(flag_name, **kwargs):
@@ -34,3 +68,23 @@ def flag_enabled(flag_name, **kwargs):
 def flag_disabled(flag_name, **kwargs):
     """ Check if a flag is disabled by passing kwargs to its conditions. """
     return not flag_state(flag_name, **kwargs)
+
+
+def enable_flag(flag_name, create_boolean_condition=True, request=None):
+    """ Add or set a boolean condition to `True` """
+    _set_flag_state(
+        flag_name,
+        True,
+        create_boolean_condition=create_boolean_condition,
+        request=request,
+    )
+
+
+def disable_flag(flag_name, create_boolean_condition=True, request=None):
+    """ Add or set a boolean condition to `False` """
+    _set_flag_state(
+        flag_name,
+        False,
+        create_boolean_condition=create_boolean_condition,
+        request=request,
+    )

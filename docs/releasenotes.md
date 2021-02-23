@@ -1,5 +1,13 @@
 # Release Notes
 
+## Unreleased
+
+### What's new?
+
+- Added [`enable_flag`](../api/state/#enable_flagflag_name-create_boolean_conditiontrue-requestnone) and [`disable_flag`](../api/state/#disable_flagflag_name-create_boolean_conditiontrue-requestnone) functions.
+- Added [`enable_flag`](../management_commands/#enable_flag-flag_name) and [`disable_flag`](../management_commands/#disable_flag-flag_name) management commands.
+
+
 ## 5.0.2
 
 ### What's new?
