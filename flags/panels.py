@@ -10,7 +10,7 @@ from flags.sources import get_flags
 
 logger = logging.getLogger(__name__)
 
-_original_flag_state = state._flag_state
+_original_flag_state = state._get_flag_state
 
 
 class FlagsPanel(Panel):
@@ -56,11 +56,11 @@ class FlagChecksPanel(Panel):
 
             return result
 
-        state._flag_state = recording_flag_state
+        state._get_flag_state = recording_flag_state
 
     def disable_instrumentation(self):
         # Restore the original functions
-        state._flag_state = _original_flag_state
+        state._get_flag_state = _original_flag_state
 
     def generate_stats(self, request, response):
         self.record_stats({"request": request, "checks": self.checks})

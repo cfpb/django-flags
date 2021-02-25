@@ -6,6 +6,7 @@ pages:
     - Debugging: debugging.md
     - Settings: settings.md
     - Conditions: conditions.md
+    - Management commands: management_commands.md
     - API Reference:
         - Flag sources: api/sources.md
         - Flag state: api/state.md
@@ -15,7 +16,8 @@ pages:
         - Django templates: api/django.md
         - Jinja2 templates: api/jinja2.md
         - Conditions: api/conditions.md
-    - Release notes: releasenotes.md
+    - Release notes:
+        - Release notes: releasenotes.md
 theme:
   name: 'readthedocs'
   custom_dir: docs/theme-overrides/

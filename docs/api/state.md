@@ -5,6 +5,8 @@ from flags.state import (
     flag_state,
     flag_enabled,
     flag_disabled,
+    enable_flag,
+    disable_flag,
 )
 ```
 
@@ -18,6 +20,7 @@ from flags.state import (
 ### `flag_state(flag_name, **kwargs)`
 
 Return the value for the flag (`True` or `False`) by passing kwargs to its conditions. If the flag does not exist, this will return `None` so that existence can be introspected but will still evaluate to `False`.
+
 
 ## Requiring state
 
@@ -38,3 +41,19 @@ Returns `True` if a flag is disabled by passing kwargs to its conditions, otherw
 if flag_disabled('MY_FLAG', request=a_request):
 	print(“My feature flag is disabled”)
 ```
+
+
+## Setting state
+
+### `enable_flag(flag_name, create_boolean_condition=True, request=None)`
+
+Enable a flag by adding or setting an existing database boolean condition to `True`. If the flag has other required conditions, those will take precedence. 
+
+If `create_boolean_condition` is `False`, and a boolean database condition does not already exist, a `ValueError` will be raised.
+
+### `disable_flag(flag_name, create_boolean_condition=True, request=None)`
+
+Disable a flag by adding or setting an existing database boolean condition to `False`. If the flag has other required conditions, those will take precedence. 
+
+If `create_boolean_condition` is `False`, and a boolean database condition does not already exist, a `ValueError` will be raised.
+
