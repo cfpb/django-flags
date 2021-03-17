@@ -20,6 +20,6 @@ from flags.conditions.validators import (
     validate_boolean,
     validate_date,
     validate_parameter,
-    validate_path,
+    validate_path_re,
     validate_user,
 )

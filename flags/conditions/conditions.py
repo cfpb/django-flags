@@ -9,7 +9,7 @@ from flags.conditions.validators import (
     validate_boolean,
     validate_date,
     validate_parameter,
-    validate_path,
+    validate_path_re,
     validate_user,
 )
 
@@ -67,7 +67,7 @@ def parameter_condition(param_name, request=None, **kwargs):
     return request.GET.get(param_name) == param_value
 
 
-@register("path matches", validator=validate_path)
+@register("path matches", validator=validate_path_re)
 def path_condition(pattern, request=None, **kwargs):
     """ Does the request's path match the given regular expression? """
     if request is None:

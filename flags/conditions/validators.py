@@ -7,20 +7,21 @@ from django.core.validators import RegexValidator
 from django.utils import dateparse
 
 
-validate_path = RegexValidator(
-    re.compile(r"^[^\s:?#]+$", re.UNICODE),
-    message=(
-        "Enter a valid path without a URL scheme, query string, or fragment."
-    ),
-    code="invalid",
-)
-
-
 validate_parameter = RegexValidator(
     re.compile(r"^[-_\w=]+$", re.UNICODE),
     message="Enter a valid HTTP parameter name.",
     code="invalid",
 )
+
+
+def validate_path_re(value):
+    try:
+        re.compile(value)
+    except re.error as e:
+        raise ValidationError(
+            "Enter either a valid path or a regular expression to match a "
+            "path, without a URL scheme, query string, or fragment."
+        ) from e
 
 
 def validate_boolean(value):

@@ -1,5 +1,12 @@
 # Release Notes
 
+## Unreleased
+
+### What's new?
+
+- Fixed the "path matches" condition validator to allow any valid regular expression.
+
+
 ## 5.0.3
 
 ### What's new?
