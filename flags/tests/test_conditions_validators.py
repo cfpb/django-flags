@@ -6,7 +6,7 @@ from flags.conditions.validators import (
     validate_boolean,
     validate_date,
     validate_parameter,
-    validate_path,
+    validate_path_re,
     validate_user,
 )
 
@@ -26,18 +26,15 @@ class ValidateParameterTestCase(TestCase):
 
 
 class ValidatePathTestCase(TestCase):
-    def test_invalid_path_strings(self):
+    def test_invalid_path_regexs(self):
         with self.assertRaises(ValidationError):
-            validate_path("/my/path#foo")
-        with self.assertRaises(ValidationError):
-            validate_path("/my/path?foo=bar")
-        with self.assertRaises(ValidationError):
-            validate_path("https://foo/my/path")
+            validate_path_re("*foo/my/path")
 
-    def test_valid_path_strings(self):
-        validate_path("/my/path")
-        validate_path("/my/path/")
-        validate_path("my/path/")
+    def test_valid_path_regexs(self):
+        validate_path_re("/my/path")
+        validate_path_re("/my/path/")
+        validate_path_re("my/path/")
+        validate_path_re(r"^/my/(path)?$")
 
 
 class ValidateBooleanTestCase(TestCase):
