@@ -1,6 +1,6 @@
 # Release Notes
 
-## Unreleased
+## 5.0.4
 
 ### What's new?
 
