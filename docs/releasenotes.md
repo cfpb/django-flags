@@ -4,7 +4,7 @@
 
 ### What's new?
 
-- Added Django 3.2 support
+- Added Django 3.2 support (thanks [@dduong42](https://github.com/dduong42)!)
 
 
 ## 5.0.4
