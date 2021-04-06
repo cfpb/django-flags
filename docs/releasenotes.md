@@ -1,5 +1,12 @@
 # Release Notes
 
+## 5.0.5
+
+### What's new?
+
+- Added Django 3.2 support
+
+
 ## 5.0.4
 
 ### What's new?
