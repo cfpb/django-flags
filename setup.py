@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-install_requires = ["Django>=1.11,<3.2"]
+install_requires = ["Django>=1.11,<3.3"]
 
 testing_extras = [
     "coverage>=3.7.0",
@@ -24,7 +24,7 @@ setup(
     long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="CC0",
-    version="5.0.4",
+    version="5.0.5",
     include_package_data=True,
     packages=find_packages(),
     python_requires=">=3.6",
@@ -35,6 +35,7 @@ setup(
         "Framework :: Django :: 2.2",
         "Framework :: Django :: 3.0",
         "Framework :: Django :: 3.1",
+        "Framework :: Django :: 3.2",
         "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
         "License :: Public Domain",
         "Programming Language :: Python",
