@@ -57,14 +57,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install tox coveralls
+          pip install tox diff_cover
 
       - name: Run tox
         run: tox
         env:
           TOXENV: ${{ matrix.toxenv }}
  
-      - name: Upload coverage data
-        run: coveralls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check coverage
+        run: |
+          coverage xml
+          diff-cover coverage.xml --compare-branch=origin/main --fail-under=100
