@@ -68,6 +68,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../conditions/">Conditions</a>
                     </li>
                 </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../management_commands/">Management commands</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">API Reference</span></p>
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../sources/">Flag sources</a>
@@ -80,6 +84,8 @@
             <li><a class="toctree-l4" href="#checking-state">Checking state</a></li>
         
             <li><a class="toctree-l4" href="#requiring-state">Requiring state</a></li>
+        
+            <li><a class="toctree-l4" href="#setting-state">Setting state</a></li>
         
         </ul>
     
@@ -99,6 +105,7 @@
                     <li class="toctree-l1"><a class="reference internal" href="../conditions/">Conditions</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Release notes</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../releasenotes/">Release notes</a>
                     </li>
@@ -147,8 +154,9 @@
     flag_state,
     flag_enabled,
     flag_disabled,
+    enable_flag,
+    disable_flag,
 )</code></pre>
-
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If any of the flag state checking functions below is used at the top-level of a module (in <code>urls.py</code>, for example), it will be evaluated at import-time. This may have unintended consequences. <a href="/api/sources/#flag-sources">Database flag conditions</a> may not be available, <a href="/api/conditions/">custom conditions</a> may not be registered, and any dynamic change in flag state (such as date-based conditions or a newly added database condition) will not have an effect.</p>
@@ -162,11 +170,17 @@
 <p>Returns <code>True</code> if a flag is enabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
 <pre class="highlight"><code class="language-python">if flag_enabled('MY_FLAG', request=a_request):
     print("My feature flag is enabled")</code></pre>
-
 <h3 id="flag_disabledflag_name-kwargs"><code>flag_disabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_disabledflag_name-kwargs" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
 <pre class="highlight"><code class="language-python">if flag_disabled('MY_FLAG', request=a_request):
     print(“My feature flag is disabled”)</code></pre>
+<h2 id="setting-state">Setting state<a class="headerlink" href="#setting-state" title="Permanent link">¶</a></h2>
+<h3 id="enable_flagflag_name-create_boolean_conditiontrue-requestnone"><code>enable_flag(flag_name, create_boolean_condition=True, request=None)</code><a class="headerlink" href="#enable_flagflag_name-create_boolean_conditiontrue-requestnone" title="Permanent link">¶</a></h3>
+<p>Enable a flag by adding or setting an existing database boolean condition to <code>True</code>. If the flag has other required conditions, those will take precedence. </p>
+<p>If <code>create_boolean_condition</code> is <code>False</code>, and a boolean database condition does not already exist, a <code>ValueError</code> will be raised.</p>
+<h3 id="disable_flagflag_name-create_boolean_conditiontrue-requestnone"><code>disable_flag(flag_name, create_boolean_condition=True, request=None)</code><a class="headerlink" href="#disable_flagflag_name-create_boolean_conditiontrue-requestnone" title="Permanent link">¶</a></h3>
+<p>Disable a flag by adding or setting an existing database boolean condition to <code>False</code>. If the flag has other required conditions, those will take precedence. </p>
+<p>If <code>create_boolean_condition</code> is <code>False</code>, and a boolean database condition does not already exist, a <code>ValueError</code> will be raised.</p>
               
             </div>
           </div>

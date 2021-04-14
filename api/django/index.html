@@ -68,6 +68,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../conditions/">Conditions</a>
                     </li>
                 </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../management_commands/">Management commands</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">API Reference</span></p>
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../sources/">Flag sources</a>
@@ -99,6 +103,7 @@
                     <li class="toctree-l1"><a class="reference internal" href="../conditions/">Conditions</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Release notes</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../releasenotes/">Release notes</a>
                     </li>
@@ -145,7 +150,6 @@
                 <h1 id="django-templates">Django templates<a class="headerlink" href="#django-templates" title="Permanent link">¶</a></h1>
 <p>Django-Flags provides a template tag library that can be used to evaluate flags in Django templates.</p>
 <pre class="highlight"><code class="language-django">{% load feature_flags %}</code></pre>
-
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_enabled"><code>flag_enabled</code><a class="headerlink" href="#flag_enabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is enabled, otherwise returns <code>False</code>.</p>
@@ -155,7 +159,6 @@
     I’m the result of a feature flag.   
   &lt;/div&gt;
 {% endif %}</code></pre>
-
 <h3 id="flag_disabled"><code>flag_disabled</code><a class="headerlink" href="#flag_disabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled, otherwise returns <code>False</code>.</p>
 <pre class="highlight"><code class="language-django">{% flag_disabled 'MY_FLAG' as my_flag %}
@@ -164,7 +167,6 @@
     I’m the result of a feature flag that is not enabled.
   &lt;/div&gt;
 {% endif %}</code></pre>
-
 <p>If a <code>request</code> exists in the current context,
 it will be passed to any conditions that use it.</p>
 <h2 id="passing-additional-arguments">Passing additional arguments<a class="headerlink" href="#passing-additional-arguments" title="Permanent link">¶</a></h2>

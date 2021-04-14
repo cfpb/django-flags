@@ -78,6 +78,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../conditions/">Conditions</a>
                     </li>
                 </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../management_commands/">Management commands</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">API Reference</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../api/sources/">Flag sources</a>
@@ -97,6 +101,7 @@
                     <li class="toctree-l1"><a class="reference internal" href="../api/conditions/">Conditions</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Release notes</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../releasenotes/">Release notes</a>
                     </li>
@@ -174,14 +179,12 @@
     ('condition name', 'expected value to be enabled', True),
   ],
 }</code></pre>
-
 <p>Previously flag definitions in <code>FLAGS</code> supported a single dictionary (rather than a list) with the condition name as the key and expected value as value. This method of specifying flags is deprecated and will be removed in Django-Flags 5.0.</p>
 <h3 id="flags_state_logging"><code>FLAGS_STATE_LOGGING</code><a class="headerlink" href="#flags_state_logging" title="Permanent link">¶</a></h3>
 <p>Default: <code>False</code></p>
 <p>If this setting is <code>True</code> Django-Flags will log all flag state checks with how the conditions were evaluated. These will appear in the log file like:</p>
 <pre class="highlight"><code>INFO:flags.sources:Flag MY_FLAG evaluated False with conditions: boolean (False).
 INFO:flags.sources:Flag MY_FLAG evaluated True with conditions: boolean (False), path matches (True).</code></pre>
-
 <p>This is intended for use in tracking the history and usage of enabled featured flags.</p>
               
             </div>

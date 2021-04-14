@@ -84,6 +84,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="conditions/">Conditions</a>
                     </li>
                 </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="management_commands/">Management commands</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">API Reference</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="api/sources/">Flag sources</a>
@@ -103,6 +107,7 @@
                     <li class="toctree-l1"><a class="reference internal" href="api/conditions/">Conditions</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Release notes</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="releasenotes/">Release notes</a>
                     </li>
@@ -152,14 +157,12 @@
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
 <p>First, install django-flags:</p>
 <pre class="highlight"><code class="language-shell">pip install django-flags</code></pre>
-
 <p>Then add <code>flags</code> as an installed app in your Django <code>settings.py</code>:</p>
 <pre class="highlight"><code class="language-python">INSTALLED_APPS = (
     # …
     'flags',
     # …
 )</code></pre>
-
 <p>And <code>django.template.context_processors.request</code> to the <code>TEMPLATES</code> <code>context_processors</code> setting so that the <code>request</code> variable is available:</p>
 <pre class="highlight"><code class="language-python">TEMPLATES = [
     {
@@ -177,10 +180,8 @@
         # …
     },
 ]</code></pre>
-
 <p>Finally, run migrations:</p>
 <pre class="highlight"><code class="language-shell">./manage.py migrate</code></pre>
-
 <h2 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">¶</a></h2>
 <p>Feature flags in Django-Flags are identified by simple strings that are enabled when the conditions they are associated with are met. These flags can be used to wrap code and template content that should only be used when a flag is enabled or disabled.</p>
 <p>Conditions determine whether a flag is enabled or disabled by comparing a defined expected value of some kind with the value at the time the flag is checked. In many cases, the flag is checked during a request, and some piece of the request's metadata is what is compared. For example, a feature flag that is enabled for a specific user would be enabled if the request's user matches the condition's user.</p>
@@ -190,7 +191,6 @@
 <pre class="highlight"><code class="language-python">FLAGS = {
     'MY_FLAG': []
 }</code></pre>
-
 <p>Then use the flag in a Django template (<code>mytemplate.html</code>):</p>
 <pre class="highlight"><code class="language-django">{% load feature_flags %}
 {% flag_enabled 'MY_FLAG' as my_flag %}
@@ -200,7 +200,6 @@
     I’m the result of a feature flag.   
   &lt;/div&gt;
 {% endif %}</code></pre>
-
 <p>Configure a URL for that template (<code>urls.py</code>):</p>
 <pre class="highlight"><code class="language-python">from django.urls import path
 from django.views.generic import TemplateView
@@ -208,7 +207,6 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path(r'mypage/', TemplateView.as_view(template_name='mytemplate.html')),
 ]</code></pre>
-
 <p>Then in the Django admin add conditions for the flag in "Django Flags", "Flag states":</p>
 <p><img alt="Creating conditions in the Django admin" src="images/screenshot_create.png" /></p>
 <p>Then visiting the URL <code>/mypage?enable_my_flag=True</code> should show you the flagged <code>&lt;div&gt;</code> in the template.</p>
@@ -266,6 +264,6 @@ urlpatterns = [
 </html>
 
 <!--
-MkDocs version : 1.1
-Build Date UTC : 2020-08-13 20:40:22
+MkDocs version : 1.1.2
+Build Date UTC : 2021-04-14 13:18:50.654826+00:00
 -->

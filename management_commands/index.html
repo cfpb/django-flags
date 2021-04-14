@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Debugging - Django-Flags</title>
+  <title>Management commands - Django-Flags</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -19,8 +19,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Debugging";
-    var mkdocs_page_input_path = "debugging.md";
+    var mkdocs_page_name = "Management commands";
+    var mkdocs_page_input_path = "management_commands.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -56,22 +56,8 @@
                     <li class="toctree-l1"><a class="reference internal" href="../usage/">Usage guide</a>
                     </li>
                 </ul>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Debugging</a>
-    <ul class="current">
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#system-checks">System checks</a></li>
-        
-            <li><a class="toctree-l4" href="#exceptions">Exceptions</a></li>
-        
-            <li><a class="toctree-l4" href="#django-debug-toolbar-panels">Django Debug Toolbar Panels</a></li>
-        
-        </ul>
-    
-
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../debugging/">Debugging</a>
                     </li>
                 </ul>
                 <ul>
@@ -82,8 +68,20 @@
                     <li class="toctree-l1"><a class="reference internal" href="../conditions/">Conditions</a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../management_commands/">Management commands</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Management commands</a>
+    <ul class="current">
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#enable_flag-flag_name">enable_flag FLAG_NAME</a></li>
+        
+            <li><a class="toctree-l4" href="#disable_flag-flag_name">disable_flag FLAG_NAME</a></li>
+        
+        </ul>
+    
+
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">API Reference</span></p>
@@ -131,10 +129,10 @@
     
       
     
-    <li>Debugging</li>
+    <li>Management commands</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/debugging.md"
+        <a href="https://github.com/cfpb/django-flags/edit/master/docs/management_commands.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -145,51 +143,16 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">¶</a></h1>
-<h2 id="system-checks">System checks<a class="headerlink" href="#system-checks" title="Permanent link">¶</a></h2>
-<dl>
-  <dt>`flags.E001`</dt>
-  <dd>
-    <p>Django-Flags includes a <a href="https://docs.djangoproject.com/en/stable/topics/checks/">Django system check</a> to check for flags that have non-existent conditions on start-up.</p>
-    <pre><code>?: (flags.E001) Flag FLAG_WITH_ANY_CONDITIONS has non-existent condition "condition name".
-HINT: Register "condition name" as a Django-Flags condition.</code></pre>
-  </dd>
-</dl>
-
-<dl>
-  <dt>`flags.E002`</dt>
-  <dd>
-    <p>Django-Flags includes a <a href="https://docs.djangoproject.com/en/stable/topics/checks/">Django system check</a> to check to ensure that flag conditions have valid expected values on start-up.</p>
-    <pre><code>?: (flags.E002) Flag FLAG_WITH_ANY_CONDITIONS's "boolean" condition has an invalid value.
-HINT: Enter one of "on", "off", "true", "false".</code></pre>
-  </dd>
-</dl>
-
-<h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">¶</a></h2>
-<h3 id="requiredforcondition"><code>RequiredForCondition</code><a class="headerlink" href="#requiredforcondition" title="Permanent link">¶</a></h3>
-<p>Django-Flags allows conditions to require any number of keyword arguments that must be passed when checking the condition. If a condition does not receive the necessary arguments, it may raise a <code>RequiredForCondition</code> exception, for example:</p>
-<pre class="highlight"><code class="language-python">Traceback (most recent call last):
-  …
-    raise RequiredForCondition("request is required for condition 'path'")</code></pre>
-<h2 id="django-debug-toolbar-panels">Django Debug Toolbar Panels<a class="headerlink" href="#django-debug-toolbar-panels" title="Permanent link">¶</a></h2>
-<h3 id="flag-conditions">Flag conditions<a class="headerlink" href="#flag-conditions" title="Permanent link">¶</a></h3>
-<p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will list all flags, their conditions, and the state of each flag for the current request.</p>
-<p><img alt="Feature flags Django Debug Toolbar panel" src="../images/screenshot_flags_debug_panel.png" /></p>
-<p>To enable the panel first follow the <a href="https://django-debug-toolbar.readthedocs.io/en/latest/installation.html">installation and setup instructions for Django Debug Toolbar</a>. Then add <code>flags.panels.FlagsPanel</code> to the <code>DEBUG_TOOLBAR_PANELS</code> setting:</p>
-<pre class="highlight"><code class="language-python">DEBUG_TOOLBAR_PANELS = [
-    # …
-    'flags.panels.FlagsPanel',
-    # …
-]</code></pre>
-<h3 id="flag-checks">Flag checks<a class="headerlink" href="#flag-checks" title="Permanent link">¶</a></h3>
-<p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will show which flags were checked during a request, how many times it was checked, and what the results of those checks were.</p>
-<p><img alt="Flag Checks Django Debug Toolbar panel" src="../images/screenshot_flag_checks_panel.png" /></p>
-<p>To enable the panel first follow the <a href="https://django-debug-toolbar.readthedocs.io/en/latest/installation.html">installation and setup instructions for Django Debug Toolbar</a>. Then add <code>flags.panels.FlagChecksPanel</code> to the <code>DEBUG_TOOLBAR_PANELS</code> setting:</p>
-<pre class="highlight"><code class="language-python">DEBUG_TOOLBAR_PANELS = [
-    # …
-    'flags.panels.FlagChecksPanel',
-    # …
-]</code></pre>
+                <h1 id="management-commands">Management Commands<a class="headerlink" href="#management-commands" title="Permanent link">¶</a></h1>
+<p>Django-Flags provides two management commands that allow for enabling and disabling of feature flags from the command line.</p>
+<h2 id="enable_flag-flag_name"><code>enable_flag FLAG_NAME</code><a class="headerlink" href="#enable_flag-flag_name" title="Permanent link">¶</a></h2>
+<p>Enable a flag by adding or setting an existing database boolean condition to <code>True</code>. If the flag has other required conditions, those will take precedence. </p>
+<p>This command calls the <a href="../api/state#enable_flagflag_name-create_boolean_conditiontrue-requestnone"><code>flags.state.enable_flag</code> function</a> function.</p>
+<pre class="highlight"><code>./manage.py enable_flag MY_FLAG</code></pre>
+<h2 id="disable_flag-flag_name"><code>disable_flag FLAG_NAME</code><a class="headerlink" href="#disable_flag-flag_name" title="Permanent link">¶</a></h2>
+<p>Disable a flag by adding or setting an existing database boolean condition to <code>False</code>. If the flag has other required conditions, those will take precedence. </p>
+<p>This command calls the <a href="../api/state#disable_flagflag_name-create_boolean_conditiontrue-requestnone"><code>flags.state.enable_flag</code> function</a> function.</p>
+<pre class="highlight"><code>./manage.py disable_flag MY_FLAG</code></pre>
               
             </div>
           </div>
@@ -197,10 +160,10 @@ HINT: Enter one of "on", "off", "true", "false".</code></pre>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../settings/" class="btn btn-neutral float-right" title="Settings">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../api/sources/" class="btn btn-neutral float-right" title="Flag sources">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../usage/" class="btn btn-neutral" title="Usage guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../conditions/" class="btn btn-neutral" title="Conditions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -228,10 +191,10 @@ HINT: Enter one of "on", "off", "true", "false".</code></pre>
           <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../usage/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../conditions/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../settings/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../api/sources/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -68,6 +68,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../../conditions/">Conditions</a>
                     </li>
                 </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../management_commands/">Management commands</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">API Reference</span></p>
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">Flag sources</a>
@@ -97,6 +101,7 @@
                     <li class="toctree-l1"><a class="reference internal" href="../conditions/">Conditions</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Release notes</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../../releasenotes/">Release notes</a>
                     </li>
@@ -154,7 +159,6 @@ class CustomFlagSource(object):
             ]
         }
         return flags</code></pre>
-
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">¶</a></h2>
 <h3 id="get_flagssourcesnone-ignore_errorsfalse"><code>get_flags(sources=None, ignore_errors=False)</code><a class="headerlink" href="#get_flagssourcesnone-ignore_errorsfalse" title="Permanent link">¶</a></h3>
 <p>Return a dictionary of all flag names with <a href="#flagname-conditions"><code>Flag</code></a> objects that are available in the given <code>sources</code>. If <code>sources</code> is not given, the sources in the <a href="../../settings/#flag_sources"><code>FLAG_SOURCES</code> setting</a> are used. If <code>ignore_errors</code> is <code>True</code>, any exceptions that occur when getting flags from a source will be caught and ignored.</p>
@@ -176,7 +180,7 @@ class CustomFlagSource(object):
         <a href="../state/" class="btn btn-neutral float-right" title="Flag state">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../conditions/" class="btn btn-neutral" title="Conditions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../management_commands/" class="btn btn-neutral" title="Management commands"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -204,7 +208,7 @@ class CustomFlagSource(object):
           <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../../conditions/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../management_commands/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../state/" style="color: #fcfcfc">Next &raquo;</a></span>

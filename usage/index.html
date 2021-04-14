@@ -80,6 +80,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../conditions/">Conditions</a>
                     </li>
                 </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../management_commands/">Management commands</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">API Reference</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../api/sources/">Flag sources</a>
@@ -99,6 +103,7 @@
                     <li class="toctree-l1"><a class="reference internal" href="../api/conditions/">Conditions</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Release notes</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../releasenotes/">Release notes</a>
                     </li>
@@ -152,7 +157,6 @@
         {'condition': 'path matches', 'value': r'^/liberty/island', 'required': True},
     ]
 }</code></pre>
-
 <p>The set of conditions can be empty (flag will never be enabled), have one or more conditions that are not required (any of those conditions can be met for the flag to be enabled), or one or more required conditions (all required conditions have to be met for the flag to be enabled).</p>
 <p>Additional conditions can be added in the Django admin for any defined flag (illustrated in <a href="../#quickstart">Quickstart</a>). Conditions added in the Django admin can be changed without restarting Django, conditions defined in <code>settings.py</code> cannot. See <a href="../conditions/">the list of built-in conditions</a>.</p>
 <h2 id="using-flags-in-code">Using flags in code<a class="headerlink" href="#using-flags-in-code" title="Permanent link">¶</a></h2>
@@ -161,7 +165,6 @@
 
 if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
     print("My feature flag is enabled") </code></pre>
-
 <p>In Django templates:</p>
 <pre class="highlight"><code class="language-django">{% load feature_flags %}
 {% flag_enabled 'FLAG_WITH_ANY_CONDITIONS' as my_flag %}
@@ -170,21 +173,18 @@ if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
     I’m the result of a feature flag.   
   &lt;/div&gt;
 {% endif %}</code></pre>
-
 <p>In Jinja2 templates (after <a href="../api/jinja2/">adding <code>flag_enabled</code> to the Jinja2 environment</a>):</p>
 <pre class="highlight"><code class="language-jinja">{% if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request) %}
   &lt;div&gt;
     I’m the result of a feature flag.   
   &lt;/div&gt;
 {% endif %}</code></pre>
-
 <p>In <code>urls.py</code>:</p>
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_path
 
 urlpatterns = [
     flagged_path('FLAG_WITH_REQUIRED_CONDITIONS', 'a-url/', view_requiring_flag, state=True),
 ]</code></pre>
-
 <p>See the <a href="/api/state">API reference</a> for more details and examples.</p>
               
             </div>
