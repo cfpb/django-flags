@@ -136,7 +136,7 @@
     <li>Jinja2 templates</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/jinja2.md"
+        <a href="https://github.com/cfpb/django-flags/edit/main/docs/api/jinja2.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -167,6 +167,7 @@ backend configuration to enable the tags to be used in Jinja2 templates.</p>
         }
     },
 ]</code></pre>
+
 <h2 id="checking-state">Checking state<a class="headerlink" href="#checking-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_enabled"><code>flag_enabled</code><a class="headerlink" href="#flag_enabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is enabled, otherwise returns <code>False</code>.</p>
@@ -175,6 +176,7 @@ backend configuration to enable the tags to be used in Jinja2 templates.</p>
     I’m the result of a feature flag.   
   &lt;/div&gt;
 {% endif %}</code></pre>
+
 <h3 id="flag_disabled"><code>flag_disabled</code><a class="headerlink" href="#flag_disabled" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled to its conditions, otherwise returns <code>False</code>.</p>
 <pre class="highlight"><code class="language-jinja">{% if flag_disabled('MY_FLAG') %}
@@ -182,6 +184,7 @@ backend configuration to enable the tags to be used in Jinja2 templates.</p>
     I’m the result of a feature flag that is not enabled.
   &lt;/div&gt;
 {% endif %}</code></pre>
+
 <p>If a <code>request</code> exists in the current context,
 it will be passed to any conditions that use it.</p>
 <h2 id="passing-additional-arguments">Passing additional arguments<a class="headerlink" href="#passing-additional-arguments" title="Permanent link">¶</a></h2>

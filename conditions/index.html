@@ -132,7 +132,7 @@
     <li>Conditions</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/conditions.md"
+        <a href="https://github.com/cfpb/django-flags/edit/main/docs/conditions.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -149,14 +149,17 @@
 <h3 id="boolean"><code>boolean</code><a class="headerlink" href="#boolean" title="Permanent link">¶</a></h3>
 <p>A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition. </p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'boolean', 'value': True}]}</code></pre>
+
 <p>The value can given as a Python <code>True</code> or <code>False</code> or  as any <a href="https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool">string representation of truth</a>, such as <code>y</code>, <code>yes</code>, <code>t</code>, <code>true</code>, <code>on</code> and <code>1</code> for true values, and <code>n</code>, <code>no</code>, <code>f</code>, <code>false</code>, <code>off</code> and <code>0</code> for false values.</p>
 <h3 id="user"><code>user</code><a class="headerlink" href="#user" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled for the username given as the condition's value.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'user', 'value': 'jane.doe'}]}</code></pre>
+
 <h3 id="anonymous"><code>anonymous</code><a class="headerlink" href="#anonymous" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be either enabled or disabled depending on whether a user is anonymous (not logged in) to Django.</p>
 <pre class="highlight"><code class="language-python"># MY_FLAG is enabled if the user is not anonymous (is logged in)
 FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}</code></pre>
+
 <p>The value can given as a Python <code>True</code> or <code>False</code> or  as any <a href="https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool">string representation of truth</a>, such as <code>y</code>, <code>yes</code>, <code>t</code>, <code>true</code>, <code>on</code> and <code>1</code> for true values, and <code>n</code>, <code>no</code>, <code>f</code>, <code>false</code>, <code>off</code> and <code>0</code> for false values.</p>
 <h3 id="parameter"><code>parameter</code><a class="headerlink" href="#parameter" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled by including a parameter in the request's query string. <code>value</code> is the name of the parameter, or a name and expected value. If an expected value isn't provided, the value must be <code>True</code>.</p>
@@ -167,15 +170,19 @@ FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}</code></pre>
         {'condition': 'parameter', 'value': 'my_flag_param3='},     # ?my_flag_param3
     ]
 }</code></pre>
+
 <h3 id="path-matches"><code>path matches</code><a class="headerlink" href="#path-matches" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled if the request's path matches the regular expression value.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'path matches', 'value': r'^/flagged/path'}]}</code></pre>
+
 <h3 id="after-date"><code>after date</code><a class="headerlink" href="#after-date" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled after a given date (and time) given in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 format</a>. The time must be specified either in UTC or as an offset from UTC.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'after date', 'value': '2017-06-01T12:00Z'}]}</code></pre>
+
 <h3 id="before_date"><code>before_date</code><a class="headerlink" href="#before_date" title="Permanent link">¶</a></h3>
 <p>Allows a flag to be enabled before a given date (and time) given in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 format</a>. The time must be specified either in UTC or as an offset from UTC.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': {'before date': '2022-06-01T12:00Z'}}</code></pre>
+
 <h2 id="custom-conditions">Custom conditions<a class="headerlink" href="#custom-conditions" title="Permanent link">¶</a></h2>
 <p>Custom conditions can be created and registered for use using the <a href="../api/conditions">conditions API</a>.</p>
               

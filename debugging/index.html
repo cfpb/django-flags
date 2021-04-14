@@ -134,7 +134,7 @@
     <li>Debugging</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/debugging.md"
+        <a href="https://github.com/cfpb/django-flags/edit/main/docs/debugging.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -171,6 +171,7 @@ HINT: Enter one of "on", "off", "true", "false".</code></pre>
 <pre class="highlight"><code class="language-python">Traceback (most recent call last):
   …
     raise RequiredForCondition("request is required for condition 'path'")</code></pre>
+
 <h2 id="django-debug-toolbar-panels">Django Debug Toolbar Panels<a class="headerlink" href="#django-debug-toolbar-panels" title="Permanent link">¶</a></h2>
 <h3 id="flag-conditions">Flag conditions<a class="headerlink" href="#flag-conditions" title="Permanent link">¶</a></h3>
 <p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will list all flags, their conditions, and the state of each flag for the current request.</p>
@@ -181,6 +182,7 @@ HINT: Enter one of "on", "off", "true", "false".</code></pre>
     'flags.panels.FlagsPanel',
     # …
 ]</code></pre>
+
 <h3 id="flag-checks">Flag checks<a class="headerlink" href="#flag-checks" title="Permanent link">¶</a></h3>
 <p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will show which flags were checked during a request, how many times it was checked, and what the results of those checks were.</p>
 <p><img alt="Flag Checks Django Debug Toolbar panel" src="../images/screenshot_flag_checks_panel.png" /></p>

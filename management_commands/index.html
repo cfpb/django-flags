@@ -132,7 +132,7 @@
     <li>Management commands</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/management_commands.md"
+        <a href="https://github.com/cfpb/django-flags/edit/main/docs/management_commands.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -149,6 +149,7 @@
 <p>Enable a flag by adding or setting an existing database boolean condition to <code>True</code>. If the flag has other required conditions, those will take precedence. </p>
 <p>This command calls the <a href="../api/state#enable_flagflag_name-create_boolean_conditiontrue-requestnone"><code>flags.state.enable_flag</code> function</a> function.</p>
 <pre class="highlight"><code>./manage.py enable_flag MY_FLAG</code></pre>
+
 <h2 id="disable_flag-flag_name"><code>disable_flag FLAG_NAME</code><a class="headerlink" href="#disable_flag-flag_name" title="Permanent link">¶</a></h2>
 <p>Disable a flag by adding or setting an existing database boolean condition to <code>False</code>. If the flag has other required conditions, those will take precedence. </p>
 <p>This command calls the <a href="../api/state#disable_flagflag_name-create_boolean_conditiontrue-requestnone"><code>flags.state.enable_flag</code> function</a> function.</p>

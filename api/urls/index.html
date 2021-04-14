@@ -140,7 +140,7 @@
     <li>Flagged URL patterns</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/urls.md"
+        <a href="https://github.com/cfpb/django-flags/edit/main/docs/api/urls.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -154,6 +154,7 @@
                 <h1 id="flagged-url-patterns">Flagged URL patterns<a class="headerlink" href="#flagged-url-patterns" title="Permanent link">¶</a></h1>
 <p>Flagged URL patterns are an alternative to <a href="../../api/decorators">flagging views with decorators</a>.</p>
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_path, flagged_paths, flagged_re_path, flagged_re_paths</code></pre>
+
 <h3 id="flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <h3 id="flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_re_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <p>Make a URL depend on the state of a feature flag. </p>
@@ -174,6 +175,7 @@
     flagged_re_path('MY_NEW_APP_FLAG', r'^mynewapp$', include('mynewapp.urls'),
                     state=True, fallback=include('myoldapp.urls'))
 ]</code></pre>
+
 <h3 id="flagged_pathsflag_name-statetrue-fallbacknone"><code>flagged_paths(flag_name, state=True, fallback=None)</code><a class="headerlink" href="#flagged_pathsflag_name-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <h3 id="flagged_re_pathsflag_name-statetrue-fallbacknone"><code>flagged_re_paths(flag_name, state=True, fallback=None)</code><a class="headerlink" href="#flagged_re_pathsflag_name-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <p>Flag multiple URLs in the same context with a context manager.</p>

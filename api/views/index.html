@@ -134,7 +134,7 @@
     <li>Class-based views</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/views.md"
+        <a href="https://github.com/cfpb/django-flags/edit/main/docs/api/views.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -150,6 +150,7 @@
     FlaggedViewMixin,
     FlaggedTemplateView,
 )</code></pre>
+
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">¶</a></h2>
 <h3 id="flaggedviewmixin"><code>FlaggedViewMixin</code><a class="headerlink" href="#flaggedviewmixin" title="Permanent link">¶</a></h3>
 <p>Adds flag-checking to HTTP method dispatching in <a href="https://docs.djangoproject.com/en/2.2/topics/class-based-views/">class-based views</a>.</p>
@@ -176,6 +177,7 @@ from flags.views import FlaggedViewMixin
 class MyFlaggedView(FlaggedViewMixin, View):
     def get(self, request, *args, **kwargs):
         return HttpResponse('ok')</code></pre>
+
 <p>And in <code>urls.py</code>:</p>
 <pre class="highlight"><code class="language-python">from django.urls import path
 from flags.urls import flagged_path
@@ -183,6 +185,7 @@ from flags.urls import flagged_path
 urlpatterns = [
     path('my-url/', MyFlaggedView.as_view(flag_name='MY_FLAG'))
 ]</code></pre>
+
 <h3 id="flaggedtemplateview"><code>FlaggedTemplateView</code><a class="headerlink" href="#flaggedtemplateview" title="Permanent link">¶</a></h3>
 <p>A combination of <a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#templateview"><code>TemplateView</code></a> and <a href="#flaggedviewmixin"><code>FlaggedViewMixin</code></a>.</p>
 <p>For example, in <code>views.py</code>:</p>
@@ -191,6 +194,7 @@ urlpatterns = [
 class MyFlaggedView(FlaggedTemplateView):
     template_name = "mytemplate.html"
     flag_name = 'MY_FLAG'</code></pre>
+
 <p>Or to serve a template directly in <code>urls.py</code>:</p>
 <pre class="highlight"><code>from django.urls import path
 from flags.views import FlaggedTemplateView

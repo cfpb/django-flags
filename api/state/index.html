@@ -138,7 +138,7 @@
     <li>Flag state</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/django-flags/edit/master/docs/api/state.md"
+        <a href="https://github.com/cfpb/django-flags/edit/main/docs/api/state.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -157,6 +157,7 @@
     enable_flag,
     disable_flag,
 )</code></pre>
+
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If any of the flag state checking functions below is used at the top-level of a module (in <code>urls.py</code>, for example), it will be evaluated at import-time. This may have unintended consequences. <a href="/api/sources/#flag-sources">Database flag conditions</a> may not be available, <a href="/api/conditions/">custom conditions</a> may not be registered, and any dynamic change in flag state (such as date-based conditions or a newly added database condition) will not have an effect.</p>
@@ -170,10 +171,12 @@
 <p>Returns <code>True</code> if a flag is enabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
 <pre class="highlight"><code class="language-python">if flag_enabled('MY_FLAG', request=a_request):
     print("My feature flag is enabled")</code></pre>
+
 <h3 id="flag_disabledflag_name-kwargs"><code>flag_disabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_disabledflag_name-kwargs" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
 <pre class="highlight"><code class="language-python">if flag_disabled('MY_FLAG', request=a_request):
     print(“My feature flag is disabled”)</code></pre>
+
 <h2 id="setting-state">Setting state<a class="headerlink" href="#setting-state" title="Permanent link">¶</a></h2>
 <h3 id="enable_flagflag_name-create_boolean_conditiontrue-requestnone"><code>enable_flag(flag_name, create_boolean_condition=True, request=None)</code><a class="headerlink" href="#enable_flagflag_name-create_boolean_conditiontrue-requestnone" title="Permanent link">¶</a></h3>
 <p>Enable a flag by adding or setting an existing database boolean condition to <code>True</code>. If the flag has other required conditions, those will take precedence. </p>
