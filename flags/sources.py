@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class Condition(object):
-    """ A simple wrapper around conditions """
+    """A simple wrapper around conditions"""
 
     def __init__(self, condition, value, required=False):
         self.condition = condition
@@ -28,18 +28,18 @@ class Condition(object):
 
 
 class Flag(object):
-    """ A simple wrapper around feature flags and their conditions """
+    """A simple wrapper around feature flags and their conditions"""
 
     def __init__(self, name, conditions=[]):
         self.name = name
         self.conditions = conditions
 
     def __eq__(self, other):
-        """ There can be only one feature flag of a given name """
+        """There can be only one feature flag of a given name"""
         return other.name == self.name
 
     def check_state(self, **kwargs):
-        """ Determine this flag's state based on any of its conditions """
+        """Determine this flag's state based on any of its conditions"""
         non_required_conditions = [
             c for c in self.conditions if not c.required
         ]
@@ -117,7 +117,7 @@ class SettingsFlagsSource(object):
 
 
 class DatabaseCondition(Condition):
-    """ Condition that includes the FlagState database object """
+    """Condition that includes the FlagState database object"""
 
     def __init__(self, condition, value, required=False, obj=None):
         super(DatabaseCondition, self).__init__(

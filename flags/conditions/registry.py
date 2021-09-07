@@ -4,7 +4,7 @@ _conditions = {}
 
 
 class DuplicateCondition(ValueError):
-    """ Raised when registering a condition that is already registered """
+    """Raised when registering a condition that is already registered"""
 
 
 def register(condition_name, fn=None, validator=None):
@@ -49,11 +49,11 @@ def register(condition_name, fn=None, validator=None):
 
 
 def get_conditions():
-    """ Return the names of all available conditions """
+    """Return the names of all available conditions"""
     return _conditions.keys()
 
 
 def get_condition(condition_name):
-    """ Fetch condition checker functions from the registry """
+    """Fetch condition checker functions from the registry"""
     if condition_name in _conditions:
         return _conditions[condition_name]
