@@ -8,7 +8,7 @@ from django.utils import dateparse
 
 
 validate_parameter = RegexValidator(
-    re.compile(r"^[-_\w=]+$", re.UNICODE),
+    re.compile(r"^[-_\w=]+$"),
     message="Enter a valid HTTP parameter name.",
     code="invalid",
 )
