@@ -118,7 +118,7 @@ def _flagged_path(
     fallback=None,
     Pattern=None,
 ):
-    """ Make a URL depend on the state of a feature flag """
+    """Make a URL depend on the state of a feature flag"""
     if callable(view):
         flagged_view = flag_check(flag_name, state, fallback=fallback)(view)
         route_pattern = Pattern(route, name=name, is_endpoint=True)

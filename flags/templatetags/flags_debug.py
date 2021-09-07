@@ -23,7 +23,7 @@ def required_conditions_without_bool(flag):
 
 @register.filter
 def state_str(flag):
-    """ Construct a string that describes the current state of the flag """
+    """Construct a string that describes the current state of the flag"""
     non_bool_conditions = conditions_without_bool(flag)
     req_conditions = required_conditions_without_bool(flag)
     bool_conditions = [c for c in flag.conditions if c.condition == "boolean"]

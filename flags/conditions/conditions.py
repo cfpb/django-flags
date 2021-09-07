@@ -15,12 +15,12 @@ from flags.conditions.validators import (
 
 
 class RequiredForCondition(AttributeError):
-    """ Raised when a kwarg that is required for a condition is not given """
+    """Raised when a kwarg that is required for a condition is not given"""
 
 
 @register("boolean", validator=validate_boolean)
 def boolean_condition(condition, **kwargs):
-    """ Basic boolean check """
+    """Basic boolean check"""
     try:
         return strtobool(condition.strip())
     except AttributeError:
@@ -29,7 +29,7 @@ def boolean_condition(condition, **kwargs):
 
 @register("user", validator=validate_user)
 def user_condition(username, request=None, **kwargs):
-    """ Does request.user match the expected username? """
+    """Does request.user match the expected username?"""
     if request is None:
         raise RequiredForCondition("request is required for condition 'user'")
 
@@ -54,7 +54,7 @@ def anonymous_condition(boolean_value, request=None, **kwargs):
 
 @register("parameter", validator=validate_parameter)
 def parameter_condition(param_name, request=None, **kwargs):
-    """ Is the parameter name part of the GET parameters? """
+    """Is the parameter name part of the GET parameters?"""
     if request is None:
         raise RequiredForCondition(
             "request is required for condition 'parameter'"
@@ -69,7 +69,7 @@ def parameter_condition(param_name, request=None, **kwargs):
 
 @register("path matches", validator=validate_path_re)
 def path_condition(pattern, request=None, **kwargs):
-    """ Does the request's path match the given regular expression? """
+    """Does the request's path match the given regular expression?"""
     if request is None:
         raise RequiredForCondition("request is required for condition 'path'")
 

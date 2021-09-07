@@ -39,7 +39,7 @@ class ValidatePathTestCase(TestCase):
 
 class ValidateBooleanTestCase(TestCase):
     def test_invalid_boolean_strings(self):
-        """ ValidationError should be raised for invalid boolean values """
+        """ValidationError should be raised for invalid boolean values"""
         with self.assertRaises(ValidationError):
             validate_boolean("Flase")
         with self.assertRaises(ValidationError):
@@ -52,7 +52,7 @@ class ValidateBooleanTestCase(TestCase):
             validate_boolean(["foo"])
 
     def test_valid_boolean_strings(self):
-        """ Valid boolean values should not raise ValidationError """
+        """Valid boolean values should not raise ValidationError"""
         validate_boolean(True)
         validate_boolean(False)
         validate_boolean(1)
