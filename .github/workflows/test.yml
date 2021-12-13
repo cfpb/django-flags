@@ -34,18 +34,23 @@ jobs:
         toxenv:
             - py36-dj22
             - py36-dj32
+            - py36-dj40
             - py38-dj22
             - py38-dj32
+            - py38-dj40
         include:
           - toxenv: py36-dj22
             python-version: 3.6
           - toxenv: py36-dj32
             python-version: 3.6
+          - toxenv: py36-dj40
+            python-version: 3.6
           - toxenv: py38-dj22
             python-version: 3.8
           - toxenv: py38-dj32
             python-version: 3.8
-
+          - toxenv: py38-dj40
+            python-version: 3.8
     steps:
       - uses: actions/checkout@v1
 
