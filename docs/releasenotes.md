@@ -1,5 +1,12 @@
 # Release Notes
 
+## 5.0.6
+
+### What's new?
+
+- Added Django 4.0 support (thanks [@gregtap](https://github.com/gregtap)!)
+
+
 ## 5.0.5
 
 ### What's new?
@@ -131,7 +138,7 @@
 ### What's new?
 
 - The template functions `flag_enabled` and `flag_disabled` in both [Django](/api/django) and [Jinja2](/api/jinja2) templates now support taking keyword arguments that could be used by [custom conditions](/api/conditions).
-- Jinja2 template functions are now available via a Jinja2 extension that can be [included in `settings.py`](/api/jinja2). 
+- Jinja2 template functions are now available via a Jinja2 extension that can be [included in `settings.py`](/api/jinja2).
 - The optional `flags.middleware.FlagConditionsMiddleware` has been added to ensure that all feature flag checks throughout single request cycle use the same flag conditions.
 - Support for specifying the [source of feature flags in `settings.py`](/settings#flag_sources) has been added to allow further customization and the potential to limit flags to settings or database-only.
 - The "user" condition now supports custom user models. ([@callorico](https://github.com/callorico))
@@ -157,7 +164,7 @@ TEMPLATES = [
             ],
         }
     },
-] 
+]
 ```
 
 ## 3.0.2
