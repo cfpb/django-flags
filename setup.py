@@ -5,7 +5,7 @@ install_requires = ["Django>=1.11,<=4"]
 
 testing_extras = [
     "coverage>=3.7.0",
-    "django-debug-toolbar>=2.0,<2.3",
+    "django-debug-toolbar>=3.2,<4",
     "jinja2",
 ]
 
