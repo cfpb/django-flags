@@ -1,11 +1,11 @@
 from setuptools import find_packages, setup
 
 
-install_requires = ["Django>=1.11,<3.3"]
+install_requires = ["Django>=1.11,<=4"]
 
 testing_extras = [
     "coverage>=3.7.0",
-    "django-debug-toolbar>=2.0,<2.3",
+    "django-debug-toolbar>=3.2,<4",
     "jinja2",
 ]
 
@@ -24,7 +24,7 @@ setup(
     long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="CC0",
-    version="5.0.5",
+    version="5.0.6",
     include_package_data=True,
     packages=find_packages(),
     python_requires=">=3.6",

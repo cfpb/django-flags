@@ -1,7 +1,6 @@
 from django.apps import apps
 from django.core.exceptions import AppRegistryNotReady
 
-from flags.models import FlagState
 from flags.sources import get_flags
 
 
@@ -20,6 +19,8 @@ def _set_flag_state(
     flag_name, state, create_boolean_condition=True, request=None
 ):
     """A private function to set a boolean condition to the desired state"""
+    from flags.models import FlagState
+
     flags = get_flags(request=request)
     flag = flags.get(flag_name)
     if flag is None:

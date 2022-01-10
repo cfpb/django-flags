@@ -17,7 +17,7 @@ Feature flags allow you to toggle functionality in both Django code and the Djan
 ## Dependencies
 
 - Python 3.6+
-- Django 2.2-3.2
+- Django 2.2-4.0
 
 ## Installation
 
@@ -39,7 +39,7 @@ pip install django-flags
 
 ## Documentation
 
-https://cfpb.github.io/django-flags is the full documentation for Django-Flags, and includes how to get started, general usage, and an API reference. 
+https://cfpb.github.io/django-flags is the full documentation for Django-Flags, and includes how to get started, general usage, and an API reference.
 
 ## Getting help
 
