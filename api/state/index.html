@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../../css/overrides.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href="../.." class="icon icon-home"> Django-Flags</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -146,6 +145,7 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -157,7 +157,6 @@
     enable_flag,
     disable_flag,
 )</code></pre>
-
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If any of the flag state checking functions below is used at the top-level of a module (in <code>urls.py</code>, for example), it will be evaluated at import-time. This may have unintended consequences. <a href="/api/sources/#flag-sources">Database flag conditions</a> may not be available, <a href="/api/conditions/">custom conditions</a> may not be registered, and any dynamic change in flag state (such as date-based conditions or a newly added database condition) will not have an effect.</p>
@@ -171,12 +170,10 @@
 <p>Returns <code>True</code> if a flag is enabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
 <pre class="highlight"><code class="language-python">if flag_enabled('MY_FLAG', request=a_request):
     print("My feature flag is enabled")</code></pre>
-
 <h3 id="flag_disabledflag_name-kwargs"><code>flag_disabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_disabledflag_name-kwargs" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
 <pre class="highlight"><code class="language-python">if flag_disabled('MY_FLAG', request=a_request):
     print(“My feature flag is disabled”)</code></pre>
-
 <h2 id="setting-state">Setting state<a class="headerlink" href="#setting-state" title="Permanent link">¶</a></h2>
 <h3 id="enable_flagflag_name-create_boolean_conditiontrue-requestnone"><code>enable_flag(flag_name, create_boolean_condition=True, request=None)</code><a class="headerlink" href="#enable_flagflag_name-create_boolean_conditiontrue-requestnone" title="Permanent link">¶</a></h3>
 <p>Enable a flag by adding or setting an existing database boolean condition to <code>True</code>. If the flag has other required conditions, those will take precedence. </p>
@@ -217,19 +214,22 @@
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../sources/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../decorators/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../sources/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../decorators/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
     <script src="../../js/theme.js" defer></script>
       <script src="../../search/main.js" defer></script>
     <script defer>

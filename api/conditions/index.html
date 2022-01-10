@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../../css/overrides.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href="../.." class="icon icon-home"> Django-Flags</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -144,13 +143,13 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
                 <h1 id="conditions">Conditions<a class="headerlink" href="#conditions" title="Permanent link">¶</a></h1>
 <p>Conditions are functions that take a configured value and possible keyword arguments and determines whether the given arguments are equivalent to the value. Conditions are registered with a unique name that is exposed to users in Django settings and the Django admin.</p>
 <pre class="highlight"><code class="language-python">from flags import conditions</code></pre>
-
 <h2 id="registering-conditions">Registering conditions<a class="headerlink" href="#registering-conditions" title="Permanent link">¶</a></h2>
 <h3 id="conditionsregistercondition_name-fnnone-validatornone"><code>conditions.register(condition_name, fn=None, validator=None)</code><a class="headerlink" href="#conditionsregistercondition_name-fnnone-validatornone" title="Permanent link">¶</a></h3>
 <p>Register a new condition, either as a decorator:</p>
@@ -159,13 +158,11 @@
 @conditions.register('path')
 def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)</code></pre>
-
 <p>Or as a function call:</p>
 <pre class="highlight"><code class="language-python">def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)
 
 conditions.register('path', fn=path_condition)</code></pre>
-
 <p>Will raise a <code>conditions.DuplicateCondition</code> exception if the condition name is already registered.</p>
 <p>A <a href="https://docs.djangoproject.com/en/stable/ref/validators/">validator</a> can be given to validate the condition's expected value as provided by <a href="../sources/">the flag sources</a>, either as another callable as an argument to the <code>register</code> function:</p>
 <pre class="highlight"><code class="language-python">from flags import conditions
@@ -177,7 +174,6 @@ def validate_path(value):
 @conditions.register('path', validator=validate_path)
 def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)</code></pre>
-
 <p>Or as an attribute on the condition callable:</p>
 <pre class="highlight"><code class="language-python">from flags import conditions
 
@@ -190,12 +186,10 @@ class PathCondition:
             raise ValidationError('Enter a valid path')
 
 conditions.register('path', fn=path_condition)</code></pre>
-
 <p>Validators specified in both ways are available on condition callables as 
 a <code>validate</code> attribute:</p>
 <pre class="highlight"><code class="language-python">condition = get_condition('path')
 condition.validate(value)</code></pre>
-
 <h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">¶</a></h2>
 <h3 id="conditionsduplicatecondition"><code>conditions.DuplicateCondition</code><a class="headerlink" href="#conditionsduplicatecondition" title="Permanent link">¶</a></h3>
 <p>Exception raised by <code>conditions.register</code> if the condition name being registered is already registered.</p>
@@ -241,19 +235,22 @@ def path_condition(path, request=None, **kwargs):
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../jinja2/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../../releasenotes/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../jinja2/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../releasenotes/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
     <script src="../../js/theme.js" defer></script>
       <script src="../../search/main.js" defer></script>
     <script defer>

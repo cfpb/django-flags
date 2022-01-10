@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   <link href="../../css/overrides.css" rel="stylesheet" />
   
   <script>
@@ -26,9 +26,8 @@
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
   <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -42,7 +41,7 @@
         <a href="../.." class="icon icon-home"> Django-Flags</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -148,13 +147,13 @@
   
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
                 <h1 id="flagged-url-patterns">Flagged URL patterns<a class="headerlink" href="#flagged-url-patterns" title="Permanent link">¶</a></h1>
 <p>Flagged URL patterns are an alternative to <a href="../../api/decorators">flagging views with decorators</a>.</p>
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_path, flagged_paths, flagged_re_path, flagged_re_paths</code></pre>
-
 <h3 id="flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <h3 id="flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_re_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <p>Make a URL depend on the state of a feature flag. </p>
@@ -175,7 +174,6 @@
     flagged_re_path('MY_NEW_APP_FLAG', r'^mynewapp$', include('mynewapp.urls'),
                     state=True, fallback=include('myoldapp.urls'))
 ]</code></pre>
-
 <h3 id="flagged_pathsflag_name-statetrue-fallbacknone"><code>flagged_paths(flag_name, state=True, fallback=None)</code><a class="headerlink" href="#flagged_pathsflag_name-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <h3 id="flagged_re_pathsflag_name-statetrue-fallbacknone"><code>flagged_re_paths(flag_name, state=True, fallback=None)</code><a class="headerlink" href="#flagged_re_pathsflag_name-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <p>Flag multiple URLs in the same context with a context manager.</p>
@@ -224,19 +222,22 @@ urlpatterns = urlpatterns + flagged_url_patterns</code></pre>
   </div>
 
   <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../decorators/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../views/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/cfpb/django-flags/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../decorators/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../views/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
     <script src="../../js/theme.js" defer></script>
       <script src="../../search/main.js" defer></script>
     <script defer>
