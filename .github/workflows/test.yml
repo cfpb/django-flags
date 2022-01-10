@@ -13,7 +13,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Install dependencies
         run: |
@@ -45,7 +45,7 @@ jobs:
           - toxenv: py39-dj22
             python-version: 3.9
           - toxenv: py39-dj32
-            python-version: 3.8
+            python-version: 3.9
           - toxenv: py39-dj40
             python-version: 3.9
     steps:
