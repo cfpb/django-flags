@@ -1,5 +1,12 @@
 # Release Notes
 
+## 5.0.7
+
+### What's new?
+
+- Update Django 4 pin to allow versions under 4.1
+
+
 ## 5.0.6
 
 ### What's new?
