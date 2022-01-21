@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-install_requires = ["Django>=1.11,<=4"]
+install_requires = ["Django>=1.11,<4.1"]
 
 testing_extras = [
     "coverage>=3.7.0",
