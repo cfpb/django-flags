@@ -1,10 +1,10 @@
 # Release Notes
 
-## Pending release
+## 5.0.8
 
 ### What's new?
 
-- Prevent `RemovedInDjango41Warning` about `default_app_config` for Django 3.2+.
+- Prevent `RemovedInDjango41Warning` about `default_app_config` for Django 3.2+ (thanks [@adamchainz](https://github.com/adamchainz)!)
 
 ## 5.0.7
 
