@@ -1,7 +1,6 @@
 # Django-Flags
 
 [![Build Status](https://github.com/cfpb/django-flags/workflows/test/badge.svg)](https://github.com/cfpb/django-flags/actions)
-[![Coverage Status](https://coveralls.io/repos/github/cfpb/django-flags/badge.svg?branch=main)](https://coveralls.io/github/cfpb/django-flags?branch=main)
 [![Ethical open source](https://img.shields.io/badge/ethical-open-%23bb8c3c?labelColor=393162)](https://ethicalsource.dev/principles/)
 
 Feature flags allow you to toggle functionality in both Django code and the Django templates based on configurable conditions. Flags can be useful for staging feature deployments, for A/B testing, or for any time you need an on/off switch for blocks of code. The toggle can be by date, user, URL value, or a number of [other conditions](https://cfpb.github.io/django-flags/conditions/), editable in the admin or in definable in settings.
