@@ -53,6 +53,8 @@ TEMPLATES = [
 
 STATIC_URL = "/static/"
 
+USE_TZ = True
+
 FLAGS = {
     "FLAG_ENABLED": [("boolean", True)],
     "FLAG_ENABLED_WITH_KWARG": [("flag_enabled_with_kwarg", (2 + 2))],

@@ -1,5 +1,11 @@
 # Release Notes
 
+## Pending
+
+### What's new?
+
+- Fixed a `DeprecationWarning` on Jinja 3+.
+
 ## 5.0.8
 
 ### What's new?
