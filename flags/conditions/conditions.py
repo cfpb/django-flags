@@ -33,6 +33,9 @@ def user_condition(username, request=None, **kwargs):
     if request is None:
         raise RequiredForCondition("request is required for condition 'user'")
 
+    if request.user.is_anonymous:
+        return False
+
     return getattr(request.user, get_user_model().USERNAME_FIELD) == username
 
 
