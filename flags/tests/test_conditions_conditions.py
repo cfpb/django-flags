@@ -58,6 +58,10 @@ class UserConditionTestCase(TestCase):
     def test_user_invalid(self):
         self.assertFalse(user_condition("nottestuser", request=self.request))
 
+    def test_user_anonymous(self):
+        self.request.user = AnonymousUser()
+        self.assertFalse(user_condition("somebody", request=self.request))
+
     def test_request_required(self):
         with self.assertRaises(RequiredForCondition):
             user_condition("testuser")
@@ -68,6 +72,11 @@ class UserConditionTestCase(TestCase):
         user.save()
         self.request.user = user
         self.assertTrue(user_condition("customuser", request=self.request))
+
+    @override_settings(AUTH_USER_MODEL="testapp.MyUserModel")
+    def test_custom_user_model_valid_anonymous(self):
+        self.request.user = AnonymousUser()
+        self.assertFalse(user_condition("somebody", request=self.request))
 
 
 class AnonymousConditionTestCase(TestCase):
