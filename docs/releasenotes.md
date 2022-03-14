@@ -1,10 +1,12 @@
 # Release Notes
 
-## Pending
+## 5.0.9
 
 ### What's new?
 
 - Fixed a `DeprecationWarning` on Jinja 3+.
+- Fixed an `AttributeError` on `AnonymousUser` in the user condition (thanks [@edomora97](https://github.com/edomora97)!)
+
 
 ## 5.0.8
 
