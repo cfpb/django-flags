@@ -1,5 +1,4 @@
 import re
-from distutils.util import strtobool
 
 from django.contrib.auth import get_user_model
 from django.utils import dateparse, timezone
@@ -12,6 +11,7 @@ from flags.conditions.validators import (
     validate_path_re,
     validate_user,
 )
+from flags.utils import strtobool
 
 
 class RequiredForCondition(AttributeError):
