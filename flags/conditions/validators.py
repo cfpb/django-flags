@@ -1,10 +1,11 @@
 import re
-from distutils.util import strtobool
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils import dateparse
+
+from flags.utils import strtobool
 
 
 validate_parameter = RegexValidator(
