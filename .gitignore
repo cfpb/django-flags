@@ -71,3 +71,6 @@ bower_components/
 src/vendor/
 dist/
 site/
+
+# IDEs
+.idea/

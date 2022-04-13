@@ -1,9 +1,7 @@
 from django import template
 
-from flags.state import (
-    flag_disabled as base_flag_disabled,
-    flag_enabled as base_flag_enabled,
-)
+from flags.state import flag_disabled as base_flag_disabled
+from flags.state import flag_enabled as base_flag_enabled
 
 
 register = template.Library()
