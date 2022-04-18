@@ -30,7 +30,9 @@ class Condition(object):
 class Flag(object):
     """A simple wrapper around feature flags and their conditions"""
 
-    def __init__(self, name, conditions=[]):
+    def __init__(self, name, conditions=None):
+        if conditions is None:
+            conditions = []
         self.name = name
         self.conditions = conditions
 

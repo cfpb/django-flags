@@ -197,7 +197,7 @@ class GetFlagsTestCase(TestCase):
 
     def test_ignore_errors(self):
         # Without ignore_errors
-        with self.assertRaises(Exception):
+        with self.assertRaises(Exception):  # noqa: B017
             get_flags(
                 sources=["flags.tests.test_sources.ExceptionalFlagsSource"]
             )

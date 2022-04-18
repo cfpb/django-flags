@@ -19,5 +19,20 @@ exclude = '''
 )
 '''
 
+[tool.isort]
+profile = "black"
+line_length = 79
+lines_after_imports = 2
+skip = [".tox", "migrations", ".venv", "venv"]
+known_django = ["django"]
+default_section = "THIRDPARTY"
+sections = [
+    "STDLIB",
+    "DJANGO",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER"
+]
+
 [build-system]
 requires = ["setuptools", "wheel"]

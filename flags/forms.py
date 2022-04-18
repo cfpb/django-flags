@@ -33,7 +33,7 @@ class FlagStateForm(forms.ModelForm):
         condition_name = self.cleaned_data.get("condition")
         value = self.cleaned_data.get("value")
         condition = get_condition(condition_name)
-        validator = getattr(condition, "validate")
+        validator = condition.validate
 
         if validator is not None:
             try:
