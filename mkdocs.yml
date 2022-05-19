@@ -1,7 +1,7 @@
 site_name: Django-Flags
 repo_url: https://github.com/cfpb/django-flags/
 edit_uri: edit/main/docs
-pages:
+nav:
     - Getting started: index.md
     - Usage guide: usage.md
     - Debugging: debugging.md
