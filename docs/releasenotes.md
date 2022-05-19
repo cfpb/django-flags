@@ -1,5 +1,12 @@
 # Release Notes
 
+## 5.0.10
+
+### What's new?
+
+- Fixed an issue with resolving `include()`s in `flagged_path()` URL patterns ([#100](https://github.com/cfpb/django-flags/issues/100))
+
+
 ## 5.0.9
 
 ### What's new?
