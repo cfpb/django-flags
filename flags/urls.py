@@ -15,7 +15,7 @@ class FlaggedURLResolver(URLResolver):
     def __init__(
         self,
         flag_name,
-        regex,
+        pattern,
         urlconf_name,
         default_kwargs=None,
         app_name=None,
@@ -24,7 +24,7 @@ class FlaggedURLResolver(URLResolver):
         fallback=None,
     ):
         super(FlaggedURLResolver, self).__init__(
-            regex,
+            pattern,
             urlconf_name,
             default_kwargs=default_kwargs,
             app_name=app_name,
@@ -39,7 +39,7 @@ class FlaggedURLResolver(URLResolver):
         if isinstance(self.fallback, (list, tuple)):
             urlconf_module, app_name, namespace = self.fallback
             self.fallback_patterns = URLResolver(
-                regex,
+                pattern,
                 urlconf_module,
                 None,
                 app_name=app_name,
@@ -78,6 +78,7 @@ class FlaggedURLResolver(URLResolver):
                 pattern.default_args,
                 pattern.name,
             )
+            print(pattern, flagged_pattern)
 
             url_patterns.append(flagged_pattern)
 
@@ -127,7 +128,7 @@ def _flagged_path(
     elif isinstance(view, (list, tuple)):
         urlconf_module, app_name, namespace = view
 
-        route_pattern = Pattern(route, name=name, is_endpoint=True)
+        route_pattern = Pattern(route, name=name, is_endpoint=False)
 
         return FlaggedURLResolver(
             flag_name,
