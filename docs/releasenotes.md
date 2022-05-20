@@ -1,5 +1,12 @@
 # Release Notes
 
+## 5.0.11
+
+### What's new?
+
+- Added changelog and documentation links to the package on PyPI (thanks [@adamchainz](https://github.com/adamchainz)!)
+
+
 ## 5.0.10
 
 ### What's new?
