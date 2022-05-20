@@ -18,6 +18,10 @@ docs_extras = [
 setup(
     name="django-flags",
     url="https://github.com/cfpb/django-flags",
+    project_urls={
+        "Changelog": "https://cfpb.github.io/django-flags/releasenotes/",
+        "Documentation": "https://cfpb.github.io/django-flags/",
+    },
     author="CFPB",
     author_email="tech@cfpb.gov",
     description="Feature flags for Django projects",
