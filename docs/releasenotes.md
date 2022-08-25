@@ -1,5 +1,11 @@
 # Release Notes
 
+## Pending Release
+
+### 5.1.0
+
+- Support Jinja2 3.0+.
+
 ## 5.0.8
 
 ### What's new?
