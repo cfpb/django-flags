@@ -1,5 +1,11 @@
 # Release Notes
 
+## Pending
+
+### What's new?
+
+- Added Django 4.1 support.
+
 ## 5.0.11
 
 ### What's new?
