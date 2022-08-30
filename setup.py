@@ -28,7 +28,7 @@ setup(
     long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="CC0",
-    version="5.0.11",
+    version="5.0.12",
     include_package_data=True,
     packages=find_packages(),
     python_requires=">=3.6",

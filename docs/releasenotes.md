@@ -1,10 +1,11 @@
 # Release Notes
 
-## Pending
+## 5.0.12
 
 ### What's new?
 
-- Added Django 4.1 support.
+- Added Django 4.1 support (thanks [@adamchainz](https://github.com/adamchainz)!).
+
 
 ## 5.0.11
 
