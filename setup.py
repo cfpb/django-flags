@@ -31,7 +31,7 @@ setup(
     version="5.0.12",
     include_package_data=True,
     packages=find_packages(),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=install_requires,
     extras_require={"testing": testing_extras, "docs": docs_extras},
     classifiers=[

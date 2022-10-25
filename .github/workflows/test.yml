@@ -32,17 +32,17 @@ jobs:
     strategy:
       matrix:
         toxenv:
-            - py36-dj22
-            - py36-dj32
+            - py37-dj22
+            - py37-dj32
             - py39-dj22
             - py39-dj32
             - py39-dj40
             - py39-dj41
         include:
-          - toxenv: py36-dj22
-            python-version: 3.6
-          - toxenv: py36-dj32
-            python-version: 3.6
+          - toxenv: py37-dj22
+            python-version: 3.7
+          - toxenv: py37-dj32
+            python-version: 3.7
           - toxenv: py39-dj22
             python-version: 3.9
           - toxenv: py39-dj32
