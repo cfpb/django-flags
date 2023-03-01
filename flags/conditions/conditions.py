@@ -38,6 +38,19 @@ def user_condition(username, request=None, **kwargs):
 
     return getattr(request.user, get_user_model().USERNAME_FIELD) == username
 
+@register("staff", validator=validate_boolean)
+def staff_condition(boolean_value, request=None, **kwargs):
+    """request.user an staff user, true or false based on boolean_value"""
+    if request is None:
+        raise RequiredForCondition("request is required for condition 'staff'")
+
+    is_staff = bool(request.user.is_staff)
+
+    try:
+        return strtobool(boolean_value.strip().lower()) == is_staff
+    except AttributeError:
+        return bool(boolean_value) == is_staff
+
 
 @register("anonymous", validator=validate_boolean)
 def anonymous_condition(boolean_value, request=None, **kwargs):

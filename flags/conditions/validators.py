@@ -1,5 +1,6 @@
 import re
 
+from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
@@ -45,7 +46,6 @@ def validate_user(value):
         UserModel.objects.get(**{UserModel.USERNAME_FIELD: value})
     except UserModel.DoesNotExist:
         raise ValidationError("Enter the username of a valid user.")
-
 
 def validate_date(value):
     datetime = dateparse.parse_datetime(value)

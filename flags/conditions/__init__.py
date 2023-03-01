@@ -9,6 +9,7 @@ from flags.conditions.conditions import (
     parameter_condition,
     path_condition,
     user_condition,
+    staff_condition,
 )
 from flags.conditions.registry import (
     DuplicateCondition,

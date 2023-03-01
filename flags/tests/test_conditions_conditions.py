@@ -15,6 +15,7 @@ from flags.conditions.conditions import (
     parameter_condition,
     path_condition,
     user_condition,
+    staff_condition,
 )
 
 
@@ -98,6 +99,25 @@ class AnonymousConditionTestCase(TestCase):
         with self.assertRaises(RequiredForCondition):
             anonymous_condition(True)
 
+class StaffConditionTestCase(TestCase):
+    def setUp(self):
+        user = User.objects.create_user(username="testuser", email="test@user", is_staff=True)
+        self.request = HttpRequest()
+        self.request.user = user
+
+    def test_user_staff_valid(self):
+        self.assertTrue(staff_condition(True, request=self.request))
+
+    def test_user_staff_invalid(self):
+        user = User.objects.create_user(
+            username="notstaffuser", email="test@user", is_staff=False
+        )
+        self.request.user = user
+        self.assertFalse(staff_condition(True, request=self.request))
+
+    def test_request_required(self):
+        with self.assertRaises(RequiredForCondition):
+            staff_condition(True)
 
 class ParameterConditionTestCase(TestCase):
     def setUp(self):
