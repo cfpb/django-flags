@@ -78,7 +78,6 @@ class FlaggedURLResolver(URLResolver):
                 pattern.default_args,
                 pattern.name,
             )
-            print(pattern, flagged_pattern)
 
             url_patterns.append(flagged_pattern)
 

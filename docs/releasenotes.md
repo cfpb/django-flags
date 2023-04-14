@@ -1,5 +1,12 @@
 # Release Notes
 
+## Pending
+
+### What's new?
+
+- Added Django 4.2 support (thanks [@adamchainz](https://github.com/adamchainz)!).
+
+
 ## 5.0.12
 
 ### What's new?
