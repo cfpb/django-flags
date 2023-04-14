@@ -14,7 +14,7 @@ from flags.sources import (
 
 
 # Test flag source for using this module to test
-class TestFlagsSource(object):
+class TestFlagsSource:
     def get_flags(self):
         return {
             "SOURCED_FLAG": [Condition("boolean", True)],
@@ -22,7 +22,7 @@ class TestFlagsSource(object):
         }
 
 
-class ExceptionalFlagsSource(object):
+class ExceptionalFlagsSource:
     def get_flags(self):
         raise Exception("This flag source is exceptional!")
 

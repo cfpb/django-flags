@@ -25,7 +25,7 @@ setup(
     author="CFPB",
     author_email="tech@cfpb.gov",
     description="Feature flags for Django projects",
-    long_description=open("README.md", "r", encoding="utf-8").read(),
+    long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="CC0",
     version="5.0.12",

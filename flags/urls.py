@@ -23,7 +23,7 @@ class FlaggedURLResolver(URLResolver):
         state=True,
         fallback=None,
     ):
-        super(FlaggedURLResolver, self).__init__(
+        super().__init__(
             pattern,
             urlconf_name,
             default_kwargs=default_kwargs,
@@ -52,7 +52,7 @@ class FlaggedURLResolver(URLResolver):
         # matches the defined state, the view is served for the pattern
         # and not the fallback.
         url_patterns = []
-        for pattern in super(FlaggedURLResolver, self).url_patterns:
+        for pattern in super().url_patterns:
             # Get the fallback view, if there is one, and remove it from
             # the list of fallback patterns.
             fallback = self.fallback

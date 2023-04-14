@@ -19,7 +19,7 @@ class FlagStateForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super(FlagStateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.fields["name"].choices = [
             (f, f) for f in sorted(get_flags().keys())
