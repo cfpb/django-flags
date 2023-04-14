@@ -41,7 +41,7 @@ class FlagChecksPanel(Panel):
     title = _("Flag Checks")
 
     def __init__(self, *args, **kwargs):
-        super(FlagChecksPanel, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.checks = {}
 
     def enable_instrumentation(self):

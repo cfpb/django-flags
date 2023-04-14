@@ -13,7 +13,7 @@ except ImportError:  # pragma: no cover
 
 class FlagsExtension(Extension):
     def __init__(self, environment):
-        super(FlagsExtension, self).__init__(environment)
+        super().__init__(environment)
         self.environment.globals.update(
             {
                 "flag_enabled": pass_context(flag_enabled),

@@ -11,7 +11,7 @@ from flags.decorators import flag_check
 logger = logging.getLogger(__name__)
 
 
-class FlaggedViewMixin(object):
+class FlaggedViewMixin:
     flag_name = None
     fallback = None
     state = True
@@ -40,7 +40,7 @@ class FlaggedViewMixin(object):
             )
             state = condition
 
-        view = super(FlaggedViewMixin, cls).as_view(**initkwargs)
+        view = super().as_view(**initkwargs)
 
         decorator = flag_check(
             flag_name,
