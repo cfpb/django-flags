@@ -51,10 +51,8 @@ def state_str(flag):
     # Otherwise we have to dig into all the non-boolean conditions and figure
     # out what the state string should say
     elif len(non_bool_conditions) > 0:
-
         # Are there required conditions?
         if len(req_conditions) > 0:
-
             if (
                 len(bool_conditions) > 0
                 and len(non_bool_conditions) == len(req_conditions)

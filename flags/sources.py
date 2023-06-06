@@ -90,7 +90,6 @@ class SettingsFlagsSource(object):
         settings_flags = getattr(settings, "FLAGS", {}).items()
         flags = {}
         for flag, conditions in settings_flags:
-
             # Flag conditions should be a list of either 3-tuples of
             # dictionaries in the form (condition, value, required) or
             # {'name': 'condition', 'value': value, 'required': True}
