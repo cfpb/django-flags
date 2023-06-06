@@ -75,8 +75,7 @@ class Flag:
                     name=self.name,
                     state=state,
                     conditions=", ".join(
-                        f"{c.condition} ({v})"
-                        for c, v in checked_conditions
+                        f"{c.condition} ({v})" for c, v in checked_conditions
                     ),
                     conditions_plural="s" if len(self.conditions) > 1 else "",
                 )
@@ -121,9 +120,7 @@ class DatabaseCondition(Condition):
     """Condition that includes the FlagState database object"""
 
     def __init__(self, condition, value, required=False, obj=None):
-        super().__init__(
-            condition, value, required=required
-        )
+        super().__init__(condition, value, required=required)
         self.obj = obj
 
 
