@@ -4,7 +4,23 @@
 
 ### What's new?
 
+
+## 5.0.13
+
+### What's new?
+
+- Modernize code for Python 3.6+ (thanks [@adamchainz](https://github.com/adamchainz)!)
+- Run linters with Python 3.11 (thanks [@adamchainz](https://github.com/adamchainz)!)
+- Format with Black 23 (thanks [@adamchainz](https://github.com/adamchainz)!)
 - Added Django 4.2 support (thanks [@adamchainz](https://github.com/adamchainz)!).
+
+### Removals
+
+- Removed Python 3.6 support (thanks [@michael-k](https://github.com/michael-k)!).
+
+### Bug fixes
+
+- Removed errant print statement (thanks [@Natim](https://github.com/Natim)!).
 
 
 ## 5.0.12

@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-install_requires = ["Django>=1.11"]
+install_requires = ["Django>=2.2"]
 
 testing_extras = [
     "coverage>=3.7.0",
@@ -28,7 +28,7 @@ setup(
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="CC0",
-    version="5.0.12",
+    version="5.0.13",
     include_package_data=True,
     packages=find_packages(),
     python_requires=">=3.7",
