@@ -4,7 +4,7 @@ Feature flags allow you to toggle functionality in both Django code and the Djan
 
 ## Dependencies
 
-- Django 2.2, 3.0
+- Django 2.2, 3.0, 4.x
 - Python 3.7+
 
 ## Installation
