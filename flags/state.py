@@ -40,7 +40,7 @@ def _set_flag_state(
         boolean_condition_obj = db_boolean_condition.obj
     elif db_boolean_condition is None and create_boolean_condition:
         # We can create a boolean condition and we need to.
-        boolean_condition_obj = FlagState.objects.create(
+        boolean_condition_obj = FlagState(
             name=flag_name, condition="boolean", value="True"
         )
     else:
