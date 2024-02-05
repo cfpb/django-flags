@@ -65,4 +65,20 @@ urlpatterns = [
 ]
 ```
 
+## Testing with flags
+
+A test case that covers both values of the flag may look like this:
+
+```python
+class FlaggedCodeTestCase(TestCase):
+    @override_settings(FLAGS={"MY_FLAG": [("boolean", True)]})
+    def test_flag_enabled(self):
+        # Do the thing that requires the flag to be enabled
+
+    @override_settings(FLAGS={"MY_FLAG": [("boolean", False)]})
+    def test_flag_disabled(self):
+        # Do the thing that requires the flag to be disabled
+```
+
+
 See the [API reference](/api/state) for more details and examples.
