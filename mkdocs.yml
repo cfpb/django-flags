@@ -5,6 +5,7 @@ nav:
     - Getting started: index.md
     - Usage guide: usage.md
     - Debugging: debugging.md
+    - Testing: testing.md
     - Settings: settings.md
     - Conditions: conditions.md
     - Management commands: management_commands.md
