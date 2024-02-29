@@ -70,6 +70,8 @@ urlpatterns = [
 A test case that covers both values of the flag may look like this:
 
 ```python
+from django.test import TestCase, override_settings
+
 class FlaggedCodeTestCase(TestCase):
     @override_settings(FLAGS={"MY_FLAG": [("boolean", True)]})
     def test_flag_enabled(self):
