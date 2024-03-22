@@ -4,6 +4,7 @@
 
 ### What's new?
 
+- Added Django 5.0 support (thanks [@adamchainz](https://github.com/adamchainz)!)
 
 ## 5.0.13
 
