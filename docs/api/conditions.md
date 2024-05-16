@@ -50,6 +50,7 @@ def path_condition(path, request=None, **kwargs):
 Or as an attribute on the condition callable:
 
 ```python
+from django.core.exceptions import ValidationError
 from flags import conditions
 
 class PathCondition:
