@@ -35,6 +35,7 @@ A [validator](https://docs.djangoproject.com/en/stable/ref/validators/) can be g
 
 
 ```python
+from django.core.exceptions import ValidationError
 from flags import conditions
 
 def validate_path(value):
@@ -59,7 +60,7 @@ class PathCondition:
         if not value.startswith('/'):
             raise ValidationError('Enter a valid path')
 
-conditions.register('path', fn=path_condition)
+conditions.register('path', fn=PathCondition)
 ```
 
 Validators specified in both ways are available on condition callables as 
