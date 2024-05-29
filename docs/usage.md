@@ -83,4 +83,4 @@ class FlaggedCodeTestCase(TestCase):
 ```
 
 
-See the [API reference](/api/state) for more details and examples.
+See the [API reference](/django-flags/api/state) for more details and examples.
