@@ -4,6 +4,7 @@
 
 ### What's new?
 
+- Updated packaging to pyproject.toml and linting/formatting to ruff
 - Added Django 5.0 support (thanks [@adamchainz](https://github.com/adamchainz)!)
 
 ## 5.0.13
