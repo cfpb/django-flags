@@ -38,8 +38,8 @@ class FlagStateForm(forms.ModelForm):
         if validator is not None:
             try:
                 validator(value)
-            except Exception as e:
-                raise forms.ValidationError(e)
+            except Exception as err:
+                raise forms.ValidationError(err) from err
 
         return value
 

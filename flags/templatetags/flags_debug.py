@@ -77,14 +77,13 @@ def state_str(flag):
 
         # If there are non-required conditions, we should say something about
         # them too.
-        if not is_enabled:
-            if len(non_bool_conditions) > len(req_conditions):
-                if len(req_conditions) > 0:
-                    state_str += _(" and")
-                state_str += _(" <i>any</i>")
-                if len(req_conditions) > 0:
-                    state_str += _(" non-required")
-                state_str += _(" condition is met")
+        if not is_enabled and len(non_bool_conditions) > len(req_conditions):
+            if len(req_conditions) > 0:
+                state_str += _(" and")
+            state_str += _(" <i>any</i>")
+            if len(req_conditions) > 0:
+                state_str += _(" non-required")
+            state_str += _(" condition is met")
 
     # Finally, if there are no non-boolean conditions and no required boolean
     # conditions, we can just say it's enabled or disabled for all requests.
@@ -96,4 +95,4 @@ def state_str(flag):
     # Full stop.
     state_str += "."
 
-    return mark_safe(state_str)
+    return mark_safe(state_str)  # nosec B703, B308

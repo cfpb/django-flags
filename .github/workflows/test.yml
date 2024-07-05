@@ -31,39 +31,19 @@ jobs:
 
     strategy:
       matrix:
-        toxenv:
-            - py37-dj22
-            - py37-dj32
-            - py39-dj22
-            - py39-dj32
-            - py39-dj40
-            - py39-dj41
-            - py39-dj42
-            - py310-dj50
+        python: ['3.12']
+        django: ['4.2', '5.0']
         include:
-          - toxenv: py37-dj22
-            python-version: 3.7
-          - toxenv: py37-dj32
-            python-version: 3.7
-          - toxenv: py39-dj22
-            python-version: 3.9
-          - toxenv: py39-dj32
-            python-version: 3.9
-          - toxenv: py39-dj40
-            python-version: 3.9
-          - toxenv: py39-dj41
-            python-version: 3.9
-          - toxenv: py39-dj42
-            python-version: 3.9
-          - toxenv: py310-dj50
-            python-version: '3.10'
+          - python: '3.8'
+            django: '4.2'
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python }}
 
       - name: Install dependencies
         run: |
@@ -71,15 +51,15 @@ jobs:
           pip install tox
 
       - name: Run tox
-        run: tox
+        run: |
+            tox
         env:
-          TOXENV: ${{ matrix.toxenv }}
+          TOXENV: python${{ matrix.python }}-django${{ matrix.django }}
 
       - name: Store test coverage
-        if: matrix.toxenv != 'lint'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage
+          name: coverage-${{ matrix.python }}-${{ matrix.django }}
           path: .coverage.*
 
   coverage:
@@ -96,7 +76,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -104,9 +84,9 @@ jobs:
           pip install tox
 
       - name: Retrieve test coverage
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
-          name: coverage
+          merge-multiple: true
 
       - name: Check coverage
         run: tox -e coverage

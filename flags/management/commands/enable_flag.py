@@ -17,8 +17,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             enable_flag(options["flag_name"])
-        except KeyError as e:
-            raise CommandError(e)
+        except KeyError as err:
+            raise CommandError(err) from err
 
         self.stdout.write(
             self.style.SUCCESS(f"Successfully enabled {options['flag_name']}")
