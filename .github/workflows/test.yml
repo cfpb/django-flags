@@ -39,6 +39,7 @@ jobs:
             - py39-dj40
             - py39-dj41
             - py39-dj42
+            - py310-dj50
         include:
           - toxenv: py37-dj22
             python-version: 3.7
@@ -54,6 +55,8 @@ jobs:
             python-version: 3.9
           - toxenv: py39-dj42
             python-version: 3.9
+          - toxenv: py310-dj50
+            python-version: '3.10'
     steps:
       - uses: actions/checkout@v4
 
