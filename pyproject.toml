@@ -1,38 +1,102 @@
-[tool.black]
-line-length = 79
-target-version = ['py37', 'py38']
-include = '\.pyi?$'
-exclude = '''
+[build-system]
+requires = ["setuptools>=63", "setuptools_scm[toml]>=8"]
+build-backend = "setuptools.build_meta"
 
-(
-  /(
-      \.eggs
-    | \.git
-    | \.tox
-    | \*.egg-info
-    | _build
-    | build
-    | dist
-    | migrations
-    | site
-  )/
-)
-'''
-
-[tool.isort]
-profile = "black"
-line_length = 79
-lines_after_imports = 2
-skip = [".tox", "migrations", ".venv", "venv"]
-known_django = ["django"]
-default_section = "THIRDPARTY"
-sections = [
-    "STDLIB",
-    "DJANGO",
-    "THIRDPARTY",
-    "FIRSTPARTY",
-    "LOCALFOLDER"
+[project]
+name = "django-flags"
+dynamic = ["version"]
+description = "TreeModelAdmin for Wagtail"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "CC0"}
+authors = [
+    {name = "CFPB", email = "tech@cfpb.gov" }
+]
+dependencies = [
+    "django>=4.2",
+]
+classifiers = [
+    "Framework :: Django",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.2",
+    "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+    "License :: Public Domain",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
 ]
 
-[build-system]
-requires = ["setuptools", "wheel"]
+[project.optional-dependencies]
+testing = [
+    "coverage[toml]",
+    "django-debug-toolbar",
+    "jinja2",
+]
+docs = [
+    "mkdocs>=0.17",
+    "mkdocs-rtd-dropdown>=0.0.11",
+    "pymdown-extensions>=4.11",
+]
+
+[project.urls]
+"Homepage" = "https://cfpb.github.io/django-flags/"
+"Bug Reports" = "https://github.com/cfpb/django-flags/issues"
+"Source" = "https://github.com/cfpb/django-flags"
+
+[tool.setuptools_scm]
+
+[tool.ruff]
+# Use PEP8 line-length
+line-length = 79
+# Exclude common paths
+exclude = [
+    ".git",
+    ".tox",
+    "__pycache__",
+    "**/migrations/*.py",
+]
+
+[tool.ruff.lint]
+ignore = ["E731", ]
+# Select specific rulesets to use
+select = [
+    # pycodestyle
+    "E",
+    # pyflakes
+    "F",
+    # flake8-bugbear
+    "B",
+    # pyupgrade
+    "UP",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+[tool.ruff.lint.isort.sections]
+"django" = ["django"]
+"wagtail" = ["wagtail"]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+known-third-party = ["jinja2"]
+section-order = [
+    "future",
+    "standard-library",
+    "django",
+    "wagtail",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.coverage.run]
+omit = [
+    "treemodeladmin/tests/*",
+]
+
+[tool.bandit]
+exclude_dirs = [
+    "*/tests/*",
+]
