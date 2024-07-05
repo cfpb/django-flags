@@ -34,9 +34,7 @@ def register(condition_name, fn=None, validator=None):
     # Don't be a decorator, just register
     if condition_name in _conditions:
         raise DuplicateCondition(
-            'Flag condition "{name}" already registered.'.format(
-                name=condition_name
-            )
+            f'Flag condition "{condition_name}" already registered.'
         )
 
     # We attach the validator to the callable to allow for both a single source

@@ -29,13 +29,13 @@ def validate_boolean(value):
     message = "Enter one of 'on', 'off', 'true', 'false', etc."
     try:
         strtobool(value)
-    except ValueError:
+    except ValueError as err:
         # This was a string with an invalid boolean value
-        raise ValidationError(message)
-    except AttributeError:
+        raise ValidationError(message) from err
+    except AttributeError as err:
         # This was not a string
         if not isinstance(value, (int, bool)):
-            raise ValidationError(message)
+            raise ValidationError(message) from err
 
 
 def validate_user(value):
@@ -43,8 +43,8 @@ def validate_user(value):
 
     try:
         UserModel.objects.get(**{UserModel.USERNAME_FIELD: value})
-    except UserModel.DoesNotExist:
-        raise ValidationError("Enter the username of a valid user.")
+    except UserModel.DoesNotExist as err:
+        raise ValidationError("Enter the username of a valid user.") from err
 
 
 def validate_date(value):

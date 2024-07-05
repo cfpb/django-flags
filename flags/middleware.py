@@ -9,5 +9,6 @@ class FlagConditionsMiddleware:
             "FlagConditionsMiddleware is deprecated and no longer has any "
             "effect. It will be removed in a future version of Django-Flags. ",
             FutureWarning,
+            stacklevel=2,
         )
         raise MiddlewareNotUsed

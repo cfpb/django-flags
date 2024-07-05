@@ -89,7 +89,7 @@ class FlaggedViewMixinTestCase(TestCase):
             response = view(self.request())
 
             self.assertTrue(
-                any(item.category == FutureWarning for item in warning_list)
+                any(item.category is FutureWarning for item in warning_list)
             )
 
             self.assertContains(response, "ok")

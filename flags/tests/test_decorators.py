@@ -99,7 +99,7 @@ class FlagCheckTestCase(TestCase):
             decorator(view)
 
             self.assertTrue(
-                any(item.category == RuntimeWarning for item in warning_list)
+                any(item.category is RuntimeWarning for item in warning_list)
             )
 
     def test_view_fallback_same_args(self):

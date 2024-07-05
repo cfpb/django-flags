@@ -37,6 +37,7 @@ class FlaggedViewMixin:
                 "will be removed in a future version of Django-Flags. "
                 "Please use the state attribute instead.",
                 FutureWarning,
+                stacklevel=2,
             )
             state = condition
 
