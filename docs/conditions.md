@@ -6,7 +6,7 @@ Django-Flags comes with the following conditions built-in:
 
 ### `boolean`
 
-A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition. 
+A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.
 
 
 ```python
@@ -41,7 +41,7 @@ Allows a flag to be enabled by including a parameter in the request's query stri
 ```python
 FLAGS = {
     'MY_FLAG': [
-        {'condition': 'parameter', 'value': 'my_flag_param1'},      # ?my_flag_param1=true
+        {'condition': 'parameter', 'value': 'my_flag_param1'},      # ?my_flag_param1=True
         {'condition': 'parameter', 'value': 'my_flag_param2=now'},  # ?my_flag_param2=now
         {'condition': 'parameter', 'value': 'my_flag_param3='},     # ?my_flag_param3
     ]
