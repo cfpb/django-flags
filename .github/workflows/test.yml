@@ -31,10 +31,12 @@ jobs:
 
     strategy:
       matrix:
-        python: ['3.12']
-        django: ['4.2', '5.0']
+        python: ['3.10', '3.13']
+        django: ['5.1', '5.2']
         include:
           - python: '3.8'
+            django: '4.2'
+          - python: '3.12'
             django: '4.2'
 
     steps:
