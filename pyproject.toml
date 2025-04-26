@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "django-flags"
 dynamic = ["version"]
-description = "TreeModelAdmin for Wagtail"
+description = "Feature flags for Django projects"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "CC0"}
@@ -76,7 +76,6 @@ select = [
 
 [tool.ruff.lint.isort.sections]
 "django" = ["django"]
-"wagtail" = ["wagtail"]
 
 [tool.ruff.lint.isort]
 lines-after-imports = 2
@@ -85,7 +84,6 @@ section-order = [
     "future",
     "standard-library",
     "django",
-    "wagtail",
     "third-party",
     "first-party",
     "local-folder",
