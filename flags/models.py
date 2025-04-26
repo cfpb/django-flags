@@ -13,8 +13,7 @@ class FlagState(models.Model):
 
     def __str__(self):
         return (
-            "{name} is enabled when {condition} is "
-            "{value}{required}".format(
+            "{name} is enabled when {condition} is {value}{required}".format(
                 name=self.name,
                 condition=self.condition,
                 value=self.value,
