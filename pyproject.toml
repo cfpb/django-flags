@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "django-flags"
 dynamic = ["version"]
-description = "TreeModelAdmin for Wagtail"
+description = "Feature flags for Django projects"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "CC0"}
@@ -17,13 +17,19 @@ dependencies = [
 ]
 classifiers = [
     "Framework :: Django",
-    "Framework :: Django :: 2.2",
-    "Framework :: Django :: 3.2",
     "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
     "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
     "License :: Public Domain",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 
 [project.optional-dependencies]
@@ -76,7 +82,6 @@ select = [
 
 [tool.ruff.lint.isort.sections]
 "django" = ["django"]
-"wagtail" = ["wagtail"]
 
 [tool.ruff.lint.isort]
 lines-after-imports = 2
@@ -85,7 +90,6 @@ section-order = [
     "future",
     "standard-library",
     "django",
-    "wagtail",
     "third-party",
     "first-party",
     "local-folder",

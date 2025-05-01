@@ -33,15 +33,13 @@ and patterns in the existing code-base.
 
 ## Style
 
-This project uses [`black`](https://github.com/psf/black) to format code, 
-[`isort`](https://github.com/timothycrosley/isort) to format imports, 
-and [`flake8`](https://gitlab.com/pycqa/flake8).
+This project uses [`ruff`](https://docs.astral.sh/ruff/) to format and lint code.
 
 You can format code and imports by calling:
 
 ```
-black flags
-isort --recursive flags
+ruff check flags --fix
+ruff format
 ```
 
 And you can check for style, import order, and other linting by using:
@@ -49,4 +47,3 @@ And you can check for style, import order, and other linting by using:
 ```
 tox -e lint
 ```
-

@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
@@ -31,17 +31,19 @@ jobs:
 
     strategy:
       matrix:
-        python: ['3.12']
-        django: ['4.2', '5.0']
+        python: ['3.10', '3.13']
+        django: ['5.1', '5.2']
         include:
           - python: '3.8'
+            django: '4.2'
+          - python: '3.12'
             django: '4.2'
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
 
@@ -60,6 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-${{ matrix.python }}-${{ matrix.django }}
+          include-hidden-files: true
           path: .coverage.*
 
   coverage:
@@ -74,7 +77,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 

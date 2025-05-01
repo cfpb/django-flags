@@ -165,7 +165,7 @@ class TestStateStrTemplateTag(TestCase):
     def test_state_str_non_bool_non_required(self):
         flag = get_flags().get("MYFLAG")
         self.assertEqual(
-            "MYFLAG is <b>enabled</b> when <i>any</i> condition " "is met.",
+            "MYFLAG is <b>enabled</b> when <i>any</i> condition is met.",
             state_str(flag),
         )
 

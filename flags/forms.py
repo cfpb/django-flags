@@ -13,8 +13,7 @@ class FlagStateForm(forms.ModelForm):
         label="Required",
         required=False,
         help_text=(
-            'All conditions marked "required" must be met to enable '
-            "the flag"
+            'All conditions marked "required" must be met to enable the flag'
         ),
     )
 
