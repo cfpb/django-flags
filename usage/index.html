@@ -8,7 +8,7 @@
     <title>Usage guide - Django-Flags</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../css/overrides.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -46,7 +45,7 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Usage guide</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Usage guide</a>
     <ul class="current">
     
         <ul>
@@ -54,6 +53,8 @@
             <li><a class="toctree-l4" href="#defining-flags">Defining flags</a></li>
         
             <li><a class="toctree-l4" href="#using-flags-in-code">Using flags in code</a></li>
+        
+            <li><a class="toctree-l4" href="#testing-with-flags">Testing with flags</a></li>
         
         </ul>
     
@@ -63,6 +64,10 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../debugging/">Debugging</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../testing/">Testing</a>
                 </li>
               </ul>
               <ul>
@@ -114,8 +119,8 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-      <li>Usage guide</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Usage guide</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/cfpb/django-flags/edit/main/docs/usage.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -167,7 +172,19 @@ if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
 urlpatterns = [
     flagged_path('FLAG_WITH_REQUIRED_CONDITIONS', 'a-url/', view_requiring_flag, state=True),
 ]</code></pre>
-<p>See the <a href="/api/state">API reference</a> for more details and examples.</p>
+<h2 id="testing-with-flags">Testing with flags<a class="headerlink" href="#testing-with-flags" title="Permanent link">¶</a></h2>
+<p>A test case that covers both values of the flag may look like this:</p>
+<pre class="highlight"><code class="language-python">from django.test import TestCase, override_settings
+
+class FlaggedCodeTestCase(TestCase):
+    @override_settings(FLAGS={"MY_FLAG": [("boolean", True)]})
+    def test_flag_enabled(self):
+        # Do the thing that requires the flag to be enabled
+
+    @override_settings(FLAGS={"MY_FLAG": [("boolean", False)]})
+    def test_flag_disabled(self):
+        # Do the thing that requires the flag to be disabled</code></pre>
+<p>See the <a href="/django-flags/api/state">API reference</a> for more details and examples.</p>
               
             </div>
           </div><footer>
@@ -207,14 +224,15 @@ urlpatterns = [
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

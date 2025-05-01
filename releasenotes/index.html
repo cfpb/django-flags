@@ -8,7 +8,7 @@
     <title>Release notes - Django-Flags</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../css/overrides.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -51,6 +50,10 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../debugging/">Debugging</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../testing/">Testing</a>
                 </li>
               </ul>
               <ul>
@@ -86,12 +89,12 @@
               </ul>
               <p class="caption"><span class="caption-text">Release notes</span></p>
               <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Release notes</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Release notes</a>
     <ul class="current">
     
         <ul>
         
-            <li><a class="toctree-l4" href="#pending">Pending</a></li>
+            <li><a class="toctree-l4" href="#5014">5.0.14</a></li>
         
             <li><a class="toctree-l4" href="#5013">5.0.13</a></li>
         
@@ -170,9 +173,9 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-          <li>Release notes &raquo;</li>
-      <li>Release notes</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Release notes</li>
+      <li class="breadcrumb-item active">Release notes</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/cfpb/django-flags/edit/main/docs/releasenotes.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -183,8 +186,17 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">¶</a></h1>
-<h2 id="pending">Pending<a class="headerlink" href="#pending" title="Permanent link">¶</a></h2>
+<h2 id="5014">5.0.14<a class="headerlink" href="#5014" title="Permanent link">¶</a></h2>
 <h3 id="whats-new">What's new?<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
+<ul>
+<li>Updated packaging to pyproject.toml and linting/formatting to ruff</li>
+<li>Added Django 5.0 support (thanks <a href="https://github.com/adamchainz">@adamchainz</a>!)</li>
+<li>Added Django 5.2 support (thanks <a href="https://github.com/sergei-maertens">@sergei-maertens</a>!)</li>
+</ul>
+<h3 id="bug-fixes">Bug fixes<a class="headerlink" href="#bug-fixes" title="Permanent link">¶</a></h3>
+<ul>
+<li>Fixed parameter condition example in docs (thanks <a href="https://github.com/andy-isoc">@andy-isoc</a>!)</li>
+</ul>
 <h2 id="5013">5.0.13<a class="headerlink" href="#5013" title="Permanent link">¶</a></h2>
 <h3 id="whats-new_1">What's new?<a class="headerlink" href="#whats-new_1" title="Permanent link">¶</a></h3>
 <ul>
@@ -197,7 +209,7 @@
 <ul>
 <li>Removed Python 3.6 support (thanks <a href="https://github.com/michael-k">@michael-k</a>!).</li>
 </ul>
-<h3 id="bug-fixes">Bug fixes<a class="headerlink" href="#bug-fixes" title="Permanent link">¶</a></h3>
+<h3 id="bug-fixes_1">Bug fixes<a class="headerlink" href="#bug-fixes_1" title="Permanent link">¶</a></h3>
 <ul>
 <li>Removed errant print statement (thanks <a href="https://github.com/Natim">@Natim</a>!).</li>
 </ul>
@@ -414,14 +426,15 @@
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

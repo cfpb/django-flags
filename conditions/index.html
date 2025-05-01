@@ -8,7 +8,7 @@
     <title>Conditions - Django-Flags</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../css/overrides.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -54,11 +53,15 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../testing/">Testing</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../settings/">Settings</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Conditions</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Conditions</a>
     <ul class="current">
     
         <ul>
@@ -114,8 +117,8 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-      <li>Conditions</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Conditions</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/cfpb/django-flags/edit/main/docs/conditions.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -129,7 +132,7 @@
 <h2 id="built-in-conditions">Built-in conditions<a class="headerlink" href="#built-in-conditions" title="Permanent link">¶</a></h2>
 <p>Django-Flags comes with the following conditions built-in:</p>
 <h3 id="boolean"><code>boolean</code><a class="headerlink" href="#boolean" title="Permanent link">¶</a></h3>
-<p>A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition. </p>
+<p>A simple boolean true/false intended to enable or disable a flag explicitly. The state of the flag evaluates to the value of the boolean condition.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {'MY_FLAG': [{'condition': 'boolean', 'value': True}]}</code></pre>
 <p>The value can given as a Python <code>True</code> or <code>False</code> or  as any <a href="https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool">string representation of truth</a>, such as <code>y</code>, <code>yes</code>, <code>t</code>, <code>true</code>, <code>on</code> and <code>1</code> for true values, and <code>n</code>, <code>no</code>, <code>f</code>, <code>false</code>, <code>off</code> and <code>0</code> for false values.</p>
 <h3 id="user"><code>user</code><a class="headerlink" href="#user" title="Permanent link">¶</a></h3>
@@ -144,7 +147,7 @@ FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}</code></pre>
 <p>Allows a flag to be enabled by including a parameter in the request's query string. <code>value</code> is the name of the parameter, or a name and expected value. If an expected value isn't provided, the value must be <code>True</code>.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {
     'MY_FLAG': [
-        {'condition': 'parameter', 'value': 'my_flag_param1'},      # ?my_flag_param1=true
+        {'condition': 'parameter', 'value': 'my_flag_param1'},      # ?my_flag_param1=True
         {'condition': 'parameter', 'value': 'my_flag_param2=now'},  # ?my_flag_param2=now
         {'condition': 'parameter', 'value': 'my_flag_param3='},     # ?my_flag_param3
     ]
@@ -199,14 +202,15 @@ FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}</code></pre>
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

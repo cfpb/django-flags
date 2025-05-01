@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Debugging - Django-Flags</title>
+    <title>Testing - Django-Flags</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,8 +13,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Debugging";
-        var mkdocs_page_input_path = "debugging.md";
+        var mkdocs_page_name = "Testing";
+        var mkdocs_page_input_path = "testing.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -48,26 +48,22 @@
                 <li class="toctree-l1"><a class="reference internal" href="../usage/">Usage guide</a>
                 </li>
               </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../debugging/">Debugging</a>
+                </li>
+              </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Debugging</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Testing</a>
     <ul class="current">
     
         <ul>
         
-            <li><a class="toctree-l4" href="#system-checks">System checks</a></li>
-        
-            <li><a class="toctree-l4" href="#exceptions">Exceptions</a></li>
-        
-            <li><a class="toctree-l4" href="#django-debug-toolbar-panels">Django Debug Toolbar Panels</a></li>
+            <li><a class="toctree-l4" href="#testing-code-that-depends-on-flags">Testing code that depends on flags</a></li>
         
         </ul>
     
 
     </ul>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../testing/">Testing</a>
                 </li>
               </ul>
               <ul>
@@ -120,9 +116,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Debugging</li>
+      <li class="breadcrumb-item active">Testing</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/cfpb/django-flags/edit/main/docs/debugging.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/cfpb/django-flags/edit/main/docs/testing.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -130,57 +126,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">¶</a></h1>
-<h2 id="system-checks">System checks<a class="headerlink" href="#system-checks" title="Permanent link">¶</a></h2>
-<dl>
-  <dt>`flags.E001`</dt>
-  <dd>
-    <p>Django-Flags includes a <a href="https://docs.djangoproject.com/en/stable/topics/checks/">Django system check</a> to check for flags that have non-existent conditions on start-up.</p>
-    <pre><code>?: (flags.E001) Flag FLAG_WITH_ANY_CONDITIONS has non-existent condition "condition name".
-HINT: Register "condition name" as a Django-Flags condition.</code></pre>
-  </dd>
-</dl>
+                <h1 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">¶</a></h1>
+<h2 id="testing-code-that-depends-on-flags">Testing code that depends on flags<a class="headerlink" href="#testing-code-that-depends-on-flags" title="Permanent link">¶</a></h2>
+<p>Because <code>FLAGS</code> are definable in Django settings, you can use Django's standard <code>override_settings</code> to test with a flag off and on.</p>
+<pre class="highlight"><code class="language-python">from django.test import TestCase, override_settings
 
-<dl>
-  <dt>`flags.E002`</dt>
-  <dd>
-    <p>Django-Flags includes a <a href="https://docs.djangoproject.com/en/stable/topics/checks/">Django system check</a> to check to ensure that flag conditions have valid expected values on start-up.</p>
-    <pre><code>?: (flags.E002) Flag FLAG_WITH_ANY_CONDITIONS's "boolean" condition has an invalid value.
-HINT: Enter one of "on", "off", "true", "false".</code></pre>
-  </dd>
-</dl>
+class FlaggedCodeTestCase(TestCase):
+    @override_settings(FLAGS={"MY_FLAG": [("boolean", True)]})
+    def test_flag_enabled(self):
+        # Do the thing that requires the flag to be enabled
 
-<h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">¶</a></h2>
-<h3 id="requiredforcondition"><code>RequiredForCondition</code><a class="headerlink" href="#requiredforcondition" title="Permanent link">¶</a></h3>
-<p>Django-Flags allows conditions to require any number of keyword arguments that must be passed when checking the condition. If a condition does not receive the necessary arguments, it may raise a <code>RequiredForCondition</code> exception, for example:</p>
-<pre class="highlight"><code class="language-python">Traceback (most recent call last):
-  …
-    raise RequiredForCondition("request is required for condition 'path'")</code></pre>
-<h2 id="django-debug-toolbar-panels">Django Debug Toolbar Panels<a class="headerlink" href="#django-debug-toolbar-panels" title="Permanent link">¶</a></h2>
-<h3 id="flag-conditions">Flag conditions<a class="headerlink" href="#flag-conditions" title="Permanent link">¶</a></h3>
-<p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will list all flags, their conditions, and the state of each flag for the current request.</p>
-<p><img alt="Feature flags Django Debug Toolbar panel" src="../images/screenshot_flags_debug_panel.png" /></p>
-<p>To enable the panel first follow the <a href="https://django-debug-toolbar.readthedocs.io/en/latest/installation.html">installation and setup instructions for Django Debug Toolbar</a>. Then add <code>flags.panels.FlagsPanel</code> to the <code>DEBUG_TOOLBAR_PANELS</code> setting:</p>
-<pre class="highlight"><code class="language-python">DEBUG_TOOLBAR_PANELS = [
-    # …
-    'flags.panels.FlagsPanel',
-    # …
-]</code></pre>
-<h3 id="flag-checks">Flag checks<a class="headerlink" href="#flag-checks" title="Permanent link">¶</a></h3>
-<p>Django-Flags comes with a panel for <a href="https://django-debug-toolbar.readthedocs.io/en/latest/index.html">Django Debug Toolbar</a> that will show which flags were checked during a request, how many times it was checked, and what the results of those checks were.</p>
-<p><img alt="Flag Checks Django Debug Toolbar panel" src="../images/screenshot_flag_checks_panel.png" /></p>
-<p>To enable the panel first follow the <a href="https://django-debug-toolbar.readthedocs.io/en/latest/installation.html">installation and setup instructions for Django Debug Toolbar</a>. Then add <code>flags.panels.FlagChecksPanel</code> to the <code>DEBUG_TOOLBAR_PANELS</code> setting:</p>
-<pre class="highlight"><code class="language-python">DEBUG_TOOLBAR_PANELS = [
-    # …
-    'flags.panels.FlagChecksPanel',
-    # …
-]</code></pre>
+    @override_settings(FLAGS={"MY_FLAG": [("boolean", False)]})
+    def test_flag_disabled(self):
+        # Do the thing that requires the flag to be disabled</code></pre>
+<p>Alternatively, you can create a <code>FlagState</code> object along the same lines with a boolean condition that is <code>True</code> to test the flag-enabled code path, and then create one with a boolean condition that is<code>False</code> to test the not-enabled path.</p>
+<pre class="highlight"><code class="language-python">class FlaggedCodeTestCase(TestCase):
+    def test_flag_enabled(self):
+        FlagState.objects.create(
+            name="MY_FLAG", condition="boolean", value="True"
+        )
+        # Do the thing that requires the flag to be enabled
+
+    def test_flag_disabled(self):
+        FlagState.objects.create(
+            name="MY_FLAG", condition="boolean", value="True"
+        )
+        # Do the thing that requires the flag to be disabled</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../usage/" class="btn btn-neutral float-left" title="Usage guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../testing/" class="btn btn-neutral float-right" title="Testing">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../debugging/" class="btn btn-neutral float-left" title="Debugging"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../settings/" class="btn btn-neutral float-right" title="Settings">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -207,10 +184,10 @@ HINT: Enter one of "on", "off", "true", "false".</code></pre>
         </span>
     
     
-      <span><a href="../usage/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../debugging/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../testing/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../settings/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

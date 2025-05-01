@@ -8,7 +8,7 @@
     <title>Conditions - Django-Flags</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../../css/overrides.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -54,6 +53,10 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../testing/">Testing</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../../settings/">Settings</a>
                 </li>
               </ul>
@@ -81,7 +84,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../jinja2/">Jinja2 templates</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Conditions</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Conditions</a>
     <ul class="current">
     
         <ul>
@@ -114,9 +117,9 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-          <li>API Reference &raquo;</li>
-      <li>Conditions</li>
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Reference</li>
+      <li class="breadcrumb-item active">Conditions</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/cfpb/django-flags/edit/main/docs/api/conditions.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -144,7 +147,8 @@ def path_condition(path, request=None, **kwargs):
 conditions.register('path', fn=path_condition)</code></pre>
 <p>Will raise a <code>conditions.DuplicateCondition</code> exception if the condition name is already registered.</p>
 <p>A <a href="https://docs.djangoproject.com/en/stable/ref/validators/">validator</a> can be given to validate the condition's expected value as provided by <a href="../sources/">the flag sources</a>, either as another callable as an argument to the <code>register</code> function:</p>
-<pre class="highlight"><code class="language-python">from flags import conditions
+<pre class="highlight"><code class="language-python">from django.core.exceptions import ValidationError
+from flags import conditions
 
 def validate_path(value):
     if not value.startswith('/'):
@@ -154,7 +158,8 @@ def validate_path(value):
 def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)</code></pre>
 <p>Or as an attribute on the condition callable:</p>
-<pre class="highlight"><code class="language-python">from flags import conditions
+<pre class="highlight"><code class="language-python">from django.core.exceptions import ValidationError
+from flags import conditions
 
 class PathCondition:
     def __call__(self, path, request=None, **kwargs):
@@ -164,7 +169,7 @@ class PathCondition:
         if not value.startswith('/'):
             raise ValidationError('Enter a valid path')
 
-conditions.register('path', fn=path_condition)</code></pre>
+conditions.register('path', fn=PathCondition)</code></pre>
 <p>Validators specified in both ways are available on condition callables as 
 a <code>validate</code> attribute:</p>
 <pre class="highlight"><code class="language-python">condition = get_condition('path')
@@ -220,14 +225,15 @@ def path_condition(path, request=None, **kwargs):
     
   </span>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme_extra.js" defer></script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>
