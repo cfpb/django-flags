@@ -1,11 +1,16 @@
 # Release Notes
 
-## Pending
+## 5.0.14
 
 ### What's new?
 
 - Updated packaging to pyproject.toml and linting/formatting to ruff
 - Added Django 5.0 support (thanks [@adamchainz](https://github.com/adamchainz)!)
+- Added Django 5.2 support (thanks [@sergei-maertens](https://github.com/sergei-maertens)!)
+
+### Bug fixes
+
+- Fixed parameter condition example in docs (thanks [@andy-isoc](https://github.com/andy-isoc)!)
 
 ## 5.0.13
 
