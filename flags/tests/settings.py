@@ -1,9 +1,5 @@
 import os
 
-from django.urls import include, path
-
-import debug_toolbar
-
 from flags.conditions import register
 
 
@@ -80,9 +76,4 @@ def kwarg_condition(expected_value, passed_value=None, **kwargs):
 
 # DEBUG=True
 # INTERNAL_IPS=['127.0.0.1']
-ROOT_URLCONF = __name__
-
-
-urlpatterns = [
-    path("__debug__/", include(debug_toolbar.urls)),
-]
+ROOT_URLCONF = "flags.tests.urls"
