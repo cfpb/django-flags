@@ -3,17 +3,16 @@ name: test
 on: [pull_request, push]
 
 jobs:
-
   lint:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.12'
+          python-version: "3.13"
 
       - name: Install dependencies
         run: |
@@ -31,19 +30,25 @@ jobs:
 
     strategy:
       matrix:
-        python: ['3.10', '3.13']
-        django: ['5.1', '5.2']
         include:
-          - python: '3.8'
-            django: '4.2'
-          - python: '3.12'
-            django: '4.2'
+          - python: "3.10"
+            django: "4.2"
+          - python: "3.13"
+            django: "4.2"
+          - python: "3.12"
+            django: "5.1"
+          - python: "3.13"
+            django: "5.1"
+          - python: "3.12"
+            django: "5.2"
+          - python: "3.13"
+            django: "5.2"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
 
@@ -54,12 +59,12 @@ jobs:
 
       - name: Run tox
         run: |
-            tox
+          tox
         env:
           TOXENV: python${{ matrix.python }}-django${{ matrix.django }}
 
       - name: Store test coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: coverage-${{ matrix.python }}-${{ matrix.django }}
           include-hidden-files: true
@@ -72,14 +77,14 @@ jobs:
       - test
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Install dependencies
         run: |
@@ -87,7 +92,7 @@ jobs:
           pip install tox
 
       - name: Retrieve test coverage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           merge-multiple: true
 

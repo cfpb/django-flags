@@ -1,5 +1,12 @@
 # Release Notes
 
+## Unreleased
+
+### What's new?
+
+- Added support for Python 3.13, removed support for Python < 3.10
+
+
 ## 5.0.14
 
 ### What's new?
@@ -255,4 +262,3 @@ TEMPLATES = [
 ## 3.0
 
 Django-Flags is a fork of the Django-only components of the [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) feature flag library. This is the initial release.
-
