@@ -1,5 +1,13 @@
 # Release Notes
 
+## Unreleased
+
+### What's new?
+
+- Added support for Django 6.0
+- Removed obsolete Django version checks
+
+
 ## 5.1.0
 
 ### What's new?
