@@ -9,7 +9,12 @@ class FlagState(models.Model):
 
     class Meta:
         app_label = "flags"
-        unique_together = ("name", "condition", "value")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "condition", "value"],
+                name="flags_flagstate_unique_name_condition_value",
+            )
+        ]
 
     def __str__(self):
         return (

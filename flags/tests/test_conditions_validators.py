@@ -1,4 +1,3 @@
-import django
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase, override_settings
@@ -88,13 +87,6 @@ class ValidateDateTestCase(TestCase):
     def test_invalid_date_strings(self):
         with self.assertRaises(ValidationError):
             validate_date("tomorrowish")
-
-        # Django 4.0 relies on Python 3.7+'s `datetime.fromisoformat()`, which
-        # handles this where the old regex did not. This is now valid when on
-        # Django 4.0+. See https://github.com/django/django/pull/14582
-        if django.VERSION < (4, 0):
-            with self.assertRaises(ValidationError):
-                validate_date("2020-04-01")
 
     def test_valid_date_strings(self):
         validate_date("2020-04-01T12:00")
