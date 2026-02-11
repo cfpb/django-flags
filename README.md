@@ -1,4 +1,5 @@
 # Django-Flags
+[![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/cfpb/django-flags)
 
 [![Build Status](https://github.com/cfpb/django-flags/workflows/test/badge.svg)](https://github.com/cfpb/django-flags/actions)
 [![Ethical open source](https://img.shields.io/badge/ethical-open-%23bb8c3c?labelColor=393162)](https://ethicalsource.dev/principles/)
