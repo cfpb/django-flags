@@ -1,5 +1,8 @@
+from unittest import mock
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.db import OperationalError, ProgrammingError
 from django.test import TestCase, override_settings
 
 from flags.conditions.validators import (
@@ -81,6 +84,19 @@ class ValidateUserTestCase(TestCase):
     def test_custom_user_invalid(self):
         with self.assertRaises(ValidationError):
             validate_user("nottestuser")
+
+    def test_user_table_missing_is_skipped(self):
+        # If the user table does not exist yet (for example when the system
+        # checks run during a migration against a fresh database), the lookup
+        # raises a database error. Validation should be skipped rather than
+        # letting that error abort the migration. See GH-96.
+        User = get_user_model()
+        for exc in (OperationalError, ProgrammingError):
+            with mock.patch.object(
+                User.objects, "get", side_effect=exc("relation does not exist")
+            ):
+                # Must not raise.
+                validate_user("testuser")
 
 
 class ValidateDateTestCase(TestCase):
