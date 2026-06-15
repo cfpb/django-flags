@@ -3,6 +3,7 @@ import re
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
+from django.db import OperationalError, ProgrammingError
 from django.utils import dateparse
 
 from flags.utils import strtobool
@@ -45,6 +46,13 @@ def validate_user(value):
         UserModel.objects.get(**{UserModel.USERNAME_FIELD: value})
     except UserModel.DoesNotExist as err:
         raise ValidationError("Enter the username of a valid user.") from err
+    except (OperationalError, ProgrammingError):
+        # The user table may not exist yet, for example when the system checks
+        # run during a migration against a fresh database (before the auth
+        # tables are created). The username cannot be checked in that case, so
+        # skip validation rather than letting the database error abort the
+        # migration.
+        pass
 
 
 def validate_date(value):
