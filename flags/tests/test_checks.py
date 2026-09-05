@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.core.checks import Warning
+from django.db import connection
 from django.test import TestCase, override_settings
 
 from flags.checks import flag_conditions_check
@@ -19,6 +20,15 @@ class TestFlagsConditionsCheck(TestCase):
 
     @override_settings(FLAGS={"FLAG_TO_CHECK": [("boolean", "foo")]})
     def test_check_fails_if_conditions_exist_with_invalid_value(self):
+        errors = flag_conditions_check(apps.get_app_configs())
+        self.assertEqual(len(errors), 1)
+        self.assertIsInstance(errors[0], Warning)
+        self.assertEqual(errors[0].id, "flags.E002")
+
+    @override_settings(FLAGS={"FLAG_TO_CHECK": [("user", "testuser")]})
+    def test_check_does_not_crash_when_user_table_missing(self):
+        with connection.cursor() as cursor:
+            cursor.execute("DROP TABLE auth_user")
         errors = flag_conditions_check(apps.get_app_configs())
         self.assertEqual(len(errors), 1)
         self.assertIsInstance(errors[0], Warning)

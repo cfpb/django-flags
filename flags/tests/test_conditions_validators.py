@@ -1,5 +1,8 @@
+from unittest import mock
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.db import OperationalError
 from django.test import TestCase, override_settings
 
 from flags.conditions.validators import (
@@ -81,6 +84,18 @@ class ValidateUserTestCase(TestCase):
     def test_custom_user_invalid(self):
         with self.assertRaises(ValidationError):
             validate_user("nottestuser")
+
+    def test_user_table_missing_raises_validation_error(self):
+        User = get_user_model()
+        with (
+            mock.patch.object(
+                User.objects,
+                "get",
+                side_effect=OperationalError("no such table: auth_user"),
+            ),
+            self.assertRaises(ValidationError),
+        ):
+            validate_user("testuser")
 
 
 class ValidateDateTestCase(TestCase):

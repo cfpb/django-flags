@@ -3,6 +3,7 @@ import re
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
+from django.db import OperationalError, ProgrammingError
 from django.utils import dateparse
 
 from flags.utils import strtobool
@@ -45,6 +46,11 @@ def validate_user(value):
         UserModel.objects.get(**{UserModel.USERNAME_FIELD: value})
     except UserModel.DoesNotExist as err:
         raise ValidationError("Enter the username of a valid user.") from err
+    except (OperationalError, ProgrammingError) as err:
+        raise ValidationError(
+            "Unable to validate the user because the user table is not "
+            "available. This may be because migrations have not been run."
+        ) from err
 
 
 def validate_date(value):
