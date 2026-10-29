@@ -7,11 +7,10 @@ from flags.sources import Condition
 
 
 class CustomFlagSource(object):
-
     def get_flags(self):
         flags = {
-            'MY_FLAG': [
-                Condition('parameter', 'enable_my_flag'),
+            "MY_FLAG": [
+                Condition("parameter", "enable_my_flag"),
             ]
         }
         return flags

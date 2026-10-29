@@ -29,8 +29,8 @@ Return the value for the flag (`True` or `False`) by passing kwargs to its condi
 Returns `True` if a flag is enabled by passing kwargs to its conditions, otherwise returns `False`.
 
 ```python
-if flag_enabled('MY_FLAG', request=a_request):
-	print("My feature flag is enabled")
+if flag_enabled("MY_FLAG", request=a_request):
+    print("My feature flag is enabled")
 ```
 
 ### `flag_disabled(flag_name, **kwargs)`

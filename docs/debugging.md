@@ -46,7 +46,7 @@ To enable the panel first follow the [installation and setup instructions for Dj
 ```python
 DEBUG_TOOLBAR_PANELS = [
     # …
-    'flags.panels.FlagsPanel',
+    "flags.panels.FlagsPanel",
     # …
 ]
 ```
@@ -62,7 +62,7 @@ To enable the panel first follow the [installation and setup instructions for Dj
 ```python
 DEBUG_TOOLBAR_PANELS = [
     # …
-    'flags.panels.FlagChecksPanel',
+    "flags.panels.FlagChecksPanel",
     # …
 ]
 ```

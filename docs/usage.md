@@ -6,15 +6,22 @@ Flags are defined in Django settings with the conditions in which they are enabl
 
 ```python
 FLAGS = {
-    'FLAG_WITH_EMPTY_CONDITIONS': [],
-    'FLAG_WITH_ANY_CONDITIONS': [
-        {'condition': 'condition name', 'value': 'expected value to be enabled'},
-        {'condition': 'user', 'value': 'lady.liberty'},
+    "FLAG_WITH_EMPTY_CONDITIONS": [],
+    "FLAG_WITH_ANY_CONDITIONS": [
+        {
+            "condition": "condition name",
+            "value": "expected value to be enabled",
+        },
+        {"condition": "user", "value": "lady.liberty"},
     ],
-    'FLAG_WITH_REQUIRED_CONDITIONS': [
-        {'condition': 'user', 'value': 'lady.liberty'},
-        {'condition': 'path matches', 'value': r'^/liberty/island', 'required': True},
-    ]
+    "FLAG_WITH_REQUIRED_CONDITIONS": [
+        {"condition": "user", "value": "lady.liberty"},
+        {
+            "condition": "path matches",
+            "value": r"^/liberty/island",
+            "required": True,
+        },
+    ],
 }
 ```
 
@@ -29,8 +36,8 @@ Flags can be used in Python code:
 ```python
 from flags.state import flag_enabled
 
-if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
-    print("My feature flag is enabled")	
+if flag_enabled("FLAG_WITH_ANY_CONDITIONS", request=a_request):
+    print("My feature flag is enabled")
 ```
 
 In Django templates:
@@ -61,7 +68,12 @@ In `urls.py`:
 from flags.urls import flagged_path
 
 urlpatterns = [
-    flagged_path('FLAG_WITH_REQUIRED_CONDITIONS', 'a-url/', view_requiring_flag, state=True),
+    flagged_path(
+        "FLAG_WITH_REQUIRED_CONDITIONS",
+        "a-url/",
+        view_requiring_flag,
+        state=True,
+    ),
 ]
 ```
 

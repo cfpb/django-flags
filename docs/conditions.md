@@ -10,7 +10,7 @@ A simple boolean true/false intended to enable or disable a flag explicitly. The
 
 
 ```python
-FLAGS = {'MY_FLAG': [{'condition': 'boolean', 'value': True}]}
+FLAGS = {"MY_FLAG": [{"condition": "boolean", "value": True}]}
 ```
 
 The value can given as a Python `True` or `False` or  as any [string representation of truth](https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool), such as `y`, `yes`, `t`, `true`, `on` and `1` for true values, and `n`, `no`, `f`, `false`, `off` and `0` for false values.
@@ -20,7 +20,7 @@ The value can given as a Python `True` or `False` or  as any [string representat
 Allows a flag to be enabled for the username given as the condition's value.
 
 ```python
-FLAGS = {'MY_FLAG': [{'condition': 'user', 'value': 'jane.doe'}]}
+FLAGS = {"MY_FLAG": [{"condition": "user", "value": "jane.doe"}]}
 ```
 
 ### `anonymous`
@@ -29,7 +29,7 @@ Allows a flag to be either enabled or disabled depending on whether a user is an
 
 ```python
 # MY_FLAG is enabled if the user is not anonymous (is logged in)
-FLAGS = {'MY_FLAG': [{'condition': 'anonymous', 'value': False}]}
+FLAGS = {"MY_FLAG": [{"condition": "anonymous", "value": False}]}
 ```
 
 The value can given as a Python `True` or `False` or  as any [string representation of truth](https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool), such as `y`, `yes`, `t`, `true`, `on` and `1` for true values, and `n`, `no`, `f`, `false`, `off` and `0` for false values.
@@ -40,10 +40,19 @@ Allows a flag to be enabled by including a parameter in the request's query stri
 
 ```python
 FLAGS = {
-    'MY_FLAG': [
-        {'condition': 'parameter', 'value': 'my_flag_param1'},      # ?my_flag_param1=True
-        {'condition': 'parameter', 'value': 'my_flag_param2=now'},  # ?my_flag_param2=now
-        {'condition': 'parameter', 'value': 'my_flag_param3='},     # ?my_flag_param3
+    "MY_FLAG": [
+        {
+            "condition": "parameter",
+            "value": "my_flag_param1",
+        },  # ?my_flag_param1=True
+        {
+            "condition": "parameter",
+            "value": "my_flag_param2=now",
+        },  # ?my_flag_param2=now
+        {
+            "condition": "parameter",
+            "value": "my_flag_param3=",
+        },  # ?my_flag_param3
     ]
 }
 ```
@@ -53,7 +62,9 @@ FLAGS = {
 Allows a flag to be enabled if the request's path matches the regular expression value.
 
 ```python
-FLAGS = {'MY_FLAG': [{'condition': 'path matches', 'value': r'^/flagged/path'}]}
+FLAGS = {
+    "MY_FLAG": [{"condition": "path matches", "value": r"^/flagged/path"}]
+}
 ```
 
 ### `after date`
@@ -61,7 +72,9 @@ FLAGS = {'MY_FLAG': [{'condition': 'path matches', 'value': r'^/flagged/path'}]}
 Allows a flag to be enabled after a given date (and time) given in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). The time must be specified either in UTC or as an offset from UTC.
 
 ```python
-FLAGS = {'MY_FLAG': [{'condition': 'after date', 'value': '2017-06-01T12:00Z'}]}
+FLAGS = {
+    "MY_FLAG": [{"condition": "after date", "value": "2017-06-01T12:00Z"}]
+}
 ```
 
 ### `before_date`
@@ -69,7 +82,7 @@ FLAGS = {'MY_FLAG': [{'condition': 'after date', 'value': '2017-06-01T12:00Z'}]}
 Allows a flag to be enabled before a given date (and time) given in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). The time must be specified either in UTC or as an offset from UTC.
 
 ```python
-FLAGS = {'MY_FLAG': {'before date': '2022-06-01T12:00Z'}}
+FLAGS = {"MY_FLAG": {"before date": "2022-06-01T12:00Z"}}
 ```
 
 ## Custom conditions

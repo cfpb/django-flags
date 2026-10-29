@@ -22,7 +22,7 @@ Conditions can either be included as:
   ```
   or
   ```python
-  {'condition': 'condition name', 'value': 'expected value'}
+  {"condition": "condition name", "value": "expected value"}
   ``` 
   (`required` defaults to `False`).
 - A list of 3-tuples with the format: 
@@ -39,20 +39,30 @@ For example:
 
 ```python
 FLAGS = {
-  'FLAG_WITH_EMPTY_CONDITIONS': [],
-  'FLAG_WITH_DICT_CONDITIONS': [
-    {'condition': 'condition name', 'value': 'expected value to be enabled'},
-    {'condition': 'condition name', 'value': 'expected value to be enabled', 'required': True},
-  ],
-  'FLAG_WITH_TUPLE_CONDITIONS': [
-    ('condition name', 'expected value to be enabled'),
-    ('condition name', 'expected value to be enabled', True),
-  ],
-  # This is possible, but not recommended
-  'FLAG_WITH_MIXED_CONDITIONS': [
-    {'condition': 'condition name', 'value': 'expected value to be enabled'},
-    ('condition name', 'expected value to be enabled', True),
-  ],
+    "FLAG_WITH_EMPTY_CONDITIONS": [],
+    "FLAG_WITH_DICT_CONDITIONS": [
+        {
+            "condition": "condition name",
+            "value": "expected value to be enabled",
+        },
+        {
+            "condition": "condition name",
+            "value": "expected value to be enabled",
+            "required": True,
+        },
+    ],
+    "FLAG_WITH_TUPLE_CONDITIONS": [
+        ("condition name", "expected value to be enabled"),
+        ("condition name", "expected value to be enabled", True),
+    ],
+    # This is possible, but not recommended
+    "FLAG_WITH_MIXED_CONDITIONS": [
+        {
+            "condition": "condition name",
+            "value": "expected value to be enabled",
+        },
+        ("condition name", "expected value to be enabled", True),
+    ],
 }
 ```
 
