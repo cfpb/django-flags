@@ -3,22 +3,22 @@
 ## System checks
 
 <dl>
-  <dt>`flags.E001`</dt>
+  <dt>`flags.W001`</dt>
   <dd>
     <p>Django-Flags includes a <a href="https://docs.djangoproject.com/en/stable/topics/checks/">Django system check</a> to check for flags that have non-existent conditions on start-up.</p>
-    <pre><code>?: (flags.E001) Flag FLAG_WITH_ANY_CONDITIONS has non-existent condition "condition name".
+    <pre><code>?: (flags.W001) Flag FLAG_WITH_ANY_CONDITIONS has non-existent condition "condition name".
 HINT: Register "condition name" as a Django-Flags condition.</code></pre>
   </dd>
-</dl> 
+</dl>
 
 <dl>
-  <dt>`flags.E002`</dt>
+  <dt>`flags.W002`</dt>
   <dd>
     <p>Django-Flags includes a <a href="https://docs.djangoproject.com/en/stable/topics/checks/">Django system check</a> to check to ensure that flag conditions have valid expected values on start-up.</p>
-    <pre><code>?: (flags.E002) Flag FLAG_WITH_ANY_CONDITIONS's "boolean" condition has an invalid value.
+    <pre><code>?: (flags.W002) Flag FLAG_WITH_ANY_CONDITIONS's "boolean" condition has an invalid value.
 HINT: Enter one of "on", "off", "true", "false".</code></pre>
   </dd>
-</dl> 
+</dl>
 
 
 ## Exceptions
@@ -46,7 +46,7 @@ To enable the panel first follow the [installation and setup instructions for Dj
 ```python
 DEBUG_TOOLBAR_PANELS = [
     # …
-    'flags.panels.FlagsPanel',
+    "flags.panels.FlagsPanel",
     # …
 ]
 ```
@@ -62,7 +62,7 @@ To enable the panel first follow the [installation and setup instructions for Dj
 ```python
 DEBUG_TOOLBAR_PANELS = [
     # …
-    'flags.panels.FlagChecksPanel',
+    "flags.panels.FlagChecksPanel",
     # …
 ]
 ```

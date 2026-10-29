@@ -24,20 +24,24 @@ Check that a given flag has the given state. If the state does not match, perfor
 ```python
 from flags.decorators import flag_check
 
-@flag_check('MY_FLAG', True)
-def view_requiring_flag(request):
-    return HttpResponse('MY_FLAG was true')
 
-@flag_check('MY_OTHER_FLAG', False)
+@flag_check("MY_FLAG", True)
+def view_requiring_flag(request):
+    return HttpResponse("MY_FLAG was true")
+
+
+@flag_check("MY_OTHER_FLAG", False)
 def view_requiring_other_flag_not_true(request):
-    return HttpResponse('MY_OTHER_FLAG was False')
+    return HttpResponse("MY_OTHER_FLAG was False")
+
 
 def fallback_view(request):
-    return HttpResponse('MY_FLAG_WITH_FALLBACK was False')
+    return HttpResponse("MY_FLAG_WITH_FALLBACK was False")
 
-@flag_check('MY_FLAG_WITH_FALLBACK', True, fallback=fallback_view)
+
+@flag_check("MY_FLAG_WITH_FALLBACK", True, fallback=fallback_view)
 def view_with_fallback(request):
-    return HttpResponse('MY_FLAG_WITH_FALLBACK was True')
+    return HttpResponse("MY_FLAG_WITH_FALLBACK was True")
 ```
 
 
@@ -53,14 +57,17 @@ Require the given flag to be enabled.
 ```python
 from flags.decorators import flag_required
 
-@flag_required('MY_FLAG')
+
+@flag_required("MY_FLAG")
 def view_requiring_flag(request):
-    return HttpResponse('flag was set')
+    return HttpResponse("flag was set")
+
 
 def other_view(request):
-    return HttpResponse('flag was not set')
+    return HttpResponse("flag was not set")
 
-@flag_required('MY_FLAG_WITH_FALLBACK', fallback_view=other_view)
+
+@flag_required("MY_FLAG_WITH_FALLBACK", fallback_view=other_view)
 def view_with_fallback(request):
-    return HttpResponse('flag was set')
+    return HttpResponse("flag was set")
 ```

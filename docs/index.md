@@ -20,7 +20,7 @@ Then add `flags` as an installed app in your Django `settings.py`:
 ```python
 INSTALLED_APPS = (
     # …
-    'flags',
+    "flags",
     # …
 )
 ```
@@ -30,13 +30,13 @@ And `django.template.context_processors.request` to the `TEMPLATES` `context_pro
 ```python
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
         # …
-        'OPTIONS': {
+        "OPTIONS": {
             # …
-            'context_processors': [
+            "context_processors": [
                 # …
-                'django.template.context_processors.request',
+                "django.template.context_processors.request",
                 # …
             ],
             # …
@@ -65,9 +65,7 @@ To use Django-Flags you first need to define the flag, use the flag, and define 
 First, define the flag in Django `settings.py`:
 
 ```python
-FLAGS = {
-    'MY_FLAG': []
-}
+FLAGS = {"MY_FLAG": []}
 ```
 
 Then use the flag in a Django template (`mytemplate.html`):
@@ -90,7 +88,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path(r'mypage/', TemplateView.as_view(template_name='mytemplate.html')),
+    path(r"mypage/", TemplateView.as_view(template_name="mytemplate.html")),
 ]
 ```
 
