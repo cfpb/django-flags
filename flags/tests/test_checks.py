@@ -16,14 +16,14 @@ class TestFlagsConditionsCheck(TestCase):
         errors = flag_conditions_check(apps.get_app_configs())
         self.assertEqual(len(errors), 1)
         self.assertIsInstance(errors[0], Warning)
-        self.assertEqual(errors[0].id, "flags.E001")
+        self.assertEqual(errors[0].id, "flags.W001")
 
     @override_settings(FLAGS={"FLAG_TO_CHECK": [("boolean", "foo")]})
     def test_check_fails_if_conditions_exist_with_invalid_value(self):
         errors = flag_conditions_check(apps.get_app_configs())
         self.assertEqual(len(errors), 1)
         self.assertIsInstance(errors[0], Warning)
-        self.assertEqual(errors[0].id, "flags.E002")
+        self.assertEqual(errors[0].id, "flags.W002")
 
     @override_settings(FLAGS={"FLAG_TO_CHECK": [("user", "testuser")]})
     def test_check_does_not_crash_when_user_table_missing(self):
@@ -32,4 +32,4 @@ class TestFlagsConditionsCheck(TestCase):
         errors = flag_conditions_check(apps.get_app_configs())
         self.assertEqual(len(errors), 1)
         self.assertIsInstance(errors[0], Warning)
-        self.assertEqual(errors[0].id, "flags.E002")
+        self.assertEqual(errors[0].id, "flags.W002")

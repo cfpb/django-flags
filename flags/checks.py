@@ -22,7 +22,7 @@ def flag_conditions_check(app_configs, **kwargs):
                             f"Register '{condition.condition}' as a "
                             "Django-Flags condition."
                         ),
-                        id="flags.E001",
+                        id="flags.W001",
                     )
                 )
             elif condition.fn.validate is not None:
@@ -36,7 +36,7 @@ def flag_conditions_check(app_configs, **kwargs):
                                 "condition has an invalid value."
                             ),
                             hint=e.message,
-                            id="flags.E002",
+                            id="flags.W002",
                         )
                     )
 
