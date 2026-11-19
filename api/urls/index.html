@@ -135,7 +135,12 @@
               
                 <h1 id="flagged-url-patterns">Flagged URL patterns<a class="headerlink" href="#flagged-url-patterns" title="Permanent link">¶</a></h1>
 <p>Flagged URL patterns are an alternative to <a href="../../api/decorators">flagging views with decorators</a>.</p>
-<pre class="highlight"><code class="language-python">from flags.urls import flagged_path, flagged_paths, flagged_re_path, flagged_re_paths</code></pre>
+<pre class="highlight"><code class="language-python">from flags.urls import (
+    flagged_path,
+    flagged_paths,
+    flagged_re_path,
+    flagged_re_paths,
+)</code></pre>
 <h3 id="flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <h3 id="flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone"><code>flagged_re_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)</code><a class="headerlink" href="#flagged_re_pathflag_name-route-view-kwargsnone-namenone-statetrue-fallbacknone" title="Permanent link">¶</a></h3>
 <p>Make a URL depend on the state of a feature flag. </p>
@@ -165,9 +170,9 @@
 <p class="admonition-title">Note</p>
 <p>When a fallback view is given it <em>must</em> take the same arguments as the flagged view.</p>
 </div>
-<pre class="highlight"><code class="language-python">with flagged_paths('MY_FLAG') as path:
+<pre class="highlight"><code class="language-python">with flagged_paths("MY_FLAG") as path:
     flagged_url_patterns = [
-        path('a-url/', view_requiring_flag),
+        path("a-url/", view_requiring_flag),
     ]
 
 urlpatterns = urlpatterns + flagged_url_patterns</code></pre>

@@ -136,8 +136,8 @@
 <p>Feature flags allow you to toggle functionality in both Django code and the Django templates based on configurable conditions. Flags can be useful for staging feature deployments, for A/B testing, or for any time you need an on/off switch for blocks of code. The toggle can be by date, user, URL value, or a number of <a href="./conditions">other conditions</a>, editable in the admin or in definable in settings.</p>
 <h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">¶</a></h2>
 <ul>
-<li>Django 2.2, 3.0, 4.x</li>
-<li>Python 3.7+</li>
+<li>Django 4.2, 5.1, 5.2, 6.0</li>
+<li>Python 3.10+</li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
 <p>First, install django-flags:</p>
@@ -145,19 +145,19 @@
 <p>Then add <code>flags</code> as an installed app in your Django <code>settings.py</code>:</p>
 <pre class="highlight"><code class="language-python">INSTALLED_APPS = (
     # …
-    'flags',
+    "flags",
     # …
 )</code></pre>
 <p>And <code>django.template.context_processors.request</code> to the <code>TEMPLATES</code> <code>context_processors</code> setting so that the <code>request</code> variable is available:</p>
 <pre class="highlight"><code class="language-python">TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
         # …
-        'OPTIONS': {
+        "OPTIONS": {
             # …
-            'context_processors': [
+            "context_processors": [
                 # …
-                'django.template.context_processors.request',
+                "django.template.context_processors.request",
                 # …
             ],
             # …
@@ -173,9 +173,7 @@
 <h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">¶</a></h2>
 <p>To use Django-Flags you first need to define the flag, use the flag, and define conditions for the flag to be enabled.</p>
 <p>First, define the flag in Django <code>settings.py</code>:</p>
-<pre class="highlight"><code class="language-python">FLAGS = {
-    'MY_FLAG': []
-}</code></pre>
+<pre class="highlight"><code class="language-python">FLAGS = {"MY_FLAG": []}</code></pre>
 <p>Then use the flag in a Django template (<code>mytemplate.html</code>):</p>
 <pre class="highlight"><code class="language-django">{% load feature_flags %}
 {% flag_enabled 'MY_FLAG' as my_flag %}
@@ -190,7 +188,7 @@
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path(r'mypage/', TemplateView.as_view(template_name='mytemplate.html')),
+    path(r"mypage/", TemplateView.as_view(template_name="mytemplate.html")),
 ]</code></pre>
 <p>Then in the Django admin add conditions for the flag in "Django Flags", "Flag states":</p>
 <p><img alt="Creating conditions in the Django admin" src="images/screenshot_create.png" /></p>
@@ -247,5 +245,5 @@ urlpatterns = [
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2026-02-10 16:51:48.551761+00:00
+Build Date UTC : 2026-11-19 20:00:22.104557+00:00
 -->

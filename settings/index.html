@@ -139,7 +139,7 @@
 <li>A list of dictionaries with the format:
   <pre class="highlight"><code class="language-python">{'condition': 'condition name', 'value': 'expected value', 'required': True}`</code></pre>
   or
-  <pre class="highlight"><code class="language-python">{'condition': 'condition name', 'value': 'expected value'}</code></pre>
+  <pre class="highlight"><code class="language-python">{"condition": "condition name", "value": "expected value"}</code></pre>
   (<code>required</code> defaults to <code>False</code>).</li>
 <li>A list of 3-tuples with the format: 
   <pre class="highlight"><code class="language-python">(condition name, expected value, required)</code></pre></li>
@@ -149,20 +149,30 @@
 </ul>
 <p>For example:</p>
 <pre class="highlight"><code class="language-python">FLAGS = {
-  'FLAG_WITH_EMPTY_CONDITIONS': [],
-  'FLAG_WITH_DICT_CONDITIONS': [
-    {'condition': 'condition name', 'value': 'expected value to be enabled'},
-    {'condition': 'condition name', 'value': 'expected value to be enabled', 'required': True},
-  ],
-  'FLAG_WITH_TUPLE_CONDITIONS': [
-    ('condition name', 'expected value to be enabled'),
-    ('condition name', 'expected value to be enabled', True),
-  ],
-  # This is possible, but not recommended
-  'FLAG_WITH_MIXED_CONDITIONS': [
-    {'condition': 'condition name', 'value': 'expected value to be enabled'},
-    ('condition name', 'expected value to be enabled', True),
-  ],
+    "FLAG_WITH_EMPTY_CONDITIONS": [],
+    "FLAG_WITH_DICT_CONDITIONS": [
+        {
+            "condition": "condition name",
+            "value": "expected value to be enabled",
+        },
+        {
+            "condition": "condition name",
+            "value": "expected value to be enabled",
+            "required": True,
+        },
+    ],
+    "FLAG_WITH_TUPLE_CONDITIONS": [
+        ("condition name", "expected value to be enabled"),
+        ("condition name", "expected value to be enabled", True),
+    ],
+    # This is possible, but not recommended
+    "FLAG_WITH_MIXED_CONDITIONS": [
+        {
+            "condition": "condition name",
+            "value": "expected value to be enabled",
+        },
+        ("condition name", "expected value to be enabled", True),
+    ],
 }</code></pre>
 <p>Previously flag definitions in <code>FLAGS</code> supported a single dictionary (rather than a list) with the condition name as the key and expected value as value. This method of specifying flags is deprecated and will be removed in Django-Flags 5.0.</p>
 <h3 id="flags_state_logging"><code>FLAGS_STATE_LOGGING</code><a class="headerlink" href="#flags_state_logging" title="Permanent link">¶</a></h3>

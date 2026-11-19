@@ -150,7 +150,7 @@
 <h2 id="requiring-state">Requiring state<a class="headerlink" href="#requiring-state" title="Permanent link">¶</a></h2>
 <h3 id="flag_enabledflag_name-kwargs"><code>flag_enabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_enabledflag_name-kwargs" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is enabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>
-<pre class="highlight"><code class="language-python">if flag_enabled('MY_FLAG', request=a_request):
+<pre class="highlight"><code class="language-python">if flag_enabled("MY_FLAG", request=a_request):
     print("My feature flag is enabled")</code></pre>
 <h3 id="flag_disabledflag_name-kwargs"><code>flag_disabled(flag_name, **kwargs)</code><a class="headerlink" href="#flag_disabledflag_name-kwargs" title="Permanent link">¶</a></h3>
 <p>Returns <code>True</code> if a flag is disabled by passing kwargs to its conditions, otherwise returns <code>False</code>.</p>

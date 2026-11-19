@@ -134,15 +134,22 @@
 <h2 id="defining-flags">Defining flags<a class="headerlink" href="#defining-flags" title="Permanent link">¶</a></h2>
 <p>Flags are defined in Django settings with the conditions in which they are enabled.</p>
 <pre class="highlight"><code class="language-python">FLAGS = {
-    'FLAG_WITH_EMPTY_CONDITIONS': [],
-    'FLAG_WITH_ANY_CONDITIONS': [
-        {'condition': 'condition name', 'value': 'expected value to be enabled'},
-        {'condition': 'user', 'value': 'lady.liberty'},
+    "FLAG_WITH_EMPTY_CONDITIONS": [],
+    "FLAG_WITH_ANY_CONDITIONS": [
+        {
+            "condition": "condition name",
+            "value": "expected value to be enabled",
+        },
+        {"condition": "user", "value": "lady.liberty"},
     ],
-    'FLAG_WITH_REQUIRED_CONDITIONS': [
-        {'condition': 'user', 'value': 'lady.liberty'},
-        {'condition': 'path matches', 'value': r'^/liberty/island', 'required': True},
-    ]
+    "FLAG_WITH_REQUIRED_CONDITIONS": [
+        {"condition": "user", "value": "lady.liberty"},
+        {
+            "condition": "path matches",
+            "value": r"^/liberty/island",
+            "required": True,
+        },
+    ],
 }</code></pre>
 <p>The set of conditions can be empty (flag will never be enabled), have one or more conditions that are not required (any of those conditions can be met for the flag to be enabled), or one or more required conditions (all required conditions have to be met for the flag to be enabled).</p>
 <p>Additional conditions can be added in the Django admin for any defined flag (illustrated in <a href="../#quickstart">Quickstart</a>). Conditions added in the Django admin can be changed without restarting Django, conditions defined in <code>settings.py</code> cannot. See <a href="../conditions/">the list of built-in conditions</a>.</p>
@@ -150,8 +157,8 @@
 <p>Flags can be used in Python code:</p>
 <pre class="highlight"><code class="language-python">from flags.state import flag_enabled
 
-if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
-    print("My feature flag is enabled") </code></pre>
+if flag_enabled("FLAG_WITH_ANY_CONDITIONS", request=a_request):
+    print("My feature flag is enabled")</code></pre>
 <p>In Django templates:</p>
 <pre class="highlight"><code class="language-django">{% load feature_flags %}
 {% flag_enabled 'FLAG_WITH_ANY_CONDITIONS' as my_flag %}
@@ -170,7 +177,12 @@ if flag_enabled('FLAG_WITH_ANY_CONDITIONS', request=a_request):
 <pre class="highlight"><code class="language-python">from flags.urls import flagged_path
 
 urlpatterns = [
-    flagged_path('FLAG_WITH_REQUIRED_CONDITIONS', 'a-url/', view_requiring_flag, state=True),
+    flagged_path(
+        "FLAG_WITH_REQUIRED_CONDITIONS",
+        "a-url/",
+        view_requiring_flag,
+        state=True,
+    ),
 ]</code></pre>
 <h2 id="testing-with-flags">Testing with flags<a class="headerlink" href="#testing-with-flags" title="Permanent link">¶</a></h2>
 <p>A test case that covers both values of the flag may look like this:</p>

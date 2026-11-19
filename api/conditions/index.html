@@ -137,53 +137,60 @@
 <p>Register a new condition, either as a decorator:</p>
 <pre class="highlight"><code class="language-python">from flags import conditions
 
-@conditions.register('path')
+
+@conditions.register("path")
 def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)</code></pre>
 <p>Or as a function call:</p>
 <pre class="highlight"><code class="language-python">def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)
 
-conditions.register('path', fn=path_condition)</code></pre>
+
+conditions.register("path", fn=path_condition)</code></pre>
 <p>Will raise a <code>conditions.DuplicateCondition</code> exception if the condition name is already registered.</p>
 <p>A <a href="https://docs.djangoproject.com/en/stable/ref/validators/">validator</a> can be given to validate the condition's expected value as provided by <a href="../sources/">the flag sources</a>, either as another callable as an argument to the <code>register</code> function:</p>
 <pre class="highlight"><code class="language-python">from django.core.exceptions import ValidationError
 from flags import conditions
 
-def validate_path(value):
-    if not value.startswith('/'):
-        raise ValidationError('Enter a valid path')
 
-@conditions.register('path', validator=validate_path)
+def validate_path(value):
+    if not value.startswith("/"):
+        raise ValidationError("Enter a valid path")
+
+
+@conditions.register("path", validator=validate_path)
 def path_condition(path, request=None, **kwargs):
     return request.path.startswith(path)</code></pre>
 <p>Or as an attribute on the condition callable:</p>
 <pre class="highlight"><code class="language-python">from django.core.exceptions import ValidationError
 from flags import conditions
 
+
 class PathCondition:
     def __call__(self, path, request=None, **kwargs):
         return request.path.startswith(path)
 
     def validate(self, value):
-        if not value.startswith('/'):
-            raise ValidationError('Enter a valid path')
+        if not value.startswith("/"):
+            raise ValidationError("Enter a valid path")
 
-conditions.register('path', fn=PathCondition)</code></pre>
+
+conditions.register("path", fn=PathCondition)</code></pre>
 <p>Validators specified in both ways are available on condition callables as 
 a <code>validate</code> attribute:</p>
-<pre class="highlight"><code class="language-python">condition = get_condition('path')
+<pre class="highlight"><code class="language-python">condition = get_condition("path")
 condition.validate(value)</code></pre>
 <h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">¶</a></h2>
 <h3 id="conditionsduplicatecondition"><code>conditions.DuplicateCondition</code><a class="headerlink" href="#conditionsduplicatecondition" title="Permanent link">¶</a></h3>
 <p>Exception raised by <code>conditions.register</code> if the condition name being registered is already registered.</p>
 <h3 id="conditionsrequiredforcondition"><code>conditions.RequiredForCondition</code><a class="headerlink" href="#conditionsrequiredforcondition" title="Permanent link">¶</a></h3>
 <p>Exception intended to be raised when a condition is not given a keyword argument it requires for evaluation.</p>
-<pre class="highlight"><code class="language-python">@conditions.register('path')
+<pre class="highlight"><code class="language-python">@conditions.register("path")
 def path_condition(path, request=None, **kwargs):
     if request is None:
         raise conditions.RequiredForCondition(
-            "request is required for condition 'path'")
+            "request is required for condition 'path'"
+        )
 
     return request.path.startswith(path)</code></pre>
               
