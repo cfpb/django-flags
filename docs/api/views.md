@@ -35,9 +35,10 @@ For example, in `views.py`:
 from django.views.generic import View
 from flags.views import FlaggedViewMixin
 
+
 class MyFlaggedView(FlaggedViewMixin, View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse('ok')
+        return HttpResponse("ok")
 ```
 
 And in `urls.py`:
@@ -46,9 +47,7 @@ And in `urls.py`:
 from django.urls import path
 from flags.urls import flagged_path
 
-urlpatterns = [
-    path('my-url/', MyFlaggedView.as_view(flag_name='MY_FLAG'))
-]
+urlpatterns = [path("my-url/", MyFlaggedView.as_view(flag_name="MY_FLAG"))]
 ```
 
 ### `FlaggedTemplateView`
@@ -60,9 +59,10 @@ For example, in `views.py`:
 ```python
 from flags.views import FlaggedTemplateView
 
+
 class MyFlaggedView(FlaggedTemplateView):
     template_name = "mytemplate.html"
-    flag_name = 'MY_FLAG'
+    flag_name = "MY_FLAG"
 ```
 
 Or to serve a template directly in `urls.py`:

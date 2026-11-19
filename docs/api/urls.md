@@ -3,7 +3,12 @@
 Flagged URL patterns are an alternative to [flagging views with decorators](../../api/decorators).
 
 ```python
-from flags.urls import flagged_path, flagged_paths, flagged_re_path, flagged_re_paths
+from flags.urls import (
+    flagged_path,
+    flagged_paths,
+    flagged_re_path,
+    flagged_re_paths,
+)
 ```
 
 ### `flagged_path(flag_name, route, view, kwargs=None, name=None, state=True, fallback=None)`
@@ -47,9 +52,9 @@ Flag multiple URLs in the same context with a context manager.
     When a fallback view is given it *must* take the same arguments as the flagged view.
 
 ```python
-with flagged_paths('MY_FLAG') as path:
+with flagged_paths("MY_FLAG") as path:
     flagged_url_patterns = [
-        path('a-url/', view_requiring_flag),
+        path("a-url/", view_requiring_flag),
     ]
 
 urlpatterns = urlpatterns + flagged_url_patterns
